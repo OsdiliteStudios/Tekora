@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tekora:yttrium_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:yttrium_nugget"
+  }
+}

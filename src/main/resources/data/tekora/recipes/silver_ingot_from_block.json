@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapless",
+  "ingredients": [
+    {
+      "item": "tekora:silver_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:silver_ingot"
+  }
+}

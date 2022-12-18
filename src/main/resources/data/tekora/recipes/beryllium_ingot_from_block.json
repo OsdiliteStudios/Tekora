@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tekora:beryllium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:beryllium_ingot"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tekora:thorium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:thorium_ingot"
+  }
+}

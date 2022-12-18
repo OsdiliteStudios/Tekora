@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tekora:strontium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:strontium_ingot"
+  }
+}

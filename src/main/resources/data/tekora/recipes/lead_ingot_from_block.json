@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tekora:lead_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:lead_ingot"
+  }
+}

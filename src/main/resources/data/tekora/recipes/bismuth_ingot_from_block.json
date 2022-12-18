@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tekora:bismuth_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:bismuth_ingot"
+  }
+}

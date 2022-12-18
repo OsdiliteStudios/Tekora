@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tekora:zirconium_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:zirconium_nugget"
+  }
+}

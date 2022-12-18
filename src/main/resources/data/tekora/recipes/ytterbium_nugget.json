@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tekora:ytterbium_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:ytterbium_nugget"
+  }
+}

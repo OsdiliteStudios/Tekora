@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tekora:scandium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:scandium_ingot"
+  }
+}

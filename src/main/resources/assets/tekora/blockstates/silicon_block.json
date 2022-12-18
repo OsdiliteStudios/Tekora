@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "tekora:block/silicon_block" }
+  }
+}

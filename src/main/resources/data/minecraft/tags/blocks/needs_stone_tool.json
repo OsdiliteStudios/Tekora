@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "tekora:bauxite_block",
+    "tekora:bauxite_ore",
+    "tekora:cinnabar_block",
+    "tekora:cinnabar_ore",
+    "tekora:deepslate_bauxite_ore",
+    "tekora:deepslate_cinnabar_ore",
+    "tekora:deepslate_dolomite_ore",
+    "tekora:deepslate_galena_ore",
+    "tekora:deepslate_graphite_ore",
+    "tekora:dolomite_block",
+    "tekora:dolomite_ore",
+    "tekora:galena_block",
+    "tekora:galena_ore",
+    "tekora:graphite_block",
+    "tekora:graphite_ore"
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "tekora:block/galena_block" }
+  }
+}

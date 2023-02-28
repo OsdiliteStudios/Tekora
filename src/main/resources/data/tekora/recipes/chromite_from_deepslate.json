@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "chromite",
+  "ingredient": {
+    "item": "tekora:deepslate_chromite_ore"
+  },
+  "result": "tekora:chromite"
+}

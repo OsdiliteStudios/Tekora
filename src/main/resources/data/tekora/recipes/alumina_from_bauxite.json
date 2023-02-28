@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:blasting",
+    "cookingtime": 350,
+    "experience": 2.0,
+    "group": "alumina",
+    "ingredient": {
+      "item": "tekora:bauxite"
+    },
+    "result": "tekora:alumina"
+  }

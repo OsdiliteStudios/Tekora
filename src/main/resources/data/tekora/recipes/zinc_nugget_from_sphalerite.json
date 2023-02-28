@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:blasting",
+    "cookingtime": 200,
+    "experience": 2.0,
+    "group": "zinc_nugget",
+    "ingredient": {
+      "item": "tekora:sphalerite"
+    },
+    "result": {
+      "count": 5,
+      "item": "tekora:zinc_nugget"
+    }
+  }

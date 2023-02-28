@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_river",
+  "features": "tekora:river_bauxite_ore_placed",
+  "step": "raw_generation"
+}

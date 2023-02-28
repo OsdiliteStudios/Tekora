@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_river",
+  "features": "tekora:salt_spawned",
+  "step": "raw_generation"
+}

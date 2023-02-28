@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "apatite",
+  "ingredient": {
+    "item": "tekora:apatite_ore"
+  },
+  "result": "tekora:apatite"
+}

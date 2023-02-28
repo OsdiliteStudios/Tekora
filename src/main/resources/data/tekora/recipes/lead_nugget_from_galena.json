@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:blasting",
+    "cookingtime": 200,
+    "experience": 2.0,
+    "group": "lead_nugget",
+    "ingredient": {
+      "item": "tekora:galena"
+    },
+    "result": {
+      "count": 8,
+      "item": "tekora:lead_nugget"
+    }
+  }

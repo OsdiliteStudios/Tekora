@@ -1,6 +1,8 @@
 package net.nukollodda.tekora;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -10,7 +12,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.nukollodda.tekora.block.ModBlocks;
+import net.nukollodda.tekora.fluid.ModFluidTypes;
+import net.nukollodda.tekora.fluid.ModFluids;
 import net.nukollodda.tekora.item.ModItems;
+import net.nukollodda.tekora.world.feature.ModConfiguredFeatures;
+import net.nukollodda.tekora.world.feature.ModPlacedFeatures;
 import org.slf4j.Logger;
 
 @Mod(Tekora.MODID)
@@ -22,6 +28,12 @@ public class Tekora {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        ModConfiguredFeatures.register(modEventBus);
+        ModPlacedFeatures.register(modEventBus);
+
+        ModFluids.register(modEventBus);
+        ModFluidTypes.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -37,6 +49,8 @@ public class Tekora {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CHLORINE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CHLORINE.get(), RenderType.translucent());
         }
     }
 }

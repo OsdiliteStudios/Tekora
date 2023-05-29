@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "0":{
+      "item": "minecraft:smooth_stone"
+    },
+    "1": {
+      "item": "tekora:steel_ingot"
+    },
+    "2": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "pattern": [
+    "111",
+    "121",
+    "000"
+  ],
+  "result": {
+    "item": "tekora:alloy_furnace"
+  }
+}

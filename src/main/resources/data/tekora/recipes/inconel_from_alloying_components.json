@@ -1,0 +1,18 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/nickel"
+    },
+    {
+      "tag": "forge:nuggets/iron"
+    },
+    {
+      "tag": "forge:nuggets/chromium"
+    }
+  ],
+  "output": {
+    "count": 2,
+    "item": "tekora:inconel_ingot"
+  }
+}

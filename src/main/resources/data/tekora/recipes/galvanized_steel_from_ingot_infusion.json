@@ -1,0 +1,15 @@
+{
+  "type": "tekora:infusion",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:dusts/zinc"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "item": "tekora:galvanized_steel_ingot"
+  }
+}

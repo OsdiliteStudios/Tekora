@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:ruthenium_nugget"
+      "tag": "forge:nuggets/ruthenium"
     }
   },
   "pattern": [

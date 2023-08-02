@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:tools/hammer"
+    },
+    {
+      "tag": "forge:ingots/palladium"
+    }
+  ],
+  "result": {
+    "item": "tekora:palladium_plate"
+  }
+}

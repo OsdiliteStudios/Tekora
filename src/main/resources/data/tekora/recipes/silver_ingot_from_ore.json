@@ -4,7 +4,7 @@
   "experience": 1.0,
   "group": "silver_ingot",
   "ingredient": {
-    "item": "tekora:silver_ore"
+    "tag": "forge:ores/silver"
   },
   "result": "tekora:silver_ingot"
 }

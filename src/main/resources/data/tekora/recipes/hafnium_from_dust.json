@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "hafnium",
+  "ingredient": {
+    "tag": "forge:dusts/hafnium"
+  },
+  "result": "tekora:hafnium_ingot"
+}

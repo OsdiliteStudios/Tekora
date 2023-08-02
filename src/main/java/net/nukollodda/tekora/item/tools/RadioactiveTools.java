@@ -1,4 +1,4 @@
-package net.nukollodda.tekora.item.tools.thorium;
+package net.nukollodda.tekora.item.tools;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "iridium",
+  "ingredient": {
+    "tag": "forge:dusts/iridium"
+  },
+  "result": "tekora:iridium_ingot"
+}

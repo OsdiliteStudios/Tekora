@@ -1,13 +1,11 @@
 {
   "type": "minecraft:smithing",
-  "ingredients": [
-    {
-      "item": "tekora:diamond_hammer"
-    },
-    {
-      "tag": "forge:ingots/netherite"
-    }
-  ],
+  "addition": {
+    "tag": "forge:netherite"
+  },
+  "base": {
+    "item": "tekora:diamond_hammer"
+  },
   "result": {
     "item": "tekora:netherite_hammer"
   }

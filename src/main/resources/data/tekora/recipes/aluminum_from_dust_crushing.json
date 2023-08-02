@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/aluminum"
+    }
+  ],
+  "output": {
+    "item": "tekora:aluminum_plate"
+  }
+}

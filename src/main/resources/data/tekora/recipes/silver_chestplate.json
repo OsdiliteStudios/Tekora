@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "0": {
+      "tag": "forge:ingots/silver"
+    }
+  },
+  "pattern": [
+    "0 0",
+    "000",
+    "000"
+  ],
+  "result": {
+    "item": "tekora:silver_chestplate"
+  }
+}

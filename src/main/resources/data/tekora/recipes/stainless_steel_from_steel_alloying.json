@@ -1,0 +1,15 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:steel"
+    },
+    {
+      "tag": "forge:chromium"
+    }
+  ],
+  "output": {
+    "count": 2,
+    "item": "tekora:stainless_steel_ingot"
+  }
+}

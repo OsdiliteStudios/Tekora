@@ -1,0 +1,14 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:steel"
+    },
+    {
+      "tag": "forge:nuggets/manganese"
+    }
+  ],
+  "output": {
+    "item": "tekora:hsla_steel_ingot"
+  }
+}

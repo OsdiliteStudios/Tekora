@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/scandium"
+    }
+  ],
+  "output": {
+    "item": "tekora:scandium_plate"
+  }
+}

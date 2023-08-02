@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "rhodium",
+  "ingredient": {
+    "tag": "forge:dusts/rhodium"
+  },
+  "result": "tekora:rhodium_ingot"
+}

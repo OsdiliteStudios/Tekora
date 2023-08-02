@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "0": {
+      "tag": "forge:ingots/silver"
+    }
+  },
+  "pattern": [
+    "0 0",
+    "0 0"
+  ],
+  "result": {
+    "item": "tekora:silver_boots"
+  }
+}

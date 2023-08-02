@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/cadmium"
+    }
+  ],
+  "output": {
+    "item": "tekora:cadmium_plate"
+  }
+}

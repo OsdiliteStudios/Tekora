@@ -4,7 +4,7 @@
   "experience": 1.0,
   "group": "garnet",
   "ingredient": {
-    "item": "tekora:garnet_ore"
+    "tag": "forge:ores/garnet"
   },
   "result": "tekora:garnet"
 }

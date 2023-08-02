@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/ferroboron"
+    }
+  ],
+  "output": {
+    "item": "tekora:ferroboron_plate"
+  }
+}

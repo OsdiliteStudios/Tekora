@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/iridium"
+    }
+  ],
+  "output": {
+    "item": "tekora:iridium_plate"
+  }
+}

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:lithium_nugget"
+      "tag": "forge:nuggets/lithium"
     }
   },
   "pattern": [

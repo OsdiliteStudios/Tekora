@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:silver_nugget"
+      "tag": "forge:nuggets/silver"
     }
   },
   "pattern": [

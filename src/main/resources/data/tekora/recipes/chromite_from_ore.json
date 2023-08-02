@@ -4,7 +4,7 @@
   "experience": 1.0,
   "group": "chromite",
   "ingredient": {
-    "item": "tekora:chromite_ore"
+    "tag": "forge:ores/chromite"
   },
   "result": "tekora:chromite"
 }

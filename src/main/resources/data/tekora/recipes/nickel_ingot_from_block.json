@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "tekora:nickel_block"
+      "tag": "forge:storage_blocks/nickel"
     }
   ],
   "result": {

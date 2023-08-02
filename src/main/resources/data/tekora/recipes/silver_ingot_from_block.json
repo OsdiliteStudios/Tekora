@@ -1,8 +1,8 @@
 {
-  "type": "minecraft:crafting_shapless",
+  "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "tekora:silver_block"
+      "tag": "forge:storage_blocks/silver"
     }
   ],
   "result": {

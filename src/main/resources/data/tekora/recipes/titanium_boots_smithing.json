@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "tag": "forge:titanium"
+  },
+  "base": {
+    "item": "tekora:steel_boots"
+  },
+  "result": {
+    "item": "tekora:titanium_boots"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/lead"
+    }
+  ],
+  "output": {
+    "item": "tekora:lead_plate"
+  }
+}

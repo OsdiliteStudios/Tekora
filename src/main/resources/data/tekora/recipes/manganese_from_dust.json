@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "manganese",
+  "ingredient": {
+    "tag": "forge:dusts/manganese"
+  },
+  "result": "tekora:manganese_ingot"
+}

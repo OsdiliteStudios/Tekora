@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:barium_nugget"
+      "tag": "forge:nuggets/barium"
     }
   },
   "pattern": [

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "tekora:zinc_block"
+      "tag": "forge:storage_blocks/zinc"
     }
   ],
   "result": {

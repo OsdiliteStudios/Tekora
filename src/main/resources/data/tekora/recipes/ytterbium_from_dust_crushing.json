@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/ytterbium"
+    }
+  ],
+  "output": {
+    "item": "tekora:ytterbium_plate"
+  }
+}

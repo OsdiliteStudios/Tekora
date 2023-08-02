@@ -1,0 +1,16 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/gold",
+      "count": 4
+    },
+    {
+      "item": "minecraft:netherite_scrap",
+      "count": 4
+    }
+  ],
+  "output": {
+    "item": "minecraft:netherite_ingot"
+  }
+}

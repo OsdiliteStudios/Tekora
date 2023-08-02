@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/stainless_steel"
+    }
+  ],
+  "output": {
+    "item": "tekora:stainless_steel_plate"
+  }
+}

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:manganese_nugget"
+      "tag": "forge:nuggets/manganese"
     }
   },
   "pattern": [

@@ -1,0 +1,15 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/iron"
+    },
+    {
+      "item": "minecraft:coal",
+      "count": 3
+    }
+  ],
+  "output": {
+    "item": "tekora:steel_ingot"
+  }
+}

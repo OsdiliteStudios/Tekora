@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "erbium",
+  "ingredient": {
+    "tag": "forge:dusts/erbium"
+  },
+  "result": "tekora:erbium_ingot"
+}

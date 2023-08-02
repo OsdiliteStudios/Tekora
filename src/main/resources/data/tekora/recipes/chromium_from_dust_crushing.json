@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/chromium"
+    }
+  ],
+  "output": {
+    "item": "tekora:chromium_plate"
+  }
+}

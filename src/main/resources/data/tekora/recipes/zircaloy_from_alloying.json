@@ -1,0 +1,15 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:zirconium"
+    },
+    {
+      "tag": "forge:nuggets/tin",
+      "count": 3
+    }
+  ],
+  "output": {
+    "item": "tekora:zircaloy_ingot"
+  }
+}

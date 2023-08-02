@@ -4,7 +4,7 @@
   "experience": 1.0,
   "group": "cinnabar",
   "ingredient": {
-    "item": "tekora:cinnabar_ore"
+    "tag": "forge:ores/cinnabar"
   },
   "result": "tekora:cinnabar"
 }

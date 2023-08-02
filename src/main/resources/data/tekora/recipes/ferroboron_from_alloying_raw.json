@@ -1,0 +1,14 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/iron"
+    },
+    {
+      "item": "tekora:boron_piece"
+    }
+  ],
+  "output": {
+    "item": "tekora:ferroboron_ingot"
+  }
+}

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:zirconium_nugget"
+      "tag": "forge:nuggets/zirconium"
     }
   },
   "pattern": [

@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "item": "tekora:rutile"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "item": "tekora:rutile_shard"
+    }
+  }

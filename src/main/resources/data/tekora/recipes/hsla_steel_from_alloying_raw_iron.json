@@ -1,0 +1,17 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/iron"
+    },
+    {
+      "tag": "forge:nuggets/manganese"
+    },
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "output": {
+    "item": "tekora:hsla_steel_ingot"
+  }
+}

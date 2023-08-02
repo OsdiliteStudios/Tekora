@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/bronze"
+    }
+  ],
+  "output": {
+    "item": "tekora:bronze_plate"
+  }
+}

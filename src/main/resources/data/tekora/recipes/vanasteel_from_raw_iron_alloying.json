@@ -1,0 +1,17 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/iron"
+    },
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "tag": "forge:nuggets/vanadium"
+    }
+  ],
+  "output": {
+    "item": "tekora:vanasteel_ingot"
+  }
+}

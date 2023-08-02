@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:praseodymium_nugget"
+      "tag": "forge:nuggets/praseodymium"
     }
   },
   "pattern": [

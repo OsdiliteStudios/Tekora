@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "tekora:ruthenium_block"
+      "tag": "forge:storage_blocks/ruthenium"
     }
   ],
   "result": {

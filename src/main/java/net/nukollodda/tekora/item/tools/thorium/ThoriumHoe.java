@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ThoriumHoe extends HoeItem implements RadioactiveTools {
     public ThoriumHoe() {
-        super(ModTiers.THORIUM, -3, 0, new Item.Properties().fireResistant().tab(CreativeModeTab.TAB_TOOLS));
+        super(ModTiers.THORIUM, -3, 0, new Item.Properties().fireResistant());
     }
 
     @Override

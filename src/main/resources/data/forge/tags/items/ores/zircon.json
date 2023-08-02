@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "tekora:zircon_ore",
+    "tekora:deepslate_zircon_ore",
+    "tekora:granite_zircon_ore",
+    "tekora:sandstone_zircon_ore"
+  ]
+}

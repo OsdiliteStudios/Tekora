@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ThoriumShovel extends ShovelItem implements RadioactiveTools {
     public ThoriumShovel() {
-        super(ModTiers.THORIUM, 1.5f, -3.0f, new Item.Properties().fireResistant().tab(CreativeModeTab.TAB_TOOLS));
+        super(ModTiers.THORIUM, 1.5f, -3.0f, new Item.Properties().fireResistant());
     }
 
     @Override

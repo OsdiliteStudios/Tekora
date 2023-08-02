@@ -1,0 +1,14 @@
+{
+  "type": "tekora:infusion",
+  "ingredients": [
+    {
+      "tag": "forge:plates/iron"
+    },
+    {
+      "item": "tekora:boron_piece"
+    }
+  ],
+  "output": {
+    "item": "tekora:ferroboron_plate"
+  }
+}

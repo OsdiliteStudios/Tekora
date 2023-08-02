@@ -5,7 +5,7 @@
       "item": "minecraft:smooth_stone"
     },
     "1": {
-      "item": "tekora:steel_ingot"
+      "tag": "forge:ingots/steel"
     },
     "2": {
       "item": "minecraft:furnace"

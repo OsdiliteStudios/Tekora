@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/brass"
+    }
+  ],
+  "output": {
+    "item": "tekora:brass_plate"
+  }
+}

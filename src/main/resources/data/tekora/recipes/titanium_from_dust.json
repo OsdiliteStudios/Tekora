@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "titanium",
+  "ingredient": {
+    "tag": "forge:dusts/titanium"
+  },
+  "result": "tekora:titanium_ingot"
+}

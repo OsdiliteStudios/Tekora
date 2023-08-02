@@ -3,6 +3,7 @@ package net.nukollodda.tekora.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -13,12 +14,11 @@ import net.minecraft.world.level.Level;
 import net.nukollodda.tekora.Tekora;
 import org.jetbrains.annotations.Nullable;
 
-public class Infusion implements Recipe<SimpleContainer> {
+public class InfusionRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
-
-    public Infusion(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems) {
+    public InfusionRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
@@ -35,7 +35,12 @@ public class Infusion implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer pContainer) {
+    public NonNullList<Ingredient> getIngredients() {
+        return recipeItems;
+    }
+
+    @Override
+    public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
         return output;
     }
 
@@ -45,7 +50,7 @@ public class Infusion implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pAccess) {
         return output.copy();
     }
 
@@ -64,32 +69,32 @@ public class Infusion implements Recipe<SimpleContainer> {
         return Type.INSTANCE;
     }
 
-    public static class Type implements RecipeType<Infusion> {
+    public static class Type implements RecipeType<InfusionRecipe> {
         public Type() {}
         public static final Type INSTANCE = new Type();
         public static final String ID = "infusion";
     }
 
-    public static class Serializer implements RecipeSerializer<Infusion> {
+    public static class Serializer implements RecipeSerializer<InfusionRecipe> {
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID =
                 new ResourceLocation(Tekora.MODID, "infusion");
 
         @Override
-        public Infusion fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
+        public InfusionRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
+            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "output"));
 
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
+            JsonArray ingredients = GsonHelper.getAsJsonArray(pJson, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(2, Ingredient.EMPTY); // note: it expects two inputs
 
             for (int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
-            return new Infusion(pRecipeId, output, inputs);
+            return new InfusionRecipe(pRecipeId, output, inputs);
         }
 
         @Override
-        public @Nullable Infusion fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
+        public @Nullable InfusionRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
 
             for (int i = 0; i < inputs.size(); i++) {
@@ -97,17 +102,16 @@ public class Infusion implements Recipe<SimpleContainer> {
             }
 
             ItemStack output = pBuffer.readItem();
-            return new Infusion(pRecipeId, output, inputs);
+            return new InfusionRecipe(pRecipeId, output, inputs);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, Infusion pRecipe) {
+        public void toNetwork(FriendlyByteBuf pBuffer, InfusionRecipe pRecipe) {
             pBuffer.writeInt(pRecipe.getIngredients().size());
 
             for (Ingredient ing : pRecipe.getIngredients()) {
                 ing.toNetwork(pBuffer);
             }
-            pBuffer.writeItemStack(pRecipe.getResultItem(), false);
         }
     }
 }

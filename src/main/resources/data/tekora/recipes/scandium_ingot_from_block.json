@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "tekora:scandium_block"
+      "tag": "forge:storage_blocks/scandium"
     }
   ],
   "result": {

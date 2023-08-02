@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:tools/hammer"
+    },
+    {
+      "tag": "forge:ingots/manganese"
+    }
+  ],
+  "result": {
+    "item": "tekora:manganese_plate"
+  }
+}

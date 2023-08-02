@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "calcium",
+  "ingredient": {
+    "tag": "forge:dusts/calcium"
+  },
+  "result": "tekora:calcium_ingot"
+}

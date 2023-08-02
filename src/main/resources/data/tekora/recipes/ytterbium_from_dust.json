@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "ytterbium",
+  "ingredient": {
+    "tag": "forge:dusts/ytterbium"
+  },
+  "result": "tekora:ytterbium_ingot"
+}

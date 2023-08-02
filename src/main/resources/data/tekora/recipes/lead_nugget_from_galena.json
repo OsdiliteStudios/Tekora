@@ -4,7 +4,7 @@
     "experience": 2.0,
     "group": "lead_nugget",
     "ingredient": {
-      "item": "tekora:galena"
+      "tag": "forge:gems/galena"
     },
     "result": {
       "count": 8,

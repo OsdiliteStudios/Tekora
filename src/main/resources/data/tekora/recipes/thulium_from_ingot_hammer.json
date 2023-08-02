@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:tools/hammer"
+    },
+    {
+      "tag": "forge:ingots/thulium"
+    }
+  ],
+  "result": {
+    "item": "tekora:thulium_plate"
+  }
+}

@@ -8,7 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.nukollodda.tekora.block.ModBlocks;
 import net.nukollodda.tekora.block.entity.entities.AlloyFurnaceEntity;
@@ -19,25 +18,25 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public AlloyFurnaceMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5));
+        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5));
     }
 
     public AlloyFurnaceMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.ALLOY_FURNACE_MENU.get(), id);
         checkContainerSize(inv, 5);
         blockEnt = (AlloyFurnaceEntity) entity;
-        this.level = inv.player.level;
+        this.level = inv.player.level();
         this.data = data;
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
         this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> { // adds the slots themselves
-            this.addSlot(new SlotItemHandler(handler, 0, 88, 53));
+            this.addSlot(new SlotItemHandler(handler, 0, 79, 53));
             this.addSlot(new SlotItemHandler(handler, 1, 52, 26));
             this.addSlot(new SlotItemHandler(handler, 2, 34, 26));
             this.addSlot(new SlotItemHandler(handler, 3, 43, 44));
-            this.addSlot(new SlotItemHandler(handler, 4, 130, 35));
+            this.addSlot(new SlotItemHandler(handler, 4, 117, 26));
         });
 
         addDataSlots(data);
@@ -53,6 +52,14 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
         int progressArrowSize = 26; // height of the arrow in pixels
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    public int getFuelAmt() {
+        int fuel = this.data.get(2);
+        int maxFuel = this.data.get(3);
+        int fuelSize = 14;
+
+        return maxFuel != 0 && fuel != 0 ? fuel * fuelSize / maxFuel : 0;
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
@@ -82,12 +89,14 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
 
         // Check if the slot clicked is one of the vanilla container slots
         if (index < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
+
             // This is a vanilla container slot so merge the stack into the tile inventory
             if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX
                     + TE_INVENTORY_SLOT_COUNT, false)) {
                 return ItemStack.EMPTY;  // EMPTY_ITEM
             }
         } else if (index < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
+
             // This is a TE slot so merge the stack into the players inventory
             if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
                 return ItemStack.EMPTY;
@@ -115,14 +124,14 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInv) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 86 + i * 18));
+                this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInv) {
-        for (int i = 0; i < 0; i++) {
-            this.addSlot(new Slot(playerInv, i, 8 + i * 18, 144));
+        for (int i = 0; i < 9; i++) {
+            this.addSlot(new Slot(playerInv, i, 8 + i * 18, 142));
         }
     }
 }

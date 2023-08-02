@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/niobium"
+    }
+  ],
+  "output": {
+    "item": "tekora:niobium_plate"
+  }
+}

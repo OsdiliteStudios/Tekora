@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:thorium_nugget"
+      "tag": "forge:nuggets/thorium"
     }
   },
   "pattern": [

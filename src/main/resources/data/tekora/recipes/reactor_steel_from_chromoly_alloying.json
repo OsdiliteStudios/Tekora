@@ -1,0 +1,14 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:chromoly_steel"
+    },
+    {
+      "tag": "forge:nuggets/vanadium"
+    }
+  ],
+  "output": {
+    "item": "tekora:reactor_steel_ingot"
+  }
+}

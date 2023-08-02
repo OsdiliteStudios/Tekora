@@ -2,17 +2,19 @@
   "type": "tekora:alloying",
   "ingredients": [
     {
-      "tag": "forge:ingots/nickel"
+      "tag": "forge:nickel",
+      "count": 2
     },
     {
-      "tag": "forge:nuggets/iron"
+      "tag": "forge:nuggets/chromium",
+      "count": 6
     },
     {
-      "tag": "forge:nuggets/chromium"
+      "tag": "forge:nuggets/iron",
+      "count": 3
     }
   ],
   "output": {
-    "count": 2,
     "item": "tekora:inconel_ingot"
   }
 }

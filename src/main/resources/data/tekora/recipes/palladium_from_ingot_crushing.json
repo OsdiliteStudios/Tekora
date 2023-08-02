@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/palladium"
+    }
+  ],
+  "output": {
+    "item": "tekora:palladium_plate"
+  }
+}

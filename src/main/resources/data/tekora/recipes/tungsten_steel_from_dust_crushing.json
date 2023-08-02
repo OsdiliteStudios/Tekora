@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/tungsten_steel"
+    }
+  ],
+  "output": {
+    "item": "tekora:tungsten_steel_plate"
+  }
+}

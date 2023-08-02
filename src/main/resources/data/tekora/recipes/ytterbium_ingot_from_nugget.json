@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:ytterbium_nugget"
+      "tag": "forge:nuggets/ytterbium"
     }
   },
   "pattern": [

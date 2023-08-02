@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tekora:bastnaesite"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:bastnaesite_shard"
+  }
+}

@@ -4,7 +4,7 @@
   "experience": 1.0,
   "group": "galena",
   "ingredient": {
-    "item": "tekora:galena_ore"
+    "tag": "forge:ores/galena"
   },
   "result": "tekora:galena"
 }

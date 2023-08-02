@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:strontium_nugget"
+      "tag": "forge:nuggets/strontium"
     }
   },
   "pattern": [

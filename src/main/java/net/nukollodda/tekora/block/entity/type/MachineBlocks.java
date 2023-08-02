@@ -5,41 +5,38 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.nukollodda.tekora.block.entity.entities.AlloyFurnaceEntity;
-import net.nukollodda.tekora.block.entity.entities.ModBlockEntities;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MachineBlocks extends BaseEntityBlock {
+public abstract class MachineBlocks extends BaseEntityBlock {
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private final int mineTier;
-    public MachineBlocks(Material material, float strength, SoundType sound, int tier) {
-        super(Properties.of(material)
+    public MachineBlocks(float strength, SoundType sound, int tier) {
+        super(Properties.of()
                 .strength(strength).requiresCorrectToolForDrops().sound(sound).noOcclusion());
         this.mineTier = tier;
     }
-    public MachineBlocks(Material material, float strength, int tier) {
-        this(material, strength, SoundType.STONE, tier);
+    public MachineBlocks(float strength, int tier) {
+        this(strength, SoundType.STONE, tier);
     }
 
-    public MachineBlocks(Material material, float strength, SoundType sound) {
-        this(material, strength, sound, 2);
+    public MachineBlocks(float strength, SoundType sound) {
+        this(strength, sound, 2);
     }
 
-    public MachineBlocks(Material material, float strength) {
-        this(material, strength, 2);
+    public MachineBlocks(float strength) {
+        this(strength, 2);
     }
 
     public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
@@ -85,14 +82,14 @@ public class MachineBlocks extends BaseEntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return null;
-    }
+    public abstract BlockEntity newBlockEntity(BlockPos pPos, BlockState pState);
 
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level lvl, BlockState state,
-                                                                  BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntities.ALLOY_FURNACE.get(),
-                AlloyFurnaceEntity::tick);
-    }
+    /*
+     * list of what to code
+     * list of errors
+     * 1. fuel data not stored in game
+     * 2. not all fuels actually generates fuel
+     *
+     * include:
+     */
 }

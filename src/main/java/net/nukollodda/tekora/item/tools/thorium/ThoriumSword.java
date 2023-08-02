@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ThoriumSword extends SwordItem implements RadioactiveTools {
     public ThoriumSword() {
-        super(ModTiers.THORIUM, 3, -2.4f, new Item.Properties().fireResistant().tab(CreativeModeTab.TAB_COMBAT));
+        super(ModTiers.THORIUM, 3, -2.4f, new Item.Properties().fireResistant());
     }
 
     @Override

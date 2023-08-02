@@ -1,0 +1,17 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:vanasteel"
+    },
+    {
+      "tag": "forge:nuggets/chromium"
+    },
+    {
+      "tag": "forge:nuggets/molybdenum"
+    }
+  ],
+  "output": {
+    "item": "tekora:reactor_steel_ingot"
+  }
+}

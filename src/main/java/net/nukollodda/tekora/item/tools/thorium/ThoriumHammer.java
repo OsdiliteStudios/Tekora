@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ThoriumHammer extends HammerItem implements RadioactiveTools {
     public ThoriumHammer() {
-        super(ModTiers.THORIUM, new Item.Properties().fireResistant().tab(CreativeModeTab.TAB_TOOLS));
+        super(ModTiers.THORIUM, new Item.Properties().fireResistant());
     }
 
     @Override

@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "values": [
     "tekora:basalt_chromite_ore",
     "tekora:basalt_galena_ore",
@@ -10,7 +9,6 @@
     "tekora:deepslate_aquamarine_ore",
     "tekora:deepslate_cassiterite_ore",
     "tekora:deepslate_chromite_ore",
-    "tekora:deepslate_fluorite_ore",
     "tekora:deepslate_garnet_ore",
     "tekora:deepslate_pentlandite_ore",
     "tekora:deepslate_ruby_ore",
@@ -30,27 +28,13 @@
     "tekora:apatite_ore",
     "tekora:aquamarine_ore",
     "tekora:chromite_ore",
-    "tekora:fluorite_ore",
     "tekora:garnet_ore",
     "tekora:pentlandite_ore",
-    "tekora:ruby_block",
     "tekora:ruby_ore",
     "tekora:sapphire_ore",
     "tekora:silver_ore",
     "tekora:uraninite_ore",
     "tekora:zircon_ore",
-
-    "tekora:raw_silver_block",
-
-    "tekora:apatite_block",
-    "tekora:aquamarine_block",
-    "tekora:chromite_block",
-    "tekora:fluorite_block",
-    "tekora:garnet_block",
-    "tekora:pentlandite_block",
-    "tekora:sapphire_block",
-    "tekora:uraninite_block",
-    "tekora:zircon_block",
 
     "tekora:aluminum_block",
     "tekora:antimony_block",
@@ -109,6 +93,9 @@
     "tekora:ytterbium_block",
     "tekora:yttrium_block",
     "tekora:zinc_block",
-    "tekora:zirconium_block"
+    "tekora:zirconium_block",
+
+    "tekora:alloy_furnace",
+    "tekora:infusion_furnace"
   ]
 }

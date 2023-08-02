@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ThoriumAxe extends AxeItem implements RadioactiveTools {
     public ThoriumAxe() {
-        super(ModTiers.THORIUM, 6.0f, -3.0f, new Item.Properties().fireResistant().tab(CreativeModeTab.TAB_TOOLS));
+        super(ModTiers.THORIUM, 6.0f, -3.0f, new Item.Properties().fireResistant());
     }
 
     @Override

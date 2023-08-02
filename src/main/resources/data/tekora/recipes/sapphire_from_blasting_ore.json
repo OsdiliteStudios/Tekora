@@ -4,7 +4,7 @@
   "experience": 1.0,
   "group": "sapphire",
   "ingredient": {
-    "item": "tekora:sapphire_ore"
+    "tag": "forge:ores/sapphire"
   },
   "result": "tekora:sapphire"
 }

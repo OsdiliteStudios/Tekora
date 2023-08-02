@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "bronze",
+  "ingredient": {
+    "tag": "forge:dusts/bronze"
+  },
+  "result": "tekora:bronze_ingot"
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "0": {
+      "tag": "forge:rods/wooden"
+    },
+    "1": {
+      "item": "tekora:boron_piece"
+    }
+  },
+  "pattern": [
+    "11 ",
+    "10 ",
+    " 0 "
+  ],
+  "result": {
+    "item": "tekora:boron_axe"
+  }
+}

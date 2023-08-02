@@ -4,7 +4,7 @@
   "experience": 1.0,
   "group": "aquamarine",
   "ingredient": {
-    "item": "tekora:aquamarine_ore"
+    "tag": "forge:ores/aquamarine"
   },
   "result": "tekora:aquamarine"
 }

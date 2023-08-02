@@ -5,72 +5,66 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.nukollodda.tekora.item.ModItems;
+import net.nukollodda.tekora.block.entity.entities.types.AbstractTekoraFurnaceEntity;
 import net.nukollodda.tekora.menu.AlloyFurnaceMenu;
+import net.nukollodda.tekora.recipes.AlloyingRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 
-public class AlloyFurnaceEntity extends BlockEntity implements MenuProvider {
+
+public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
     private final ItemStackHandler itemHandler = new ItemStackHandler(5) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged(); // if a change happens to this block, the block gets reloaded
         }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return switch (slot) { // temporary
+                case 0 -> FurnaceBlockEntity.isFuel(stack);
+                case 1, 2, 3 -> true;
+                case 4 -> false;
+                default -> super.isItemValid(slot, stack);
+            };
+        }
     };
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
-    protected final ContainerData data; // this data is being sent to the menu
-    private int progress = 0;
-    private int maxProgress = 45;
+
+    /*
+    * "north" is always going to be the away side
+    * "south" is always going to be the side facing the player
+    * "east" is always the right
+    * "west" is always the left
+    *
+    * the second statement always determines whether we can or can't extract from a certain slot
+    */
 
     public AlloyFurnaceEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.ALLOY_FURNACE.get(), pos, blockState);
-        this.data = new ContainerData() {
-            @Override
-            public int get(int pIndex) {
-                return switch (pIndex) { // returns the progress
-                    case 0 -> AlloyFurnaceEntity.this.progress;
-                    case 1 -> AlloyFurnaceEntity.this.maxProgress;
-                    default -> 0;
-                };
-            }
-
-            @Override
-            public void set(int pIndex, int pValue) {
-                switch (pIndex) { // sets progress values
-                    case 0 -> AlloyFurnaceEntity.this.progress = pValue;
-                    case 1 -> AlloyFurnaceEntity.this.maxProgress = pValue;
-                };
-
-            }
-
-            @Override
-            public int getCount() {
-                return 5;
-            }
-        };
+        super(ModBlockEntities.ALLOY_FURNACE.get(), pos, blockState, 5);
     }
 
     @Override
     public Component getDisplayName() {
-        return Component.literal("Alloy Furnace");
+        return Component.translatable("block.tekora.alloy_furnace");
     }
 
     @Nullable
@@ -84,7 +78,6 @@ public class AlloyFurnaceEntity extends BlockEntity implements MenuProvider {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return lazyItemHandler.cast();
         }
-
         return super.getCapability(cap, side);
     }
 
@@ -101,14 +94,15 @@ public class AlloyFurnaceEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        tag.put("inventory", itemHandler.serializeNBT());
-        super.saveAdditional(tag);
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        itemHandler.deserializeNBT(tag.getCompound("inventory"));
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void saveAdditional(CompoundTag tag) {
+        tag.put("inventory", itemHandler.serializeNBT());
+        super.saveAdditional(tag);
     }
 
     public void drops() {
@@ -120,65 +114,71 @@ public class AlloyFurnaceEntity extends BlockEntity implements MenuProvider {
 
         Containers.dropContents(this.level, this.worldPosition, inv);
     }
-
     public static void tick(Level level, BlockPos pos, BlockState state, AlloyFurnaceEntity entity) {
         if (level.isClientSide()) {
             return;
         } // if a recipe exists, the tick does something
 
-        if (hasRecipe(entity)) {
-            entity.progress++;
+        ItemStack itemFuel = new ItemStack(entity.itemHandler.getStackInSlot(0).getItem());
+
+        if (entity.fuel > 0)
+            entity.fuel--;
+
+        if (entity.hasRecipe()) {
+            if (FurnaceBlockEntity.isFuel(itemFuel) && entity.fuel == 0) {
+                entity.maxFuel = ForgeHooks.getBurnTime(itemFuel, RecipeType.BLASTING);
+                entity.fuel = entity.maxFuel;
+                entity.itemHandler.extractItem(0, 1, false);
+            }
+
+            if (entity.fuel > 0) {
+                entity.progress++;
+            }
             setChanged(level, pos, state);
 
             if (entity.progress > entity.maxProgress) { // crafts the item
-                craftItem(entity);
+                entity.craftItem();
             }
+
         } else {
             entity.resetProgress();
             setChanged(level, pos, state);
         }
     }
 
-    private void resetProgress() {
-        this.progress = 0;
-    }
-
-    private static void craftItem(AlloyFurnaceEntity entity) { // extracts one of the ingrediants
-        if (hasRecipe(entity)) {
-            entity.itemHandler.extractItem(1,1, false); // checks the slots to make sure
-            // slot organization, slot 1 = coal input, slot 2-4 = item inputs, slot 5 = output, for the electric variant, slot 1 = residue
-            entity.itemHandler.setStackInSlot(2, new ItemStack(ModItems.GRAPHITE_DUST.get(),
-                    entity.itemHandler.getStackInSlot(2).getCount() + 1));
-
-            entity.resetProgress();
-        }
-    }
-
-    private static boolean hasRecipe(AlloyFurnaceEntity entity) {
-        SimpleContainer inv = new SimpleContainer(entity.itemHandler.getSlots()); // makes an inventory from the block
-        for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
-            inv.setItem(i, entity.itemHandler.getStackInSlot(i));
+    protected void craftItem() { // extracts one of the ingredients
+        Level level = this.level;
+        SimpleContainer inv = new SimpleContainer(this.itemHandler.getSlots());
+        for (int i = 0; i < this.itemHandler.getSlots(); i++) {
+            inv.setItem(i, this.itemHandler.getStackInSlot(i));
         }
 
-        boolean hasIngred = true; // if the recipe was shaped, there'd be only one variable
-        for (int i = 0; i < entity.itemHandler.getSlots(); i++) { // the i value and max will change as a result of there only being 3 input slots
-            if (entity.itemHandler.getStackInSlot(i).getItem() != ModItems.GRAPHITE_DUST.get() ||
-                    entity.itemHandler.getStackInSlot(i).getItem() != Items.IRON_INGOT) {
-                hasIngred = false;
-                break;
+        Optional<AlloyingRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(AlloyingRecipe.Type.INSTANCE, inv, level);
+
+        if (this.hasRecipe()) {
+            for (int i = 1; i < this.itemHandler.getSlots(); i++) {
+                this.itemHandler.extractItem(i, 1, false);
             }
+            // slot organization, slot 0 = coal input, slot 1-2 = item inputs, slot 3 = output, for the electric variant, slot 1 = residue
+            this.itemHandler.setStackInSlot(this.containerSize - 1, new ItemStack(recipe.get().getResultItem(level.registryAccess()).getItem(),
+                    this.itemHandler.getStackInSlot(this.containerSize - 1).getCount() + recipe.get().getResultItem(level.registryAccess()).getCount())); // the 1 needs to be replaced by the count
+
+            this.resetProgress();
+        }
+    }
+
+    protected boolean hasRecipe() {
+        Level level = this.level;
+        SimpleContainer inv = new SimpleContainer(this.itemHandler.getSlots()); // makes an inventory from the block
+        for (int i = 0; i < this.itemHandler.getSlots(); i++) {
+            inv.setItem(i, this.itemHandler.getStackInSlot(i));
         }
 
-        return hasIngred && canInsertAmountIntoOutputSlot(inv) &&
-                canInsertItemIntoOutputSlot(inv, new ItemStack(ModItems.STEEL_INGOT.get(), 1));
-    }
+        Optional<AlloyingRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(AlloyingRecipe.Type.INSTANCE, inv, level);
 
-    private static boolean canInsertItemIntoOutputSlot(SimpleContainer inv, ItemStack stack) { // getItem() returns the slot number
-        return inv.getItem(2).getItem() == stack.getItem() || inv.getItem(2).isEmpty();
+        return recipe.isPresent() && this.canInsertAmountIntoOutputSlot(inv) &&
+                this.canInsertItemIntoOutputSlot(inv, recipe.get().getResultItem(level.registryAccess()));
     }
-
-    private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inv) { // make it so items cap out at 64
-        return inv.getItem(2).getMaxStackSize() > inv.getItem(2).getCount();
-    }
-
 }

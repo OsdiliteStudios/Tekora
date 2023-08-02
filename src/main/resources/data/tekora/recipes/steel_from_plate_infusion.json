@@ -1,0 +1,16 @@
+{
+  "type": "tekora:infusion",
+  "ingredients": [
+    {
+      "tag": "forge:plates/iron"
+    },
+    {
+      "item": "minecraft:coal",
+      "count": 3
+    }
+  ],
+  "output": {
+    "count": 1,
+    "item": "tekora:steel_plate"
+  }
+}

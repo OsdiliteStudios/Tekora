@@ -4,7 +4,7 @@
     "experience": 1.0,
     "group": "arsenic",
     "ingredient": {
-      "item": "tekora:orpiment"
+      "tag": "forge:gems/orpiment"
     },
     "result": "tekora:arsenic_piece"
   }

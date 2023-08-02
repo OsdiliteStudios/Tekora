@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "tekora:lutetium_block"
+      "tag": "forge:storage_blocks/lutetium"
     }
   ],
   "result": {

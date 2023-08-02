@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:tools/hammer"
+    },
+    {
+      "tag": "forge:dusts/hsla_steel"
+    }
+  ],
+  "result": {
+    "item": "tekora:hsla_steel_plate"
+  }
+}

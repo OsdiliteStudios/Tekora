@@ -1,7 +1,7 @@
 package net.nukollodda.tekora.menu;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -23,29 +23,36 @@ public class AlloyFurnaceScreen extends AbstractContainerScreen<AlloyFurnaceMenu
     }
 
     @Override
-    protected void renderBg(PoseStack stack, float partialTick, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics pGraphics, float partialTick, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0f,1.0f,1.0f,1.0f);
         RenderSystem.setShaderTexture(0, TEXTURE);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        this.blit(stack, x, y, 0, 0, imageWidth, imageHeight); // renders texture
+        pGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight); // renders texture
 
-        renderProgressArrow(stack, x, y);
+        renderProgressArrow(pGraphics, x, y);
+        renderFuelAmount(pGraphics, x, y);
     }
 
-    private void renderProgressArrow(PoseStack stack, int x, int y) {
+    private void renderProgressArrow(GuiGraphics pGraphics, int x, int y) {
         if (menu.isCrafting()) {
-            blit(stack, x + 88, y + 35, 176, 14, menu.getScaledProgress(), 17);
+            pGraphics.blit(TEXTURE, x + 79, y + 27, 176, 12, menu.getScaledProgress(), 17);
             // var 2 & 3 determines pos, var 4 && 5 determines rendered item pos, var 6 & 7 determines size of rendered item
         }
     }
 
+    private void renderFuelAmount(GuiGraphics pGraphics, int x, int y) {
+        pGraphics.blit(TEXTURE, x + 100, y + 55 + (14 - menu.getFuelAmt()), 176, 14 - menu.getFuelAmt(), 14, menu.getFuelAmt());
+    }
+
     @Override
-    public void render(PoseStack stack, int pMouseX, int pMouseY, float pPartialTick) {
-        renderBackground(stack);
-        super.render(stack, pMouseX, pMouseY, pPartialTick);
-        renderTooltip(stack, pMouseX, pMouseY);
+    public void render(GuiGraphics pGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        renderBackground(pGraphics);
+        super.render(pGraphics, pMouseX, pMouseY, pPartialTick);
+        renderTooltip(pGraphics, pMouseX, pMouseY);
     }
 }
+
+

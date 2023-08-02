@@ -1,5 +1,5 @@
 
-package net.nukollodda.tekora.block.custom;
+package net.nukollodda.tekora.block.entity;
 
 import net.minecraft.world.level.block.Block;
 

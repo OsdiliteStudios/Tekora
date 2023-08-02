@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "tekora:copper_steel",
+    "#forge:dusts/copper_steel",
+    "#forge:plates/copper_steel"
+  ]
+}

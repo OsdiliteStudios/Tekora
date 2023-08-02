@@ -4,7 +4,7 @@
   "experience": 1.0,
   "group": "ruby",
   "ingredient": {
-    "item": "tekora:ruby_ore"
+    "tag": "forge:ores/ruby"
   },
   "result": "tekora:ruby"
 }

@@ -9,7 +9,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.ModBlocks;
-import net.nukollodda.tekora.item.ModItems;
 
 public class ModFluids {
     public static final DeferredRegister<Fluid> FLUIDS =

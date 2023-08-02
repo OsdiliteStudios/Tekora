@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "tekora:bismuth_block"
+      "tag": "forge:storage_blocks/bismuth"
     }
   ],
   "result": {

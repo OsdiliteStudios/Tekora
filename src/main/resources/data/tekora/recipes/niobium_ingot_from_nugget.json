@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:niobium_nugget"
+      "tag": "forge:nuggets/niobium"
     }
   },
   "pattern": [

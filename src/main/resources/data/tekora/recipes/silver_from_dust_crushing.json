@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/silver"
+    }
+  ],
+  "output": {
+    "item": "tekora:silver_plate"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/tungsten_carbide"
+    },
+    {
+      "tag": "forge:iron"
+    }
+  ],
+  "output": {
+    "item": "tekora:tungsten_steel_ingot",
+    "count": 2
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/reactor_steel"
+    }
+  ],
+  "output": {
+    "item": "tekora:reactor_steel_plate"
+  }
+}

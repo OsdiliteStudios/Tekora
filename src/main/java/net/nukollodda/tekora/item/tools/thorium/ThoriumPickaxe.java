@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ThoriumPickaxe extends PickaxeItem implements RadioactiveTools {
     public ThoriumPickaxe() {
-        super(ModTiers.THORIUM, 1, -2.8f, new Item.Properties().fireResistant().tab(CreativeModeTab.TAB_TOOLS));
+        super(ModTiers.THORIUM, 1, -2.8f, new Item.Properties().fireResistant());
     }
 
     @Override

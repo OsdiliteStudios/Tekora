@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/thorium"
+    }
+  ],
+  "output": {
+    "item": "tekora:thorium_plate"
+  }
+}

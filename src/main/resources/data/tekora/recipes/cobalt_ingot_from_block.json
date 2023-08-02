@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "tekora:cobalt_block"
+      "tag": "forge:storage_blocks/cobalt"
     }
   ],
   "result": {

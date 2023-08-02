@@ -1,0 +1,20 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:nickel",
+      "count": 2
+    },
+    {
+      "tag": "forge:nuggets/iron",
+      "count": 6
+    },
+    {
+      "tag": "forge:nuggets/copper",
+      "count": 3
+    }
+  ],
+  "output": {
+    "item": "tekora:mu_metal_ingot"
+  }
+}

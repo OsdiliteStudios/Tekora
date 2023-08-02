@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:sodium_nugget"
+      "tag": "forge:nuggets/sodium"
     }
   },
   "pattern": [

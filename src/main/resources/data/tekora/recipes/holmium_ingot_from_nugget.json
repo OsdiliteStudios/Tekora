@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:holmium_nugget"
+      "tag": "forge:nuggets/holmium"
     }
   },
   "pattern": [

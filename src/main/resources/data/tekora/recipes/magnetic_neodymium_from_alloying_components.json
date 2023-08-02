@@ -1,0 +1,17 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:iron"
+    },
+    {
+      "item": "tekora:boron_piece"
+    },
+    {
+      "tag": "forge:nuggets/neodymium"
+    }
+  ],
+  "output": {
+    "item": "tekora:magnetic_neodymium_ingot"
+  }
+}

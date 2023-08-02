@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/platinum"
+    }
+  ],
+  "output": {
+    "item": "tekora:platinum_plate"
+  }
+}

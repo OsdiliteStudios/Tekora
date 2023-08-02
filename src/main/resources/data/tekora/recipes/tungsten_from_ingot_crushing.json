@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/tungsten"
+    }
+  ],
+  "output": {
+    "item": "tekora:tungsten_plate"
+  }
+}

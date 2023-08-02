@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "tekora:hafnium_block"
+      "tag": "forge:storage_blocks/hafnium"
     }
   ],
   "result": {

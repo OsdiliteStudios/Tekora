@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "lutetium",
+  "ingredient": {
+    "tag": "forge:dusts/lutetium"
+  },
+  "result": "tekora:lutetium_ingot"
+}

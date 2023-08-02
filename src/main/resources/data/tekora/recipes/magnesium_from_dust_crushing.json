@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/magnesium"
+    }
+  ],
+  "output": {
+    "item": "tekora:magnesium_plate"
+  }
+}

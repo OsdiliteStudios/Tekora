@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "item": "tekora:iodine_bar"
+    }
+  ],
+  "output": {
+    "item": "tekora:iodine_dust"
+  }
+}

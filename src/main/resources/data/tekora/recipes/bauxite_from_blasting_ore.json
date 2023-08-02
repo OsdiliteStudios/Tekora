@@ -4,7 +4,7 @@
   "experience": 1.0,
   "group": "bauxite",
   "ingredient": {
-    "item": "tekora:bauxite_ore"
+    "tag": "forge:ores/bauxite"
   },
   "result": "tekora:bauxite"
 }

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "tag": "forge:tungsten_steel"
+  },
+  "base": {
+    "item": "tekora:steel_hoe"
+  },
+  "result": {
+    "item": "tekora:tungsten_steel_hoe"
+  }
+}

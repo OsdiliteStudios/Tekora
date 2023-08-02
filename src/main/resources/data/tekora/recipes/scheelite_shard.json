@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "item": "tekora:scheelite"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "item": "tekora:scheelite_shard"
+    }
+  }

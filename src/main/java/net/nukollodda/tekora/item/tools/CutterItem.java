@@ -1,2 +1,4 @@
-package net.nukollodda.tekora.item.tools;public class Cutters {
+package net.nukollodda.tekora.item.tools;
+
+public class CutterItem {
 }

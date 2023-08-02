@@ -1,0 +1,16 @@
+{
+  "type": "tekora:alloying",
+  "ingredients": [
+    {
+      "tag": "forge:copper"
+    },
+    {
+      "tag": "forge:tin",
+      "count": 3
+    }
+  ],
+  "output": {
+    "item": "tekora:bronze_ingot",
+    "count": 2
+  }
+}

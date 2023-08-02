@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "terbium",
+  "ingredient": {
+    "tag": "forge:dusts/terbium"
+  },
+  "result": "tekora:terbium_ingot"
+}

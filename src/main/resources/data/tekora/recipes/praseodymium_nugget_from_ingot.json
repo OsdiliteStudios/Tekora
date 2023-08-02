@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/praseodymium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:praseodymium_nugget"
+  }
+}

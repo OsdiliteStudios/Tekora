@@ -1,0 +1,15 @@
+{
+  "type": "tekora:infusion",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/iron"
+    },
+    {
+      "item": "tekora:boron_piece"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "item": "tekora:ferroboron_ingot"
+  }
+}

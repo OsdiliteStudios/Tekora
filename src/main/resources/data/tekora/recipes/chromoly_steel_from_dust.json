@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "chromoly_steel",
+  "ingredient": {
+    "tag": "forge:dusts/chromoly_steel"
+  },
+  "result": "tekora:chromoly_steel_ingot"
+}

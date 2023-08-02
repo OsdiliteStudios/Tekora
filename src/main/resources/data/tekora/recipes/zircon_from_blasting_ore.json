@@ -4,7 +4,7 @@
   "experience": 1.0,
   "group": "zircon",
   "ingredient": {
-    "item": "tekora:zircon_ore"
+    "tag": "forge:ores/zircon"
   },
   "result": "tekora:zircon"
 }

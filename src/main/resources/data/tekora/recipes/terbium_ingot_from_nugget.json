@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:terbium_nugget"
+      "tag": "forge:nuggets/terbium"
     }
   },
   "pattern": [

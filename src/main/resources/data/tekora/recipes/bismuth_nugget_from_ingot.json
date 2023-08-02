@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/bismuth"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:bismuth_nugget"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/galvanized_steel"
+    }
+  ],
+  "output": {
+    "item": "tekora:galvanized_steel_plate"
+  }
+}

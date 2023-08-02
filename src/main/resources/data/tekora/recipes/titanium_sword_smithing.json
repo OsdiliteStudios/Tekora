@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "tag": "forge:titanium"
+  },
+  "base": {
+    "item": "tekora:steel_sword"
+  },
+  "result": {
+    "item": "tekora:titanium_sword"
+  }
+}

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "tekora:uranium_block"
+      "tag": "forge:storage_blocks/uranium"
     }
   ],
   "result": {

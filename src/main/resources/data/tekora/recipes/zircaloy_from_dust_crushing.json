@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/zircaloy"
+    }
+  ],
+  "output": {
+    "item": "tekora:zircaloy_plate"
+  }
+}

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "tekora:thallium_nugget"
+      "tag": "forge:nuggets/thallium"
     }
   },
   "pattern": [

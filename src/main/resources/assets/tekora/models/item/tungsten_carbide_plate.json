@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "tekora:item/tungsten_carbide_plate"
+  }
+}

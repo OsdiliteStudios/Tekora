@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/copper"
+    }
+  ],
+  "output": {
+    "item": "tekora:copper_plate"
+  }
+}

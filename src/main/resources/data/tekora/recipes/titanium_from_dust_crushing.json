@@ -1,0 +1,11 @@
+{
+  "type": "tekora:crushing",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/titanium"
+    }
+  ],
+  "output": {
+    "item": "tekora:titanium_plate"
+  }
+}

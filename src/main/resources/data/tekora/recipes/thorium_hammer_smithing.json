@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "tag": "forge:thorium"
+  },
+  "base": {
+    "item": "tekora:diamond_hammer"
+  },
+  "result": {
+    "item": "tekora:thorium_hammer"
+  }
+}

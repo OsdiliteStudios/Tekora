@@ -4,17 +4,17 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.nukollodda.tekora.item.tools.RadioactiveTools;
-import net.nukollodda.tekora.tiers.ModTiers;
+import net.nukollodda.tekora.item.RadioactiveItems;
+import net.nukollodda.tekora.item.isotopic.radioactive.Thorium;
+import net.nukollodda.tekora.tiers.TekoraTiers;
 import org.jetbrains.annotations.NotNull;
 
-public class ThoriumHoe extends HoeItem implements RadioactiveTools {
+public class ThoriumHoe extends HoeItem implements RadioactiveItems {
     public ThoriumHoe() {
-        super(ModTiers.THORIUM, -3, 0, new Item.Properties().fireResistant());
+        super(TekoraTiers.THORIUM, -3, 0, new Item.Properties().fireResistant());
     }
 
     @Override
@@ -29,4 +29,10 @@ public class ThoriumHoe extends HoeItem implements RadioactiveTools {
         return true;
     } // note, there needs to be code that would also make the soil grow poisonous variants of food instead of the regular,
       // maybe this could be re-added in BioTekora
+
+
+    @Override
+    public double getRadiation() {
+        return Thorium.Isotopes.TH232.getRadiationVal();
+    }
 }

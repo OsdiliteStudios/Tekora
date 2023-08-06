@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "tekora:block/electric_infusion_furnace_front",
+    "side": "tekora:block/electric_furnace_side",
+    "top": "tekora:block/electric_furnace_top",
+    "bottom": "tekora:block/electric_furnace_bottom"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "facing=north": { "model":  "tekora:block/electric_infusion_furnace" },
+    "facing=east": {
+      "model":  "tekora:block/electric_infusion_furnace",
+      "y": 90
+    },
+    "facing=south": {
+      "model":  "tekora:block/electric_infusion_furnace",
+      "y": 180
+    },
+    "facing=west": {
+      "model":  "tekora:block/electric_infusion_furnace",
+      "y": 270
+    }
+  }
+}

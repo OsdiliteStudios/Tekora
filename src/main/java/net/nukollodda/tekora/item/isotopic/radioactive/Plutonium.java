@@ -21,7 +21,7 @@ public class Plutonium extends AbstractRadioactiveItem {
     }
 
     @Override
-    public void readData() {
+    public void readData(CompoundTag pTag) {
 
     }
 
@@ -56,9 +56,9 @@ public class Plutonium extends AbstractRadioactiveItem {
     }
 
     public enum Isotopes implements AbstractRadioactiveItem.Isotopes {
-        PU240(0, 0.000108, 0.01, 0.08, 20f, 971f, Americium.Isotopes.AM241),
-        PU239(1, 0.000292, 0.62, 0.01, 2168.9f, 0, PU240),
-        PU238(2, 0.008, 0.5, 0.01, 1000f, 0, PU239);
+        PU240(0, 108, 0.01, 0.08, 20f, 971f, Americium.Isotopes.AM241),
+        PU239(1, 292, 0.62, 0.01, 2168.9f, 0, PU240),
+        PU238(2, 8000, 0.5, 0.01, 1000f, 0, PU239);
 
         private final int id;
         private final double radiationVal;
@@ -108,8 +108,7 @@ public class Plutonium extends AbstractRadioactiveItem {
             return postAbsorptionIsotope;
         }
 
-        @Override
-        public AbstractIsotopicItem.Isotopes getIsotopeById(int id) {
+        public static AbstractRadioactiveItem.Isotopes getIsotopeById(int id) {
             return switch (id) {
                 case 0 -> PU240;
                 case 2 -> PU238;

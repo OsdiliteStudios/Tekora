@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "discard_chance_on_air_exposure": 0.3,
+    "size": 9,
+    "targets": [
+      {
+        "state": {
+          "Name": "tekora:epsomite_block"
+        },
+        "target": {
+          "block": "minecraft:sand",
+          "predicate_type": "minecraft:block_match"
+        }
+      },      {
+        "state": {
+          "Name": "tekora:epsomite_block"
+        },
+        "target": {
+          "block": "minecraft:gravel",
+          "predicate_type": "minecraft:block_match"
+        }
+      },
+      {
+        "state": {
+          "Name": "tekora:epsomite_block"
+        },
+        "target": {
+          "block": "minecraft:dirt",
+          "predicate_type": "minecraft:block_match"
+        }
+      }
+    ]
+  }
+}

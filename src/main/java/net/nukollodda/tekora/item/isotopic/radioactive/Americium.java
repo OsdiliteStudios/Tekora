@@ -21,7 +21,7 @@ public class Americium extends AbstractRadioactiveItem {
     }
 
     @Override
-    public void readData() {
+    public void readData(CompoundTag pTag) {
 
     }
 
@@ -56,7 +56,7 @@ public class Americium extends AbstractRadioactiveItem {
     }
 
     public enum Isotopes implements AbstractRadioactiveItem.Isotopes {
-        AM241(0, 0, 0, 0, 0, 0, Plutonium.Isotopes.PU238);
+        AM241(0, 2000, 0, 0, 0, 0, Plutonium.Isotopes.PU238);
 
         private final int id;
         private final double radiationVal;
@@ -103,11 +103,6 @@ public class Americium extends AbstractRadioactiveItem {
         @Override
         public float getNeutronAbsorptionEnergy() {
             return neutronAbsorptionEnergy;
-        }
-
-        @Override
-        public AbstractIsotopicItem.Isotopes getIsotopeById(int id) {
-            return AM241;
         }
 
         @Override

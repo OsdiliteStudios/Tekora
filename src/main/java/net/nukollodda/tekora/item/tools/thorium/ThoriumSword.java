@@ -4,17 +4,17 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
-import net.nukollodda.tekora.item.tools.RadioactiveTools;
-import net.nukollodda.tekora.tiers.ModTiers;
+import net.nukollodda.tekora.item.RadioactiveItems;
+import net.nukollodda.tekora.item.isotopic.radioactive.Thorium;
+import net.nukollodda.tekora.tiers.TekoraTiers;
 import org.jetbrains.annotations.NotNull;
 
-public class ThoriumSword extends SwordItem implements RadioactiveTools {
+public class ThoriumSword extends SwordItem implements RadioactiveItems {
     public ThoriumSword() {
-        super(ModTiers.THORIUM, 3, -2.4f, new Item.Properties().fireResistant());
+        super(TekoraTiers.THORIUM, 3, -2.4f, new Item.Properties().fireResistant());
     }
 
     @Override
@@ -27,5 +27,10 @@ public class ThoriumSword extends SwordItem implements RadioactiveTools {
         pTarget.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 3000, 2, true, false, false));
         pTarget.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 3000, 2, true, false, false));
         return true;
+    }
+
+    @Override
+    public double getRadiation() {
+        return Thorium.Isotopes.TH232.getRadiationVal();
     }
 }

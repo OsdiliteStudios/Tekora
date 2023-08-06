@@ -4,17 +4,17 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
-import net.nukollodda.tekora.item.tools.RadioactiveTools;
-import net.nukollodda.tekora.tiers.ModTiers;
+import net.nukollodda.tekora.item.RadioactiveItems;
+import net.nukollodda.tekora.item.isotopic.radioactive.Thorium;
+import net.nukollodda.tekora.tiers.TekoraTiers;
 import org.jetbrains.annotations.NotNull;
 
-public class ThoriumPickaxe extends PickaxeItem implements RadioactiveTools {
+public class ThoriumPickaxe extends PickaxeItem implements RadioactiveItems {
     public ThoriumPickaxe() {
-        super(ModTiers.THORIUM, 1, -2.8f, new Item.Properties().fireResistant());
+        super(TekoraTiers.THORIUM, 1, -2.8f, new Item.Properties().fireResistant());
     }
 
     @Override
@@ -27,5 +27,10 @@ public class ThoriumPickaxe extends PickaxeItem implements RadioactiveTools {
         pTarget.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 1500, 0, true, false, false));
         pTarget.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 1500, 0, true, false, false));
         return true;
+    }
+
+    @Override
+    public double getRadiation() {
+        return Thorium.Isotopes.TH232.getRadiationVal();
     }
 }

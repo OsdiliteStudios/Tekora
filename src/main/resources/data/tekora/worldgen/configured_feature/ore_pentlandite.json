@@ -1,0 +1,52 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "discard_chance_on_air_exposure": 0.5,
+    "size": 16,
+    "targets": [
+      {
+        "state": {
+          "Name": "tekora:smooth_basalt_pentlandite_ore"
+        },
+        "target": {
+          "block": "minecraft:smooth_basalt",
+          "predicate_type": "minecraft:block_match"
+        }
+      },      {
+        "state": {
+          "Name": "tekora:granite_pentlandite_ore"
+        },
+        "target": {
+          "block": "minecraft:granite",
+          "predicate_type": "minecraft:block_match"
+        }
+      },      {
+        "state": {
+          "Name": "tekora:tuff_pentlandite_ore"
+        },
+        "target": {
+          "block": "minecraft:tuff",
+          "predicate_type": "minecraft:block_match"
+        }
+      },
+      {
+        "state": {
+          "Name": "tekora:pentlandite_ore"
+        },
+        "target": {
+          "block": "minecraft:stone",
+          "predicate_type": "minecraft:block_match"
+        }
+      },
+      {
+        "state": {
+          "Name": "tekora:deesplate_pentlandite_ore"
+        },
+        "target": {
+          "block": "minecraft:deepslate",
+          "predicate_type": "minecraft:block_match"
+        }
+      }
+    ]
+  }
+}

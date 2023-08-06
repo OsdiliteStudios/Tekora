@@ -3,6 +3,8 @@ package net.nukollodda.tekora.item.isotopic.radioactive;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.nukollodda.tekora.item.isotopic.AbstractIsotopicItem;
+import net.nukollodda.tekora.item.typical.CompoundItem;
+import net.nukollodda.tekora.item.typical.Compounds;
 
 public class Protactinium extends AbstractRadioactiveItem {
     private int[] isotopeRatio;
@@ -12,16 +14,6 @@ public class Protactinium extends AbstractRadioactiveItem {
 
     public static AbstractRadioactiveItem.Isotopes[] getIsotopeList() {
         return new AbstractRadioactiveItem.Isotopes[]{Isotopes.PA231};
-    }
-
-    @Override
-    public void saveData(CompoundTag pTag) {
-
-    }
-
-    @Override
-    public void readData() {
-
     }
 
     @Override
@@ -58,7 +50,7 @@ public class Protactinium extends AbstractRadioactiveItem {
 
         @Override
         public double getRadiationVal() {
-            return 0.000021;
+            return 21;
         }
 
         @Override
@@ -79,11 +71,6 @@ public class Protactinium extends AbstractRadioactiveItem {
         @Override
         public float getNeutronAbsorptionEnergy() {
             return 4913f;
-        }
-
-        @Override
-        public AbstractIsotopicItem.Isotopes getIsotopeById(int id) {
-            return PA231;
         }
 
         @Override
@@ -109,16 +96,29 @@ public class Protactinium extends AbstractRadioactiveItem {
         }
     }
 
-    public static class CompoundDust extends Protactinium {
+    public static class CompoundDust extends Protactinium implements Compounds {
 
         private final Item decayItem;
+        private final CompoundItem.Cations cation = CompoundItem.Cations.PROTACTINIUM;
+        private final CompoundItem.Anions anion;
 
-        public CompoundDust(Item item) {
+        public CompoundDust(Item item, CompoundItem.Anions anions) {
             this.decayItem = item;
+            this.anion = anions;
         }
 
         public Item getDecayItem() {
             return decayItem;
+        }
+
+        @Override
+        public CompoundItem.Cations getCation() {
+            return cation;
+        }
+
+        @Override
+        public CompoundItem.Anions getAnion() {
+            return anion;
         }
     }
 }

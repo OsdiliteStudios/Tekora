@@ -1,7 +1,7 @@
 package net.nukollodda.tekora.item.isotopic;
 
 import net.minecraft.world.item.Item;
-import net.nukollodda.tekora.item.ModItems;
+import net.nukollodda.tekora.item.TekoraItems;
 
 public class Lithium extends AbstractIsotopicItem {
     public Lithium() {
@@ -34,7 +34,7 @@ public class Lithium extends AbstractIsotopicItem {
     }
 
     public Item getPostAbsorptionIsotopes() {
-        return ModItems.BERYLLIUM_DUST.get();
+        return TekoraItems.BERYLLIUM_DUST.get();
     }
 
     public enum Isotopes implements AbstractIsotopicItem.Isotopes {
@@ -79,8 +79,7 @@ public class Lithium extends AbstractIsotopicItem {
             return neutronAbsorptionEnergy;
         }
 
-        @Override
-        public AbstractIsotopicItem.Isotopes getIsotopeById(int id) {
+        public static AbstractIsotopicItem.Isotopes getIsotopeById(int id) {
             return id == 1 ? LI6 : LI7;
         }
     }

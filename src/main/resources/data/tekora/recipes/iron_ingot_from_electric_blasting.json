@@ -1,0 +1,11 @@
+{
+  "type": "tekora:blasting",
+  "ingredients": [
+    {
+      "tag": "forge:ores/iron"
+    }
+  ],
+  "output": {
+    "item": "minecraft:iron_ingot"
+  }
+}

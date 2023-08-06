@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "features": "tekora:salt_salt",
+  "biomes": "#forge:is_water",
+  "step": "top_layer_modification"
+}

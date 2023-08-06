@@ -1,8 +1,16 @@
 package net.nukollodda.tekora.item.isotopic.radioactive;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.nukollodda.tekora.item.isotopic.AbstractIsotopicItem;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class Thorium extends AbstractRadioactiveItem {
     private int[] isotopeRatio;
@@ -15,38 +23,36 @@ public class Thorium extends AbstractRadioactiveItem {
     }
 
     @Override
-    public void saveData(CompoundTag pTag) {
-
-    }
-
-    @Override
-    public void readData() {
-
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        pTooltipComponents.add(Component.translatable("msg.tekora.rad"));
+        pTooltipComponents.add(Component.literal(AbstractRadioactiveItem.formatRad(getRadiation()))
+                .withStyle(AbstractRadioactiveItem.radColor(getRadiation())));
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
     @Override
     public double getRadiation() {
-        return 0;
+        return Isotopes.TH232.getRadiationVal();
     }
 
     @Override
     public double getFissionRate() {
-        return 0;
+        return Isotopes.TH232.getFissionRate();
     }
 
     @Override
     public double getNeutronAbsorptionRate() {
-        return 0;
+        return Isotopes.TH232.getNeutronAbsorptionRate();
     }
 
     @Override
     public float getFissionEnergy() {
-        return 0;
+        return Isotopes.TH232.getFissionEnergy();
     }
 
     @Override
     public float getNeutronAbsorptionEnergy() {
-        return 0;
+        return Isotopes.TH232.getNeutronAbsorptionEnergy();
     }
 
     public enum Isotopes implements AbstractRadioactiveItem.Isotopes {
@@ -79,11 +85,6 @@ public class Thorium extends AbstractRadioactiveItem {
         @Override
         public float getNeutronAbsorptionEnergy() {
             return 1942f;
-        }
-
-        @Override
-        public AbstractIsotopicItem.Isotopes getIsotopeById(int id) {
-            return TH232;
         }
 
         @Override

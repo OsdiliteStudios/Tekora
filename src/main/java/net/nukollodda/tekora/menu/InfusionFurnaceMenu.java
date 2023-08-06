@@ -9,8 +9,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
-import net.nukollodda.tekora.block.ModBlocks;
-import net.nukollodda.tekora.block.entity.entities.InfusionFurnaceEntity;
+import net.nukollodda.tekora.block.TekoraBlocks;
+import net.nukollodda.tekora.block.entity.entities.machines.InfusionFurnaceEntity;
 
 public class InfusionFurnaceMenu extends AbstractContainerMenu {
     public final InfusionFurnaceEntity blockEnt;
@@ -22,7 +22,7 @@ public class InfusionFurnaceMenu extends AbstractContainerMenu {
     }
 
     public InfusionFurnaceMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.INFUSION_FURNACE_MENU.get(), id);
+        super(TekoraMenuTypes.INFUSION_FURNACE_MENU.get(), id);
         checkContainerSize(inv, 4);
         blockEnt = (InfusionFurnaceEntity) entity;
         this.level = inv.player.level();
@@ -61,13 +61,13 @@ public class InfusionFurnaceMenu extends AbstractContainerMenu {
         return maxFuel != 0 && fuel != 0 ? fuel * fuelSize / maxFuel : 0;
     }
 
-    // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
-    // must assign a slot number to each of the slots used by the GUI.
-    // For this container, we can see both the tile inventory's slots and the player inventory slots and the hotbar.
-    // Each time we add a Slot to the container, it automatically increases the slotIndex, which means
-    //  0 - 8 = hotbar slots (which will map to the InventoryPlayer slot numbers 0 - 8)
-    //  9 - 35 = player inventory slots (which map to the InventoryPlayer slot numbers 9 - 35)
-    //  36 - 44 = TileInventory slots, which map to our TileEntity slot numbers 0 - 8)
+    /** CREDIT GOES TO: <a href="https://github.com/diesieben07/SevenCommons">diesiebend07</a>
+     * must assign a slot number to each of the slots used by the GUI.
+     * For this container, we can see both the tile inventory's slots as well as the player inventory slots and the hotbar.
+     * Each time we add a Slot to the container, it automatically increases the slotIndex, which means
+     *  0 - 8 = hotbar slots (which will map to the InventoryPlayer slot numbers 0 - 8)
+     *  9 - 35 = player inventory slots (which map to the InventoryPlayer slot numbers 9 - 35)
+     * 36 - 44 = TileInventory slots, which map to our TileEntity slot numbers 0 - 8) **/
     private static final int HOTBAR_SLOT_COUNT = 9;
     private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
     private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
@@ -117,7 +117,7 @@ public class InfusionFurnaceMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(level, blockEnt.getBlockPos()),
-                pPlayer, ModBlocks.INFUSION_FURNACE.get());
+                pPlayer, TekoraBlocks.INFUSION_FURNACE.get());
     }
 
     private void addPlayerInventory(Inventory playerInv) {

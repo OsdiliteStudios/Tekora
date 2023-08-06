@@ -15,38 +15,28 @@ public class Neptunium extends AbstractRadioactiveItem {
     }
 
     @Override
-    public void saveData(CompoundTag pTag) {
-
-    }
-
-    @Override
-    public void readData() {
-
-    }
-
-    @Override
     public double getRadiation() {
-        return 0;
+        return Isotopes.NP237.getRadiationVal();
     }
 
     @Override
     public double getFissionRate() {
-        return 0;
+        return Isotopes.NP237.getFissionRate();
     }
 
     @Override
     public double getNeutronAbsorptionRate() {
-        return 0;
+        return Isotopes.NP237.getNeutronAbsorptionRate();
     }
 
     @Override
     public float getFissionEnergy() {
-        return 0;
+        return Isotopes.NP237.getFissionEnergy();
     }
 
     @Override
     public float getNeutronAbsorptionEnergy() {
-        return 0;
+        return Isotopes.NP237.getNeutronAbsorptionEnergy();
     }
 
     public enum Isotopes implements AbstractRadioactiveItem.Isotopes {
@@ -58,7 +48,7 @@ public class Neptunium extends AbstractRadioactiveItem {
 
         @Override
         public double getRadiationVal() {
-            return 0.000003;
+            return 3;
         }
 
         @Override
@@ -79,11 +69,6 @@ public class Neptunium extends AbstractRadioactiveItem {
         @Override
         public float getNeutronAbsorptionEnergy() {
             return 1371f;
-        }
-
-        @Override
-        public AbstractIsotopicItem.Isotopes getIsotopeById(int id) {
-            return NP237;
         }
 
         @Override

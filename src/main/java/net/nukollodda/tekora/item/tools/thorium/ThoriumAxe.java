@@ -5,16 +5,16 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.nukollodda.tekora.item.tools.RadioactiveTools;
-import net.nukollodda.tekora.tiers.ModTiers;
+import net.nukollodda.tekora.item.RadioactiveItems;
+import net.nukollodda.tekora.item.isotopic.radioactive.Thorium;
+import net.nukollodda.tekora.tiers.TekoraTiers;
 import org.jetbrains.annotations.NotNull;
 
-public class ThoriumAxe extends AxeItem implements RadioactiveTools {
+public class ThoriumAxe extends AxeItem implements RadioactiveItems {
     public ThoriumAxe() {
-        super(ModTiers.THORIUM, 6.0f, -3.0f, new Item.Properties().fireResistant());
+        super(TekoraTiers.THORIUM, 6.0f, -3.0f, new Item.Properties().fireResistant());
     }
 
     @Override
@@ -27,5 +27,10 @@ public class ThoriumAxe extends AxeItem implements RadioactiveTools {
         pTarget.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 1500, 1, true, false, false));
         pTarget.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 1500, 1, true, false, false));
         return true;
+    }
+
+    @Override
+    public double getRadiation() {
+        return Thorium.Isotopes.TH232.getRadiationVal();
     }
 }

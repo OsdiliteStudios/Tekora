@@ -392,6 +392,8 @@
   "item.tekora.zinc_nitrate": "Zinc Nitrate Dust",
   "item.tekora.zinc_sulfide": "Zinc Sulfide Dust",
 
+  "item.tekora.residue": "Residue",
+
   "item.tekora.aluminum_dust": "Aluminum Dust",
   "item.tekora.barium_dust": "Barium Dust",
   "item.tekora.beryllium_dust": "Beryllium Dust",
@@ -856,6 +858,8 @@
   "fluid_type.tekora.oxygen_difluoride": "Oxygen Difluoride",
   "fluid_type.tekora.propane": "Propane",
   "fluid_type.tekora.propylene": "Propylene",
-  "fluid_type.tekora.hydrogen_cyanide": "Prussic Acid"
+  "fluid_type.tekora.hydrogen_cyanide": "Prussic Acid",
+  "msg.tekora.isoratio": "Isotope Ratio",
+  "msg.tekora.rad": "Radiation Value"
 
 }

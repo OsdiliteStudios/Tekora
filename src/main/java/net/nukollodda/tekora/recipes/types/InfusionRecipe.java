@@ -1,6 +1,5 @@
 package net.nukollodda.tekora.recipes.types;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -17,11 +16,17 @@ import org.jetbrains.annotations.Nullable;
 public class InfusionRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
-    private final NonNullList<Ingredient> recipeItems;
-    public InfusionRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems) {
+    private final Ingredient input;
+    private final Ingredient catalyst;
+    private final int inputAmount;
+    private final int catalystAmount;
+    public InfusionRecipe(ResourceLocation id, ItemStack output, Ingredient input, Ingredient catalyst, int inputAmt, int catalystAmt) {
         this.id = id;
         this.output = output;
-        this.recipeItems = recipeItems;
+        this.input = input;
+        this.catalyst = catalyst;
+        this.inputAmount = inputAmt;
+        this.catalystAmount = catalystAmt;
     }
 
     @Override
@@ -30,13 +35,32 @@ public class InfusionRecipe implements Recipe<SimpleContainer> {
             return false;
         }
 
-        return recipeItems.get(0).test(pContainer.getItem(1))
-                && recipeItems.get(1).test(pContainer.getItem(2)); // brain of the recipe
+        ItemStack in = pContainer.getItem(1);
+        ItemStack cat = pContainer.getItem(2);
+
+        return input.test(in) && inputAmount <= in.getCount()
+                && catalyst.test(cat) && catalystAmount <= cat.getCount(); // brain of the recipe
+    }
+
+    public Ingredient getCatalyst() {
+        return catalyst;
+    }
+
+    public Ingredient getInput() {
+        return input;
+    }
+
+    public int getInputAmount() {
+        return inputAmount;
+    }
+
+    public int getCatalystAmount() {
+        return catalystAmount;
     }
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        return recipeItems;
+        return NonNullList.of(input, catalyst);
     }
 
     @Override
@@ -82,36 +106,34 @@ public class InfusionRecipe implements Recipe<SimpleContainer> {
 
         @Override
         public InfusionRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
+            JsonObject jsonInput = GsonHelper.getAsJsonObject(pJson, "input");
+            JsonObject jsonCatalyst = GsonHelper.getAsJsonObject(pJson, "catalyst");
+
+            int inAmt = jsonInput.has("count") ? jsonInput.get("count").getAsInt() : 1;
+            int catAmt = jsonCatalyst.has("count") ? jsonCatalyst.get("count").getAsInt() : 1;
+            Ingredient input = Ingredient.fromJson(jsonInput);
+            Ingredient catalyst = Ingredient.fromJson(jsonCatalyst);
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "output"));
-
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pJson, "ingredients");
-            NonNullList<Ingredient> inputs = NonNullList.withSize(2, Ingredient.EMPTY); // note: it expects two inputs
-
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
-            }
-            return new InfusionRecipe(pRecipeId, output, inputs);
+            return new InfusionRecipe(pRecipeId, output, input, catalyst, inAmt, catAmt);
         }
 
         @Override
         public @Nullable InfusionRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
-
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromNetwork(pBuffer));
-            }
-
+            Ingredient input = Ingredient.fromNetwork(pBuffer);
+            Ingredient catalyst = Ingredient.fromNetwork(pBuffer);
+            int inAmt = pBuffer.readInt();
+            int catAmt = pBuffer.readInt();
             ItemStack output = pBuffer.readItem();
-            return new InfusionRecipe(pRecipeId, output, inputs);
+            return new InfusionRecipe(pRecipeId, output, input, catalyst, inAmt, catAmt);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf pBuffer, InfusionRecipe pRecipe) {
-            pBuffer.writeInt(pRecipe.getIngredients().size());
-
-            for (Ingredient ing : pRecipe.getIngredients()) {
-                ing.toNetwork(pBuffer);
-            }
+            pRecipe.getInput().toNetwork(pBuffer);
+            pRecipe.getCatalyst().toNetwork(pBuffer);
+            pBuffer.writeInt(pRecipe.inputAmount);
+            pBuffer.writeInt(pRecipe.catalystAmount);
+            pBuffer.writeItem(pRecipe.output);
         }
     }
 }

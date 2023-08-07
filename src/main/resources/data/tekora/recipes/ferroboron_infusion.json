@@ -1,13 +1,11 @@
 {
   "type": "tekora:infusion",
-  "ingredients": [
-    {
-      "tag": "forge:ingots/iron"
-    },
-    {
-      "item": "tekora:boron_piece"
-    }
-  ],
+  "input": {
+    "tag": "forge:ingots/iron"
+  },
+  "catalyst": {
+    "item": "tekora:boron_piece"
+  },
   "output": {
     "count": 1,
     "item": "tekora:ferroboron_ingot"

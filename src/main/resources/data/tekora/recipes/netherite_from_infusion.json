@@ -1,15 +1,13 @@
 {
   "type": "tekora:infusion",
-  "ingredients": [
-    {
-      "tag": "forge:ingots/gold",
-      "count": 4
-    },
-    {
-      "item": "minecraft:netherite_scrap",
-      "count": 4
-    }
-  ],
+  "input": {
+    "tag": "forge:ingots/gold",
+    "count": 3
+  },
+  "catalyst": {
+    "item": "minecraft:netherite_scrap",
+    "count": 3
+  },
   "output": {
     "item": "minecraft:netherite_ingot"
   }

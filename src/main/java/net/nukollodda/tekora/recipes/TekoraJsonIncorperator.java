@@ -1,12 +1,13 @@
 package net.nukollodda.tekora.recipes;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import javax.annotation.Nullable;
 
 public class TekoraJsonIncorperator {
-    public static Ingredient fromJson(@Nullable JsonElement pJson, boolean pCanBeEmpty) {
-        return Ingredient.fromJson(pJson, pCanBeEmpty);
+    public static int getCount(JsonObject pJson) {
+        return pJson.has("count") ? pJson.get("count").getAsInt() : 1;
     }
 }

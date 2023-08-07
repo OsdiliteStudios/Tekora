@@ -1,16 +1,13 @@
 {
   "type": "tekora:infusion",
-  "ingredients": [
-    {
-      "tag": "forge:ingots/steel"
-    },
-    {
-      "item": "minecraft:coal",
-      "count": 9
-    }
-  ],
+  "input": {
+    "tag": "forge:ingots/steel"
+  },
+  "catalyst": {
+    "item": "minecraft:coal",
+    "count": 3
+  },
   "output": {
-    "count": 1,
     "item": "tekora:carbon_steel_ingot"
   }
 }

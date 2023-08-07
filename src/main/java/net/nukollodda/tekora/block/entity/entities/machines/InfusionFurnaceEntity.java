@@ -188,8 +188,8 @@ public class InfusionFurnaceEntity extends AbstractTekoraFurnaceEntity {
                 .getRecipeFor(InfusionRecipe.Type.INSTANCE, inv, level);
 
         if (this.hasRecipe()) {
-            this.itemHandler.extractItem(1,1, false); // checks the slots to make sure
-            this.itemHandler.extractItem(2,1, false);
+            this.itemHandler.extractItem(1, recipe.get().getInputAmount(), false); // checks the slots to make sure
+            this.itemHandler.extractItem(2, recipe.get().getCatalystAmount(), false);
             // slot organization, slot 0 = coal input, slot 1-2 = item inputs, slot 3 = output, for the electric variant, slot 1 = residue
             this.itemHandler.setStackInSlot(3, new ItemStack(recipe.get().getResultItem(level.registryAccess()).getItem(),
                     this.itemHandler.getStackInSlot(3).getCount() + 1)); // the 1 needs to be replaced by the count

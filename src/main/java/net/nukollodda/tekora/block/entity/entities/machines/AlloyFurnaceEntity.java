@@ -43,7 +43,7 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return switch (slot) { // temporary
+            return switch (slot) {
                 case 0 -> FurnaceBlockEntity.isFuel(stack);
                 case 1, 2, 3 -> true;
                 case 4 -> false;
@@ -170,9 +170,6 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
 
             if (entity.fuel > 0) {
                 entity.progress++;
-                if (!entity.hasRecipe()) {
-                    entity.resetProgress();
-                }
             }
             setChanged(level, pos, state);
 
@@ -197,10 +194,10 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
                 .getRecipeFor(AlloyingRecipe.Type.INSTANCE, inv, level);
 
         if (this.hasRecipe()) {
-            int[] extracted = new int[5]; // how much is removed for every slot
+            int[] extracted = new int[3]; // how much is removed for every slot
             // extra items should disable this recipe...
 
-            for (int i = 1; i < this.itemHandler.getSlots(); i++) {
+            for (int i = 1; i < 4; i++) {
                 if (!this.itemHandler.getStackInSlot(i).isEmpty()) this.itemHandler.extractItem(i, 1, false);
                 // basically, removes items if said items adds up to the recipe number
             }

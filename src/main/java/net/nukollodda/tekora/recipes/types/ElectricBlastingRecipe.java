@@ -12,17 +12,24 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.nukollodda.tekora.Tekora;
+import net.nukollodda.tekora.item.typical.CompoundItem;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
 
 public class ElectricBlastingRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
+    // private final Map<CompoundItem.Cations, Integer> cations;
+    // private final Map<CompoundItem.Anions, Integer> anions;
 
-    public ElectricBlastingRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems) {
+    public ElectricBlastingRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems
+                                  /*,Map<CompoundItem.Cations, Integer> cations, Map<CompoundItem.Anions, Integer> anions*/) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
+        // this.cations = cations; this.anions = anions;
     }
 
     @Override
@@ -33,6 +40,14 @@ public class ElectricBlastingRecipe implements Recipe<SimpleContainer> {
 
         return recipeItems.get(0).test(pContainer.getItem(0));
     }
+    /*
+    public Map<CompoundItem.Cations, Integer> getCations() {
+        return cations;
+    }
+
+    public Map<CompoundItem.Anions, Integer> getAnions() {
+        return anions;
+    }*/
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
@@ -87,6 +102,9 @@ public class ElectricBlastingRecipe implements Recipe<SimpleContainer> {
 
             JsonArray ingredients = GsonHelper.getAsJsonArray(pJson, "ingredients"); // make the input number matter
             NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
+
+            Map<CompoundItem.Cations, Integer> cationsMap = Map.of();
+            Map<CompoundItem.Anions, Integer> anionsMap = Map.of();
 
             for (int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));

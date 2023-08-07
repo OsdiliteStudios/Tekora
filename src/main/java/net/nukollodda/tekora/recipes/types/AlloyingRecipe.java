@@ -17,52 +17,68 @@ import org.jetbrains.annotations.Nullable;
 public class AlloyingRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
-    private final NonNullList<ItemStack> recipeItems;
-    public AlloyingRecipe(ResourceLocation id, ItemStack output, NonNullList<ItemStack> recipeItems) {
+    private final NonNullList<Ingredient> recipeItems;
+    private final NonNullList<Integer> recipeRatio;
+    public AlloyingRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, NonNullList<Integer> recipeRatio) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
+        this.recipeRatio = recipeRatio;
     }
     @Override
     public boolean matches(SimpleContainer pContainer, Level pLevel) {
         if (pLevel.isClientSide()) {
             return false;
         }
-        boolean hasIng = true;
-        int ingNum = 0;
-        int nullCounter = 0;
+        boolean hasIng = recipeItems.size() > 0;
+        int ingNum;
         ItemStack prevItem;
         ItemStack curItem;
         ItemStack postItem;
+        Ingredient ing;
 
-        for (ItemStack recItem : recipeItems) {
+        // the matches function may or may not be disabling the output
+        // this is only one part of the speculation
+
+        for (int j = 0; j < recipeItems.size(); j++) {
+            ing = recipeItems.get(j);
+            ingNum = 0;
             for (int i = 1; i < 4; i++) {
                 curItem = pContainer.getItem(i);
-                prevItem = pContainer.getItem(i-1 >= 1 ? i-1 : 3+i);
+                if (curItem.isEmpty()) {
+                    continue;
+                }
+                if (isInvalidItem(curItem)) {
+                    break;
+                }
+                prevItem = pContainer.getItem(i-1 >= 1 ? i-1 : 3);
                 postItem = pContainer.getItem(i+1 < 4 ? i+1 : 1);
-                if (curItem.isEmpty()) nullCounter++;
-                if (recItem.equals(curItem)) {
-                    ingNum = curItem.getCount() + (curItem.equals(prevItem) ? prevItem.getCount() : 0) +
-                            (curItem.equals(postItem) ? postItem.getCount() : 0);
+                if (ing.test(curItem)) {
+                    ingNum = curItem.getCount() + (curItem.is(prevItem.getItem()) ? prevItem.getCount() : 0) +
+                            (curItem.is(postItem.getItem()) ? postItem.getCount() : 0);
                 }
             }
-            hasIng = hasIng && ingNum >= recItem.getCount();
-            ingNum = 0;
+            hasIng = ingNum >= recipeRatio.get(j) && hasIng;
         }
-        return hasIng && nullCounter < 2;
+        return hasIng;
+    }
+
+    protected boolean isInvalidItem(ItemStack pItem) {
+        boolean isCor = false;
+        for (Ingredient ing : recipeItems) {
+            isCor = ing.test(pItem);
+            if (isCor) break;
+        }
+        return !isCor;
     }
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> ingredients = NonNullList.withSize(recipeItems.size(), Ingredient.EMPTY);
-        for (int i = 0; i < recipeItems.size(); i++) {
-            ingredients.set(i, Ingredient.of(recipeItems.get(i)));
-        }
-        return ingredients;
+        return recipeItems;
     }
 
-    public NonNullList<ItemStack> getInputs() {
-        return recipeItems;
+    public NonNullList<Integer> getRecipeRatio() {
+        return recipeRatio;
     }
 
     @Override
@@ -111,32 +127,46 @@ public class AlloyingRecipe implements Recipe<SimpleContainer> {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "output"));
 
             JsonArray ingredients = GsonHelper.getAsJsonArray(pJson, "ingredients"); // make the input number matter
-            NonNullList<ItemStack> inputs = NonNullList.withSize(3, ItemStack.EMPTY);
+            JsonObject ing;
+            int arraySize = Math.min(ingredients.size(), 3);
+            NonNullList<Ingredient> inputs = NonNullList.withSize(arraySize, Ingredient.EMPTY);
+            NonNullList<Integer> inputRat = NonNullList.withSize(arraySize, 0);
 
             for (int i = 0; i < inputs.size(); i++) {
-                if (i < ingredients.size()) inputs.set(i, Ingredient.fromJson(ingredients.get(i)).getItems()[0]);
+                if (i < ingredients.size()) {
+                    ing = ingredients.get(i).getAsJsonObject();
+                    inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
+                    inputRat.set(i, ing.has("count") ? ing.get("count").getAsInt() : 1);
+                }
             }
-            return new AlloyingRecipe(pId, output, inputs);
+            return new AlloyingRecipe(pId, output, inputs, inputRat);
         }
 
         @Override
         public @Nullable AlloyingRecipe fromNetwork(ResourceLocation pId, FriendlyByteBuf pBuffer) {
-            NonNullList<ItemStack> inputs = NonNullList.withSize(pBuffer.readInt(), ItemStack.EMPTY);
+            NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
+            NonNullList<Integer> inputRat = NonNullList.withSize(pBuffer.readInt(), 0);
+            Ingredient ing;
             for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromNetwork(pBuffer).getItems()[0]);
+                ing = Ingredient.fromNetwork(pBuffer);
+                inputs.set(i, ing);
+                inputRat.set(i, ing.getItems().length > 0 && ing.getItems()[0].getCount() > 0 ? ing.getItems()[0].getCount() : 1);
             }
-
-            ItemStack output = pBuffer.readItem();
-            return new AlloyingRecipe(pId, output, inputs);
+            return new AlloyingRecipe(pId, pBuffer.readItem(), inputs, inputRat);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf pBuffer, AlloyingRecipe pRecipe) {
-            pBuffer.writeInt(pRecipe.getIngredients().size());
+            NonNullList<Ingredient> ings = pRecipe.getIngredients();
+            pBuffer.writeInt(ings.size());
+            Ingredient ing;
 
-            for (Ingredient ing : pRecipe.getIngredients()) {
+            for (int i = 0; i < ings.size(); i++) {
+                ing = ings.get(i);
                 ing.toNetwork(pBuffer);
+                pBuffer.writeInt(pRecipe.recipeRatio.get(i));
             }
+            pBuffer.writeItem(pRecipe.output);
         }
     }
 }

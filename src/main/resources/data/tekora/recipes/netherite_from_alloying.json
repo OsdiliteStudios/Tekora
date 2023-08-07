@@ -3,11 +3,11 @@
   "ingredients": [
     {
       "tag": "forge:ingots/gold",
-      "count": 4
+      "count": 3
     },
     {
       "item": "minecraft:netherite_scrap",
-      "count": 4
+      "count": 3
     }
   ],
   "output": {

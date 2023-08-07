@@ -77,7 +77,7 @@ public class Uranium extends AbstractRadioactiveItem {
     }
 
     @Override
-    public @Nullable CompoundTag getShareTag(ItemStack stack) {
+    public CompoundTag getShareTag(ItemStack stack) {
         if (stack.getTag() != null) {
             saveData(stack.getTag());
             readData(stack.getTag());

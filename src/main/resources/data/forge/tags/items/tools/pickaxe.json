@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "tekora:boron_pickaxe",
+    "tekora:bronze_pickaxe",
+    "tekora:platinum_pickaxe",
+    "tekora:silver_pickaxe",
+    "tekora:steel_pickaxe",
+    "tekora:thorium_pickaxe",
+    "tekora:titanium_pickaxe",
+    "tekora:tungsten_steel_pickaxe",
+    "tekora:vanasteel_pickaxe"
+  ]
+}

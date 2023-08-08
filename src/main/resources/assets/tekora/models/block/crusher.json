@@ -2,16 +2,16 @@
   "render_type": "minecraft:cutout",
   "parent": "block/cube_all",
   "textures": {
-    "0": "tekora:block/crusher/crusher_lower_front",
-    "1": "tekora:block/crusher/crusher_lower_plate",
-    "2": "tekora:block/crusher/crusher_lower_side",
-    "3": "tekora:block/crusher/crusher_plate_side",
-    "4": "tekora:block/crusher/crusher_top",
-    "5": "tekora:block/crusher/crusher_upper_front",
-    "6": "tekora:block/crusher/crusher_upper_side",
-    "7": "tekora:block/crusher/crusher_holder_side",
-    "8": "tekora:block/crusher/crusher_top_plate",
-    "particle": "tekora:block/crusher/crusher_top"
+    "0": "tekora:block/crusher/lower_front",
+    "1": "tekora:block/crusher/lower_plate",
+    "2": "tekora:block/crusher/lower_side",
+    "3": "tekora:block/crusher/plate_side",
+    "4": "tekora:block/crusher/top",
+    "5": "tekora:block/crusher/upper_front",
+    "6": "tekora:block/crusher/upper_side",
+    "7": "tekora:block/crusher/holder_side",
+    "8": "tekora:block/crusher/top_plate",
+    "particle": "tekora:block/crusher/top"
   },
   "elements": [
     {

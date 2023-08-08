@@ -44,7 +44,7 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
     }
 
     private void renderElectricityAmount(GuiGraphics pGraphics, int x, int y) {
-        pGraphics.blit(TEXTURE, x + 100, y + 55 + (38 - menu.getElectricityAmt()), 176, 52 - menu.getElectricityAmt(), 14, menu.getElectricityAmt());
+        pGraphics.blit(TEXTURE, x + 22, y + 22 + (48 - menu.getEnergy()), 176, 17 + (48 - menu.getEnergy()), 6, menu.getEnergy());
     }
 
     @Override

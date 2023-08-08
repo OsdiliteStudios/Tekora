@@ -18,10 +18,7 @@ import net.nukollodda.tekora.block.TekoraBlocks;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.fluid.TekoraFluidTypes;
 import net.nukollodda.tekora.block.fluid.TekoraFluids;
-import net.nukollodda.tekora.client.screens.AlloyFurnaceScreen;
-import net.nukollodda.tekora.client.screens.CrusherScreen;
-import net.nukollodda.tekora.client.screens.ElectricFurnaceScreen;
-import net.nukollodda.tekora.client.screens.InfusionFurnaceScreen;
+import net.nukollodda.tekora.client.screens.*;
 import net.nukollodda.tekora.item.TekoraCreativeModTab;
 import net.nukollodda.tekora.item.TekoraItems;
 import net.nukollodda.tekora.menu.*;
@@ -197,6 +194,7 @@ public class Tekora {
             MenuScreens.register(TekoraMenuTypes.INFUSION_FURNACE_MENU.get(), InfusionFurnaceScreen::new);
             MenuScreens.register(TekoraMenuTypes.CRUSHER_MENU.get(), CrusherScreen::new);
             MenuScreens.register(TekoraMenuTypes.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
+            MenuScreens.register(TekoraMenuTypes.BATTERY_MENU.get(), BatteryScreen::new);
         }
     }
 }

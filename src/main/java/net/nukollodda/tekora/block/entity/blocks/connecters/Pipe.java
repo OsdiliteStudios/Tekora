@@ -2,7 +2,7 @@ package net.nukollodda.tekora.block.entity.blocks.connecters;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.nukollodda.tekora.block.entity.blocks.models.IrregularModel;
+import net.nukollodda.tekora.block.entity.blocks.machines.IrregularModel;
 
 public abstract class Pipe extends IrregularModel {
 

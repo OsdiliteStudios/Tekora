@@ -7,26 +7,17 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
+import net.nukollodda.tekora.menu.BatteryMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class InfiniteBatteryEntity extends AbstractBatteryEntity {
-    protected final ItemStackHandler itemHandler = new ItemStackHandler(1) {
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-        }
-
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return false; // should always be something that can be charged
-        }
-    };
     public InfiniteBatteryEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.INFINITE_BATTERY.get(), pPos, pBlockState, -1);
+        super(TekoraBlockEntities.INFINITE_BATTERY.get(), pPos, pBlockState, 1024);
     }
 
     @Override
@@ -35,8 +26,14 @@ public class InfiniteBatteryEntity extends AbstractBatteryEntity {
     }
 
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return null;
+    public @Nullable AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new BatteryMenu(id, inv, this, this.data);
+    }
+
+    public static void tick(Level level, BlockPos pos, BlockState state, InfiniteBatteryEntity entity) {
+        if (level.isClientSide()) return;
+        if (entity.data.get(0) < entity.data.get(1))
+            entity.data.set(0, entity.data.get(1));
     }
 
 

@@ -21,6 +21,7 @@ public class TekoraCreativeModTab {
                     .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
                     .title(Component.translatable("itemGroup.tekora_machines"))
                     .displayItems((((pParameters, pOutput) -> {
+                        pOutput.accept(TekoraBlocks.INFINITE_BATTERY.get());
                         pOutput.accept(TekoraBlocks.ALLOY_FURNACE.get());
                         pOutput.accept(TekoraBlocks.CRUSHER.get());
                         pOutput.accept(TekoraBlocks.INFUSION_FURNACE.get());

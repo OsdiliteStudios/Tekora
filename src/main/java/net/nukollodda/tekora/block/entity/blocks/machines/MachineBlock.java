@@ -1,4 +1,4 @@
-package net.nukollodda.tekora.block.entity.blocks.models;
+package net.nukollodda.tekora.block.entity.blocks.machines;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;

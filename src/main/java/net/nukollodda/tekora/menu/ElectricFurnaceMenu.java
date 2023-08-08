@@ -52,11 +52,11 @@ public class ElectricFurnaceMenu extends AbstractTekoraMenu {
         return maxProgress != 0 && progress != 0 ? progress * 26 / maxProgress : 0;
     }
 
-    public int getElectricityAmt() {
+    public int getEnergy() {
         int electricity = this.data.get(2);
         int maxElectricity = this.data.get(3);
 
-        return maxElectricity != 0 && electricity != 0 ? electricity * 38 / maxElectricity : 0;
+        return maxElectricity != 0 && electricity != 0 ? electricity * 48 / maxElectricity : 0;
     }
 
     @Override

@@ -194,17 +194,50 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
                 .getRecipeFor(AlloyingRecipe.Type.INSTANCE, inv, level);
 
         if (this.hasRecipe()) {
-            int[] extracted = new int[3]; // how much is removed for every slot
-            // extra items should disable this recipe...
+            int[] extracted = new int[]{0, 0, 0}; // how much is removed for every slot
+
+            ItemStack prevItem;
+            ItemStack curItem;
+            ItemStack postItem;
+            Ingredient ing;
+            int ingNum;
+            int totalRemove;
+            int avNum;
+
+            for (int i = 0; i < recipe.get().getIngredients().size(); i++) {
+                ing = recipe.get().getIngredients().get(i);
+                ingNum = recipe.get().getRecipeRatio().get(i);
+                for (int j = 1; j < 4; j++) {
+                    curItem = this.itemHandler.getStackInSlot(j);
+                    prevItem = this.itemHandler.getStackInSlot(j-1 >= 1 ? j-1 : 3);
+                    postItem = this.itemHandler.getStackInSlot(j+1 < 4 ? j+1 : 1);
+                    if (ing.test(curItem)) {
+                        if (prevItem.is(curItem.getItem()) && prevItem.getCount() + curItem.getCount() >= ingNum) {
+                            totalRemove = Math.min(prevItem.getCount(), ingNum);
+                            avNum = totalRemove / 2;
+                            extracted[j-2 >= 0 ? j-2 : 2] = totalRemove % 2 == 0 ? avNum : avNum+1;
+                            extracted[j-1] = avNum;
+                        } else if (postItem.is(curItem.getItem()) && postItem.getCount() + curItem.getCount() >= ingNum) {
+                            totalRemove = Math.min(postItem.getCount(), ingNum);
+                            avNum = totalRemove / 2;
+                            extracted[j-1] = totalRemove % 2 == 0 ? avNum : avNum+1;
+                            extracted[j < 3 ? j : 0] = avNum;
+                        } else if (curItem.getCount() >= ingNum) {
+                            extracted[j-1] = ingNum;
+                        }
+                        // there is a bug where if two items are in the top slots, avNum is ignored somehow
+                    }
+                }
+            }
 
             for (int i = 1; i < 4; i++) {
-                if (!this.itemHandler.getStackInSlot(i).isEmpty()) this.itemHandler.extractItem(i, 1, false);
+                if (!this.itemHandler.getStackInSlot(i).isEmpty()) this.itemHandler.extractItem(i, extracted[i-1], false);
                 // basically, removes items if said items adds up to the recipe number
             }
             // slot organization, slot 0 = coal input, slot 1-2 = item inputs, slot 3 = output, for the electric variant, slot 1 = residue
             this.itemHandler.setStackInSlot(this.containerSize - 1, new ItemStack(recipe.get().getResultItem(level.registryAccess()).getItem(),
                     this.itemHandler.getStackInSlot(this.containerSize - 1).getCount() +
-                            recipe.get().getResultItem(level.registryAccess()).getCount())); // the 1 needs to be replaced by the count
+                            recipe.get().getResultItem(level.registryAccess()).getCount()));
 
             this.resetProgress();
         }

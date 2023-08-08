@@ -37,28 +37,25 @@ public class AlloyingRecipe implements Recipe<SimpleContainer> {
         ItemStack postItem;
         Ingredient ing;
 
-        // the matches function may or may not be disabling the output
-        // this is only one part of the speculation
-
-        for (int j = 0; j < recipeItems.size(); j++) {
-            ing = recipeItems.get(j);
+        for (int i = 0; i < recipeItems.size(); i++) {
+            ing = recipeItems.get(i);
             ingNum = 0;
-            for (int i = 1; i < 4; i++) {
-                curItem = pContainer.getItem(i);
+            for (int j = 1; j < 4; j++) {
+                curItem = pContainer.getItem(j);
                 if (curItem.isEmpty()) {
                     continue;
                 }
                 if (isInvalidItem(curItem)) {
                     break;
                 }
-                prevItem = pContainer.getItem(i-1 >= 1 ? i-1 : 3);
-                postItem = pContainer.getItem(i+1 < 4 ? i+1 : 1);
+                prevItem = pContainer.getItem(j-1 >= 1 ? j-1 : 3);
+                postItem = pContainer.getItem(j+1 < 4 ? j+1 : 1);
                 if (ing.test(curItem)) {
                     ingNum = curItem.getCount() + (curItem.is(prevItem.getItem()) ? prevItem.getCount() : 0) +
                             (curItem.is(postItem.getItem()) ? postItem.getCount() : 0);
                 }
             }
-            hasIng = ingNum >= recipeRatio.get(j) && hasIng;
+            hasIng = ingNum >= recipeRatio.get(i) && hasIng;
         }
         return hasIng;
     }

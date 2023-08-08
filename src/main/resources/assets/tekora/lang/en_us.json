@@ -617,38 +617,6 @@
   "item.tekora.tungsten_steel_helmet": "Tungsten Steel Helmet",
   "item.tekora.vanasteel_helmet": "Vanasteel Helmet",
 
-  "item.tekora.depleted_lep": "Depleted LEP Fuel",
-  "item.tekora.depleted_leu_233": "Depleted LEU 233 Fuel",
-  "item.tekora.depleted_leu_233ii": "Depleted LEU 233II Fuel",
-  "item.tekora.depleted_leu_235": "Depleted LEU 235 Fuel",
-  "item.tekora.depleted_leu_235ii": "Depleted LEU 235II Fuel",
-  "item.tekora.depleted_mox_233": "Depleted MOX 233Fuel",
-  "item.tekora.depleted_mox_235": "Depleted MOX 235 Fuel",
-  "item.tekora.depleted_mox_i": "Depleted MOX I Fuel",
-  "item.tekora.depleted_mox_ii": "Depleted MOX II Fuel",
-  "item.tekora.depleted_mox_np": "Depleted Np-MOX Fuel",
-  "item.tekora.depleted_mox_th": "Depleted Th-MOX Fuel",
-  "item.tekora.depleted_uet_233": "Depleted UET 233 Fuel",
-  "item.tekora.depleted_uet_235": "Depleted UET 235 Fuel",
-  "item.tekora.depleted_neu_i": "Depleted NEU I Fuel",
-  "item.tekora.depleted_neu_ii": "Depleted NEU II Fuel",
-
-  "item.tekora.lep": "LEP Fuel",
-  "item.tekora.leu_233": "LEU 233 Fuel",
-  "item.tekora.leu_233ii": "LEU 233II Fuel",
-  "item.tekora.leu_235": "LEU 235 Fuel",
-  "item.tekora.leu_235ii": "LEU 235II Fuel",
-  "item.tekora.mox_233": "MOX 233Fuel",
-  "item.tekora.mox_235": "MOX 235 Fuel",
-  "item.tekora.mox_i": "MOX I Fuel",
-  "item.tekora.mox_ii": "MOX II Fuel",
-  "item.tekora.mox_np": "Np-MOX Fuel",
-  "item.tekora.mox_th": "Th-MOX Fuel",
-  "item.tekora.uet_233": "UET 233 Fuel",
-  "item.tekora.uet_235": "UET 235 Fuel",
-  "item.tekora.neu_i": "NEU I Fuel",
-  "item.tekora.neu_ii": "NEU II Fuel",
-
   "block.tekora.apatite_ore": "Apatite Ore",
   "block.tekora.aquamarine_ore": "Aquamarine Ore",
   "block.tekora.bauxite_ore": "Bauxite Ore",
@@ -860,6 +828,7 @@
   "fluid_type.tekora.propylene": "Propylene",
   "fluid_type.tekora.hydrogen_cyanide": "Prussic Acid",
   "msg.tekora.isoratio": "Isotope Ratio",
-  "msg.tekora.rad": "Radiation Value"
+  "msg.tekora.rad": "Radiation Value",
+  "block.tekora.infinite_battery": "Infinite Battery"
 
 }

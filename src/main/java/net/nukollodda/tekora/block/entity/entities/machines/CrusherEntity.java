@@ -23,6 +23,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nukollodda.tekora.block.WrappedHandler;
 import net.nukollodda.tekora.block.entity.blocks.machines.AlloyFurnace;
+import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.menu.CrusherMenu;
 import net.nukollodda.tekora.recipes.types.CrushingRecipe;
 import org.jetbrains.annotations.NotNull;
@@ -66,7 +67,7 @@ public class CrusherEntity extends BlockEntity implements MenuProvider {
     private int progress = 0;
     private int maxProgress = 72;
     public CrusherEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.CRUSHER.get(), pPos, pBlockState);
+        super(TekoraBlockEntities.CRUSHER.get(), pPos, pBlockState);
         this.data = new ContainerData() {
             @Override
             public int get(int pIndex) {

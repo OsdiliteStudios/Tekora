@@ -23,6 +23,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nukollodda.tekora.block.WrappedHandler;
 import net.nukollodda.tekora.block.entity.blocks.machines.AlloyFurnace;
+import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraFurnaceEntity;
 import net.nukollodda.tekora.menu.InfusionFurnaceMenu;
 import net.nukollodda.tekora.recipes.types.InfusionRecipe;
@@ -68,7 +69,7 @@ public class InfusionFurnaceEntity extends AbstractTekoraFurnaceEntity {
                             (i) -> i == 2, (i, s) -> itemHandler.isItemValid(0, s))));
 
     public InfusionFurnaceEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.INFUSION_FURNACE.get(), pos, blockState, 4);
+        super(TekoraBlockEntities.INFUSION_FURNACE.get(), pos, blockState, 4);
     }
 
     @Override

@@ -13,6 +13,19 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 public abstract class AbstractConnector extends BaseEntityBlock {
     public static final DirectionProperty HOR_FACING = HorizontalDirectionalBlock.FACING;
     private final int mineTier;
+    /*
+     * all connectors in Tekora has multiple block states
+     * they include
+     * core: coreState
+     * half_length: posX, posY, posZ, negX, negY, negZ
+     * full_length: horX, ver, horZ
+     * bent:
+     * X plane - pZpY, nZpY, pZnY, nZnY
+     * Y plane - pXpZ, nXpZ, pXnZ, nXnZ
+     * Z plane - pXpY, nXpY, pXnY, nXnY
+     *
+     * there are thus a total of 22 total block-states here
+     */
 
     public AbstractConnector(float strength, SoundType sound, int tier) {
         super(Properties.of().strength(strength).requiresCorrectToolForDrops().sound(sound).noOcclusion());

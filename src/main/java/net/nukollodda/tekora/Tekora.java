@@ -15,7 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.nukollodda.tekora.block.TekoraBlocks;
-import net.nukollodda.tekora.block.entity.entities.machines.ModBlockEntities;
+import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.fluid.TekoraFluidTypes;
 import net.nukollodda.tekora.block.fluid.TekoraFluids;
 import net.nukollodda.tekora.client.screens.AlloyFurnaceScreen;
@@ -41,7 +41,7 @@ public class Tekora {
         TekoraItems.register(modEventBus);
         TekoraBlocks.register(modEventBus);
 
-        ModBlockEntities.register(modEventBus);
+        TekoraBlockEntities.register(modEventBus);
         TekoraMenuTypes.register(modEventBus);
 
         TekoraCreativeModTab.register(modEventBus);

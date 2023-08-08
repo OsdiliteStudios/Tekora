@@ -21,6 +21,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nukollodda.tekora.block.WrappedHandler;
 import net.nukollodda.tekora.block.entity.blocks.machines.AlloyFurnace;
+import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraMachineEntity;
 import net.nukollodda.tekora.item.TekoraItems;
 import net.nukollodda.tekora.menu.ElectricFurnaceMenu;
@@ -63,7 +64,7 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
 
     private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
     public ElectricFurnaceEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.ELECTRIC_FURNACE.get(), pPos, pBlockState, 3);
+        super(TekoraBlockEntities.ELECTRIC_FURNACE.get(), pPos, pBlockState, 3);
     }
 
     @Override

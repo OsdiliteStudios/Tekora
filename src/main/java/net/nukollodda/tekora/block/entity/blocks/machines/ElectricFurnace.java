@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.machines.ElectricFurnaceEntity;
-import net.nukollodda.tekora.block.entity.entities.machines.ModBlockEntities;
+import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.blocks.models.MachineBlock;
 
 public class ElectricFurnace extends MachineBlock {
@@ -62,7 +62,7 @@ public class ElectricFurnace extends MachineBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level lvl, BlockState state,
                                                                   BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntities.ELECTRIC_FURNACE.get(),
+        return createTickerHelper(type, TekoraBlockEntities.ELECTRIC_FURNACE.get(),
                 ElectricFurnaceEntity::tick);
     }
 }

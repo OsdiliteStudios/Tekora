@@ -12,6 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.basic.BasicBlock;
 import net.nukollodda.tekora.block.basic.ExperienceBlock;
+import net.nukollodda.tekora.block.entity.blocks.enstorage.InfiniteBattery;
 import net.nukollodda.tekora.block.entity.blocks.machines.AlloyFurnace;
 import net.nukollodda.tekora.block.entity.blocks.machines.Crusher;
 import net.nukollodda.tekora.block.entity.blocks.machines.ElectricFurnace;
@@ -195,6 +196,8 @@ public class TekoraBlocks {
     public static final RegistryObject<Block> CRUSHER = registerBlock("crusher", Crusher::new);
     public static final RegistryObject<Block> ELECTRIC_FURNACE = registerBlock("electric_blast_furnace", ElectricFurnace::new);
 
+
+    public static final RegistryObject<Block> INFINITE_BATTERY = registerBlock("infinite_battery", InfiniteBattery::new);
     public static final RegistryObject<LiquidBlock> CHLORINE_BLOCK = BLOCKS.register("chlorine_block",
             () -> new LiquidBlock(TekoraFluids.SOURCE_CHLORINE, BlockBehaviour.Properties.copy(Blocks.WATER)));
 

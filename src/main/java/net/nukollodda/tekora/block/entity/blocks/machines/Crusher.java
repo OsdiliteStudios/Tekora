@@ -18,7 +18,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.machines.CrusherEntity;
-import net.nukollodda.tekora.block.entity.entities.machines.ModBlockEntities;
+import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.blocks.models.IrregularModel;
 
 public class Crusher extends IrregularModel {
@@ -72,7 +72,7 @@ public class Crusher extends IrregularModel {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level lvl, BlockState state,
                                                                   BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntities.CRUSHER.get(),
+        return createTickerHelper(type, TekoraBlockEntities.CRUSHER.get(),
                 CrusherEntity::tick);
     }
 }

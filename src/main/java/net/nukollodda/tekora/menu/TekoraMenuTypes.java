@@ -26,6 +26,9 @@ public class TekoraMenuTypes {
     public static final RegistryObject<MenuType<CrusherMenu>> CRUSHER_MENU =
             registerMenuType(CrusherMenu::new, "crusher_menu");
 
+    public static final RegistryObject<MenuType<BatteryMenu>> BATTERY_MENU =
+            registerMenuType(BatteryMenu::new, "battery_menu");
+
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(
             IContainerFactory<T> factory, String name) {
         return MOD_MENU_TYPES.register(name, () -> IForgeMenuType.create(factory));

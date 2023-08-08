@@ -2,7 +2,6 @@ package net.nukollodda.tekora.block.entity.entities.machines;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
@@ -24,6 +23,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nukollodda.tekora.block.WrappedHandler;
 import net.nukollodda.tekora.block.entity.blocks.machines.AlloyFurnace;
+import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraFurnaceEntity;
 import net.nukollodda.tekora.menu.AlloyFurnaceMenu;
 import net.nukollodda.tekora.recipes.types.AlloyingRecipe;
@@ -80,7 +80,7 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
     */
 
     public AlloyFurnaceEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.ALLOY_FURNACE.get(), pos, blockState, 5);
+        super(TekoraBlockEntities.ALLOY_FURNACE.get(), pos, blockState, 5);
     }
 
     @Override

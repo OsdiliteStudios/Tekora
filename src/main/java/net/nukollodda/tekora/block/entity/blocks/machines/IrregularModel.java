@@ -1,4 +1,4 @@
-package net.nukollodda.tekora.block.entity.blocks.models;
+package net.nukollodda.tekora.block.entity.blocks.machines;
 
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.*;

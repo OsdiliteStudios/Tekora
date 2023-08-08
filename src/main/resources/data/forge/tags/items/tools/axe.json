@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "tekora:boron_axe",
+    "tekora:bronze_axe",
+    "tekora:platinum_axe",
+    "tekora:silver_axe",
+    "tekora:steel_axe",
+    "tekora:thorium_axe",
+    "tekora:titanium_axe",
+    "tekora:tungsten_steel_axe",
+    "tekora:vanasteel_axe"
+  ]
+}

@@ -19,7 +19,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.machines.CrusherEntity;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
-import net.nukollodda.tekora.block.entity.blocks.models.IrregularModel;
 
 public class Crusher extends IrregularModel {
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);

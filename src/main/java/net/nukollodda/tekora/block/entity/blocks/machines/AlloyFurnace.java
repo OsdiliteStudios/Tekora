@@ -15,7 +15,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.machines.AlloyFurnaceEntity;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
-import net.nukollodda.tekora.block.entity.blocks.models.MachineBlock;
 
 public class AlloyFurnace extends MachineBlock {
     public AlloyFurnace() {

@@ -1,6 +1,6 @@
 package net.nukollodda.tekora.block.entity.blocks.connecters;
 
-import net.nukollodda.tekora.block.entity.blocks.models.IrregularModel;
+import net.nukollodda.tekora.block.entity.blocks.machines.IrregularModel;
 
 public abstract class Cable extends IrregularModel {
     public Cable(float strength) {

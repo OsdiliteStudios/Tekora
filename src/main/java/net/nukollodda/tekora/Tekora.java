@@ -43,8 +43,8 @@ public class Tekora {
 
         TekoraCreativeModTab.register(modEventBus);
 
-        TekoraFluids.register(modEventBus);
         TekoraFluidTypes.register(modEventBus);
+        TekoraFluids.register(modEventBus);
 
         TekoraRecipes.register(modEventBus);
 
@@ -187,8 +187,21 @@ public class Tekora {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_CHLORINE.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_CHLORINE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROGEN_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_NITROGEN_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_OXYGEN_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_FLUORINE_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_CHLORINE_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_STEAM.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_MERCURY_FLUID.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROGEN_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_NITROGEN_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_OXYGEN_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_FLUORINE_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_CHLORINE_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_STEAM.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_MERCURY_FLUID.get(), RenderType.translucent());
 
             MenuScreens.register(TekoraMenuTypes.ALLOY_FURNACE_MENU.get(), AlloyFurnaceScreen::new);
             MenuScreens.register(TekoraMenuTypes.INFUSION_FURNACE_MENU.get(), InfusionFurnaceScreen::new);

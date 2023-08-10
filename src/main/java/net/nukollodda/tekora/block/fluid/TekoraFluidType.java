@@ -8,26 +8,36 @@ import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidType;
+import net.nukollodda.tekora.block.fluid.data.TekoraFluidData;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import java.util.function.Consumer;
 
-public class BaseFluidType extends FluidType {
+public class TekoraFluidType extends FluidType {
     private final ResourceLocation stillTexture;
     private final ResourceLocation flowingTexture;
     private final ResourceLocation overlayTexture;
     private final int tintColor;
     private final Vector3f fogColor;
+    private final TekoraFluidData fluidData;
+    private final boolean isGas;
 
-    public BaseFluidType(final ResourceLocation stillTexture, final ResourceLocation flowingTexture, final ResourceLocation overlayTexture,
-                          final int tintColor, final Vector3f fogColor, final Properties properties) {
+    public TekoraFluidType(final ResourceLocation stillTexture, final ResourceLocation flowingTexture, final ResourceLocation overlayTexture,
+                           final int tintColor, final Vector3f fogColor, final Properties properties, final TekoraFluidData data, final boolean isGas) {
         super(properties);
         this.stillTexture = stillTexture;
         this.flowingTexture = flowingTexture;
         this.overlayTexture = overlayTexture;
         this.tintColor = tintColor;
         this.fogColor = fogColor;
+        this.fluidData = data;
+        this.isGas = isGas;
+
+    }
+
+    public boolean isGas() {
+        return isGas;
     }
 
     public ResourceLocation getStillTexture() {
@@ -48,6 +58,14 @@ public class BaseFluidType extends FluidType {
 
     public Vector3f getFogColor() {
         return fogColor;
+    }
+
+    public TekoraFluidData getFluidData() {
+        return fluidData;
+    }
+
+    public float getSpecificHeat() {
+        return fluidData.getSpecificHeat(isGas);
     }
 
     @Override

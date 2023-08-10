@@ -18,6 +18,7 @@ import net.nukollodda.tekora.block.entity.blocks.machines.Crusher;
 import net.nukollodda.tekora.block.entity.blocks.machines.ElectricFurnace;
 import net.nukollodda.tekora.block.entity.blocks.machines.InfusionFurnace;
 import net.nukollodda.tekora.block.fluid.TekoraFluids;
+import net.nukollodda.tekora.block.fluid.TekoraLiquidBlock;
 import net.nukollodda.tekora.item.TekoraItems;
 
 import java.util.function.Supplier;
@@ -196,10 +197,23 @@ public class TekoraBlocks {
     public static final RegistryObject<Block> CRUSHER = registerBlock("crusher", Crusher::new);
     public static final RegistryObject<Block> ELECTRIC_FURNACE = registerBlock("electric_blast_furnace", ElectricFurnace::new);
 
-
     public static final RegistryObject<Block> INFINITE_BATTERY = registerBlock("infinite_battery", InfiniteBattery::new);
-    public static final RegistryObject<LiquidBlock> CHLORINE_BLOCK = BLOCKS.register("chlorine_block",
-            () -> new LiquidBlock(TekoraFluids.SOURCE_CHLORINE, BlockBehaviour.Properties.copy(Blocks.WATER)));
+
+
+    public static final RegistryObject<LiquidBlock> HYDROGEN_GAS_BLOCK = BLOCKS.register("hydrogen_gas_block",
+            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_HYDROGEN_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> NITROGEN_GAS_BLOCK = BLOCKS.register("nitrogen_gas_block",
+            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_NITROGEN_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> OXYGEN_GAS_BLOCK = BLOCKS.register("oxygen_gas_block",
+            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_OXYGEN_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> FLUORINE_GAS_BLOCK = BLOCKS.register("fluorine_gas_block",
+            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_FLUORINE_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> CHLORINE_GAS_BLOCK = BLOCKS.register("chlorine_gas_block",
+            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_CHLORINE_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> STEAM_BLOCK = BLOCKS.register("steam_block",
+            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_STEAM, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> MERCURY_FLUID_BLOCK = BLOCKS.register("mercury_fluid_block",
+            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_MERCURY_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         return registerBlock(name, block, false);

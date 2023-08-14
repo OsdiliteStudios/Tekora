@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:barium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/barium"
+    },
+    {
+      "tag": "forge:ingots/barium"
+    },
+    {
+      "tag": "forge:ingots/barium"
+    },
+    {
+      "tag": "forge:ingots/barium"
+    },
+    {
+      "tag": "forge:ingots/barium"
+    },
+    {
+      "tag": "forge:ingots/barium"
+    },
+    {
+      "tag": "forge:ingots/barium"
+    },
+    {
+      "tag": "forge:ingots/barium"
+    },
+    {
+      "tag": "forge:ingots/barium"
+    }
+  ],
+  "result": {
+    "item": "tekora:barium_block"
+  }
+}

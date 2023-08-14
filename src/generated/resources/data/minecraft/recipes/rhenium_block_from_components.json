@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:rhenium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/rhenium"
+    },
+    {
+      "tag": "forge:ingots/rhenium"
+    },
+    {
+      "tag": "forge:ingots/rhenium"
+    },
+    {
+      "tag": "forge:ingots/rhenium"
+    },
+    {
+      "tag": "forge:ingots/rhenium"
+    },
+    {
+      "tag": "forge:ingots/rhenium"
+    },
+    {
+      "tag": "forge:ingots/rhenium"
+    },
+    {
+      "tag": "forge:ingots/rhenium"
+    },
+    {
+      "tag": "forge:ingots/rhenium"
+    }
+  ],
+  "result": {
+    "item": "tekora:rhenium_block"
+  }
+}

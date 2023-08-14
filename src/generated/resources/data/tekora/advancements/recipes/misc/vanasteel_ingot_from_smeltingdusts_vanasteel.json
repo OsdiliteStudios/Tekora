@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/vanasteel": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/vanasteel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:vanasteel_ingot_from_smeltingdusts_vanasteel"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/vanasteel",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:vanasteel_ingot_from_smeltingdusts_vanasteel"
+    ]
+  },
+  "sends_telemetry_event": false
+}

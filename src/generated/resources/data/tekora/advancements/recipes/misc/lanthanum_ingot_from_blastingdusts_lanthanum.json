@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/lanthanum": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/lanthanum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:lanthanum_ingot_from_blastingdusts_lanthanum"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/lanthanum",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:lanthanum_ingot_from_blastingdusts_lanthanum"
+    ]
+  },
+  "sends_telemetry_event": false
+}

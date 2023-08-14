@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "arsenic_piece",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/arsenic"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:arsenic_piece"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:tin_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/tin"
+    },
+    {
+      "tag": "forge:ingots/tin"
+    },
+    {
+      "tag": "forge:ingots/tin"
+    },
+    {
+      "tag": "forge:ingots/tin"
+    },
+    {
+      "tag": "forge:ingots/tin"
+    },
+    {
+      "tag": "forge:ingots/tin"
+    },
+    {
+      "tag": "forge:ingots/tin"
+    },
+    {
+      "tag": "forge:ingots/tin"
+    },
+    {
+      "tag": "forge:ingots/tin"
+    }
+  ],
+  "result": {
+    "item": "tekora:tin_block"
+  }
+}

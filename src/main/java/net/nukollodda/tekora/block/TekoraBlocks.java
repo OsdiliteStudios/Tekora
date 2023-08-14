@@ -18,7 +18,8 @@ import net.nukollodda.tekora.block.entity.blocks.machines.Crusher;
 import net.nukollodda.tekora.block.entity.blocks.machines.ElectricFurnace;
 import net.nukollodda.tekora.block.entity.blocks.machines.InfusionFurnace;
 import net.nukollodda.tekora.block.fluid.TekoraFluids;
-import net.nukollodda.tekora.block.fluid.TekoraLiquidBlock;
+import net.nukollodda.tekora.block.fluid.blocks.TekoraGasBlock;
+import net.nukollodda.tekora.block.fluid.blocks.TekoraLiquidBlock;
 import net.nukollodda.tekora.item.TekoraItems;
 
 import java.util.function.Supplier;
@@ -28,15 +29,15 @@ public class TekoraBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, Tekora.MODID);
 
     public static final RegistryObject<Block> BORAX_BLOCK = registerBlock("borax_block",
-            () -> new ExperienceBlock(2f,2f, Blocks.CLAY, SoundType.SAND, 1));
+            () -> new ExperienceBlock(2f,2f, Blocks.CLAY, SoundType.SAND));
     public static final RegistryObject<Block> EPSOMITE_BLOCK = registerBlock("epsomite_block",
-            () -> new ExperienceBlock(2f,2f, Blocks.CLAY, SoundType.SAND, 1));
+            () -> new ExperienceBlock(2f,2f, Blocks.CLAY, SoundType.SAND));
     public static final RegistryObject<Block> SALT_BLOCK = registerBlock("salt_block",
-            () -> new ExperienceBlock(2f,2f, Blocks.CLAY, SoundType.SAND, 1));
+            () -> new ExperienceBlock(2f,2f, Blocks.CLAY, SoundType.SAND));
     public static final RegistryObject<Block> EVAPORITE = registerBlock("evaporite",
-            () -> new ExperienceBlock(4f,3f, Blocks.STONE, 1));
+            () -> new ExperienceBlock(4f,3f, Blocks.STONE));
     public static final RegistryObject<Block> LIMESTONE = registerBlock("limestone",
-            () -> new ExperienceBlock(4f,3f, Blocks.STONE, 1));
+            () -> new ExperienceBlock(4f,3f, Blocks.STONE));
 
 
     public static final RegistryObject<Block> ALUMINUM_BLOCK = registerBlock("aluminum_block", () -> new BasicBlock(3f));
@@ -100,96 +101,96 @@ public class TekoraBlocks {
 
 
     public static final RegistryObject<Block> APATITE_ORE = registerBlock("apatite_ore",
-            () -> new ExperienceBlock(5f,3f, UniformInt.of(2, 6), 2));
+            () -> new ExperienceBlock(5f,3f, UniformInt.of(2, 6)));
     public static final RegistryObject<Block> CALCITE_APATITE_ORE = registerBlock("calcite_apatite_ore",
-            () -> new ExperienceBlock(5f,3f, SoundType.CALCITE, UniformInt.of(2, 6), 2));
+            () -> new ExperienceBlock(5f,3f, SoundType.CALCITE, UniformInt.of(2, 6)));
     public static final RegistryObject<Block> DEEPSLATE_APATITE_ORE = registerBlock("deepslate_apatite_ore",
-            () -> new ExperienceBlock(6.5f,3.5f, SoundType.DEEPSLATE, UniformInt.of(2, 6), 2));
+            () -> new ExperienceBlock(6.5f,3.5f, SoundType.DEEPSLATE, UniformInt.of(2, 6)));
     public static final RegistryObject<Block> GRANITE_APATITE_ORE = registerBlock("granite_apatite_ore",
-            () -> new ExperienceBlock(5f,3f, UniformInt.of(2, 6), 2));
+            () -> new ExperienceBlock(5f,3f, UniformInt.of(2, 6)));
     public static final RegistryObject<Block> AQUAMARINE_ORE = registerBlock("aquamarine_ore",
-            () -> new ExperienceBlock(7f,4.5f, UniformInt.of(1, 4), 2));
+            () -> new ExperienceBlock(7f,4.5f, UniformInt.of(1, 4)));
     public static final RegistryObject<Block> DEEPSLATE_AQUAMARINE_ORE = registerBlock("deepslate_aquamarine_ore",
-            () -> new ExperienceBlock(8.5f,4.5f, SoundType.DEEPSLATE, UniformInt.of(1, 4), 2));
+            () -> new ExperienceBlock(8.5f,4.5f, SoundType.DEEPSLATE, UniformInt.of(1, 4)));
     public static final RegistryObject<Block> BAUXITE_ORE = registerBlock("bauxite_ore",
-            () -> new ExperienceBlock(2.25f,1.3f, UniformInt.of(1, 3), 1));
+            () -> new ExperienceBlock(2.25f,1.3f, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> DEEPSLATE_BAUXITE_ORE = registerBlock("deepslate_bauxite_ore",
-            () -> new ExperienceBlock(3.75f,1.7f, SoundType.DEEPSLATE, UniformInt.of(1, 3), 1));
+            () -> new ExperienceBlock(3.75f,1.7f, SoundType.DEEPSLATE, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> SAND_BAUXITE_ORE = registerBlock("sand_bauxite_ore",
             () -> new ExperienceBlock(1f,1.2f, Blocks.SAND, SoundType.SAND,
-                    UniformInt.of(1, 3), 1));
+                    UniformInt.of(1, 3)));
     public static final RegistryObject<Block> CASSITERITE_ORE = registerBlock("cassiterite_ore",
-            () -> new ExperienceBlock(4f,3f, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(4f,3f, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> DEEPSLATE_CASSITERITE_ORE = registerBlock("deepslate_cassiterite_ore",
-            () -> new ExperienceBlock(6.5f,3f, SoundType.DEEPSLATE, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(6.5f,3f, SoundType.DEEPSLATE, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> CHROMITE_ORE = registerBlock("chromite_ore",
-            () -> new ExperienceBlock(5.5f,3f, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(5.5f,3f, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> BASALT_CHROMITE_ORE = registerBlock("basalt_chromite_ore",
-            () -> new ExperienceBlock(5.5f,3f, SoundType.BASALT, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(5.5f,3f, SoundType.BASALT, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> DEEPSLATE_CHROMITE_ORE = registerBlock("deepslate_chromite_ore",
-            () -> new ExperienceBlock(7f,3.5f, SoundType.DEEPSLATE, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(7f,3.5f, SoundType.DEEPSLATE, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> NETHER_BASALT_CHROMITE_ORE = registerBlock("nether_basalt_chromite_ore",
-            () -> new ExperienceBlock(5.5f,3f, SoundType.BASALT, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(5.5f,3f, SoundType.BASALT, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> TUFF_CHROMITE_ORE = registerBlock("tuff_chromite_ore",
-            () -> new ExperienceBlock(5.5f,3f, SoundType.TUFF, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(5.5f,3f, SoundType.TUFF, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> CINNABAR_ORE = registerBlock("cinnabar_ore",
-            () -> new ExperienceBlock(1.25f,1.0f, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(1.25f,1.0f, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> DEEPSLATE_CINNABAR_ORE = registerBlock("deepslate_cinnabar_ore",
-            () -> new ExperienceBlock(2.25f,1.2f, SoundType.DEEPSLATE, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(2.25f,1.2f, SoundType.DEEPSLATE, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> GALENA_ORE = registerBlock("galena_ore",
-            () -> new ExperienceBlock(2.68f,1.5f, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(2.68f,1.5f, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> BASALT_GALENA_ORE = registerBlock("basalt_galena_ore",
-            () -> new ExperienceBlock(2.68f,1.5f, SoundType.BASALT, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(2.68f,1.5f, SoundType.BASALT, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> CALCITE_GALENA_ORE = registerBlock("calcite_galena_ore",
-            () -> new ExperienceBlock(2.68f,1.5f, SoundType.CALCITE, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(2.68f,1.5f, SoundType.CALCITE, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> DEEPSLATE_GALENA_ORE = registerBlock("deepslate_galena_ore",
-            () -> new ExperienceBlock(4.18f,2f, SoundType.DEEPSLATE, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(4.18f,2f, SoundType.DEEPSLATE, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> TUFF_GALENA_ORE = registerBlock("tuff_galena_ore",
-            () -> new ExperienceBlock(2.68f,1.5f, SoundType.TUFF, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(2.68f,1.5f, SoundType.TUFF, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> GARNET_ORE = registerBlock("garnet_ore",
-            () -> new ExperienceBlock(7f,4f, UniformInt.of(1, 4), 2));
+            () -> new ExperienceBlock(7f,4f, UniformInt.of(1, 4)));
     public static final RegistryObject<Block> DEEPSLATE_GARNET_ORE = registerBlock("deepslate_garnet_ore",
-            () -> new ExperienceBlock(8.5f,4.5f, SoundType.DEEPSLATE, UniformInt.of(1, 4), 2));
+            () -> new ExperienceBlock(8.5f,4.5f, SoundType.DEEPSLATE, UniformInt.of(1, 4)));
     public static final RegistryObject<Block> GRAPHITE_ORE = registerBlock("graphite_ore",
-            () -> new ExperienceBlock(5f,1.3f, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(5f,1.3f, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> DEEPSLATE_GRAPHITE_ORE = registerBlock("deepslate_graphite_ore",
-            () -> new ExperienceBlock(1.5f,1.7f, SoundType.DEEPSLATE, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(1.5f,1.7f, SoundType.DEEPSLATE, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> TUFF_GRAPHITE_ORE = registerBlock("tuff_graphite_ore",
-            () -> new ExperienceBlock(5f,1.3f, SoundType.TUFF, UniformInt.of(1, 2), 1));
+            () -> new ExperienceBlock(5f,1.3f, SoundType.TUFF, UniformInt.of(1, 2)));
     public static final RegistryObject<Block> PENTLANDITE_ORE = registerBlock("pentlandite_ore",
-            () -> new ExperienceBlock(4.8f,2.5f, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(4.8f,2.5f, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> BASALT_PENTLANDITE_ORE = registerBlock("basalt_pentlandite_ore",
-            () -> new ExperienceBlock(4.8f,2.5f, SoundType.BASALT, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(4.8f,2.5f, SoundType.BASALT, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> DEEPSLATE_PENTLANDITE_ORE = registerBlock("deepslate_pentlandite_ore",
-            () -> new ExperienceBlock(6.3f,3.5f, SoundType.DEEPSLATE, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(6.3f,3.5f, SoundType.DEEPSLATE, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> GRANITE_PENTLANDITE_ORE = registerBlock("granite_pentlandite_ore",
-            () -> new ExperienceBlock(4.8f,2.5f, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(4.8f,2.5f, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> TUFF_PENTLANDITE_ORE = registerBlock("tuff_pentlandite_ore",
-            () -> new ExperienceBlock(4.8f,2.5f, SoundType.TUFF, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(4.8f,2.5f, SoundType.TUFF, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> RUBY_ORE = registerBlock("ruby_ore",
-            () -> new ExperienceBlock(9f,4.5f, UniformInt.of(1, 4), 2));
+            () -> new ExperienceBlock(9f,4.5f, UniformInt.of(1, 4)));
     public static final RegistryObject<Block> DEEPSLATE_RUBY_ORE = registerBlock("deepslate_ruby_ore",
-            () -> new ExperienceBlock(15f,5.6f, SoundType.DEEPSLATE, UniformInt.of(1, 4), 2));
+            () -> new ExperienceBlock(15f,5.6f, SoundType.DEEPSLATE, UniformInt.of(1, 4)));
     public static final RegistryObject<Block> SAPPHIRE_ORE = registerBlock("sapphire_ore",
-            () -> new ExperienceBlock(9f,4.5f, UniformInt.of(1, 4), 2));
+            () -> new ExperienceBlock(9f,4.5f, UniformInt.of(1, 4)));
     public static final RegistryObject<Block> DEEPSLATE_SAPPHIRE_ORE = registerBlock("deepslate_sapphire_ore",
-            () -> new ExperienceBlock(15f,5.6f, SoundType.DEEPSLATE, UniformInt.of(1, 4), 2));
+            () -> new ExperienceBlock(15f,5.6f, SoundType.DEEPSLATE, UniformInt.of(1, 4)));
     public static final RegistryObject<Block> SILVER_ORE = registerBlock("silver_ore",
-            () -> new ExperienceBlock(2f,1.4f, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(2f,1.4f, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> DEEPSLATE_SILVER_ORE = registerBlock("deepslate_silver_ore",
-            () -> new ExperienceBlock(3.5f,1.5f, SoundType.DEEPSLATE, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(3.5f,1.5f, SoundType.DEEPSLATE, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> URANINITE_ORE = registerBlock("uraninite_ore",
-            () -> new ExperienceBlock(5.5f,3f, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(5.5f,3f, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> DEEPSLATE_URANINITE_ORE = registerBlock("deepslate_uraninite_ore",
-            () -> new ExperienceBlock(7f,3.5f, SoundType.DEEPSLATE, UniformInt.of(1, 3), 2));
+            () -> new ExperienceBlock(7f,3.5f, SoundType.DEEPSLATE, UniformInt.of(1, 3)));
     public static final RegistryObject<Block> ZIRCON_ORE = registerBlock("zircon_ore",
-            () -> new ExperienceBlock(6.75f,3.5f, 2));
+            () -> new ExperienceBlock(6.75f,3.5f));
     public static final RegistryObject<Block> DEEPSLATE_ZIRCON_ORE = registerBlock("deepslate_zircon_ore",
-            () -> new ExperienceBlock(8.25f,4.5f, SoundType.DEEPSLATE, 2));
+            () -> new ExperienceBlock(8.25f,4.5f, SoundType.DEEPSLATE));
     public static final RegistryObject<Block> GRANITE_ZIRCON_ORE = registerBlock("granite_zircon_ore",
-            () -> new ExperienceBlock(6.75f,4.5f, 2));
-    public static final RegistryObject<Block> SANSTONE_ZIRCON_ORE = registerBlock("sandstone_zircon_ore",
-            () -> new ExperienceBlock(4f,2.5f, 2));
+            () -> new ExperienceBlock(6.75f,4.5f));
+    public static final RegistryObject<Block> SANDSTONE_ZIRCON_ORE = registerBlock("sandstone_zircon_ore",
+            () -> new ExperienceBlock(4f,2.5f));
 
 
     public static final RegistryObject<Block> ALLOY_FURNACE = registerBlock("alloy_furnace", AlloyFurnace::new);
@@ -199,21 +200,30 @@ public class TekoraBlocks {
 
     public static final RegistryObject<Block> INFINITE_BATTERY = registerBlock("infinite_battery", InfiniteBattery::new);
 
-
-    public static final RegistryObject<LiquidBlock> HYDROGEN_GAS_BLOCK = BLOCKS.register("hydrogen_gas_block",
-            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_HYDROGEN_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
-    public static final RegistryObject<LiquidBlock> NITROGEN_GAS_BLOCK = BLOCKS.register("nitrogen_gas_block",
-            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_NITROGEN_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
-    public static final RegistryObject<LiquidBlock> OXYGEN_GAS_BLOCK = BLOCKS.register("oxygen_gas_block",
-            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_OXYGEN_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
-    public static final RegistryObject<LiquidBlock> FLUORINE_GAS_BLOCK = BLOCKS.register("fluorine_gas_block",
-            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_FLUORINE_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
-    public static final RegistryObject<LiquidBlock> CHLORINE_GAS_BLOCK = BLOCKS.register("chlorine_gas_block",
-            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_CHLORINE_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
-    public static final RegistryObject<LiquidBlock> STEAM_BLOCK = BLOCKS.register("steam_block",
-            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_STEAM, BlockBehaviour.Properties.copy(Blocks.WATER)));
-    public static final RegistryObject<LiquidBlock> MERCURY_FLUID_BLOCK = BLOCKS.register("mercury_fluid_block",
+    // tekora fluids
+    public static final RegistryObject<LiquidBlock> ALUMINUM_MOLTEN_BLOCK = BLOCKS.register("molten_aluminum",
+            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_ALUMINUM_MOLTEN, BlockBehaviour.Properties.copy(Blocks.WATER),
+                    TekoraBlocks.ALUMINUM_BLOCK.get()));
+    public static final RegistryObject<LiquidBlock> GALLIUM_FLUID_BLOCK = BLOCKS.register("gallium_fluid",
+            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_GALLIUM_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER),
+                    TekoraBlocks.GALLIUM_BLOCK.get()));
+    public static final RegistryObject<LiquidBlock> MERCURY_FLUID_BLOCK = BLOCKS.register("mercury_fluid",
             () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_MERCURY_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER)));
+
+
+    // tekora gases
+    public static final RegistryObject<LiquidBlock> HYDROGEN_GAS_BLOCK = BLOCKS.register("hydrogen_gas",
+            () -> new TekoraGasBlock(TekoraFluids.SOURCE_HYDROGEN_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> NITROGEN_GAS_BLOCK = BLOCKS.register("nitrogen_gas",
+            () -> new TekoraGasBlock(TekoraFluids.SOURCE_NITROGEN_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> OXYGEN_GAS_BLOCK = BLOCKS.register("oxygen_gas",
+            () -> new TekoraGasBlock(TekoraFluids.SOURCE_OXYGEN_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> FLUORINE_GAS_BLOCK = BLOCKS.register("fluorine_gas",
+            () -> new TekoraGasBlock(TekoraFluids.SOURCE_FLUORINE_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> CHLORINE_GAS_BLOCK = BLOCKS.register("chlorine_gas",
+            () -> new TekoraGasBlock(TekoraFluids.SOURCE_CHLORINE_GAS, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> STEAM_BLOCK = BLOCKS.register("steam",
+            () -> new TekoraGasBlock(TekoraFluids.SOURCE_STEAM, BlockBehaviour.Properties.copy(Blocks.WATER), (LiquidBlock)Blocks.WATER, Blocks.ICE));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         return registerBlock(name, block, false);

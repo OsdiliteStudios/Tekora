@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "tekora:apatite_ore",
-    "tekora:calcite_apatite_ore",
-    "tekora:deepslate_apatite_ore",
-    "tekora:granite_apatite_ore"
-  ]
-}

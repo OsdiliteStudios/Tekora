@@ -5,14 +5,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 
 public class TekoraFluidData {
-    private final Block solidForm;
-    private final LiquidBlock liquidForm;
-    private final LiquidBlock gasForm;
     private final int liquidSpecificHeat;
     private final float gasSpecificHeat;
-    private final int vapHeat;
-    private final int fusHeat;
-    private final float acidity;
+    private final float vapHeat;
+    private final float fusHeat;
     private final float melting;
     private final float boilingCoefficient;
     private final float boilingPower;
@@ -20,16 +16,14 @@ public class TekoraFluidData {
     private final boolean isMetallic;
     private final int fluidDmg;
     private final MobEffect[] effects;
+    private int liquidColor;
+    private int gasColor;
 
     public TekoraFluidData(Properties properties) {
-        this.solidForm = properties.solidForm;
-        this.liquidForm = properties.liquidForm;
-        this.gasForm = properties.gasForm;
         this.liquidSpecificHeat = properties.liquidSpecificHeat;
         this.gasSpecificHeat = properties.gasSpecificHeat;
         this.vapHeat = properties.vapHeat;
         this.fusHeat = properties.fusHeat;
-        this.acidity = properties.acidity;
         this.melting = properties.melting;
         this.boilingCoefficient = properties.boilingCoefficient;
         this.boilingPower = properties.boilingPower;
@@ -37,34 +31,20 @@ public class TekoraFluidData {
         this.isMetallic = properties.isMetallic;
         this.fluidDmg = properties.fluidDmg;
         this.effects = properties.effects;
-    }
-
-    public Block getSolidForm() {
-        return solidForm;
-    }
-
-    public LiquidBlock getLiquidForm() {
-        return liquidForm;
-    }
-
-    public LiquidBlock getGasForm() {
-        return gasForm;
+        this.liquidColor = properties.liquidColor;
+        this.gasColor = properties.gasColor;
     }
 
     public float getSpecificHeat(boolean isGas) {
         return isGas ? gasSpecificHeat : liquidSpecificHeat;
     }
 
-    public int getFusionHeat() {
+    public float getFusionHeat() {
         return fusHeat;
     }
 
-    public int getVaporizationHeat() {
+    public float getVaporizationHeat() {
         return vapHeat;
-    }
-
-    public float getAcidity() {
-        return acidity;
     }
 
     public float getMeltingPoint() {
@@ -93,26 +73,28 @@ public class TekoraFluidData {
         // the time period and amplification of the effects
     }
 
+    public int getLiquidColor() {
+        return this.liquidColor;
+    }
+
+    public int getGasColor() {
+        return this.gasColor;
+    }
+
     public static final class Properties {
         /* All temperature values are measured in kelvins
          * specific heat is measured in J/L K
          * heat of fusion and vaporization are measured in J/L
          */
 
-        // determines biome based conditions
-        private Block solidForm = null;
-        private LiquidBlock liquidForm = null;
-        private LiquidBlock gasForm;
-
         // determines energy generated in Tekora reactors
-        // should all be measured in J/L
+        // should all be measured in J/L K
         private int liquidSpecificHeat = 4170;
         private float gasSpecificHeat = 1.996f;
-        private int fusHeat = 333000;
-        private int vapHeat = 2250000;
 
-        // determines whether it can flow throw a pipe
-        private float acidity = 7;
+        // the enthalpies of fusion and heat needs to be set to kJ/L K
+        private float fusHeat = 333;
+        private float vapHeat = 2250;
 
         // more biome related vars
         private float melting = 273;
@@ -126,47 +108,40 @@ public class TekoraFluidData {
         private int fluidDmg = 0;
         private MobEffect[] effects = null;
 
-        public Properties setSolidForm(Block solidForm) {
-            this.solidForm = solidForm;
-            return this;
-        }
+        // if the acidity is too high, non-noble/non-glass pipes will break when the fluid passes through it
+        private float acidity; // measured in pKa (acid dissociation constant)
 
-        public Properties setLiquidForm(LiquidBlock liquidForm) {
-            this.liquidForm = liquidForm;
-            return this;
-        }
+        // basicity has a high tendency to kill organisms
+        private float basicity; // measured in pKb (base dissociation constant)
 
-        public Properties setGasForm(LiquidBlock gasForm) {
-            this.gasForm = gasForm;
-            return this;
-        }
+        private int liquidColor;
+        private int gasColor;
+
+
+        /* Specific heat (Cp) is the amount of energy, joules,
+         * required to increase a liter of a material to a kelvin higher
+         */
 
         public Properties setSpecificHeatOfLiquid(int liquidSpecificHeat) {
             this.liquidSpecificHeat = liquidSpecificHeat;
             return this;
         }
 
-        /* Specific heat (Cp) is the amount of energy, joules,
-         * required to increase a liter of a material to a kelvin higher
-         */
-
         public Properties setSpecificHeatOfGas(float gasSpecificHeat) {
             this.gasSpecificHeat = gasSpecificHeat;
             return this;
         }
+        /* Note: The heat of vaporization and fusion should be set
+         * from J/L to kJ/L for more efficient storage
+         */
 
-        public Properties setHeatOfVaporization(int vapHeat) {
+        public Properties setHeatOfVaporization(float vapHeat) {
             this.vapHeat = vapHeat;
             return this;
         }
 
-        public Properties setHeatOfFusion(int fusHeat) {
+        public Properties setHeatOfFusion(float fusHeat) {
             this.fusHeat = fusHeat;
-            return this;
-        }
-
-        public Properties setAcidity(float acidity) {
-            this.acidity = acidity;
             return this;
         }
 
@@ -185,6 +160,7 @@ public class TekoraFluidData {
             return this;
         }
 
+        // The substances boiling point in outer space
         public Properties setLowestPossibleBoilingPoint(float boilingLowest) {
             this.boilingLowest = boilingLowest;
             return this;
@@ -195,6 +171,7 @@ public class TekoraFluidData {
             return this;
         }
 
+        // for temporary purposes
         public Properties setDefiniteBoilingPoint(float boilingPoint) {
             this.boilingCoefficient = 0;
             this.boilingPower = 1;
@@ -209,6 +186,32 @@ public class TekoraFluidData {
 
         public Properties addEffects(MobEffect[] effects) {
             this.effects = effects;
+            return this;
+        }
+
+        public Properties setAcidity(float acidity) {
+            this.acidity = acidity;
+            return this;
+        }
+
+        public Properties setBasicity(float basicity) {
+            this.basicity = basicity;
+            return this;
+        }
+
+        public Properties setColor(int color) {
+            this.liquidColor = color;
+            this.gasColor = color;
+            return this;
+        }
+
+        public Properties setLiquidColor(int color) {
+            this.liquidColor = color;
+            return this;
+        }
+
+        public Properties setGasColor(int color) {
+            this.gasColor = color;
             return this;
         }
     }

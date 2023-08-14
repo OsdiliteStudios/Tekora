@@ -13,42 +13,34 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ExperienceBlock extends DropExperienceBlock {
-    private final int tier;
-    public ExperienceBlock(float strength, float destroyTime, Block material, SoundType sound, UniformInt uniform, int tier) {
+    public ExperienceBlock(float strength, float destroyTime, Block material, SoundType sound, UniformInt uniform) {
         super(BlockBehaviour.Properties.copy(material).requiresCorrectToolForDrops()
                 .strength(destroyTime, strength).sound(sound), uniform);
-        this.tier = tier;
     }
 
-    public ExperienceBlock(float strength, float destroyTime, Block material, SoundType sound, int tier) {
-        this(strength, destroyTime, material, sound, UniformInt.of(1, 5), tier);
+    public ExperienceBlock(float strength, float destroyTime, Block material, SoundType sound) {
+        this(strength, destroyTime, material, sound, UniformInt.of(1, 5));
     }
 
-    public ExperienceBlock(float strength, float destroyTime, SoundType sound, UniformInt uniform, int tier) {
-        this(strength, destroyTime, Blocks.STONE, sound, uniform, tier);
+    public ExperienceBlock(float strength, float destroyTime, SoundType sound, UniformInt uniform) {
+        this(strength, destroyTime, Blocks.STONE, sound, uniform);
     }
 
-    public ExperienceBlock(float strength, float destroyTime, Block material, UniformInt uniform, int tier) {
-        this(strength, destroyTime, material, SoundType.STONE, uniform, tier);
+    public ExperienceBlock(float strength, float destroyTime, Block material, UniformInt uniform) {
+        this(strength, destroyTime, material, SoundType.STONE, uniform);
     }
-    public ExperienceBlock(float strength, float destroyTime, Block material, int tier) {
-        this(strength, destroyTime, material, SoundType.STONE, tier);
+    public ExperienceBlock(float strength, float destroyTime, Block material) {
+        this(strength, destroyTime, material, SoundType.STONE);
     }
-    public ExperienceBlock(float strength, float destroyTime, SoundType sound, int tier) {
-        this(strength, destroyTime, Blocks.STONE, sound, tier);
-    }
-
-    public ExperienceBlock(float strength, float destroyTime, UniformInt uniform, int tier) {
-        this(strength, destroyTime, Blocks.STONE, uniform, tier);
+    public ExperienceBlock(float strength, float destroyTime, SoundType sound) {
+        this(strength, destroyTime, Blocks.STONE, sound);
     }
 
-    public ExperienceBlock(float strength, float destroyTime, int tier) {
-        this(strength, destroyTime, Blocks.STONE, tier);
+    public ExperienceBlock(float strength, float destroyTime, UniformInt uniform) {
+        this(strength, destroyTime, Blocks.STONE, uniform);
     }
 
-    public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-        if (player.getInventory().getSelected().getItem() instanceof PickaxeItem tieredItem)
-            return tieredItem.getTier().getLevel() >= tier;
-        return false;
+    public ExperienceBlock(float strength, float destroyTime) {
+        this(strength, destroyTime, Blocks.STONE);
     }
 }

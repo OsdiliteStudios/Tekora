@@ -27,6 +27,10 @@ public class TekoraFluids {
             () -> new ForgeFlowingFluid.Source(TekoraFluids.CHLORINE_GAS_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_STEAM = FLUIDS.register("steam",
             () -> new ForgeFlowingFluid.Source(TekoraFluids.STEAM_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> SOURCE_ALUMINUM_MOLTEN = FLUIDS.register("molten_aluminum",
+            () -> new ForgeFlowingFluid.Source(TekoraFluids.MOLTEN_ALUMINUM_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> SOURCE_GALLIUM_FLUID = FLUIDS.register("gallium_fluid",
+            () -> new ForgeFlowingFluid.Source(TekoraFluids.GALLIUM_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_MERCURY_FLUID = FLUIDS.register("mercury_fluid",
             () -> new ForgeFlowingFluid.Source(TekoraFluids.MERCURY_FLUID_PROPERTIES));
 
@@ -43,6 +47,10 @@ public class TekoraFluids {
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.CHLORINE_GAS_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_STEAM = FLUIDS.register("flowing_steam",
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.STEAM_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_ALUMINUM_MOLTEN = FLUIDS.register("flowing_aluminum",
+            () -> new ForgeFlowingFluid.Flowing(TekoraFluids.MOLTEN_ALUMINUM_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_GALLIUM_FLUID = FLUIDS.register("flowing_gallium",
+            () -> new ForgeFlowingFluid.Flowing(TekoraFluids.GALLIUM_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_MERCURY_FLUID = FLUIDS.register("flowing_mercury",
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.MERCURY_FLUID_PROPERTIES));
 
@@ -66,6 +74,12 @@ public class TekoraFluids {
     public static final ForgeFlowingFluid.Properties STEAM_PROPERTIES = new ForgeFlowingFluid.Properties(
             TekoraFluidTypes.STEAM, SOURCE_STEAM, FLOWING_STEAM)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.STEAM_BLOCK);
+    public static final ForgeFlowingFluid.Properties MOLTEN_ALUMINUM_PROPERTIES = new ForgeFlowingFluid.Properties(
+            TekoraFluidTypes.MOLTEN_ALUMINUM, SOURCE_ALUMINUM_MOLTEN, FLOWING_ALUMINUM_MOLTEN)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.ALUMINUM_MOLTEN_BLOCK);
+    public static final ForgeFlowingFluid.Properties GALLIUM_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            TekoraFluidTypes.GALLIUM_FLUID, SOURCE_GALLIUM_FLUID, FLOWING_GALLIUM_FLUID)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.GALLIUM_FLUID_BLOCK);
     public static final ForgeFlowingFluid.Properties MERCURY_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             TekoraFluidTypes.MERCURY_FLUID, SOURCE_MERCURY_FLUID, FLOWING_MERCURY_FLUID)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.MERCURY_FLUID_BLOCK);

@@ -11,20 +11,12 @@ import org.jetbrains.annotations.NotNull;
 public abstract class IrregularModel extends MachineBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public IrregularModel(float strength, SoundType sound, int tier) {
-        super(strength, sound, tier);
-    }
-
-    public IrregularModel(float strength, int tier) {
-        super(strength, SoundType.STONE, tier);
-    }
-
     public IrregularModel(float strength, SoundType sound) {
-        super(strength, sound, 2);
+        super(strength, sound);
     }
 
     public IrregularModel(float strength) {
-        super(strength, 2);
+        super(strength, SoundType.STONE);
     }
 
     @Override

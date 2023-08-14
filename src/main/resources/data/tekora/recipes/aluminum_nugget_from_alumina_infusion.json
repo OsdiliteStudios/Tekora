@@ -1,0 +1,13 @@
+{
+  "type": "tekora:infusion",
+  "input": {
+    "item": "tekora:alumina"
+  },
+  "catalyst": {
+    "item": "minecraft:coal"
+  },
+  "output": {
+    "count": 3,
+    "item": "tekora:aluminum_nugget"
+  }
+}

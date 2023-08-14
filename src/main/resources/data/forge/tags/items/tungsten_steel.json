@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#forge:ingots/tungsten_steel",
-    "#forge:dusts/tungsten_steel",
-    "#forge:plates/tungsten_steel"
-  ]
-}

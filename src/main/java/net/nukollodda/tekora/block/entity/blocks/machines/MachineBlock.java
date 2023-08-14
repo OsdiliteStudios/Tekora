@@ -21,28 +21,12 @@ import org.jetbrains.annotations.Nullable;
 public abstract class MachineBlock extends BaseEntityBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    private final int mineTier;
-    public MachineBlock(float strength, SoundType sound, int tier) {
+    public MachineBlock(float strength, SoundType sound) {
         super(Properties.of()
                 .strength(strength).requiresCorrectToolForDrops().sound(sound).noOcclusion());
-        this.mineTier = tier;
     }
-    public MachineBlock(float strength, int tier) {
-        this(strength, SoundType.STONE, tier);
-    }
-
-    public MachineBlock(float strength, SoundType sound) {
-        this(strength, sound, 2);
-    }
-
     public MachineBlock(float strength) {
-        this(strength, 2);
-    }
-
-    public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-        if (player.getInventory().getSelected().getItem() instanceof PickaxeItem tieredItem)
-            return tieredItem.getTier().getLevel() >= mineTier;
-        return false;
+        this(strength, SoundType.STONE);
     }
 
     @Override

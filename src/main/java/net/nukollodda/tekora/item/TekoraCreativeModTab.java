@@ -143,7 +143,7 @@ public class TekoraCreativeModTab {
                         pOutput.accept(TekoraBlocks.ZIRCON_ORE.get());
                         pOutput.accept(TekoraBlocks.DEEPSLATE_ZIRCON_ORE.get());
                         pOutput.accept(TekoraBlocks.GRANITE_ZIRCON_ORE.get());
-                        pOutput.accept(TekoraBlocks.SANSTONE_ZIRCON_ORE.get());
+                        pOutput.accept(TekoraBlocks.SANDSTONE_ZIRCON_ORE.get());
                     }))).build());
 
     public static RegistryObject<CreativeModeTab> TEKORA_MINERALS = CREATIVE_MODE_TABS.register("tekora_minerals", () ->
@@ -538,7 +538,6 @@ public class TekoraCreativeModTab {
                         pOutput.accept(TekoraItems.SCANDIUM_OXIDE.get());
                         pOutput.accept(TekoraItems.SODIUM_OXIDE.get());
                         pOutput.accept(TekoraItems.STRONTIUM_OXIDE.get());
-                        pOutput.accept(TekoraItems.SODIUM_OXIDE.get());
                         pOutput.accept(TekoraItems.TERBIUM_OXIDE.get());
                         pOutput.accept(TekoraItems.THULIUM_OXIDE.get());
                         pOutput.accept(TekoraItems.TUNGSTEN_OXIDE.get());
@@ -618,7 +617,7 @@ public class TekoraCreativeModTab {
                         pOutput.accept(TekoraItems.BRONZE_PLATE.get());
                         pOutput.accept(TekoraItems.CHROMOLY_STEEL_PLATE.get());
                         pOutput.accept(TekoraItems.FERROBORON_PLATE.get());
-                        pOutput.accept(TekoraItems.GALVANZIED_STEEL_PLATE.get());
+                        pOutput.accept(TekoraItems.GALVANIZED_STEEL_PLATE.get());
                         pOutput.accept(TekoraItems.HSLA_STEEL_PLATE.get());
                         pOutput.accept(TekoraItems.INCONEL_PLATE.get());
                         pOutput.accept(TekoraItems.INVAR_PLATE.get());

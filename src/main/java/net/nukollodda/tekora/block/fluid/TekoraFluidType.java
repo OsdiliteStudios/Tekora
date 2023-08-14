@@ -7,6 +7,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.nukollodda.tekora.block.fluid.data.TekoraFluidData;
 import org.jetbrains.annotations.NotNull;
@@ -23,17 +24,24 @@ public class TekoraFluidType extends FluidType {
     private final TekoraFluidData fluidData;
     private final boolean isGas;
 
-    public TekoraFluidType(final ResourceLocation stillTexture, final ResourceLocation flowingTexture, final ResourceLocation overlayTexture,
-                           final int tintColor, final Vector3f fogColor, final Properties properties, final TekoraFluidData data, final boolean isGas) {
+    public TekoraFluidType(final ResourceLocation overlayTexture, final int tintColor,
+                           final Properties properties, final TekoraFluidData data, final boolean isGas) {
         super(properties);
-        this.stillTexture = stillTexture;
-        this.flowingTexture = flowingTexture;
+        this.stillTexture = isGas ? TekoraFluidTextures.GAS_RL : getTemperature() > 700 ? TekoraFluidTextures.LAVA_STILL_RL : TekoraFluidTextures.WATER_STILL_RL;
+        this.flowingTexture = isGas ? TekoraFluidTextures.GAS_RL : getTemperature() > 700 ? TekoraFluidTextures.LAVA_FLOWING_RL : TekoraFluidTextures.WATER_FLOWING_RL;
         this.overlayTexture = overlayTexture;
         this.tintColor = tintColor;
-        this.fogColor = fogColor;
+        this.fogColor = colorToVector(tintColor);
         this.fluidData = data;
         this.isGas = isGas;
 
+    }
+
+    private Vector3f colorToVector(int hexVal) {
+        int red = hexVal / 0x10000;
+        int green = (hexVal - (red * 0x10000)) / 0x100;
+        int blue = hexVal - ((red * 0x10000) + (green * 0x100));
+        return new Vector3f(red / 255f, green / 255f, blue / 255f);
     }
 
     public boolean isGas() {
@@ -83,6 +91,12 @@ public class TekoraFluidType extends FluidType {
             public ResourceLocation getOverlayTexture() {
                 return overlayTexture;
             }
+
+            @Override
+            public ResourceLocation getOverlayTexture(FluidStack stack) {
+                return overlayTexture;
+            }
+
             @Override
             public int getTintColor() {
                 return tintColor;

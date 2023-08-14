@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#forge:ingots/stainless_steel",
-    "#forge:dusts/stainless_steel",
-    "#forge:plates/stainless_steel"
-  ]
-}

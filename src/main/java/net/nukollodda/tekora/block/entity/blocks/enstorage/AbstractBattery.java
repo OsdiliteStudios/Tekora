@@ -23,14 +23,6 @@ public abstract class AbstractBattery extends BaseEntityBlock {
                 .lightLevel((blockState) -> 5));
     }
 
-
-    @Override
-    public boolean canHarvestBlock(BlockState state, BlockGetter level, BlockPos pos, Player player) {
-        if (player.getInventory().getSelected().getItem() instanceof PickaxeItem tieredItem)
-            return tieredItem.getTier().getLevel() >= 3;
-        return false;
-    }
-
     @Override
     public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
         return true;

@@ -426,7 +426,7 @@ public class TekoraItems {
     public static final RegistryObject<Item> COPPER_PLATE = ITEMS.register("copper_plate", TekoraItem::new);
     public static final RegistryObject<Item> COPPER_STEEL_PLATE = ITEMS.register("copper_steel_plate", TekoraItem::new);
     public static final RegistryObject<Item> FERROBORON_PLATE = ITEMS.register("ferroboron_plate", TekoraItem::new);
-    public static final RegistryObject<Item> GALVANZIED_STEEL_PLATE = ITEMS.register("galvanized_steel_plate", TekoraItem::new);
+    public static final RegistryObject<Item> GALVANIZED_STEEL_PLATE = ITEMS.register("galvanized_steel_plate", TekoraItem::new);
     public static final RegistryObject<Item> GOLD_PLATE = ITEMS.register("gold_plate", TekoraItem::new);
     public static final RegistryObject<Item> HSLA_STEEL_PLATE = ITEMS.register("hsla_steel_plate", TekoraItem::new);
     public static final RegistryObject<Item> INCONEL_PLATE = ITEMS.register("inconel_plate", TekoraItem::new);

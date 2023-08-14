@@ -193,7 +193,10 @@ public class Tekora {
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_FLUORINE_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_CHLORINE_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_STEAM.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_MERCURY_FLUID.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_ALUMINUM_MOLTEN.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_GALLIUM_FLUID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_MERCURY_FLUID.get(), RenderType.solid());
 
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROGEN_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_NITROGEN_GAS.get(), RenderType.translucent());
@@ -201,7 +204,10 @@ public class Tekora {
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_FLUORINE_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_CHLORINE_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_STEAM.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_MERCURY_FLUID.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_ALUMINUM_MOLTEN.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_GALLIUM_FLUID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_MERCURY_FLUID.get(), RenderType.solid());
 
             MenuScreens.register(TekoraMenuTypes.ALLOY_FURNACE_MENU.get(), AlloyFurnaceScreen::new);
             MenuScreens.register(TekoraMenuTypes.INFUSION_FURNACE_MENU.get(), InfusionFurnaceScreen::new);

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:lutetium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/lutetium"
+    },
+    {
+      "tag": "forge:ingots/lutetium"
+    },
+    {
+      "tag": "forge:ingots/lutetium"
+    },
+    {
+      "tag": "forge:ingots/lutetium"
+    },
+    {
+      "tag": "forge:ingots/lutetium"
+    },
+    {
+      "tag": "forge:ingots/lutetium"
+    },
+    {
+      "tag": "forge:ingots/lutetium"
+    },
+    {
+      "tag": "forge:ingots/lutetium"
+    },
+    {
+      "tag": "forge:ingots/lutetium"
+    }
+  ],
+  "result": {
+    "item": "tekora:lutetium_block"
+  }
+}

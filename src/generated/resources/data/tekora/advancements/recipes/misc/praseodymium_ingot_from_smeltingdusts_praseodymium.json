@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/praseodymium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/praseodymium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:praseodymium_ingot_from_smeltingdusts_praseodymium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/praseodymium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:praseodymium_ingot_from_smeltingdusts_praseodymium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

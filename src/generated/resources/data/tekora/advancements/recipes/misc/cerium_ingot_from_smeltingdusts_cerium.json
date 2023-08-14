@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/cerium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/cerium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:cerium_ingot_from_smeltingdusts_cerium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/cerium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:cerium_ingot_from_smeltingdusts_cerium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

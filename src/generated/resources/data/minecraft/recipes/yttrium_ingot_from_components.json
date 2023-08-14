@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "yttrium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/yttrium"
+    },
+    {
+      "tag": "forge:nuggets/yttrium"
+    },
+    {
+      "tag": "forge:nuggets/yttrium"
+    },
+    {
+      "tag": "forge:nuggets/yttrium"
+    },
+    {
+      "tag": "forge:nuggets/yttrium"
+    },
+    {
+      "tag": "forge:nuggets/yttrium"
+    },
+    {
+      "tag": "forge:nuggets/yttrium"
+    },
+    {
+      "tag": "forge:nuggets/yttrium"
+    },
+    {
+      "tag": "forge:nuggets/yttrium"
+    }
+  ],
+  "result": {
+    "item": "tekora:yttrium_ingot"
+  }
+}

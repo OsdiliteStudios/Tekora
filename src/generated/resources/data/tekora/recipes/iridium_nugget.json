@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "iridium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/iridium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:iridium_nugget"
+  }
+}

@@ -20,7 +20,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.machines.CrusherEntity;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 
-public class Crusher extends IrregularModel {
+public class Crusher extends AbstractIrregularBlock {
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
     public Crusher() {
         super(6f);

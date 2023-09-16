@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:calcium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/calcium"
+    },
+    {
+      "tag": "forge:ingots/calcium"
+    },
+    {
+      "tag": "forge:ingots/calcium"
+    },
+    {
+      "tag": "forge:ingots/calcium"
+    },
+    {
+      "tag": "forge:ingots/calcium"
+    },
+    {
+      "tag": "forge:ingots/calcium"
+    },
+    {
+      "tag": "forge:ingots/calcium"
+    },
+    {
+      "tag": "forge:ingots/calcium"
+    },
+    {
+      "tag": "forge:ingots/calcium"
+    }
+  ],
+  "result": {
+    "item": "tekora:calcium_block"
+  }
+}

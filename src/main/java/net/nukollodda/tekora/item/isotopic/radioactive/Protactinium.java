@@ -1,10 +1,8 @@
 package net.nukollodda.tekora.item.isotopic.radioactive;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
-import net.nukollodda.tekora.item.isotopic.AbstractIsotopicItem;
 import net.nukollodda.tekora.item.typical.CompoundItem;
-import net.nukollodda.tekora.item.typical.Compounds;
+import net.nukollodda.tekora.item.typical.ICompounds;
 
 public class Protactinium extends AbstractRadioactiveItem {
     private int[] isotopeRatio;
@@ -96,7 +94,7 @@ public class Protactinium extends AbstractRadioactiveItem {
         }
     }
 
-    public static class CompoundDust extends Protactinium implements Compounds {
+    public static class CompoundDust extends Protactinium implements ICompounds {
 
         private final Item decayItem;
         private final CompoundItem.Cations cation = CompoundItem.Cations.PROTACTINIUM;

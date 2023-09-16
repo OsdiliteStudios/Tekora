@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
+import net.nukollodda.tekora.block.entity.entities.connectors.EnergyCableEntity;
 import net.nukollodda.tekora.block.entity.entities.enstorage.InfiniteBatteryEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -59,9 +60,8 @@ public class InfiniteBattery extends AbstractBattery {
         super.animateTick(pState, pLevel, pPos, pRandom);
     }
 
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level lvl, BlockState state,
-                                                                  BlockEntityType<T> type) {
-        return createTickerHelper(type, TekoraBlockEntities.INFINITE_BATTERY.get(),
-                InfiniteBatteryEntity::tick);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState,
+                                                                  BlockEntityType<T> pType) {
+        return pLevel.isClientSide() ? null : (lvl, pos, state, entity) -> ((InfiniteBatteryEntity)entity).tick();
     }
 }

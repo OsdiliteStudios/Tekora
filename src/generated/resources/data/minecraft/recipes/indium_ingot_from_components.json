@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "indium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/indium"
+    },
+    {
+      "tag": "forge:nuggets/indium"
+    },
+    {
+      "tag": "forge:nuggets/indium"
+    },
+    {
+      "tag": "forge:nuggets/indium"
+    },
+    {
+      "tag": "forge:nuggets/indium"
+    },
+    {
+      "tag": "forge:nuggets/indium"
+    },
+    {
+      "tag": "forge:nuggets/indium"
+    },
+    {
+      "tag": "forge:nuggets/indium"
+    },
+    {
+      "tag": "forge:nuggets/indium"
+    }
+  ],
+  "result": {
+    "item": "tekora:indium_ingot"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "platinum_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/platinum"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:platinum_ingot"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "praseodymium_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/praseodymium"
+  },
+  "result": "tekora:praseodymium_ingot"
+}

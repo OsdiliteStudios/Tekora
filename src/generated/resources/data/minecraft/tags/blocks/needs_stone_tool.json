@@ -1,0 +1,22 @@
+{
+  "values": [
+    "tekora:infusion_furnace",
+    "tekora:alloy_furnace",
+    "tekora:evaporite",
+    "tekora:limestone",
+    "tekora:deepslate_bauxite_ore",
+    "tekora:bauxite_ore",
+    "tekora:nether_basalt_chromite_ore",
+    "tekora:deepslate_cinnabar_ore",
+    "tekora:cinnabar_ore",
+    "tekora:basalt_galena_ore",
+    "tekora:calcite_galena_ore",
+    "tekora:deepslate_galena_ore",
+    "tekora:tuff_galena_ore",
+    "tekora:galena_ore",
+    "tekora:deepslate_graphite_ore",
+    "tekora:tuff_graphite_ore",
+    "tekora:graphite_ore",
+    "tekora:sandstone_zircon_ore"
+  ]
+}

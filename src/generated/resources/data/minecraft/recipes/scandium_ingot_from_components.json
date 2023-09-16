@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "scandium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/scandium"
+    },
+    {
+      "tag": "forge:nuggets/scandium"
+    },
+    {
+      "tag": "forge:nuggets/scandium"
+    },
+    {
+      "tag": "forge:nuggets/scandium"
+    },
+    {
+      "tag": "forge:nuggets/scandium"
+    },
+    {
+      "tag": "forge:nuggets/scandium"
+    },
+    {
+      "tag": "forge:nuggets/scandium"
+    },
+    {
+      "tag": "forge:nuggets/scandium"
+    },
+    {
+      "tag": "forge:nuggets/scandium"
+    }
+  ],
+  "result": {
+    "item": "tekora:scandium_ingot"
+  }
+}

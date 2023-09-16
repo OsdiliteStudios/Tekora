@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/thorium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/thorium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:thorium_ingot_from_blastingdusts_thorium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/thorium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:thorium_ingot_from_blastingdusts_thorium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

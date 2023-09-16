@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "rhenium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/rhenium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:rhenium_ingot"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:gallium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/gallium"
+    },
+    {
+      "tag": "forge:ingots/gallium"
+    },
+    {
+      "tag": "forge:ingots/gallium"
+    },
+    {
+      "tag": "forge:ingots/gallium"
+    },
+    {
+      "tag": "forge:ingots/gallium"
+    },
+    {
+      "tag": "forge:ingots/gallium"
+    },
+    {
+      "tag": "forge:ingots/gallium"
+    },
+    {
+      "tag": "forge:ingots/gallium"
+    },
+    {
+      "tag": "forge:ingots/gallium"
+    }
+  ],
+  "result": {
+    "item": "tekora:gallium_block"
+  }
+}

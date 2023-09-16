@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:arsenic_block}",
+  "ingredients": [
+    {
+      "item": "tekora:arsenic_piece"
+    },
+    {
+      "item": "tekora:arsenic_piece"
+    },
+    {
+      "item": "tekora:arsenic_piece"
+    },
+    {
+      "item": "tekora:arsenic_piece"
+    },
+    {
+      "item": "tekora:arsenic_piece"
+    },
+    {
+      "item": "tekora:arsenic_piece"
+    },
+    {
+      "item": "tekora:arsenic_piece"
+    },
+    {
+      "item": "tekora:arsenic_piece"
+    },
+    {
+      "item": "tekora:arsenic_piece"
+    }
+  ],
+  "result": {
+    "item": "tekora:arsenic_block"
+  }
+}

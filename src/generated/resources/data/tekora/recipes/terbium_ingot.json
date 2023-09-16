@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "terbium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/terbium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:terbium_ingot"
+  }
+}

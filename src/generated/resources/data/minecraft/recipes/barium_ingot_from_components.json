@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "barium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/barium"
+    },
+    {
+      "tag": "forge:nuggets/barium"
+    },
+    {
+      "tag": "forge:nuggets/barium"
+    },
+    {
+      "tag": "forge:nuggets/barium"
+    },
+    {
+      "tag": "forge:nuggets/barium"
+    },
+    {
+      "tag": "forge:nuggets/barium"
+    },
+    {
+      "tag": "forge:nuggets/barium"
+    },
+    {
+      "tag": "forge:nuggets/barium"
+    },
+    {
+      "tag": "forge:nuggets/barium"
+    }
+  ],
+  "result": {
+    "item": "tekora:barium_ingot"
+  }
+}

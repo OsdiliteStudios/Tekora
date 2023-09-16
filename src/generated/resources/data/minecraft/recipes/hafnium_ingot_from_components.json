@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "hafnium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/hafnium"
+    },
+    {
+      "tag": "forge:nuggets/hafnium"
+    },
+    {
+      "tag": "forge:nuggets/hafnium"
+    },
+    {
+      "tag": "forge:nuggets/hafnium"
+    },
+    {
+      "tag": "forge:nuggets/hafnium"
+    },
+    {
+      "tag": "forge:nuggets/hafnium"
+    },
+    {
+      "tag": "forge:nuggets/hafnium"
+    },
+    {
+      "tag": "forge:nuggets/hafnium"
+    },
+    {
+      "tag": "forge:nuggets/hafnium"
+    }
+  ],
+  "result": {
+    "item": "tekora:hafnium_ingot"
+  }
+}

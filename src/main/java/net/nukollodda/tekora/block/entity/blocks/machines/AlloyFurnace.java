@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.machines.AlloyFurnaceEntity;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 
-public class AlloyFurnace extends MachineBlock {
+public class AlloyFurnace extends AbstractMachineBlock {
     public AlloyFurnace() {
         super(6f);
     }

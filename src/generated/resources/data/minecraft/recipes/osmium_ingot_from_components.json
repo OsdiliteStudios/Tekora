@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "osmium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/osmium"
+    },
+    {
+      "tag": "forge:nuggets/osmium"
+    },
+    {
+      "tag": "forge:nuggets/osmium"
+    },
+    {
+      "tag": "forge:nuggets/osmium"
+    },
+    {
+      "tag": "forge:nuggets/osmium"
+    },
+    {
+      "tag": "forge:nuggets/osmium"
+    },
+    {
+      "tag": "forge:nuggets/osmium"
+    },
+    {
+      "tag": "forge:nuggets/osmium"
+    },
+    {
+      "tag": "forge:nuggets/osmium"
+    }
+  ],
+  "result": {
+    "item": "tekora:osmium_ingot"
+  }
+}

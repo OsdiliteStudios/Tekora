@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "osmium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/osmium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:osmium_nugget"
+  }
+}

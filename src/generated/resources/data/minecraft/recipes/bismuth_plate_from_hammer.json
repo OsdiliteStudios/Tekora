@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "bismuth_plate",
+  "ingredients": [
+    {
+      "tag": "forge:bismuth"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:bismuth_plate"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "ferroboron_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/ferroboron"
+  },
+  "result": "tekora:ferroboron_ingot"
+}

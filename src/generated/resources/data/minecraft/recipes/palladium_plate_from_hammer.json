@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "palladium_plate",
+  "ingredients": [
+    {
+      "tag": "forge:palladium"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:palladium_plate"
+  }
+}

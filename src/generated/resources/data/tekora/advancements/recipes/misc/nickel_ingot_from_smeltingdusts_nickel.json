@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/nickel": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/nickel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:nickel_ingot_from_smeltingdusts_nickel"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/nickel",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:nickel_ingot_from_smeltingdusts_nickel"
+    ]
+  },
+  "sends_telemetry_event": false
+}

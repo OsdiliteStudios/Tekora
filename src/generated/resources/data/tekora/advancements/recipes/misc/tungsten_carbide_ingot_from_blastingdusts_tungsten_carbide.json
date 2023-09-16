@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/tungsten_carbide": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/tungsten_carbide"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:tungsten_carbide_ingot_from_blastingdusts_tungsten_carbide"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/tungsten_carbide",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:tungsten_carbide_ingot_from_blastingdusts_tungsten_carbide"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:scandium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/scandium"
+    },
+    {
+      "tag": "forge:ingots/scandium"
+    },
+    {
+      "tag": "forge:ingots/scandium"
+    },
+    {
+      "tag": "forge:ingots/scandium"
+    },
+    {
+      "tag": "forge:ingots/scandium"
+    },
+    {
+      "tag": "forge:ingots/scandium"
+    },
+    {
+      "tag": "forge:ingots/scandium"
+    },
+    {
+      "tag": "forge:ingots/scandium"
+    },
+    {
+      "tag": "forge:ingots/scandium"
+    }
+  ],
+  "result": {
+    "item": "tekora:scandium_block"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "barium_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/barium"
+  },
+  "result": "tekora:barium_ingot"
+}

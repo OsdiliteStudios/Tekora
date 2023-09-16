@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/barium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/barium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:barium_ingot_from_smeltingdusts_barium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/barium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:barium_ingot_from_smeltingdusts_barium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

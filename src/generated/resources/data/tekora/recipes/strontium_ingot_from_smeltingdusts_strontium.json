@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "strontium_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/strontium"
+  },
+  "result": "tekora:strontium_ingot"
+}

@@ -7,7 +7,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.TekoraBlocks;
+import net.nukollodda.tekora.block.entity.entities.connectors.EnergyCableEntity;
 import net.nukollodda.tekora.block.entity.entities.enstorage.InfiniteBatteryEntity;
+import net.nukollodda.tekora.block.entity.entities.generators.HydroelectricGeneratorEntity;
 import net.nukollodda.tekora.block.entity.entities.machines.AlloyFurnaceEntity;
 import net.nukollodda.tekora.block.entity.entities.machines.CrusherEntity;
 import net.nukollodda.tekora.block.entity.entities.machines.ElectricFurnaceEntity;
@@ -41,6 +43,16 @@ public class TekoraBlockEntities {
             BLOCK_ENTITIES.register("infinite_battery", () ->
                 BlockEntityType.Builder.of(InfiniteBatteryEntity::new,
                     TekoraBlocks.INFINITE_BATTERY.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<EnergyCableEntity>> ENERGY_CABLE =
+            BLOCK_ENTITIES.register("energy_cable", () ->
+                    BlockEntityType.Builder.of(EnergyCableEntity::new,
+                            TekoraBlocks.COPPER_CABLE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<HydroelectricGeneratorEntity>> HYDRO_ELECTRIC_GENERATOR =
+            BLOCK_ENTITIES.register("hydroelectric_generator", () ->
+                    BlockEntityType.Builder.of(HydroelectricGeneratorEntity::new,
+                            TekoraBlocks.HYDROELECTRIC_GENERATOR.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

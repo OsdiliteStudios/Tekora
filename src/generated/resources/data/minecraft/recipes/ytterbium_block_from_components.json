@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:ytterbium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/ytterbium"
+    },
+    {
+      "tag": "forge:ingots/ytterbium"
+    },
+    {
+      "tag": "forge:ingots/ytterbium"
+    },
+    {
+      "tag": "forge:ingots/ytterbium"
+    },
+    {
+      "tag": "forge:ingots/ytterbium"
+    },
+    {
+      "tag": "forge:ingots/ytterbium"
+    },
+    {
+      "tag": "forge:ingots/ytterbium"
+    },
+    {
+      "tag": "forge:ingots/ytterbium"
+    },
+    {
+      "tag": "forge:ingots/ytterbium"
+    }
+  ],
+  "result": {
+    "item": "tekora:ytterbium_block"
+  }
+}

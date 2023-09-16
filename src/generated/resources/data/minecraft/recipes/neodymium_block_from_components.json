@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:neodymium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/neodymium"
+    },
+    {
+      "tag": "forge:ingots/neodymium"
+    },
+    {
+      "tag": "forge:ingots/neodymium"
+    },
+    {
+      "tag": "forge:ingots/neodymium"
+    },
+    {
+      "tag": "forge:ingots/neodymium"
+    },
+    {
+      "tag": "forge:ingots/neodymium"
+    },
+    {
+      "tag": "forge:ingots/neodymium"
+    },
+    {
+      "tag": "forge:ingots/neodymium"
+    },
+    {
+      "tag": "forge:ingots/neodymium"
+    }
+  ],
+  "result": {
+    "item": "tekora:neodymium_block"
+  }
+}

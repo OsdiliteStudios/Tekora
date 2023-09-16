@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "uranium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/uranium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:uranium_ingot"
+  }
+}

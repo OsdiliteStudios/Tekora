@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:ores/uraninite": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ores/uraninite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:uraninite_from_blastingores_uraninite"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:ores/uraninite",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:uraninite_from_blastingores_uraninite"
+    ]
+  },
+  "sends_telemetry_event": false
+}

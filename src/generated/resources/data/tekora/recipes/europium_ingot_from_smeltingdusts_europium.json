@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "europium_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/europium"
+  },
+  "result": "tekora:europium_ingot"
+}

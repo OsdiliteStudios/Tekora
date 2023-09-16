@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "titanium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/titanium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:titanium_nugget"
+  }
+}

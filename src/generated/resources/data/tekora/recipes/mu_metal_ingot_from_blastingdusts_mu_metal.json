@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "mu_metal_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/mu_metal"
+  },
+  "result": "tekora:mu_metal_ingot"
+}

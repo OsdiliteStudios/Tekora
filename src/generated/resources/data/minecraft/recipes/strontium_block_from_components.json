@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:strontium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/strontium"
+    },
+    {
+      "tag": "forge:ingots/strontium"
+    },
+    {
+      "tag": "forge:ingots/strontium"
+    },
+    {
+      "tag": "forge:ingots/strontium"
+    },
+    {
+      "tag": "forge:ingots/strontium"
+    },
+    {
+      "tag": "forge:ingots/strontium"
+    },
+    {
+      "tag": "forge:ingots/strontium"
+    },
+    {
+      "tag": "forge:ingots/strontium"
+    },
+    {
+      "tag": "forge:ingots/strontium"
+    }
+  ],
+  "result": {
+    "item": "tekora:strontium_block"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "thulium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/thulium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:thulium_ingot"
+  }
+}

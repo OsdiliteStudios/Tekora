@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:vanadium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/vanadium"
+    },
+    {
+      "tag": "forge:ingots/vanadium"
+    },
+    {
+      "tag": "forge:ingots/vanadium"
+    },
+    {
+      "tag": "forge:ingots/vanadium"
+    },
+    {
+      "tag": "forge:ingots/vanadium"
+    },
+    {
+      "tag": "forge:ingots/vanadium"
+    },
+    {
+      "tag": "forge:ingots/vanadium"
+    },
+    {
+      "tag": "forge:ingots/vanadium"
+    },
+    {
+      "tag": "forge:ingots/vanadium"
+    }
+  ],
+  "result": {
+    "item": "tekora:vanadium_block"
+  }
+}

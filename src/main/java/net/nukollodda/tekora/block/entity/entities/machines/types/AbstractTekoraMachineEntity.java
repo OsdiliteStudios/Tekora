@@ -15,10 +15,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.nukollodda.tekora.block.entity.entities.IElectricEntity;
 import net.nukollodda.tekora.util.TekoraEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractTekoraMachineEntity extends BlockEntity implements MenuProvider {
+public abstract class AbstractTekoraMachineEntity extends BlockEntity implements MenuProvider, IElectricEntity {
     protected final ItemStackHandler itemHandler;
 
     protected final ContainerData data; // this data is being sent to the menu
@@ -27,12 +28,7 @@ public abstract class AbstractTekoraMachineEntity extends BlockEntity implements
     protected int progress = 0;
     protected int maxProgress = 72;
 
-    protected final TekoraEnergyStorage ENERGY_STORAGE = new TekoraEnergyStorage(4096, 256) {
-        @Override
-        public void onEnergyChanged() {
-            setChanged();
-        }
-    };
+    protected final TekoraEnergyStorage ENERGY_STORAGE = new TekoraEnergyStorage(this,4096, 256);
     protected int containerSize;
 
     protected static final int ENERGY_REQ = 32; // energy consumed per tick for crafting
@@ -68,6 +64,23 @@ public abstract class AbstractTekoraMachineEntity extends BlockEntity implements
                 return 4;
             }
         };
+    }
+
+    public void changeEnergy(int pAmount) {
+        int curEn = this.ENERGY_STORAGE.getEnergyStored();
+        this.ENERGY_STORAGE.setEnergy(curEn + pAmount);
+    }
+
+    public int maxEnergy() {
+        return this.ENERGY_STORAGE.getMaxEnergyStored();
+    }
+
+    public int currentEnergy() {
+        return this.ENERGY_STORAGE.getEnergyStored();
+    }
+
+    public boolean hasElectricity() {
+        return ENERGY_STORAGE.getEnergyStored() > 0;
     }
     public boolean hasEnoughElectricity(AbstractTekoraMachineEntity pEntity) {
         return ENERGY_STORAGE.getEnergyStored() >= ENERGY_REQ * pEntity.maxProgress;

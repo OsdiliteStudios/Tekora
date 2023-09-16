@@ -8,11 +8,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.nukollodda.tekora.item.isotopic.radioactive.Thorium;
 import net.nukollodda.tekora.item.tools.HammerItem;
-import net.nukollodda.tekora.item.RadioactiveItems;
+import net.nukollodda.tekora.item.IRadioactiveItems;
 import net.nukollodda.tekora.tiers.TekoraTiers;
 import org.jetbrains.annotations.NotNull;
 
-public class ThoriumHammer extends HammerItem implements RadioactiveItems {
+public class ThoriumHammer extends HammerItem implements IRadioactiveItems {
     public ThoriumHammer() {
         super(TekoraTiers.THORIUM, new Item.Properties().fireResistant());
     }

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "zinc_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/zinc"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:zinc_ingot"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "thulium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/thulium"
+    },
+    {
+      "tag": "forge:nuggets/thulium"
+    },
+    {
+      "tag": "forge:nuggets/thulium"
+    },
+    {
+      "tag": "forge:nuggets/thulium"
+    },
+    {
+      "tag": "forge:nuggets/thulium"
+    },
+    {
+      "tag": "forge:nuggets/thulium"
+    },
+    {
+      "tag": "forge:nuggets/thulium"
+    },
+    {
+      "tag": "forge:nuggets/thulium"
+    },
+    {
+      "tag": "forge:nuggets/thulium"
+    }
+  ],
+  "result": {
+    "item": "tekora:thulium_ingot"
+  }
+}

@@ -1,10 +1,14 @@
 package net.nukollodda.tekora.block.entity.blocks.connecters;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.nukollodda.tekora.block.entity.blocks.machines.IrregularModel;
+import org.jetbrains.annotations.Nullable;
 
-public abstract class Pipe extends IrregularModel {
+public class Pipe extends AbstractConnector {
 
     protected static final VoxelShape CORE = Block.box(5, 5, 5, 9, 9, 9);
 
@@ -21,6 +25,17 @@ public abstract class Pipe extends IrregularModel {
     protected static final VoxelShape HALF_NEG_Z = Block.box(5, 5, 0, 9, 9, 9);
     public Pipe(float strength, int color) {
         super(strength);
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return null;
+    }
+
+    @Override
+    protected BlockState setDirExtensions(Level pLevel, BlockPos pPos, BlockState pState, BlockPos pNeighbor) {
+        // deals with fluids instead here
+        return pState;
     }
     /* Tekora Pipe list:
      * Glass - all fluids below 800K

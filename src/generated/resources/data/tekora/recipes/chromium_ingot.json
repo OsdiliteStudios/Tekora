@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "chromium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/chromium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:chromium_ingot"
+  }
+}

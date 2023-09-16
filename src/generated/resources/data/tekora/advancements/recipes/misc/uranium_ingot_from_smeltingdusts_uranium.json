@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/uranium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/uranium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:uranium_ingot_from_smeltingdusts_uranium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/uranium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:uranium_ingot_from_smeltingdusts_uranium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

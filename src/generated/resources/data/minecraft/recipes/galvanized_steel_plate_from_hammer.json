@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "galvanized_steel_plate",
+  "ingredients": [
+    {
+      "tag": "forge:galvanized_steel"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:galvanized_steel_plate"
+  }
+}

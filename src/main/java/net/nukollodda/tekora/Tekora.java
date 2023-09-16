@@ -31,7 +31,7 @@ public class Tekora {
      * the Tekora team! As some code in this project were copied directly from his tutorials.
      **/
     public static final String MODID = "tekora";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     public Tekora() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -214,6 +214,7 @@ public class Tekora {
             MenuScreens.register(TekoraMenuTypes.CRUSHER_MENU.get(), CrusherScreen::new);
             MenuScreens.register(TekoraMenuTypes.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
             MenuScreens.register(TekoraMenuTypes.BATTERY_MENU.get(), BatteryScreen::new);
+            MenuScreens.register(TekoraMenuTypes.HYDROELECTRIC_GENERATOR_MENU.get(), HydroelectricGeneratorScreen::new);
         }
     }
 }

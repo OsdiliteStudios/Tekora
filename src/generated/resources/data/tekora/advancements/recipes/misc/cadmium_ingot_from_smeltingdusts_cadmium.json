@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/cadmium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/cadmium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:cadmium_ingot_from_smeltingdusts_cadmium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/cadmium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:cadmium_ingot_from_smeltingdusts_cadmium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "manganese_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/manganese"
+    },
+    {
+      "tag": "forge:nuggets/manganese"
+    },
+    {
+      "tag": "forge:nuggets/manganese"
+    },
+    {
+      "tag": "forge:nuggets/manganese"
+    },
+    {
+      "tag": "forge:nuggets/manganese"
+    },
+    {
+      "tag": "forge:nuggets/manganese"
+    },
+    {
+      "tag": "forge:nuggets/manganese"
+    },
+    {
+      "tag": "forge:nuggets/manganese"
+    },
+    {
+      "tag": "forge:nuggets/manganese"
+    }
+  ],
+  "result": {
+    "item": "tekora:manganese_ingot"
+  }
+}

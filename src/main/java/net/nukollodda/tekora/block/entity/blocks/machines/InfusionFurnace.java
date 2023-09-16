@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.machines.InfusionFurnaceEntity;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 
-public class InfusionFurnace extends MachineBlock {
+public class InfusionFurnace extends AbstractMachineBlock {
     public InfusionFurnace() {
         super(6f);
     }

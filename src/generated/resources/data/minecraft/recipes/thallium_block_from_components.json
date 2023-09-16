@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:thallium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/thallium"
+    },
+    {
+      "tag": "forge:ingots/thallium"
+    },
+    {
+      "tag": "forge:ingots/thallium"
+    },
+    {
+      "tag": "forge:ingots/thallium"
+    },
+    {
+      "tag": "forge:ingots/thallium"
+    },
+    {
+      "tag": "forge:ingots/thallium"
+    },
+    {
+      "tag": "forge:ingots/thallium"
+    },
+    {
+      "tag": "forge:ingots/thallium"
+    },
+    {
+      "tag": "forge:ingots/thallium"
+    }
+  ],
+  "result": {
+    "item": "tekora:thallium_block"
+  }
+}

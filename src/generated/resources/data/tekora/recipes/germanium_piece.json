@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "germanium_piece",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/germanium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:germanium_piece"
+  }
+}

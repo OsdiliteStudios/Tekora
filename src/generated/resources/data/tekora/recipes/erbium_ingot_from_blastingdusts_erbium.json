@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "erbium_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/erbium"
+  },
+  "result": "tekora:erbium_ingot"
+}

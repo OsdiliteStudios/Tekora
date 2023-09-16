@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "dysprosium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/dysprosium"
+    },
+    {
+      "tag": "forge:nuggets/dysprosium"
+    },
+    {
+      "tag": "forge:nuggets/dysprosium"
+    },
+    {
+      "tag": "forge:nuggets/dysprosium"
+    },
+    {
+      "tag": "forge:nuggets/dysprosium"
+    },
+    {
+      "tag": "forge:nuggets/dysprosium"
+    },
+    {
+      "tag": "forge:nuggets/dysprosium"
+    },
+    {
+      "tag": "forge:nuggets/dysprosium"
+    },
+    {
+      "tag": "forge:nuggets/dysprosium"
+    }
+  ],
+  "result": {
+    "item": "tekora:dysprosium_ingot"
+  }
+}

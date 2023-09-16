@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "zircaloy_plate",
+  "ingredients": [
+    {
+      "tag": "forge:zircaloy"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:zircaloy_plate"
+  }
+}

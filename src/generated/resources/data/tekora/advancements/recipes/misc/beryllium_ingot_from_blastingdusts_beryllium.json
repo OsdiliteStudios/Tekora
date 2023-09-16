@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/beryllium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/beryllium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:beryllium_ingot_from_blastingdusts_beryllium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/beryllium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:beryllium_ingot_from_blastingdusts_beryllium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

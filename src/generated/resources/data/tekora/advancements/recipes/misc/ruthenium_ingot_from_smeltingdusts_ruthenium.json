@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/ruthenium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/ruthenium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:ruthenium_ingot_from_smeltingdusts_ruthenium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/ruthenium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:ruthenium_ingot_from_smeltingdusts_ruthenium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

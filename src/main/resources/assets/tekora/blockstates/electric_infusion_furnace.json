@@ -1,16 +1,33 @@
 {
   "variants": {
-    "facing=north": { "model":  "tekora:block/electric_infusion_furnace" },
-    "facing=east": {
-      "model":  "tekora:block/electric_infusion_furnace",
+    "facing=east,lit=false": {
+      "model": "tekora:block/electric_infusion_furnace",
       "y": 90
     },
-    "facing=south": {
-      "model":  "tekora:block/electric_infusion_furnace",
+    "facing=east,lit=true": {
+      "model": "tekora:block/electric_infusion_furnace_on",
+      "y": 90
+    },
+    "facing=north,lit=false": {
+      "model": "tekora:block/electric_infusion_furnace"
+    },
+    "facing=north,lit=true": {
+      "model": "tekora:block/electric_infusion_furnace_on"
+    },
+    "facing=south,lit=false": {
+      "model": "tekora:block/electric_infusion_furnace",
       "y": 180
     },
-    "facing=west": {
-      "model":  "tekora:block/electric_infusion_furnace",
+    "facing=south,lit=true": {
+      "model": "tekora:block/electric_infusion_furnace_on",
+      "y": 180
+    },
+    "facing=west,lit=false": {
+      "model": "tekora:block/electric_infusion_furnace",
+      "y": 270
+    },
+    "facing=west,lit=true": {
+      "model": "tekora:block/electric_infusion_furnace_on",
       "y": 270
     }
   }

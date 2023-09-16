@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "rhenium_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/rhenium"
+  },
+  "result": "tekora:rhenium_ingot"
+}

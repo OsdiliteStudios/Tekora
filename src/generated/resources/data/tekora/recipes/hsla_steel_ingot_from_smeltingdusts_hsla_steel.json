@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "hsla_steel_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/hsla_steel"
+  },
+  "result": "tekora:hsla_steel_ingot"
+}

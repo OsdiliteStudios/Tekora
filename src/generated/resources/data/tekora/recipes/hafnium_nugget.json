@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "hafnium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/hafnium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:hafnium_nugget"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "osmium_plate",
+  "ingredients": [
+    {
+      "tag": "forge:osmium"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:osmium_plate"
+  }
+}

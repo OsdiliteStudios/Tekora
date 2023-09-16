@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "tekora:block/gallium_block"
+    }
+  }
+}

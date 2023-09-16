@@ -785,6 +785,15 @@
 
   "block.tekora.pulversizer": "Pulverizer",
 
+  "block.tekora.copper_cable": "Copper Cable",
+  "block.tekora.silver_cable": "Silver Cable",
+  "block.tekora.bronze_cable": "Bronze Cable",
+  "block.tekora.steel_cable": "Steel Cable",
+  "block.tekora.niobium_tin_cable": "Niobium Tin Cable",
+
+  "block.tekora.steel_pipe": "Steel Pipe",
+  "block.tekora.glass_pipe": "Glass Pipe",
+
   "fluid_type.tekora.ammonium_hydroxide": "Ammonium Hydroxide",
   "fluid_type.tekora.aqua_regia": "Aqua Regia",
   "fluid_type.tekora.carbonic_acid": "Carbonic Acid",

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "aluminum_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/aluminum"
+    },
+    {
+      "tag": "forge:nuggets/aluminum"
+    },
+    {
+      "tag": "forge:nuggets/aluminum"
+    },
+    {
+      "tag": "forge:nuggets/aluminum"
+    },
+    {
+      "tag": "forge:nuggets/aluminum"
+    },
+    {
+      "tag": "forge:nuggets/aluminum"
+    },
+    {
+      "tag": "forge:nuggets/aluminum"
+    },
+    {
+      "tag": "forge:nuggets/aluminum"
+    },
+    {
+      "tag": "forge:nuggets/aluminum"
+    }
+  ],
+  "result": {
+    "item": "tekora:aluminum_ingot"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/magnesium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/magnesium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:magnesium_ingot_from_blastingdusts_magnesium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/magnesium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:magnesium_ingot_from_blastingdusts_magnesium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

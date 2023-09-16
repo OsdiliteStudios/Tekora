@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "thulium_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/thulium"
+  },
+  "result": "tekora:thulium_ingot"
+}

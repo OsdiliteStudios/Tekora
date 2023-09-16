@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/rhodium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/rhodium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:rhodium_ingot_from_smeltingdusts_rhodium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/rhodium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:rhodium_ingot_from_smeltingdusts_rhodium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -20,16 +20,16 @@ public class DataGenerators {
         ExistingFileHelper fileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookup = event.getLookupProvider();
 
-        generator.addProvider(event.includeServer(), new TekoraRecipeProvider(output));
-        generator.addProvider(event.includeServer(), TekoraLootTableProvider.create(output));
-
-        generator.addProvider(event.includeClient(), new TekoraBlockStateProvider(output, fileHelper));
-        generator.addProvider(event.includeClient(), new TekoraItemModelProvider(output, fileHelper));
-
         TekoraBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
                 new TekoraBlockTagGenerator(output, lookup, fileHelper));
 
         generator.addProvider(event.includeServer(),
                 new TekoraItemTagGenerator(output, lookup, blockTagGenerator.contentsGetter(), fileHelper));
+
+        generator.addProvider(event.includeServer(), new TekoraRecipeProvider(output));
+        generator.addProvider(event.includeServer(), TekoraLootTableProvider.create(output));
+
+        generator.addProvider(event.includeClient(), new TekoraBlockStateProvider(output, fileHelper));
+        generator.addProvider(event.includeClient(), new TekoraItemModelProvider(output, fileHelper));
     }
 }

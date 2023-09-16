@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cadmium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/cadmium"
+    },
+    {
+      "tag": "forge:nuggets/cadmium"
+    },
+    {
+      "tag": "forge:nuggets/cadmium"
+    },
+    {
+      "tag": "forge:nuggets/cadmium"
+    },
+    {
+      "tag": "forge:nuggets/cadmium"
+    },
+    {
+      "tag": "forge:nuggets/cadmium"
+    },
+    {
+      "tag": "forge:nuggets/cadmium"
+    },
+    {
+      "tag": "forge:nuggets/cadmium"
+    },
+    {
+      "tag": "forge:nuggets/cadmium"
+    }
+  ],
+  "result": {
+    "item": "tekora:cadmium_ingot"
+  }
+}

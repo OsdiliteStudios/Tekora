@@ -7,10 +7,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.nukollodda.tekora.item.TekoraItems;
-import net.nukollodda.tekora.item.RadioactiveItems;
+import net.nukollodda.tekora.item.IRadioactiveItems;
 import net.nukollodda.tekora.item.isotopic.AbstractIsotopicItem;
 
-public abstract class AbstractRadioactiveItem extends AbstractIsotopicItem implements RadioactiveItems {
+public abstract class AbstractRadioactiveItem extends AbstractIsotopicItem implements IRadioactiveItems {
     public AbstractRadioactiveItem(Properties pProperties) {
         super(pProperties);
     }

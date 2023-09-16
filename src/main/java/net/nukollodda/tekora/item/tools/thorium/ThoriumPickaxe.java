@@ -7,12 +7,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
-import net.nukollodda.tekora.item.RadioactiveItems;
+import net.nukollodda.tekora.item.IRadioactiveItems;
 import net.nukollodda.tekora.item.isotopic.radioactive.Thorium;
 import net.nukollodda.tekora.tiers.TekoraTiers;
 import org.jetbrains.annotations.NotNull;
 
-public class ThoriumPickaxe extends PickaxeItem implements RadioactiveItems {
+public class ThoriumPickaxe extends PickaxeItem implements IRadioactiveItems {
     public ThoriumPickaxe() {
         super(TekoraTiers.THORIUM, 1, -2.8f, new Item.Properties().fireResistant());
     }

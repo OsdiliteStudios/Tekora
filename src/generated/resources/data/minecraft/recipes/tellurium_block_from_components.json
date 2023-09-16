@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:tellurium_block}",
+  "ingredients": [
+    {
+      "item": "tekora:tellurium_piece"
+    },
+    {
+      "item": "tekora:tellurium_piece"
+    },
+    {
+      "item": "tekora:tellurium_piece"
+    },
+    {
+      "item": "tekora:tellurium_piece"
+    },
+    {
+      "item": "tekora:tellurium_piece"
+    },
+    {
+      "item": "tekora:tellurium_piece"
+    },
+    {
+      "item": "tekora:tellurium_piece"
+    },
+    {
+      "item": "tekora:tellurium_piece"
+    },
+    {
+      "item": "tekora:tellurium_piece"
+    }
+  ],
+  "result": {
+    "item": "tekora:tellurium_block"
+  }
+}

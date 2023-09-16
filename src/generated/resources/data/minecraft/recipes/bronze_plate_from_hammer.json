@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "bronze_plate",
+  "ingredients": [
+    {
+      "tag": "forge:bronze"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:bronze_plate"
+  }
+}

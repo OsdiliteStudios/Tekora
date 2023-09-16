@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cobalt_plate",
+  "ingredients": [
+    {
+      "tag": "forge:cobalt"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:cobalt_plate"
+  }
+}

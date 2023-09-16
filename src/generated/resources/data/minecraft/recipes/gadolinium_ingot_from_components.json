@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "gadolinium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/gadolinium"
+    },
+    {
+      "tag": "forge:nuggets/gadolinium"
+    },
+    {
+      "tag": "forge:nuggets/gadolinium"
+    },
+    {
+      "tag": "forge:nuggets/gadolinium"
+    },
+    {
+      "tag": "forge:nuggets/gadolinium"
+    },
+    {
+      "tag": "forge:nuggets/gadolinium"
+    },
+    {
+      "tag": "forge:nuggets/gadolinium"
+    },
+    {
+      "tag": "forge:nuggets/gadolinium"
+    },
+    {
+      "tag": "forge:nuggets/gadolinium"
+    }
+  ],
+  "result": {
+    "item": "tekora:gadolinium_ingot"
+  }
+}

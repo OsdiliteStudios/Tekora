@@ -4,7 +4,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
-public class CompoundItem extends Item implements Compounds {
+public class CompoundItem extends Item implements ICompounds {
     private final Cations cation;
     private final Anions anion;
 

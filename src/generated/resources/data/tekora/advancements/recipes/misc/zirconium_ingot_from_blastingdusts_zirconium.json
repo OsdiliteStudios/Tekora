@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/zirconium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/zirconium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:zirconium_ingot_from_blastingdusts_zirconium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/zirconium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:zirconium_ingot_from_blastingdusts_zirconium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

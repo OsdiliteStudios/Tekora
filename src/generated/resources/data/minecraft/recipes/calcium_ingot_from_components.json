@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "calcium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/calcium"
+    },
+    {
+      "tag": "forge:nuggets/calcium"
+    },
+    {
+      "tag": "forge:nuggets/calcium"
+    },
+    {
+      "tag": "forge:nuggets/calcium"
+    },
+    {
+      "tag": "forge:nuggets/calcium"
+    },
+    {
+      "tag": "forge:nuggets/calcium"
+    },
+    {
+      "tag": "forge:nuggets/calcium"
+    },
+    {
+      "tag": "forge:nuggets/calcium"
+    },
+    {
+      "tag": "forge:nuggets/calcium"
+    }
+  ],
+  "result": {
+    "item": "tekora:calcium_ingot"
+  }
+}

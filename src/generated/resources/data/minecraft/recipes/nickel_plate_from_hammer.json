@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "nickel_plate",
+  "ingredients": [
+    {
+      "tag": "forge:nickel"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:nickel_plate"
+  }
+}

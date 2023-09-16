@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "antimony_piece",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/antimony"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:antimony_piece"
+  }
+}

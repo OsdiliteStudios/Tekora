@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:niobium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/niobium"
+    },
+    {
+      "tag": "forge:ingots/niobium"
+    },
+    {
+      "tag": "forge:ingots/niobium"
+    },
+    {
+      "tag": "forge:ingots/niobium"
+    },
+    {
+      "tag": "forge:ingots/niobium"
+    },
+    {
+      "tag": "forge:ingots/niobium"
+    },
+    {
+      "tag": "forge:ingots/niobium"
+    },
+    {
+      "tag": "forge:ingots/niobium"
+    },
+    {
+      "tag": "forge:ingots/niobium"
+    }
+  ],
+  "result": {
+    "item": "tekora:niobium_block"
+  }
+}

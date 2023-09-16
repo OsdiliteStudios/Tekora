@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "item": "minecraft:smooth_stone"
+    },
+    "1": {
+      "tag": "forge:ingots/steel"
+    },
+    "2": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "pattern": [
+    "111",
+    "121",
+    "000"
+  ],
+  "result": {
+    "item": "tekora:alloy_furnace"
+  },
+  "show_notification": true
+}

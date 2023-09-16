@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "ytterbium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/ytterbium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:ytterbium_nugget"
+  }
+}

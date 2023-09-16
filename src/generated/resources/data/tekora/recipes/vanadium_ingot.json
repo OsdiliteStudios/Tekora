@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "vanadium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/vanadium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:vanadium_ingot"
+  }
+}

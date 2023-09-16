@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/erbium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/erbium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:erbium_ingot_from_smeltingdusts_erbium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/erbium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:erbium_ingot_from_smeltingdusts_erbium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "lanthanum_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/lanthanum"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:lanthanum_ingot"
+  }
+}

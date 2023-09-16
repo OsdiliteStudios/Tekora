@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:holmium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/holmium"
+    },
+    {
+      "tag": "forge:ingots/holmium"
+    },
+    {
+      "tag": "forge:ingots/holmium"
+    },
+    {
+      "tag": "forge:ingots/holmium"
+    },
+    {
+      "tag": "forge:ingots/holmium"
+    },
+    {
+      "tag": "forge:ingots/holmium"
+    },
+    {
+      "tag": "forge:ingots/holmium"
+    },
+    {
+      "tag": "forge:ingots/holmium"
+    },
+    {
+      "tag": "forge:ingots/holmium"
+    }
+  ],
+  "result": {
+    "item": "tekora:holmium_block"
+  }
+}

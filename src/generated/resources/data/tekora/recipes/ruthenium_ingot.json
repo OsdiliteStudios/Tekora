@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "ruthenium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/ruthenium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:ruthenium_ingot"
+  }
+}

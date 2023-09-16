@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/invar": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/invar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:invar_ingot_from_blastingdusts_invar"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/invar",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:invar_ingot_from_blastingdusts_invar"
+    ]
+  },
+  "sends_telemetry_event": false
+}

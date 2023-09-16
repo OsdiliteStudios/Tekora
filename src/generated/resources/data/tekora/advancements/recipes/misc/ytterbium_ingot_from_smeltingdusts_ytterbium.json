@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/ytterbium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/ytterbium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:ytterbium_ingot_from_smeltingdusts_ytterbium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/ytterbium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:ytterbium_ingot_from_smeltingdusts_ytterbium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

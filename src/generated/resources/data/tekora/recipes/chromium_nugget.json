@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "chromium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/chromium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:chromium_nugget"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:praseodymium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/praseodymium"
+    },
+    {
+      "tag": "forge:ingots/praseodymium"
+    },
+    {
+      "tag": "forge:ingots/praseodymium"
+    },
+    {
+      "tag": "forge:ingots/praseodymium"
+    },
+    {
+      "tag": "forge:ingots/praseodymium"
+    },
+    {
+      "tag": "forge:ingots/praseodymium"
+    },
+    {
+      "tag": "forge:ingots/praseodymium"
+    },
+    {
+      "tag": "forge:ingots/praseodymium"
+    },
+    {
+      "tag": "forge:ingots/praseodymium"
+    }
+  ],
+  "result": {
+    "item": "tekora:praseodymium_block"
+  }
+}

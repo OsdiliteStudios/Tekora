@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "zirconium_plate",
+  "ingredients": [
+    {
+      "tag": "forge:zirconium"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:zirconium_plate"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "scandium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/scandium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:scandium_nugget"
+  }
+}

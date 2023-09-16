@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "lanthanum_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/lanthanum"
+    },
+    {
+      "tag": "forge:nuggets/lanthanum"
+    },
+    {
+      "tag": "forge:nuggets/lanthanum"
+    },
+    {
+      "tag": "forge:nuggets/lanthanum"
+    },
+    {
+      "tag": "forge:nuggets/lanthanum"
+    },
+    {
+      "tag": "forge:nuggets/lanthanum"
+    },
+    {
+      "tag": "forge:nuggets/lanthanum"
+    },
+    {
+      "tag": "forge:nuggets/lanthanum"
+    },
+    {
+      "tag": "forge:nuggets/lanthanum"
+    }
+  ],
+  "result": {
+    "item": "tekora:lanthanum_ingot"
+  }
+}

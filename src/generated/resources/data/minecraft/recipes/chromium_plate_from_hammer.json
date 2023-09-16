@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "chromium_plate",
+  "ingredients": [
+    {
+      "tag": "forge:chromium"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:chromium_plate"
+  }
+}

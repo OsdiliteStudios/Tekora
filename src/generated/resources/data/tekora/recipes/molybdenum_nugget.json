@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "molybdenum_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/molybdenum"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:molybdenum_nugget"
+  }
+}

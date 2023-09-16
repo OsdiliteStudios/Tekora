@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "magnetic_neodymium_plate",
+  "ingredients": [
+    {
+      "tag": "forge:magnetic_neodymium"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:magnetic_neodymium_plate"
+  }
+}

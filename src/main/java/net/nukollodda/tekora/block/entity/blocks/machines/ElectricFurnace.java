@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.machines.ElectricFurnaceEntity;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 
-public class ElectricFurnace extends MachineBlock {
+public class ElectricFurnace extends AbstractElectricMachineBlock {
     public ElectricFurnace() {
         super(6f);
     }

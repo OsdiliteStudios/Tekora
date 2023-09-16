@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:boron_block}",
+  "ingredients": [
+    {
+      "item": "tekora:boron_piece"
+    },
+    {
+      "item": "tekora:boron_piece"
+    },
+    {
+      "item": "tekora:boron_piece"
+    },
+    {
+      "item": "tekora:boron_piece"
+    },
+    {
+      "item": "tekora:boron_piece"
+    },
+    {
+      "item": "tekora:boron_piece"
+    },
+    {
+      "item": "tekora:boron_piece"
+    },
+    {
+      "item": "tekora:boron_piece"
+    },
+    {
+      "item": "tekora:boron_piece"
+    }
+  ],
+  "result": {
+    "item": "tekora:boron_block"
+  }
+}

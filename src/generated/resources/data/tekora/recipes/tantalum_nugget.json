@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tantalum_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/tantalum"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:tantalum_nugget"
+  }
+}

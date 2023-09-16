@@ -33,9 +33,9 @@ public class ElectricFurnaceMenu extends AbstractTekoraMenu {
         addPlayerHotbar(inv);
 
         this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> { // adds the slots themselves
-            this.addSlot(new SlotItemHandler(handler, 0, 77, 53));
+            this.addSlot(new SlotItemHandler(handler, 0, 79, 53));
             this.addSlot(new SlotItemHandler(handler, 1, 56, 26));
-            this.addSlot(new SlotItemHandler(handler, 2, 115, 26));
+            this.addSlot(new SlotItemHandler(handler, 2, 116, 26));
         });
 
         addDataSlots(data);

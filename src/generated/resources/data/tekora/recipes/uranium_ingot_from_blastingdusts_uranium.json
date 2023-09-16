@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "uranium_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/uranium"
+  },
+  "result": "tekora:uranium_ingot"
+}

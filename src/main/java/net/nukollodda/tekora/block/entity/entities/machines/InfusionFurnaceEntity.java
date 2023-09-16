@@ -23,6 +23,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nukollodda.tekora.block.WrappedHandler;
 import net.nukollodda.tekora.block.entity.blocks.machines.AlloyFurnace;
+import net.nukollodda.tekora.block.entity.blocks.machines.AbstractMachineBlock;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraFurnaceEntity;
 import net.nukollodda.tekora.menu.InfusionFurnaceMenu;
@@ -148,6 +149,12 @@ public class InfusionFurnaceEntity extends AbstractTekoraFurnaceEntity {
 
         ItemStack itemFuel = new ItemStack(entity.itemHandler.getStackInSlot(0).getItem());
 
+        if (entity.isLit()) {
+            entity.fuel--;
+            state = state.setValue(AbstractMachineBlock.LIT, entity.isLit());
+            level.setBlock(pos, state, 3);
+        }
+
         if (entity.hasRecipe()) {
             if (FurnaceBlockEntity.isFuel(itemFuel) && entity.fuel == 0) {
                 entity.maxFuel = ForgeHooks.getBurnTime(itemFuel, RecipeType.BLASTING);
@@ -155,9 +162,8 @@ public class InfusionFurnaceEntity extends AbstractTekoraFurnaceEntity {
                 entity.itemHandler.extractItem(0, 1, false);
             }
 
-            if (entity.fuel > 0) {
+            if (entity.isLit()) {
                 entity.progress++;
-                entity.fuel--;
             }
             setChanged(level, pos, state);
 
@@ -168,9 +174,6 @@ public class InfusionFurnaceEntity extends AbstractTekoraFurnaceEntity {
         } else {
             entity.resetProgress();
             setChanged(level, pos, state);
-            if (entity.fuel > 0) {
-                entity.fuel--;
-            }
         }
     }
 

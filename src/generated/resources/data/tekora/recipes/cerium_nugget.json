@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cerium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/cerium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:cerium_nugget"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:samarium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/samarium"
+    },
+    {
+      "tag": "forge:ingots/samarium"
+    },
+    {
+      "tag": "forge:ingots/samarium"
+    },
+    {
+      "tag": "forge:ingots/samarium"
+    },
+    {
+      "tag": "forge:ingots/samarium"
+    },
+    {
+      "tag": "forge:ingots/samarium"
+    },
+    {
+      "tag": "forge:ingots/samarium"
+    },
+    {
+      "tag": "forge:ingots/samarium"
+    },
+    {
+      "tag": "forge:ingots/samarium"
+    }
+  ],
+  "result": {
+    "item": "tekora:samarium_block"
+  }
+}

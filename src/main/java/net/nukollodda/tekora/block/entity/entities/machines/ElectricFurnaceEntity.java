@@ -20,7 +20,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nukollodda.tekora.block.WrappedHandler;
-import net.nukollodda.tekora.block.entity.blocks.machines.AlloyFurnace;
+import net.nukollodda.tekora.block.entity.blocks.machines.AbstractMachineBlock;
+import net.nukollodda.tekora.block.entity.blocks.machines.ElectricFurnace;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraMachineEntity;
 import net.nukollodda.tekora.item.TekoraItems;
@@ -77,7 +78,7 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
             if (side == null) return lazyItemHandler.cast();
 
             if (directionHandlerMap.containsKey(side)) {
-                Direction local = this.getBlockState().getValue(AlloyFurnace.FACING);
+                Direction local = this.getBlockState().getValue(ElectricFurnace.FACING);
                 if (side == Direction.UP || side == Direction.DOWN) {
                     return directionHandlerMap.get(side).cast();
                 }
@@ -134,6 +135,11 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
     public static void tick(Level level, BlockPos pos, BlockState state, ElectricFurnaceEntity entity) {
         if (level.isClientSide()) {
             return;
+        }
+
+        if (entity.hasElectricity()) {
+            state = state.setValue(AbstractMachineBlock.LIT, entity.hasElectricity());
+            level.setBlock(pos, state, 3);
         }
 
         if (entity.hasRecipe() && entity.hasEnoughElectricity(entity)) {

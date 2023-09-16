@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "silicon_piece",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/silicon"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:silicon_piece"
+  }
+}

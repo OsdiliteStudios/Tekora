@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:erbium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/erbium"
+    },
+    {
+      "tag": "forge:ingots/erbium"
+    },
+    {
+      "tag": "forge:ingots/erbium"
+    },
+    {
+      "tag": "forge:ingots/erbium"
+    },
+    {
+      "tag": "forge:ingots/erbium"
+    },
+    {
+      "tag": "forge:ingots/erbium"
+    },
+    {
+      "tag": "forge:ingots/erbium"
+    },
+    {
+      "tag": "forge:ingots/erbium"
+    },
+    {
+      "tag": "forge:ingots/erbium"
+    }
+  ],
+  "result": {
+    "item": "tekora:erbium_block"
+  }
+}

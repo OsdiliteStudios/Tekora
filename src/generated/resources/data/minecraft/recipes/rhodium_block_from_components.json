@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:rhodium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/rhodium"
+    },
+    {
+      "tag": "forge:ingots/rhodium"
+    },
+    {
+      "tag": "forge:ingots/rhodium"
+    },
+    {
+      "tag": "forge:ingots/rhodium"
+    },
+    {
+      "tag": "forge:ingots/rhodium"
+    },
+    {
+      "tag": "forge:ingots/rhodium"
+    },
+    {
+      "tag": "forge:ingots/rhodium"
+    },
+    {
+      "tag": "forge:ingots/rhodium"
+    },
+    {
+      "tag": "forge:ingots/rhodium"
+    }
+  ],
+  "result": {
+    "item": "tekora:rhodium_block"
+  }
+}

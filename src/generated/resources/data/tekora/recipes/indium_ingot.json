@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "indium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/indium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:indium_ingot"
+  }
+}

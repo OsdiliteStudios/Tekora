@@ -29,6 +29,9 @@ public class TekoraMenuTypes {
     public static final RegistryObject<MenuType<BatteryMenu>> BATTERY_MENU =
             registerMenuType(BatteryMenu::new, "battery_menu");
 
+    public static final RegistryObject<MenuType<HydroelectricGeneratorMenu>> HYDROELECTRIC_GENERATOR_MENU =
+            registerMenuType(HydroelectricGeneratorMenu::new, "hydroelectric_generator_menu");
+
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(
             IContainerFactory<T> factory, String name) {
         return MOD_MENU_TYPES.register(name, () -> IForgeMenuType.create(factory));

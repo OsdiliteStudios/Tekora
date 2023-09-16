@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "reactor_steel_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/reactor_steel"
+  },
+  "result": "tekora:reactor_steel_ingot"
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:iridium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/iridium"
+    },
+    {
+      "tag": "forge:ingots/iridium"
+    },
+    {
+      "tag": "forge:ingots/iridium"
+    },
+    {
+      "tag": "forge:ingots/iridium"
+    },
+    {
+      "tag": "forge:ingots/iridium"
+    },
+    {
+      "tag": "forge:ingots/iridium"
+    },
+    {
+      "tag": "forge:ingots/iridium"
+    },
+    {
+      "tag": "forge:ingots/iridium"
+    },
+    {
+      "tag": "forge:ingots/iridium"
+    }
+  ],
+  "result": {
+    "item": "tekora:iridium_block"
+  }
+}

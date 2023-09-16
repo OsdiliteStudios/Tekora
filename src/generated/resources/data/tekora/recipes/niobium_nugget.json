@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "niobium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/niobium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:niobium_nugget"
+  }
+}

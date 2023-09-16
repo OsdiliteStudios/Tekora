@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cerium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/cerium"
+    },
+    {
+      "tag": "forge:nuggets/cerium"
+    },
+    {
+      "tag": "forge:nuggets/cerium"
+    },
+    {
+      "tag": "forge:nuggets/cerium"
+    },
+    {
+      "tag": "forge:nuggets/cerium"
+    },
+    {
+      "tag": "forge:nuggets/cerium"
+    },
+    {
+      "tag": "forge:nuggets/cerium"
+    },
+    {
+      "tag": "forge:nuggets/cerium"
+    },
+    {
+      "tag": "forge:nuggets/cerium"
+    }
+  ],
+  "result": {
+    "item": "tekora:cerium_ingot"
+  }
+}

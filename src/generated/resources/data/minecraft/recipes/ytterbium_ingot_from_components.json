@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "ytterbium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/ytterbium"
+    },
+    {
+      "tag": "forge:nuggets/ytterbium"
+    },
+    {
+      "tag": "forge:nuggets/ytterbium"
+    },
+    {
+      "tag": "forge:nuggets/ytterbium"
+    },
+    {
+      "tag": "forge:nuggets/ytterbium"
+    },
+    {
+      "tag": "forge:nuggets/ytterbium"
+    },
+    {
+      "tag": "forge:nuggets/ytterbium"
+    },
+    {
+      "tag": "forge:nuggets/ytterbium"
+    },
+    {
+      "tag": "forge:nuggets/ytterbium"
+    }
+  ],
+  "result": {
+    "item": "tekora:ytterbium_ingot"
+  }
+}

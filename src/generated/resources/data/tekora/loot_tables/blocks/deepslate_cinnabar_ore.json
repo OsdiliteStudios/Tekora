@@ -1,0 +1,161 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "name": "tekora:deepslate_cinnabar_ore"
+            },
+            {
+              "type": "minecraft:group",
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": {
+                        "type": "minecraft:uniform",
+                        "max": 1.0,
+                        "min": 3.0
+                      },
+                      "function": "minecraft:set_count"
+                    },
+                    {
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:ore_drops",
+                      "function": "minecraft:apply_bonus"
+                    },
+                    {
+                      "function": "minecraft:explosion_decay"
+                    }
+                  ],
+                  "name": "tekora:cinnabar"
+                },
+                {
+                  "type": "minecraft:group",
+                  "children": [
+                    {
+                      "type": "minecraft:item",
+                      "functions": [
+                        {
+                          "add": false,
+                          "conditions": [
+                            {
+                              "chance": 0.1,
+                              "condition": "minecraft:random_chance"
+                            }
+                          ],
+                          "count": {
+                            "type": "minecraft:uniform",
+                            "max": 1.0,
+                            "min": 1.0
+                          },
+                          "function": "minecraft:set_count"
+                        },
+                        {
+                          "enchantment": "minecraft:fortune",
+                          "formula": "minecraft:ore_drops",
+                          "function": "minecraft:apply_bonus"
+                        },
+                        {
+                          "function": "minecraft:explosion_decay"
+                        }
+                      ],
+                      "name": "tekora:orpiment_shard"
+                    },
+                    {
+                      "type": "minecraft:group",
+                      "children": [
+                        {
+                          "type": "minecraft:item",
+                          "functions": [
+                            {
+                              "add": false,
+                              "conditions": [
+                                {
+                                  "chance": 0.45,
+                                  "condition": "minecraft:random_chance"
+                                }
+                              ],
+                              "count": {
+                                "type": "minecraft:uniform",
+                                "max": 1.0,
+                                "min": 1.0
+                              },
+                              "function": "minecraft:set_count"
+                            },
+                            {
+                              "enchantment": "minecraft:fortune",
+                              "formula": "minecraft:ore_drops",
+                              "function": "minecraft:apply_bonus"
+                            },
+                            {
+                              "function": "minecraft:explosion_decay"
+                            }
+                          ],
+                          "name": "tekora:sphalerite_piece"
+                        },
+                        {
+                          "type": "minecraft:item",
+                          "functions": [
+                            {
+                              "add": false,
+                              "conditions": [
+                                {
+                                  "chance": 0.34,
+                                  "condition": "minecraft:random_chance"
+                                }
+                              ],
+                              "count": {
+                                "type": "minecraft:uniform",
+                                "max": 1.0,
+                                "min": 1.0
+                              },
+                              "function": "minecraft:set_count"
+                            },
+                            {
+                              "enchantment": "minecraft:fortune",
+                              "formula": "minecraft:ore_drops",
+                              "function": "minecraft:apply_bonus"
+                            },
+                            {
+                              "function": "minecraft:explosion_decay"
+                            }
+                          ],
+                          "name": "tekora:wolframite_piece"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "tekora:blocks/deepslate_cinnabar_ore"
+}

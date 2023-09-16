@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:palladium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/palladium"
+    },
+    {
+      "tag": "forge:ingots/palladium"
+    },
+    {
+      "tag": "forge:ingots/palladium"
+    },
+    {
+      "tag": "forge:ingots/palladium"
+    },
+    {
+      "tag": "forge:ingots/palladium"
+    },
+    {
+      "tag": "forge:ingots/palladium"
+    },
+    {
+      "tag": "forge:ingots/palladium"
+    },
+    {
+      "tag": "forge:ingots/palladium"
+    },
+    {
+      "tag": "forge:ingots/palladium"
+    }
+  ],
+  "result": {
+    "item": "tekora:palladium_block"
+  }
+}

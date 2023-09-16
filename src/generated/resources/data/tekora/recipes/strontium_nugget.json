@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "strontium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/strontium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:strontium_nugget"
+  }
+}

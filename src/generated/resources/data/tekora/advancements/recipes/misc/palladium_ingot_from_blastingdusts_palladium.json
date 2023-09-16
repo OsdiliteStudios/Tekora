@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/palladium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/palladium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:palladium_ingot_from_blastingdusts_palladium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/palladium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:palladium_ingot_from_blastingdusts_palladium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

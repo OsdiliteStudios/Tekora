@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "rhenium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/rhenium"
+    },
+    {
+      "tag": "forge:nuggets/rhenium"
+    },
+    {
+      "tag": "forge:nuggets/rhenium"
+    },
+    {
+      "tag": "forge:nuggets/rhenium"
+    },
+    {
+      "tag": "forge:nuggets/rhenium"
+    },
+    {
+      "tag": "forge:nuggets/rhenium"
+    },
+    {
+      "tag": "forge:nuggets/rhenium"
+    },
+    {
+      "tag": "forge:nuggets/rhenium"
+    },
+    {
+      "tag": "forge:nuggets/rhenium"
+    }
+  ],
+  "result": {
+    "item": "tekora:rhenium_ingot"
+  }
+}

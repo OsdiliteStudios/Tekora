@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "zinc_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/zinc"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:zinc_nugget"
+  }
+}

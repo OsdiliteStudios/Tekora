@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/rhenium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/rhenium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:rhenium_ingot_from_smeltingdusts_rhenium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/rhenium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:rhenium_ingot_from_smeltingdusts_rhenium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

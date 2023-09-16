@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/terbium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/terbium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:terbium_ingot_from_smeltingdusts_terbium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/terbium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:terbium_ingot_from_smeltingdusts_terbium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

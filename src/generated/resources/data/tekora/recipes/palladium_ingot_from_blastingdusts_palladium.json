@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "palladium_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/palladium"
+  },
+  "result": "tekora:palladium_ingot"
+}

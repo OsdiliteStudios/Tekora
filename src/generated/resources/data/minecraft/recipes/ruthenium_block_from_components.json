@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:ruthenium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/ruthenium"
+    },
+    {
+      "tag": "forge:ingots/ruthenium"
+    },
+    {
+      "tag": "forge:ingots/ruthenium"
+    },
+    {
+      "tag": "forge:ingots/ruthenium"
+    },
+    {
+      "tag": "forge:ingots/ruthenium"
+    },
+    {
+      "tag": "forge:ingots/ruthenium"
+    },
+    {
+      "tag": "forge:ingots/ruthenium"
+    },
+    {
+      "tag": "forge:ingots/ruthenium"
+    },
+    {
+      "tag": "forge:ingots/ruthenium"
+    }
+  ],
+  "result": {
+    "item": "tekora:ruthenium_block"
+  }
+}

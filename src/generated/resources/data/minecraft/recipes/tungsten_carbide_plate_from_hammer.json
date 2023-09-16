@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tungsten_carbide_plate",
+  "ingredients": [
+    {
+      "tag": "forge:tungsten_carbide"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:tungsten_carbide_plate"
+  }
+}

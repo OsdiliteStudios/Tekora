@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:ores/cassiterite": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ores/cassiterite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:cassiterite_from_blastingores_cassiterite"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:ores/cassiterite",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:cassiterite_from_blastingores_cassiterite"
+    ]
+  },
+  "sends_telemetry_event": false
+}

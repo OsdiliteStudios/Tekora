@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "stainless_steel_ingot",
+  "ingredient": {
+    "tag": "forge:dusts/stainless_steel"
+  },
+  "result": "tekora:stainless_steel_ingot"
+}

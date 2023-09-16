@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "lead_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/lead"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:lead_nugget"
+  }
+}

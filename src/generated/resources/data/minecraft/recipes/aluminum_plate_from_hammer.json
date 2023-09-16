@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "aluminum_plate",
+  "ingredients": [
+    {
+      "tag": "forge:aluminum"
+    },
+    {
+      "tag": "forge:tools/hammer"
+    }
+  ],
+  "result": {
+    "item": "tekora:aluminum_plate"
+  }
+}

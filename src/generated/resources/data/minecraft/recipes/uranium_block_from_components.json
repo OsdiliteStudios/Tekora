@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:uranium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/uranium"
+    },
+    {
+      "tag": "forge:ingots/uranium"
+    },
+    {
+      "tag": "forge:ingots/uranium"
+    },
+    {
+      "tag": "forge:ingots/uranium"
+    },
+    {
+      "tag": "forge:ingots/uranium"
+    },
+    {
+      "tag": "forge:ingots/uranium"
+    },
+    {
+      "tag": "forge:ingots/uranium"
+    },
+    {
+      "tag": "forge:ingots/uranium"
+    },
+    {
+      "tag": "forge:ingots/uranium"
+    }
+  ],
+  "result": {
+    "item": "tekora:uranium_block"
+  }
+}

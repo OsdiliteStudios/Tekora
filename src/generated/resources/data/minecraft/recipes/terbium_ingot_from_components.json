@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "terbium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/terbium"
+    },
+    {
+      "tag": "forge:nuggets/terbium"
+    },
+    {
+      "tag": "forge:nuggets/terbium"
+    },
+    {
+      "tag": "forge:nuggets/terbium"
+    },
+    {
+      "tag": "forge:nuggets/terbium"
+    },
+    {
+      "tag": "forge:nuggets/terbium"
+    },
+    {
+      "tag": "forge:nuggets/terbium"
+    },
+    {
+      "tag": "forge:nuggets/terbium"
+    },
+    {
+      "tag": "forge:nuggets/terbium"
+    }
+  ],
+  "result": {
+    "item": "tekora:terbium_ingot"
+  }
+}

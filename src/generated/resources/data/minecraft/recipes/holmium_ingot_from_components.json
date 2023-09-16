@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "holmium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/holmium"
+    },
+    {
+      "tag": "forge:nuggets/holmium"
+    },
+    {
+      "tag": "forge:nuggets/holmium"
+    },
+    {
+      "tag": "forge:nuggets/holmium"
+    },
+    {
+      "tag": "forge:nuggets/holmium"
+    },
+    {
+      "tag": "forge:nuggets/holmium"
+    },
+    {
+      "tag": "forge:nuggets/holmium"
+    },
+    {
+      "tag": "forge:nuggets/holmium"
+    },
+    {
+      "tag": "forge:nuggets/holmium"
+    }
+  ],
+  "result": {
+    "item": "tekora:holmium_ingot"
+  }
+}

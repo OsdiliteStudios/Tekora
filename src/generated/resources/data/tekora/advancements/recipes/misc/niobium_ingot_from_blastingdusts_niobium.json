@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "forge:dusts/niobium": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/niobium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:niobium_ingot_from_blastingdusts_niobium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "forge:dusts/niobium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:niobium_ingot_from_blastingdusts_niobium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "niobium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/niobium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:niobium_ingot"
+  }
+}

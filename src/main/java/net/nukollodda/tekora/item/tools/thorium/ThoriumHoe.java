@@ -7,12 +7,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.nukollodda.tekora.item.RadioactiveItems;
+import net.nukollodda.tekora.item.IRadioactiveItems;
 import net.nukollodda.tekora.item.isotopic.radioactive.Thorium;
 import net.nukollodda.tekora.tiers.TekoraTiers;
 import org.jetbrains.annotations.NotNull;
 
-public class ThoriumHoe extends HoeItem implements RadioactiveItems {
+public class ThoriumHoe extends HoeItem implements IRadioactiveItems {
     public ThoriumHoe() {
         super(TekoraTiers.THORIUM, -3, 0, new Item.Properties().fireResistant());
     }

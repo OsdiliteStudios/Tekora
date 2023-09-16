@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tantalum_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/tantalum"
+    },
+    {
+      "tag": "forge:nuggets/tantalum"
+    },
+    {
+      "tag": "forge:nuggets/tantalum"
+    },
+    {
+      "tag": "forge:nuggets/tantalum"
+    },
+    {
+      "tag": "forge:nuggets/tantalum"
+    },
+    {
+      "tag": "forge:nuggets/tantalum"
+    },
+    {
+      "tag": "forge:nuggets/tantalum"
+    },
+    {
+      "tag": "forge:nuggets/tantalum"
+    },
+    {
+      "tag": "forge:nuggets/tantalum"
+    }
+  ],
+  "result": {
+    "item": "tekora:tantalum_ingot"
+  }
+}

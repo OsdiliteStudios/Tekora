@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "gallium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/gallium"
+    },
+    {
+      "tag": "forge:nuggets/gallium"
+    },
+    {
+      "tag": "forge:nuggets/gallium"
+    },
+    {
+      "tag": "forge:nuggets/gallium"
+    },
+    {
+      "tag": "forge:nuggets/gallium"
+    },
+    {
+      "tag": "forge:nuggets/gallium"
+    },
+    {
+      "tag": "forge:nuggets/gallium"
+    },
+    {
+      "tag": "forge:nuggets/gallium"
+    },
+    {
+      "tag": "forge:nuggets/gallium"
+    }
+  ],
+  "result": {
+    "item": "tekora:gallium_ingot"
+  }
+}

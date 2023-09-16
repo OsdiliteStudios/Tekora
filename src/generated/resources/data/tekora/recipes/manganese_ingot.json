@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "manganese_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/manganese"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:manganese_ingot"
+  }
+}

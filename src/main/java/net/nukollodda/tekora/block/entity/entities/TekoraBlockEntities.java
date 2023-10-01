@@ -49,7 +49,7 @@ public class TekoraBlockEntities {
                     BlockEntityType.Builder.of(EnergyCableEntity::new,
                             TekoraBlocks.COPPER_CABLE.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<HydroelectricGeneratorEntity>> HYDRO_ELECTRIC_GENERATOR =
+    public static final RegistryObject<BlockEntityType<HydroelectricGeneratorEntity>> HYDROELECTRIC_GENERATOR =
             BLOCK_ENTITIES.register("hydroelectric_generator", () ->
                     BlockEntityType.Builder.of(HydroelectricGeneratorEntity::new,
                             TekoraBlocks.HYDROELECTRIC_GENERATOR.get()).build(null));

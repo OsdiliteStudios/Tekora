@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "forge:ingots/titanium"
+  },
+  "base": {
+    "item": "tekora:steel_boots"
+  },
+  "result": {
+    "item": "tekora:titanium_boots"
+  },
+  "template": {
+    "item": "tekora:titanium_upgrade_smithing_template"
+  }
+}

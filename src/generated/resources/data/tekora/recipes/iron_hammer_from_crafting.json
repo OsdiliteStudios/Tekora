@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "item": "minecraft:iron_ingot"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "000",
+    "000",
+    " 1 "
+  ],
+  "result": {
+    "item": "tekora:iron_hammer"
+  },
+  "show_notification": true
+}

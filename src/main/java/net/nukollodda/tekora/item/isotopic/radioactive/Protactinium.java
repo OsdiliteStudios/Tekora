@@ -1,7 +1,7 @@
 package net.nukollodda.tekora.item.isotopic.radioactive;
 
 import net.minecraft.world.item.Item;
-import net.nukollodda.tekora.item.typical.CompoundItem;
+import net.nukollodda.tekora.item.typical.IonicParts;
 import net.nukollodda.tekora.item.typical.ICompounds;
 
 public class Protactinium extends AbstractRadioactiveItem {
@@ -97,11 +97,10 @@ public class Protactinium extends AbstractRadioactiveItem {
     public static class CompoundDust extends Protactinium implements ICompounds {
 
         private final Item decayItem;
-        private final CompoundItem.Cations cation = CompoundItem.Cations.PROTACTINIUM;
-        private final CompoundItem.Anions anion;
+        private final String anion;
 
-        public CompoundDust(Item item, CompoundItem.Anions anions) {
-            this.decayItem = item;
+        public CompoundDust(Item decay, String anions) {
+            this.decayItem = decay;
             this.anion = anions;
         }
 
@@ -110,13 +109,18 @@ public class Protactinium extends AbstractRadioactiveItem {
         }
 
         @Override
-        public CompoundItem.Cations getCation() {
-            return cation;
+        public IonicParts.Cations getCation() {
+            return IonicParts.Cations.PROTACTINIUM;
         }
 
         @Override
-        public CompoundItem.Anions getAnion() {
-            return anion;
+        public IonicParts.Anions getAnion() {
+            for (IonicParts.Anions anion : IonicParts.Anions.values()) {
+                if (anion.getSymbol().equals(this.anion)) {
+                    return anion;
+                }
+            }
+            return null;
         }
     }
 }

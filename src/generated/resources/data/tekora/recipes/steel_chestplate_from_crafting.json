@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "tag": "forge:ingots/steel"
+    }
+  },
+  "pattern": [
+    "0 0",
+    "000",
+    "000"
+  ],
+  "result": {
+    "item": "tekora:steel_chestplate"
+  },
+  "show_notification": true
+}

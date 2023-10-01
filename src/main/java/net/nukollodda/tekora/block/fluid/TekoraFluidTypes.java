@@ -38,7 +38,25 @@ public class TekoraFluidTypes {
     public static final RegistryObject<FluidType> STEAM = register("steam",
             FluidType.Properties.create().density(1).viscosity(25).temperature(500), TekoraFluidTextures.STEAM_OVERLAY_RL,
             true, TekoraFluidPresets.WATER);
+    public static final RegistryObject<FluidType> AMMONIA = register("ammonia",
+            FluidType.Properties.create().density(8).viscosity(10).temperature(300), TekoraFluidTextures.NITROGEN_OVERLAY_RL,
+            true, TekoraFluidPresets.AMMONIA);
+    public static final RegistryObject<FluidType> HYDROGEN_CYANIDE = register("hydrogen_cyanide",
+            FluidType.Properties.create().density(1).viscosity(18).temperature(350), TekoraFluidTextures.BROMINE_OVERLAY_RL,
+            true, TekoraFluidPresets.HYDROGEN_CYANIDE);
+    public static final RegistryObject<FluidType> HYDROGEN_FLUORIDE = register("hydrogen_fluoride",
+            FluidType.Properties.create().density(1).viscosity(20).temperature(300), TekoraFluidTextures.FLUORINE_OVERLAY_RL,
+            true, TekoraFluidPresets.HYDROGEN_FLUORIDE);
 
+    public static final RegistryObject<FluidType> LIQUID_AMMONIA = register("ammonia_fluid",
+            FluidType.Properties.create().density(632).viscosity(266).temperature(200), TekoraFluidTextures.NITROGEN_OVERLAY_RL,
+            false, TekoraFluidPresets.AMMONIA);
+    public static final RegistryObject<FluidType> HYDROFLUORIC_ACID = register("hydrofluoric_acid",
+            FluidType.Properties.create().density(990).viscosity(1020).temperature(200), TekoraFluidTextures.FLUORINE_OVERLAY_RL,
+            false, TekoraFluidPresets.HYDROGEN_FLUORIDE);
+    public static final RegistryObject<FluidType> PRUSSIC_ACID = register("prussic_acid",
+            FluidType.Properties.create().density(687).viscosity(183).temperature(265), TekoraFluidTextures.BROMINE_OVERLAY_RL,
+            false, TekoraFluidPresets.HYDROGEN_CYANIDE);
     public static final RegistryObject<FluidType> MOLTEN_ALUMINUM = register("molten_aluminum",
             FluidType.Properties.create().density(2700).viscosity(16384).temperature(1000), TekoraFluidTextures.METAL_OVERLAY_RL,
             false, TekoraFluidPresets.ALUMINUM);
@@ -56,7 +74,8 @@ public class TekoraFluidTypes {
         FluidType.Properties modifiedProp = isGaseous ? properties.canExtinguish(false).
                 canSwim(false).canPushEntity(false).supportsBoating(false).fallDistanceModifier(0) : properties;
 
-        return FLUID_TYPES.register(name, () -> new TekoraFluidType(location, isGaseous ? data.getGasColor() : data.getLiquidColor(), modifiedProp, data, isGaseous));
+        return FLUID_TYPES.register(name, () -> new TekoraFluidType(location, isGaseous ? data.getGasColor() : data.getLiquidColor(),
+                modifiedProp, data, isGaseous));
     }
 
     public static void register(IEventBus eventBus) {

@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:ores/pentlandite": {
+    "has_pentlandite": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:ores/pentlandite",
+      "has_pentlandite",
       "has_the_recipe"
     ]
   ],

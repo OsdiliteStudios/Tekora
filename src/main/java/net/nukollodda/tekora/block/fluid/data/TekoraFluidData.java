@@ -3,6 +3,7 @@ package net.nukollodda.tekora.block.fluid.data;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
+import org.jetbrains.annotations.Contract;
 
 public class TekoraFluidData {
     private final int liquidSpecificHeat;
@@ -16,8 +17,8 @@ public class TekoraFluidData {
     private final boolean isMetallic;
     private final int fluidDmg;
     private final MobEffect[] effects;
-    private int liquidColor;
-    private int gasColor;
+    private final int liquidColor;
+    private final int gasColor;
 
     public TekoraFluidData(Properties properties) {
         this.liquidSpecificHeat = properties.liquidSpecificHeat;
@@ -59,10 +60,6 @@ public class TekoraFluidData {
         return isMetallic;
     }
 
-    private static float multiply(float num1, float num2) {
-        return num1 * num2;
-    }
-
     public int getFluidDmg() {
         return fluidDmg;
     }
@@ -93,7 +90,7 @@ public class TekoraFluidData {
         private float gasSpecificHeat = 1.996f;
 
         // the enthalpies of fusion and heat needs to be set to kJ/L K
-        private float fusHeat = 333;
+        private float fusHeat = 3.33f;
         private float vapHeat = 2250;
 
         // more biome related vars
@@ -167,11 +164,12 @@ public class TekoraFluidData {
         }
 
         public Properties metallic() {
+            this.liquidSpecificHeat = 1;
             this.isMetallic = true;
             return this;
         }
 
-        // for temporary purposes
+        // for fluids where the triple diagrams cannot be found
         public Properties setDefiniteBoilingPoint(float boilingPoint) {
             this.boilingCoefficient = 0;
             this.boilingPower = 1;
@@ -213,6 +211,10 @@ public class TekoraFluidData {
         public Properties setGasColor(int color) {
             this.gasColor = color;
             return this;
+        }
+
+        public Properties doesNotBoil() {
+            return setDefiniteBoilingPoint(4096);
         }
     }
 }

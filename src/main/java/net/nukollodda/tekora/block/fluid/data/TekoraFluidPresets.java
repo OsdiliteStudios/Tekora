@@ -1,13 +1,13 @@
 package net.nukollodda.tekora.block.fluid.data;
 
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 
 public class TekoraFluidPresets {
     /** I am very likely wrong with all the boiling coefficients, powers, and zero pressure boiling points
      * until I can come up with an equation that utilizes the critical temperature and pressure, this will
-     * have to do for now
-     */
+     * have to do for now */
     // https://www.engineeringtoolbox.com/triple-point-d_1926.html triple points for substances
     public static final TekoraFluidData HYDROGEN = new TekoraFluidData(new TekoraFluidData.Properties()
             .setMeltingPoint(14)
@@ -160,13 +160,19 @@ public class TekoraFluidPresets {
     // liquid density = 854
     // gas density = 2
 
+    // note: all viscosity values hereafter are for the gas phase
     public static final TekoraFluidData HYDROGEN_FLUORIDE = new TekoraFluidData(new TekoraFluidData.Properties()
             .setMeltingPoint(190)
             .setDefiniteBoilingPoint(293)
             .setHeatOfFusion(227)
             .setHeatOfVaporization(35.4f)
-            .setColor(0x3B6527));
-    // note: all viscosity values hereafter are for the gas phase
+            .setColor(0x3B6527)
+            .addEffects(new MobEffect[]{
+                    MobEffects.BLINDNESS,
+                    MobEffects.HUNGER,
+                    MobEffects.WEAKNESS,
+                    MobEffects.WITHER,
+                    MobEffects.CONFUSION}));
     // liquid density = 990
     // gas density = 1.15
     // normal bp = 292.6
@@ -192,11 +198,14 @@ public class TekoraFluidPresets {
             .setBoilingPower(0.166f)
             .setLowestPossibleBoilingPoint(240)
             .setSpecificHeatOfGas(10.1f)
-            .setColor(0x56390B));
-    // liquid density = 687
-    // gas density = 7.61
-    // viscosity = (liquid)183
-    // normal bp = 299
+            .setColor(0x56390B)
+            .addEffects(new MobEffect[]{
+                    MobEffects.HUNGER,
+                    MobEffects.WEAKNESS,
+                    MobEffects.WITHER,
+                    MobEffects.CONFUSION,
+                    MobEffects.MOVEMENT_SLOWDOWN,
+                    MobEffects.POISON}));
 
     public static final TekoraFluidData AMMONIA = new TekoraFluidData(new TekoraFluidData.Properties()
             .setMeltingPoint(195)
@@ -208,11 +217,13 @@ public class TekoraFluidPresets {
             .setHeatOfFusion(209)
             .setHeatOfVaporization(872)
             .setLiquidColor(0x28BABA)
-            .setGasColor(0x754A06));
-    // liquid density = 632
-    // gas density = 1
-    // viscosity = 266
-    // normal bp = 239.81
+            .setGasColor(0x754A06).addEffects(new MobEffect[]{
+                    MobEffects.HUNGER,
+                    MobEffects.WEAKNESS,
+                    MobEffects.POISON,
+                    MobEffects.CONFUSION,
+                    MobEffects.MOVEMENT_SLOWDOWN}
+            ));
 
     public static final TekoraFluidData PHOSPHINE = new TekoraFluidData(new TekoraFluidData.Properties()
             .setMeltingPoint(140)
@@ -259,7 +270,7 @@ public class TekoraFluidPresets {
             .setHeatOfFusion(221)
             .setColor(0x9C811A));
     // liquid density = 1830
-    // viscosity = (liquid) 26700
+    // viscosity = (liquid) 2670
     // normal bp = 610
 
     public static final TekoraFluidData CARBON_MONOXIDE = new TekoraFluidData(new TekoraFluidData.Properties()
@@ -372,32 +383,437 @@ public class TekoraFluidPresets {
     // viscosity =
     // normal bp = 128.35
 
-    // https://www.engineeringtoolbox.com/liquid-metal-boiling-points-specific-heat-d_1893.html - metal specific heats
+    // note for Tekora metals, ones with melting points above 2048K will not be added, density will always be g/L
+    public static final TekoraFluidData LITHIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(454)
+            .setDefiniteBoilingPoint(1615)
+            .setHeatOfFusion(41)
+            .setColor(0xC5BEB1));
+    // density = 512
+    // viscosity =
+
+    public static final TekoraFluidData BERYLLIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1560)
+            .setDefiniteBoilingPoint(2744)
+            .setSpecificHeatOfLiquid(2)
+            .setHeatOfFusion(65)
+            .setColor(0x757E71));
+    // density = 1690
+    // viscosity =
+
+    public static final TekoraFluidData SODIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(270)
+            .setDefiniteBoilingPoint(1156)
+            .setHeatOfFusion(64)
+            .setColor(0xABABB0));
+    // density = 927
+    // viscosity =
+
+    public static final TekoraFluidData MAGNESIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(923)
+            .setDefiniteBoilingPoint(1363)
+            .setHeatOfFusion(130)
+            .setColor(0xA7A7A7));
+    // density = 1584
+    // viscosity =
     public static final TekoraFluidData ALUMINUM = new TekoraFluidData(new TekoraFluidData.Properties()
             .metallic()
             .setMeltingPoint(933)
             .setDefiniteBoilingPoint(2743)
-            .setSpecificHeatOfLiquid(3190)
-            .setHeatOfFusion(1020)
+            .setHeatOfFusion(122)
             .setColor(0xE9F7F7));
-    // liquid aluminum density =
 
+    public static final TekoraFluidData SILICON = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1687)
+            .setDefiniteBoilingPoint(3538)
+            .setHeatOfFusion(549)
+            .setColor(0x66667E));
+    // density = 2570
+    // viscosity =
+
+    public static final TekoraFluidData POTASSIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(337)
+            .setDefiniteBoilingPoint(1032)
+            .setHeatOfFusion(110)
+            .setColor(0xE1DAD0));
+    // density = 829
+    // viscosity =
+
+    public static final TekoraFluidData CALCIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1115)
+            .setDefiniteBoilingPoint(1757)
+            .setHeatOfFusion(248)
+            .setColor(0xDBDBDB));
+    // density = 1378
+    // viscosity =
+
+    public static final TekoraFluidData SCANDIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1814)
+            .setDefiniteBoilingPoint(3109)
+            .setHeatOfFusion(226)
+            .setColor(0xE5E7E0));
+    // density = 2800
+    // viscosity =
+
+    public static final TekoraFluidData TITANIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1941)
+            .setDefiniteBoilingPoint(3560)
+            .setHeatOfFusion(165)
+            .setColor(0x5E5F67));
+    // density = 4110
+    // viscosity =
+
+    public static final TekoraFluidData MANGANESE = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1519)
+            .setDefiniteBoilingPoint(2334)
+            .setHeatOfFusion(119)
+            .setColor(0xCEB6CE));
+    // density = 5950
+    // viscosity =
+
+    public static final TekoraFluidData IRON = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1811)
+            .setDefiniteBoilingPoint(3134)
+            .setHeatOfFusion(110)
+            .setColor(0xF09432));
+    // density = 6980
+    // viscosity =
+
+    public static final TekoraFluidData COBALT = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1769)
+            .setDefiniteBoilingPoint(3200)
+            .setHeatOfFusion(122)
+            .setColor(0x2D67BA));
+    // density = 7750
+    // viscosity =
+
+    public static final TekoraFluidData NICKEL = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1728)
+            .setDefiniteBoilingPoint(3186)
+            .setHeatOfFusion(131)
+            .setColor(0xC5C1A4));
+    // density = 7810
+    // viscosity =
+
+    public static final TekoraFluidData COPPER = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1358)
+            .setDefiniteBoilingPoint(2835)
+            .setHeatOfFusion(107)
+            .setColor(0xFC9982));
+    // density = 8020
+    // viscosity =
+
+    public static final TekoraFluidData ZINC = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(693)
+            .setDefiniteBoilingPoint(1180)
+            .setHeatOfFusion(72.8f)
+            .setColor(0xD9D8CD));
+    // density = 6570
+    // viscosity =
     public static final TekoraFluidData GALLIUM = new TekoraFluidData(new TekoraFluidData.Properties()
             .metallic()
             .setMeltingPoint(303)
             .setDefiniteBoilingPoint(2673)
-            .setSpecificHeatOfLiquid(834)
-            .setHeatOfFusion(22.4f)
+            .setHeatOfFusion(63.9f)
             .setColor(0x9A9A9A));
-    // liquid gallium density =
+
+    public static final TekoraFluidData GERMANIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1211)
+            .setDefiniteBoilingPoint(3106)
+            .setHeatOfFusion(479)
+            .setColor(0x7E7E67));
+    // density = 5600
+    // viscosity =
+
+    public static final TekoraFluidData ARSENIC = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1090)
+            .setBoilingCoefficient(127)
+            .setBoilingPower(0.267f)
+            .setLowestPossibleBoilingPoint(760)
+            .setHeatOfFusion(351)
+            .setColor(0x706C5C));
+    // density = 5220
+    // viscosity =
+
+    public static final TekoraFluidData RUBIDIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(312)
+            .setDefiniteBoilingPoint(961)
+            .setSpecificHeatOfLiquid(2)
+            .setHeatOfFusion(128)
+            .setColor(0xBDB1AB));
+    // density = 1460
+    // viscosity =
+
+    public static final TekoraFluidData STRONTIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1050)
+            .setDefiniteBoilingPoint(1655)
+            .setHeatOfFusion(274)
+            .setColor(0xCFE1E5));
+    // density = 2375
+    // viscosity =
+
+    public static final TekoraFluidData YTTRIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1795)
+            .setDefiniteBoilingPoint(3618)
+            .setHeatOfFusion(239)
+            .setColor(0x92988A));
+    // density = 4240
+    // viscosity =
+
+    public static final TekoraFluidData PALLADIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1828)
+            .setDefiniteBoilingPoint(3236)
+            .setHeatOfFusion(172)
+            .setColor(0xD8D4D1));
+    // density = 10380
+    // viscosity =
+
+    public static final TekoraFluidData SILVER = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1235)
+            .setDefiniteBoilingPoint(2435)
+            .setHeatOfFusion(131)
+            .setColor(0xD0D0D0));
+    // density = 9320
+    // viscosity =
+
+    public static final TekoraFluidData CADMIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(594)
+            .setDefiniteBoilingPoint(1040)
+            .setHeatOfFusion(87.3f)
+            .setColor(0x3C403C));
+    // density = 7996
+    // viscosity =
+
+    public static final TekoraFluidData INDIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(430)
+            .setDefiniteBoilingPoint(2345)
+            .setHeatOfFusion(53.7f)
+            .setColor(0x9EAEAE));
+    // density = 7020
+    // viscosity =
+
+    public static final TekoraFluidData TIN = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(505)
+            .setDefiniteBoilingPoint(2875)
+            .setHeatOfFusion(119)
+            .setColor(0xEAEAEA));
+    // density = 6990
+    // viscosity =
+
+    public static final TekoraFluidData ANTIMONY = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(904)
+            .setDefiniteBoilingPoint(1860)
+            .setHeatOfFusion(369)
+            .setColor(0xBAB5C3));
+    // density = 6530
+    // viscosity =
+
+    public static final TekoraFluidData TELLURIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(723)
+            .setDefiniteBoilingPoint(1264)
+            .setHeatOfFusion(392)
+            .setColor(0x6F807C));
+    // density = 5700
+    // viscosity =
+
+    public static final TekoraFluidData CESIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(302)
+            .setDefiniteBoilingPoint(944)
+            .setSpecificHeatOfLiquid(2)
+            .setHeatOfFusion(151)
+            .setColor(0xC9C8BD));
+    // density = 1843
+    // viscosity =
+
+    public static final TekoraFluidData BARIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1000)
+            .setDefiniteBoilingPoint(2170)
+            .setSpecificHeatOfLiquid(2)
+            .setHeatOfFusion(293)
+            .setColor(0x4B4B4B));
+    // density = 3338
+    // viscosity =
+
+    public static final TekoraFluidData LANTHANUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1191)
+            .setDefiniteBoilingPoint(3737)
+            .setHeatOfFusion(150)
+            .setColor(0xF4F4F4));
+    // density = 5940
+    // viscosity =
+
+    public static final TekoraFluidData CERIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1071)
+            .setDefiniteBoilingPoint(3697)
+            .setHeatOfFusion(117)
+            .setColor(0xE0E3DB));
+    // density = 6550
+    // viscosity =
+
+    public static final TekoraFluidData PRASEODYMIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1204)
+            .setDefiniteBoilingPoint(3793)
+            .setHeatOfFusion(149)
+            .setColor(0xDCE8D6));
+    // density = 6500
+    // viscosity =
+
+    public static final TekoraFluidData NEODYMIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1294)
+            .setDefiniteBoilingPoint(3347)
+            .setHeatOfFusion(149)
+            .setColor(0xEDE4F4));
+    // density = 6890
+    // viscosity =
+
+    public static final TekoraFluidData SAMARIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1347)
+            .setDefiniteBoilingPoint(2067)
+            .setHeatOfFusion(181)
+            .setColor(0xF0ECDD));
+    // density = 7160
+    // viscosity =
+
+    public static final TekoraFluidData EUROPIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1095)
+            .setDefiniteBoilingPoint(1802)
+            .setHeatOfFusion(273)
+            .setColor(0xCAD2C4));
+    // density = 5130
+    // viscosity =
+
+    public static final TekoraFluidData GADOLINIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1586)
+            .setDefiniteBoilingPoint(3546)
+            .setHeatOfFusion(214)
+            .setColor(0xBDC9C4));
+    // density = 7400
+    // viscosity =
+
+    public static final TekoraFluidData TERBIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1629)
+            .setDefiniteBoilingPoint(3503)
+            .setHeatOfFusion(211)
+            .setColor(0xCFD2C7));
+    // density = 7650
+    // viscosity =
+
+    public static final TekoraFluidData DYSPROSIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1685)
+            .setDefiniteBoilingPoint(2840)
+            .setHeatOfFusion(215)
+            .setColor(0xE7E0E2));
+    // density = 8370
+    // viscosity =
+
+    public static final TekoraFluidData HOLMIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1747)
+            .setDefiniteBoilingPoint(2973)
+            .setHeatOfFusion(336)
+            .setColor(0xA3A3A3));
+    // density = 8340
+    // viscosity =
+
+    public static final TekoraFluidData ERBIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1802)
+            .setDefiniteBoilingPoint(3141)
+            .setHeatOfFusion(376)
+            .setColor(0xA7A2A2));
+    // density = 8860
+    // viscosity =
+
+    public static final TekoraFluidData THULIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1818)
+            .setDefiniteBoilingPoint(3141)
+            .setHeatOfFusion(332)
+            .setColor(0xAEABA4));
+    // density = 8560
+    // viscosity =
+
+    public static final TekoraFluidData YTTERBIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1092)
+            .setDefiniteBoilingPoint(1469)
+            .setHeatOfFusion(213)
+            .setColor(0xBDBCB2));
+    // density = 6210
+    // viscosity =
+
+    public static final TekoraFluidData LUTETIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1936)
+            .setDefiniteBoilingPoint(3675)
+            .setHeatOfFusion(414)
+            .setColor(0xACB5B8));
+    // density = 9300
+    // viscosity =
+
+    public static final TekoraFluidData PLATINUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(2042)
+            .setDefiniteBoilingPoint(4098)
+            .setHeatOfFusion(219)
+            .setColor(0xB1B9CE));
+    // density = 19770
+    // viscosity =
+
+    public static final TekoraFluidData GOLD = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1337)
+            .setDefiniteBoilingPoint(3129)
+            .setHeatOfFusion(143)
+            .setColor(0xFDF55F));
+    // density = 17310
+    // viscosity =
+
     public static final TekoraFluidData MERCURY = new TekoraFluidData(new TekoraFluidData.Properties()
             .metallic()
             .setMeltingPoint(234)
             .setDefiniteBoilingPoint(630)
-            .setSpecificHeatOfLiquid(1930)
-            .setSpecificHeatOfGas(1890)
-            .setHeatOfFusion(153)
-            .setHeatOfVaporization(3970)
+            .setSpecificHeatOfGas(1)
+            .setHeatOfFusion(33.9f)
+            .setHeatOfVaporization(875)
             .setColor(0x9A9A9A)
             .addEffects(new MobEffect[]{
                     MobEffects.HUNGER,
@@ -407,4 +823,85 @@ public class TekoraFluidPresets {
                     MobEffects.MOVEMENT_SLOWDOWN,
                     MobEffects.DIG_SLOWDOWN
             }));
+
+    public static final TekoraFluidData THALLIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(577)
+            .setDefiniteBoilingPoint(1746)
+            .setHeatOfFusion(75.4f)
+            .setColor(0xE4F0E8));
+    // density = 11220
+    // viscosity =
+
+    public static final TekoraFluidData LEAD = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(601)
+            .setDefiniteBoilingPoint(2022)
+            .setHeatOfFusion(92.7f)
+            .setColor(0x879FD8));
+    // density = 10660
+    // viscosity =
+
+    public static final TekoraFluidData BISMUTH = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(545)
+            .setDefiniteBoilingPoint(1837)
+            .setHeatOfFusion(235)
+            .setColor(0x9E9F94));
+    // density = 10050
+    // viscosity =
+
+    public static final TekoraFluidData THORIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(2023)
+            .setDefiniteBoilingPoint(5061)
+            .setHeatOfFusion(274)
+            .setColor(0x525252));
+    // density = 11700
+    // viscosity =
+
+    public static final TekoraFluidData PROTACTINIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1845)
+            .setDefiniteBoilingPoint(4000)
+            .setHeatOfFusion(186)
+            .setColor(0xDCD7BE));
+    // density = 15370
+    // viscosity =
+
+    public static final TekoraFluidData URANIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(1408)
+            .setDefiniteBoilingPoint(4404)
+            .setHeatOfFusion(126)
+            .setColor(0xA8BDA2));
+    // density = 17300
+    // viscosity =
+
+    public static final TekoraFluidData NEPTUNIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(917)
+            .setDefiniteBoilingPoint(4175)
+            .setHeatOfFusion(63.5f)
+            .setColor(0x8FDFBC));
+    // density = 19380
+    // viscosity =
+
+    public static final TekoraFluidData PLUTONIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(913)
+            .setDefiniteBoilingPoint(3501)
+            .setHeatOfFusion(41.4f)
+            .setColor(0xDFCDB7));
+    // density = 16630
+    // viscosity =
+
+    public static final TekoraFluidData AMERICIUM = new TekoraFluidData(new TekoraFluidData.Properties()
+            .metallic()
+            .setMeltingPoint(2284)
+            .setDefiniteBoilingPoint(3400)
+            .setHeatOfFusion(291)
+            .setColor(0xDFC2C2));
+    // density = 12000
+    // viscosity =
 }

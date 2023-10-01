@@ -6,6 +6,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
@@ -27,8 +28,8 @@ public class TekoraFluidType extends FluidType {
     public TekoraFluidType(final ResourceLocation overlayTexture, final int tintColor,
                            final Properties properties, final TekoraFluidData data, final boolean isGas) {
         super(properties);
-        this.stillTexture = isGas ? TekoraFluidTextures.GAS_RL : getTemperature() > 700 ? TekoraFluidTextures.LAVA_STILL_RL : TekoraFluidTextures.WATER_STILL_RL;
-        this.flowingTexture = isGas ? TekoraFluidTextures.GAS_RL : getTemperature() > 700 ? TekoraFluidTextures.LAVA_FLOWING_RL : TekoraFluidTextures.WATER_FLOWING_RL;
+        this.stillTexture = isGas ? TekoraFluidTextures.GAS_RL : getTemperature() > 798 ? TekoraFluidTextures.LAVA_STILL_RL : TekoraFluidTextures.WATER_STILL_RL;
+        this.flowingTexture = isGas ? TekoraFluidTextures.GAS_RL : getTemperature() > 798 ? TekoraFluidTextures.LAVA_FLOWING_RL : TekoraFluidTextures.WATER_FLOWING_RL;
         this.overlayTexture = overlayTexture;
         this.tintColor = tintColor;
         this.fogColor = colorToVector(tintColor);
@@ -74,6 +75,34 @@ public class TekoraFluidType extends FluidType {
 
     public float getSpecificHeat() {
         return fluidData.getSpecificHeat(isGas);
+    }
+
+    public float getMeltingPoint() {
+        return fluidData.getMeltingPoint();
+    }
+
+    public float getBoilingPoint(float pPressure) {
+        return fluidData.getBoilingPoint(pPressure);
+    }
+
+    public float getFusionHeat() {
+        return fluidData.getFusionHeat();
+    }
+
+    public float getVaporizationHeat() {
+        return fluidData.getVaporizationHeat();
+    }
+
+    public boolean isMetallic() {
+        return fluidData.isMetallic();
+    }
+
+    public MobEffect[] getEffects() {
+        return fluidData.getEffects();
+    }
+
+    public int getFluidDmg() {
+        return fluidData.getFluidDmg();
     }
 
     @Override

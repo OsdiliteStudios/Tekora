@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.nukollodda.tekora.block.entity.blocks.machines.AbstractMachineBlock;
 import net.nukollodda.tekora.block.entity.entities.IElectricEntity;
 import net.nukollodda.tekora.util.TekoraEnergyStorage;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +32,7 @@ public abstract class AbstractTekoraMachineEntity extends BlockEntity implements
     protected final TekoraEnergyStorage ENERGY_STORAGE = new TekoraEnergyStorage(this,4096, 256);
     protected int containerSize;
 
-    protected static final int ENERGY_REQ = 32; // energy consumed per tick for crafting
+    protected static final int ENERGY_REQ = 16; // energy consumed per tick for crafting
 
     public AbstractTekoraMachineEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int containerSize) {
         super(pType, pPos, pBlockState);
@@ -87,6 +88,10 @@ public abstract class AbstractTekoraMachineEntity extends BlockEntity implements
     }
 
     protected void resetProgress() {
+        if (level != null) {
+            BlockState state = this.getBlockState().setValue(AbstractMachineBlock.LIT, false);
+            level.setBlock(this.getBlockPos(), state, 3);
+        }
         this.progress = 0;
     }
 

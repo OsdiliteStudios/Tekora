@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:dusts/nickel": {
+    "has_nickel_ingot": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:dusts/nickel",
+      "has_nickel_ingot",
       "has_the_recipe"
     ]
   ],

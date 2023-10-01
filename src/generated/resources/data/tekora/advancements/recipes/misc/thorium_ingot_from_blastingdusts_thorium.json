@@ -1,7 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:dusts/thorium": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:thorium_ingot_from_blastingdusts_thorium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_thorium_ingot": {
       "conditions": {
         "items": [
           {
@@ -10,17 +16,11 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "tekora:thorium_ingot_from_blastingdusts_thorium"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "forge:dusts/thorium",
+      "has_thorium_ingot",
       "has_the_recipe"
     ]
   ],

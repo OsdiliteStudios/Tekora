@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:dusts/erbium": {
+    "has_erbium_ingot": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:dusts/erbium",
+      "has_erbium_ingot",
       "has_the_recipe"
     ]
   ],

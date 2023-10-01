@@ -8,6 +8,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.recipes.types.AlloyingRecipe;
 import net.nukollodda.tekora.recipes.types.CrushingRecipe;
+import net.nukollodda.tekora.recipes.types.ElectricBlastingRecipe;
 import net.nukollodda.tekora.recipes.types.InfusionRecipe;
 
 public class TekoraRecipes {
@@ -22,6 +23,9 @@ public class TekoraRecipes {
 
     public static final RegistryObject<RecipeSerializer<CrushingRecipe>> CRUSHING_SERIALIZER =
             SERIALIZERS.register("crushing", () -> CrushingRecipe.Serializer.INSTANCE);
+
+    public static final RegistryObject<RecipeSerializer<ElectricBlastingRecipe>> BLASTING_SERIALIZER =
+            SERIALIZERS.register("blasting", () -> ElectricBlastingRecipe.Serializer.INSTANCE);
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);
     }

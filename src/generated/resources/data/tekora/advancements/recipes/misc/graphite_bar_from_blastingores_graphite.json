@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:ores/graphite": {
+    "has_graphite_bar": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:ores/graphite",
+      "has_graphite_bar",
       "has_the_recipe"
     ]
   ],

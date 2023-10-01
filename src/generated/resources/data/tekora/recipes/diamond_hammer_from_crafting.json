@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "item": "minecraft:diamond"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "000",
+    "000",
+    " 1 "
+  ],
+  "result": {
+    "item": "tekora:diamond_hammer"
+  },
+  "show_notification": true
+}

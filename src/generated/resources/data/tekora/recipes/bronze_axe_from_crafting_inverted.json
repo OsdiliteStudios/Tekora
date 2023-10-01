@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "tag": "forge:ingots/bronze"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "00",
+    "10",
+    "1 "
+  ],
+  "result": {
+    "item": "tekora:bronze_axe"
+  },
+  "show_notification": true
+}

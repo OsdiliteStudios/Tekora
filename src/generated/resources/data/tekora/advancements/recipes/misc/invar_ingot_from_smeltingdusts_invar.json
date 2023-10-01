@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:dusts/invar": {
+    "has_invar_ingot": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:dusts/invar",
+      "has_invar_ingot",
       "has_the_recipe"
     ]
   ],

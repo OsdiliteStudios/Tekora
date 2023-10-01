@@ -19,7 +19,7 @@ import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.fluid.TekoraFluidTypes;
 import net.nukollodda.tekora.block.fluid.TekoraFluids;
 import net.nukollodda.tekora.client.screens.*;
-import net.nukollodda.tekora.item.TekoraCreativeModTab;
+import net.nukollodda.tekora.item.TekoraCreativeTabs;
 import net.nukollodda.tekora.item.TekoraItems;
 import net.nukollodda.tekora.menu.*;
 import net.nukollodda.tekora.recipes.TekoraRecipes;
@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 public class Tekora {
     /** Thanks to <a href="https://github.com/Tutorials-By-Kaupenjoe">Kaupenjoe</a> for making a tutorial for modding for
      * the Tekora team! As some code in this project were copied directly from his tutorials.
-     **/
+     */
     public static final String MODID = "tekora";
     public static final Logger LOGGER = LogUtils.getLogger();
     public Tekora() {
@@ -37,15 +37,11 @@ public class Tekora {
 
         TekoraItems.register(modEventBus);
         TekoraBlocks.register(modEventBus);
-
         TekoraBlockEntities.register(modEventBus);
         TekoraMenuTypes.register(modEventBus);
-
-        TekoraCreativeModTab.register(modEventBus);
-
+        TekoraCreativeTabs.register(modEventBus);
         TekoraFluidTypes.register(modEventBus);
         TekoraFluids.register(modEventBus);
-
         TekoraRecipes.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
@@ -181,33 +177,45 @@ public class Tekora {
         }
     }
 
-
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            // source block rendering
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROGEN_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_NITROGEN_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_OXYGEN_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_FLUORINE_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_CHLORINE_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_STEAM.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_AMMONIA.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROGEN_CYANIDE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROGEN_FLUORIDE.get(), RenderType.translucent());
 
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_ALUMINUM_MOLTEN.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_GALLIUM_FLUID.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_MERCURY_FLUID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_AMMONIA_FLUID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROFLUORIC_ACID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_PRUSSIC_ACID.get(), RenderType.solid());
 
+            // flowing block rendering
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROGEN_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_NITROGEN_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_OXYGEN_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_FLUORINE_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_CHLORINE_GAS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_STEAM.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_AMMONIA.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROGEN_CYANIDE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROGEN_FLUORIDE.get(), RenderType.translucent());
 
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_ALUMINUM_MOLTEN.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_GALLIUM_FLUID.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_MERCURY_FLUID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_AMMONIA_FLUID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROFLUORIC_ACID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_PRUSSIC_ACID.get(), RenderType.solid());
 
             MenuScreens.register(TekoraMenuTypes.ALLOY_FURNACE_MENU.get(), AlloyFurnaceScreen::new);
             MenuScreens.register(TekoraMenuTypes.INFUSION_FURNACE_MENU.get(), InfusionFurnaceScreen::new);

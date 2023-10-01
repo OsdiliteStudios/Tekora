@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:ores/sapphire": {
+    "has_sapphire": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:ores/sapphire",
+      "has_sapphire",
       "has_the_recipe"
     ]
   ],

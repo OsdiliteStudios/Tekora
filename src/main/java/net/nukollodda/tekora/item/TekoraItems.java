@@ -5,6 +5,7 @@ import net.nukollodda.tekora.item.isotopic.Lithium;
 import net.nukollodda.tekora.item.isotopic.radioactive.*;
 import net.nukollodda.tekora.item.mixtures.Residue;
 import net.nukollodda.tekora.item.tools.HammerItem;
+import net.nukollodda.tekora.item.tools.SmithingTemplates;
 import net.nukollodda.tekora.item.tools.thorium.*;
 import net.nukollodda.tekora.item.typical.*;
 import net.minecraft.world.item.*;
@@ -374,7 +375,7 @@ public class TekoraItems {
     public static final RegistryObject<Item> PRASEODYMIUM_OXIDE = ITEMS.register("praseodymium_oxide", HeatResistantItem::new);
     public static final RegistryObject<Item> PRASEODYMIUM_HYDROXIDE = ITEMS.register("praseodymium_hydroxide", TekoraItem::new);
     public static final RegistryObject<Item> PROTACTINIUM_DIOXIDE = ITEMS.register("protactinium_dioxide", () ->
-            new Protactinium.CompoundDust(TekoraItems.THORIUM_INGOT.get(), CompoundItem.Anions.OXIDE));
+            new Protactinium.CompoundDust(TekoraItems.THORIUM_INGOT.get(), "O"));
     public static final RegistryObject<Item> RHENIUM_DISULFIDE = ITEMS.register("rhenium_disulfide", TekoraItem::new);
     public static final RegistryObject<Item> RHENIUM_HEPTOXIDE = ITEMS.register("rhenium_heptoxide", TekoraItem::new);
     public static final RegistryObject<Item> SALT = ITEMS.register("salt", TekoraItem::new);
@@ -413,7 +414,7 @@ public class TekoraItems {
     public static final RegistryObject<Item> ZINC_NITRATE = ITEMS.register("zinc_nitrate", TekoraItem::new);
     public static final RegistryObject<Item> ZINC_SULFIDE = ITEMS.register("zinc_sulfide", TekoraItem::new);
 
-    public static final RegistryObject<Item> RESIDUE = ITEMS.register("residue", Residue::new);
+    public static final RegistryObject<Residue> RESIDUE = ITEMS.register("residue", Residue::new);
 
     public static final RegistryObject<Item> ALUMINUM_PLATE = ITEMS.register("aluminum_plate", TekoraItem::new);
     public static final RegistryObject<Item> BISMUTH_PLATE = ITEMS.register("bismuth_plate", TekoraItem::new);
@@ -463,6 +464,23 @@ public class TekoraItems {
     public static final RegistryObject<Item> ZINC_PLATE = ITEMS.register("zinc_plate", TekoraItem::new);
     public static final RegistryObject<Item> ZIRCALOY_PLATE = ITEMS.register("zircaloy_plate", HeatResistantItem::new);
     public static final RegistryObject<Item> ZIRCONIUM_PLATE = ITEMS.register("zirconium_plate", HeatResistantItem::new);
+
+
+    public static final RegistryObject<Item> TITANIUM_TEMPLATE = ITEMS.register("titanium_upgrade_smithing_template",
+            () -> SmithingTemplates.createTekoraUpgradeTemplate(SmithingTemplates.APPLIES_TO_STEEL,
+                    SmithingTemplates.APPLIES_TO_ALL_STEEL,"titanium"));
+
+    public static final RegistryObject<Item> THORIUM_TEMPLATE = ITEMS.register("thorium_upgrade_smithing_template",
+            () -> SmithingTemplates.createTekoraUpgradeTemplate(SmithingTemplates.APPLIES_TO_STEEL,
+                    SmithingTemplates.APPLIES_TO_TOOLS_STEEL,"thorium"));
+
+    public static final RegistryObject<Item> TUNGSTEN_STEEL_TEMPLATE = ITEMS.register("tungsten_steel_upgrade_smithing_template",
+            () -> SmithingTemplates.createTekoraUpgradeTemplate(SmithingTemplates.APPLIES_TO_IRON,
+                    SmithingTemplates.APPLIES_TO_ALL_IRON,"tungsten_steel"));
+
+    public static final RegistryObject<Item> VANASTEEL_TEMPLATE = ITEMS.register("vanasteel_upgrade_smithing_template",
+            () -> SmithingTemplates.createTekoraUpgradeTemplate(SmithingTemplates.APPLIES_TO_IRON,
+                    SmithingTemplates.APPLIES_TO_ALL_IRON,"vanasteel"));
 
 
     public static final RegistryObject<Item> BORON_HELMET = ITEMS.register("boron_helmet", () -> new HeatResArmor(TekoraArmors.BORON, ArmorItem.Type.HELMET));

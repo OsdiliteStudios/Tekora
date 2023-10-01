@@ -39,7 +39,7 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
 
     private void renderProgressArrow(GuiGraphics pGraphics, int x, int y) {
         if (menu.isCrafting()) {
-            pGraphics.blit(TEXTURE, x + 79, y + 27, 176, 0, menu.getScaledProgress(), 17);
+            pGraphics.blit(TEXTURE, x + 79, y + 26, 176, 0, menu.getScaledProgress(), 17);
         }
     }
 

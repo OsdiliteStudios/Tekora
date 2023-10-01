@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "tag": "forge:ingots/bronze"
+    }
+  },
+  "pattern": [
+    "000",
+    "0 0",
+    "0 0"
+  ],
+  "result": {
+    "item": "tekora:bronze_leggings"
+  },
+  "show_notification": true
+}

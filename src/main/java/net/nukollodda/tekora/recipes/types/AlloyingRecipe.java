@@ -32,27 +32,26 @@ public class AlloyingRecipe implements Recipe<SimpleContainer> {
         }
         boolean hasIng = recipeItems.size() > 0;
         int ingNum;
-        ItemStack prevItem;
         ItemStack curItem;
-        ItemStack postItem;
         Ingredient ing;
-
+        boolean[] skipped = new boolean[pContainer.getContainerSize() - 1];
         for (int i = 0; i < recipeItems.size(); i++) {
+            if (!hasIng) break;
             ing = recipeItems.get(i);
             ingNum = 0;
-            for (int j = 1; j < 4; j++) {
+            for (int j = 1; j < pContainer.getContainerSize()-1; j++) {
                 curItem = pContainer.getItem(j);
+                if (skipped[j]) continue;
                 if (curItem.isEmpty()) {
                     continue;
                 }
                 if (isInvalidItem(curItem)) {
+                    hasIng = false;
                     break;
                 }
-                prevItem = pContainer.getItem(j-1 >= 1 ? j-1 : 3);
-                postItem = pContainer.getItem(j+1 < 4 ? j+1 : 1);
                 if (ing.test(curItem)) {
-                    ingNum = curItem.getCount() + (curItem.is(prevItem.getItem()) ? prevItem.getCount() : 0) +
-                            (curItem.is(postItem.getItem()) ? postItem.getCount() : 0);
+                    ingNum += curItem.getCount();
+                    skipped[j] = true;
                 }
             }
             hasIng = ingNum >= recipeRatio.get(i) && hasIng;
@@ -74,8 +73,12 @@ public class AlloyingRecipe implements Recipe<SimpleContainer> {
         return recipeItems;
     }
 
-    public NonNullList<Integer> getRecipeRatio() {
-        return recipeRatio;
+    public int[] getRecipeRatio() {
+        int[] ratio = new int[recipeRatio.size()];
+        for (int i = 0; i < ratio.length; i++) {
+            ratio[i] = recipeRatio.get(i);
+        }
+        return ratio;
     }
 
     @Override

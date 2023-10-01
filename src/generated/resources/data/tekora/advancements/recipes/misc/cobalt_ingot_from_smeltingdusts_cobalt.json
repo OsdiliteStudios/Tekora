@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:dusts/cobalt": {
+    "has_cobalt_ingot": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:dusts/cobalt",
+      "has_cobalt_ingot",
       "has_the_recipe"
     ]
   ],

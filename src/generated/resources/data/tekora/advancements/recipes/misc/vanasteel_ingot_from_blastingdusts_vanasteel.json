@@ -1,7 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:dusts/vanasteel": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:vanasteel_ingot_from_blastingdusts_vanasteel"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_vanasteel_ingot": {
       "conditions": {
         "items": [
           {
@@ -10,17 +16,11 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "tekora:vanasteel_ingot_from_blastingdusts_vanasteel"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "forge:dusts/vanasteel",
+      "has_vanasteel_ingot",
       "has_the_recipe"
     ]
   ],

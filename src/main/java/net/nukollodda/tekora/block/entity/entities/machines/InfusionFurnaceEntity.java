@@ -73,11 +73,6 @@ public class InfusionFurnaceEntity extends AbstractTekoraFurnaceEntity {
         super(TekoraBlockEntities.INFUSION_FURNACE.get(), pos, blockState, 4);
     }
 
-    @Override
-    public Component getDisplayName() {
-        return Component.translatable("block.tekora.infusion_furnace");
-    }
-
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
@@ -151,7 +146,10 @@ public class InfusionFurnaceEntity extends AbstractTekoraFurnaceEntity {
 
         if (entity.isLit()) {
             entity.fuel--;
-            state = state.setValue(AbstractMachineBlock.LIT, entity.isLit());
+            state = state.setValue(AbstractMachineBlock.LIT, true);
+            level.setBlock(pos, state, 3);
+        } else {
+            state = state.setValue(AbstractMachineBlock.LIT, false);
             level.setBlock(pos, state, 3);
         }
 

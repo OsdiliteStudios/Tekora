@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "tungsten_oxide",
+  "ingredient": {
+    "item": "tekora:apt"
+  },
+  "result": "tekora:tungsten_oxide"
+}

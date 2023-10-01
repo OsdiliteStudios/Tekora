@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "forge:ingots/vanasteel"
+  },
+  "base": {
+    "item": "tekora:iron_hammer"
+  },
+  "result": {
+    "item": "tekora:vanasteel_hammer"
+  },
+  "template": {
+    "item": "tekora:vanasteel_upgrade_smithing_template"
+  }
+}

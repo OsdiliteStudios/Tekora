@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "tag": "forge:ingots/silver"
+    }
+  },
+  "pattern": [
+    "000",
+    "0 0",
+    "0 0"
+  ],
+  "result": {
+    "item": "tekora:silver_leggings"
+  },
+  "show_notification": true
+}

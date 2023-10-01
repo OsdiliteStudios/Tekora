@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:gems/bauxite": {
+    "has_alumina": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:gems/bauxite",
+      "has_alumina",
       "has_the_recipe"
     ]
   ],

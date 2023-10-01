@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-14T10:05:51.2405953	Item Models: tekora
+// 1.20.1	2023-09-25T07:02:19.7343194	Item Models: tekora
 6c193e6b9656195aca8152173d1218b972da9a03 assets/tekora/models/item/ahcp.json
 a55e411826af6a750e1b50c97c99ba8785bf8c8a assets/tekora/models/item/alumina.json
 05857b8bef41eff143d5cad59fa125caa30eb85c assets/tekora/models/item/aluminum_dust.json
@@ -421,6 +421,7 @@ f4c355062b1d0a4df975b8a134e875393dc1e71d assets/tekora/models/item/thorium_picka
 986d9f0693cd7c4b97ef8e628b2117c19ae747e7 assets/tekora/models/item/thorium_shovel.json
 19afcfcfa1857633eec4a9d2f2e33004b8c5ea0c assets/tekora/models/item/thorium_sword.json
 f7f787f0af203d08b48e691cfcb614c83d97d726 assets/tekora/models/item/thorium_tetrafluoride.json
+4df31b2f6539d6828399b8f1e31bc9b726074001 assets/tekora/models/item/thorium_upgrade_smithing_template.json
 0c664e9e13727f8a9f4999eb4aaf24ca5fc6cd04 assets/tekora/models/item/thulium_dust.json
 4a05677df716240044cffefe768301fb3b3725cf assets/tekora/models/item/thulium_ingot.json
 09fee2057d4053fdbbc659b15d961b31081aeee9 assets/tekora/models/item/thulium_nugget.json
@@ -446,6 +447,7 @@ b5955f036af1e35d97c3ca8485b05c5f8471dfef assets/tekora/models/item/titanium_nugg
 b47c2c7a14f0964f7e7343ff76ab43a71d069423 assets/tekora/models/item/titanium_plate.json
 8a29eb27564133c14bad266b79e53ab57aa30fe7 assets/tekora/models/item/titanium_shovel.json
 ce2d47cee61ec0bbfef751c74b95b61a127036c0 assets/tekora/models/item/titanium_sword.json
+bdaac94a20fc37679bf7ec1b6901db8827beb591 assets/tekora/models/item/titanium_upgrade_smithing_template.json
 1c68d5c937737534e5554e05a50ae7a5eae9f45c assets/tekora/models/item/tungsten_carbide_dust.json
 bf5395806ecc3da4632671cad86bf411f9eb77ba assets/tekora/models/item/tungsten_carbide_ingot.json
 54aa206573cb031ed9a3f0b5f23c7cc76713bf03 assets/tekora/models/item/tungsten_carbide_plate.json
@@ -467,6 +469,7 @@ cefeff362cd315a2373f18a1d902871782dcb6ad assets/tekora/models/item/tungsten_stee
 d71ef68df38458b4011d6462f405c99618433df7 assets/tekora/models/item/tungsten_steel_plate.json
 3c59a4bbf435782c7ef6f0152263d68cd69dd8ba assets/tekora/models/item/tungsten_steel_shovel.json
 ddf4cfcdb3713f2191716fa95dd8704fd7867197 assets/tekora/models/item/tungsten_steel_sword.json
+de7826f65104011be33c031fbde911f28c9adb34 assets/tekora/models/item/tungsten_steel_upgrade_smithing_template.json
 d0052a0b063a21f5c9c461ced99b97a9c6f57530 assets/tekora/models/item/uraninite.json
 07b11da0445976a01e98df63a76ddaa4b6597d58 assets/tekora/models/item/uranium_dioxide.json
 57d83ee6ccc1c39c01c9a54331f1a2ca23e735eb assets/tekora/models/item/uranium_dust.json
@@ -491,6 +494,7 @@ f5bcc5e0027faaa5f93d6fd2ad0765c04f7ff81c assets/tekora/models/item/vanasteel_pic
 15a461a9d37a5b726553bc48208c128f2e36d8e0 assets/tekora/models/item/vanasteel_plate.json
 2b36ebe1d62de656b2b54724493071e561c44651 assets/tekora/models/item/vanasteel_shovel.json
 99f68c8bd55288cb709d8134d0be0f730695e819 assets/tekora/models/item/vanasteel_sword.json
+1c330e863b4f8fff17622e8046a6ed5a4a80e544 assets/tekora/models/item/vanasteel_upgrade_smithing_template.json
 abafa4bb94088aa47e31e86fdb15e09f303421b5 assets/tekora/models/item/wolframite.json
 20b41a9d47ebdd0ca7dc06d303ec9b896d3e57b4 assets/tekora/models/item/wolframite_piece.json
 04178834c1e3e067db5b7909654a1b0145707ca9 assets/tekora/models/item/ytterbium_dust.json

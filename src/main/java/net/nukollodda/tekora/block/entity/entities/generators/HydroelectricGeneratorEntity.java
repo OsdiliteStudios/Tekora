@@ -6,19 +6,20 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.fluids.FluidType;
 import net.nukollodda.tekora.block.entity.blocks.generators.HydroelectricGeneratorBlock;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
+import net.nukollodda.tekora.block.fluid.TekoraFluidType;
+import net.nukollodda.tekora.block.fluid.blocks.TekoraGasBlock;
 import net.nukollodda.tekora.menu.HydroelectricGeneratorMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class HydroelectricGeneratorEntity extends AbstractElectricGeneratorEntity {
     public HydroelectricGeneratorEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.HYDRO_ELECTRIC_GENERATOR.get(), pPos, pBlockState, 2048, 64);
+        super(TekoraBlockEntities.HYDROELECTRIC_GENERATOR.get(), pPos, pBlockState, 2048, 64);
     }
 
     @Nullable
@@ -45,25 +46,38 @@ public class HydroelectricGeneratorEntity extends AbstractElectricGeneratorEntit
     public void tick() {
         if (level != null && !level.isClientSide()) {
             if (this.currentEnergy() < this.maxEnergy() - 64) {
-                if (this.getBlockState().getBlock() instanceof HydroelectricGeneratorBlock) {
-                    if (this.getBlockState().hasProperty(BlockStateProperties.WATERLOGGED) &&
-                        this.getBlockState().getValue(BlockStateProperties.WATERLOGGED)) {
+                BlockState state = this.getBlockState();
+                if (state.getBlock() instanceof HydroelectricGeneratorBlock) {
+                    if (state.hasProperty(HydroelectricGeneratorBlock.WATERLOGGED) &&
+                            state.getValue(HydroelectricGeneratorBlock.WATERLOGGED) &&
+                            state.hasProperty(HydroelectricGeneratorBlock.FACING)) {
                         int energyMade = 0;
+                        Direction entDir = state.getValue(HydroelectricGeneratorBlock.FACING);
                         final BlockState above = this.level.getBlockState(this.getBlockPos().relative(Direction.UP));
-                        if (above.getBlock() instanceof LiquidBlock liquid) {
-                            if (liquid.getFluid().getFluidType().getTemperature() < 400) {
-                                energyMade += 5;
-                            }
+                        final BlockState behind = this.level.getBlockState(this.getBlockPos().relative(entDir));
+                        if (state.hasProperty(HydroelectricGeneratorBlock.WATERLOGGED) &&
+                                state.getValue(HydroelectricGeneratorBlock.WATERLOGGED)) {
+                            energyMade += makeEnergy(above) + makeEnergy(behind);
                         }
-                        Direction entDir = this.getBlockState().getValue(BlockStateProperties.FACING);
                         this.changeEnergy(energyMade);
-                        // make sure that energy is the most if there is a water source above and behind the generator
-                        // note, energy should cancel out if there is water in front of the generator
-                        // when a block is behind/above the block, energy production becomes obstructed
                     }
                 }
             }
         }
         super.tick();
+    }
+
+    // There may be inaccuracies in this method, please correct me if possible
+    private int makeEnergy(BlockState pState) {
+        if (pState.getBlock() instanceof LiquidBlock liquid && liquid.getFluid().getFluidType().getTemperature() < 400) {
+            FluidType type = liquid.getFluid().getFluidType();
+            if (!(liquid instanceof TekoraGasBlock) &&
+                    !(type instanceof TekoraFluidType fluid && fluid.isMetallic())) {
+                final int viscosity = type.getViscosity() / 20;
+                final int density = type.getDensity() / 100;
+                return viscosity / density;
+            }
+        }
+        return 0;
     }
 }

@@ -9,8 +9,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractIrregularBlock extends AbstractMachineBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-
     public AbstractIrregularBlock(float strength, SoundType sound) {
         super(strength, sound);
     }

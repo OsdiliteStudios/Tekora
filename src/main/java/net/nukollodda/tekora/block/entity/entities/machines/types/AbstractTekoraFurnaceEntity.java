@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.nukollodda.tekora.block.entity.blocks.machines.AbstractMachineBlock;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -82,7 +83,9 @@ public abstract class AbstractTekoraFurnaceEntity extends BlockEntity implements
     }
 
     @Override
-    public abstract Component getDisplayName();
+    public Component getDisplayName() {
+        return this.level != null ? this.level.getBlockState(this.getBlockPos()).getBlock().getName() : Component.literal("");
+    }
     @Nullable
     @Override
     public abstract AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer);

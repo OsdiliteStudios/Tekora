@@ -1,0 +1,36 @@
+{
+  "type": "tekora:blasting",
+  "ingredients": [
+    {
+      "tag": "forge:ores/gold"
+    }
+  ],
+  "output": {
+    "item": "minecraft:gold_ingot"
+  },
+  "cations": [
+    {
+      "symbol": "Fe",
+      "count": 3
+    },
+    {
+      "symbol": "Zn"
+    },
+    {
+      "symbol": "Cu",
+      "count": 2
+    },
+    {
+      "symbol": "Ag"
+    }
+  ],
+  "anions": [
+    {
+      "symbol": "O",
+      "count": 2
+    },
+    {
+      "symbol": "CO3"
+    }
+  ]
+}

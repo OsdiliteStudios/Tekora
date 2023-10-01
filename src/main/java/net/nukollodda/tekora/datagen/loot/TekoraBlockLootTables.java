@@ -92,6 +92,9 @@ public class TekoraBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(TekoraBlocks.EVAPORITE.get());
         this.dropSelf(TekoraBlocks.LIMESTONE.get());
 
+        this.dropSelf(TekoraBlocks.COPPER_CABLE.get());
+        this.dropSelf(TekoraBlocks.HYDROELECTRIC_GENERATOR.get());
+
         this.add(TekoraBlocks.APATITE_ORE.get(), block -> createApatiteDrops(TekoraBlocks.APATITE_ORE.get()));
         this.add(TekoraBlocks.AQUAMARINE_ORE.get(), block -> createAquamarineDrops(TekoraBlocks.AQUAMARINE_ORE.get()));
         this.add(TekoraBlocks.BAUXITE_ORE.get(), block -> createBauxiteDrops(TekoraBlocks.BAUXITE_ORE.get()));

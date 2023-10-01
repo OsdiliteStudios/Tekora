@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:dusts/bismuth": {
+    "has_bismuth_ingot": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:dusts/bismuth",
+      "has_bismuth_ingot",
       "has_the_recipe"
     ]
   ],

@@ -19,6 +19,7 @@ so unlike Modussy, Tekora just isn't as flexible.
 
 -----
 **Addons**
+
 Tekora will likely have a couple of dependencies to it since some of the code
 in Tekora is rudementary for features I plan for other mods I may make in the
 future.

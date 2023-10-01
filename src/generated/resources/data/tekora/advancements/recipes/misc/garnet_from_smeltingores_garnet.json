@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:ores/garnet": {
+    "has_garnet": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:ores/garnet",
+      "has_garnet",
       "has_the_recipe"
     ]
   ],

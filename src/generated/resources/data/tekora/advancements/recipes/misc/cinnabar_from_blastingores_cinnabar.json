@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:ores/cinnabar": {
+    "has_cinnabar": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:ores/cinnabar",
+      "has_cinnabar",
       "has_the_recipe"
     ]
   ],

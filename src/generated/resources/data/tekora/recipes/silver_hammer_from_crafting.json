@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "tag": "forge:ingots/silver"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "000",
+    "000",
+    " 1 "
+  ],
+  "result": {
+    "item": "tekora:silver_hammer"
+  },
+  "show_notification": true
+}

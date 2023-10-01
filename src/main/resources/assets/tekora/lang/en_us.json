@@ -517,6 +517,17 @@
   "item.tekora.zircaloy_plate": "Zircaloy Plate",
   "item.tekora.zirconium_plate": "Zirconium Plate",
 
+  "item.tekora.upgrade_smithing_template_iron.applies_to": "Iron Equipment",
+  "item.tekora.upgrade_smithing_template_steel.applies_to": "Steel Equipment",
+  "item.tekora.upgrade_smithing_template_iron.all_base_desc": "Add iron armor, weapon, or tool",
+  "item.tekora.upgrade_smithing_template_steel.all_base_desc": "Add steel armor, weapon, or tool",
+  "item.tekora.upgrade_smithing_template_steel.tools_base_desc": "Add steel weapon, or tool",
+
+  "item.tekora.titanium_smithing_template.desc": "Titanium Upgrade",
+  "item.tekora.thorium_smithing_template.desc": "Thorium Upgrade",
+  "item.tekora.tungsten_steel_smithing_template.desc": "Tungsten Steel Upgrade",
+  "item.tekora.vanasteel_smithing_template.desc": "Vanasteel Upgrade",
+
   "item.tekora.boron_hammer": "Boron Hammer",
   "item.tekora.bronze_hammer": "Bronze Hammer",
   "item.tekora.diamond_hammer": "Diamond Hammer",
@@ -785,6 +796,8 @@
 
   "block.tekora.pulversizer": "Pulverizer",
 
+  "block.tekora.hydroelectric_generator": "Hydroelectric Generator",
+
   "block.tekora.copper_cable": "Copper Cable",
   "block.tekora.silver_cable": "Silver Cable",
   "block.tekora.bronze_cable": "Bronze Cable",
@@ -838,6 +851,7 @@
   "fluid_type.tekora.hydrogen_cyanide": "Prussic Acid",
   "msg.tekora.isoratio": "Isotope Ratio",
   "msg.tekora.rad": "Radiation Value",
-  "block.tekora.infinite_battery": "Infinite Battery"
-
+  "block.tekora.infinite_battery": "Infinite Battery",
+  "ion.tekora.cation": "Cations",
+  "ion.tekora.anions": "Anions"
 }

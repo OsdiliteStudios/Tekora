@@ -2,6 +2,7 @@ package net.nukollodda.tekora.block.entity.entities.machines;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
@@ -28,6 +29,7 @@ import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraFurnaceEntity;
 import net.nukollodda.tekora.menu.AlloyFurnaceMenu;
 import net.nukollodda.tekora.recipes.types.AlloyingRecipe;
+import net.nukollodda.tekora.util.TekoraUtilFunctions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -82,11 +84,6 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
 
     public AlloyFurnaceEntity(BlockPos pos, BlockState blockState) {
         super(TekoraBlockEntities.ALLOY_FURNACE.get(), pos, blockState, 5);
-    }
-
-    @Override
-    public Component getDisplayName() {
-        return Component.translatable("block.tekora.alloy_furnace");
     }
 
     @Nullable
@@ -144,13 +141,13 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
     }
 
     public void drops() {
-        SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
-        for (int i = 0; i < itemHandler.getSlots(); i++) {
-            inv.setItem(i, itemHandler.getStackInSlot(i));
+        if (this.level != null) {
+            SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
+            for (int i = 0; i < itemHandler.getSlots(); i++) {
+                inv.setItem(i, itemHandler.getStackInSlot(i));
+            }
+            Containers.dropContents(this.level, this.worldPosition, inv);
         }
-        // drops all the contents of this particular block entity
-
-        Containers.dropContents(this.level, this.worldPosition, inv);
     }
     public static void tick(Level level, BlockPos pos, BlockState state, AlloyFurnaceEntity entity) {
         if (level.isClientSide()) {
@@ -161,7 +158,10 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
 
         if (entity.isLit()) {
             entity.fuel--;
-            state = state.setValue(AbstractMachineBlock.LIT, entity.isLit());
+            state = state.setValue(AbstractMachineBlock.LIT, true);
+            level.setBlock(pos, state, 3);
+        } else {
+            state = state.setValue(AbstractMachineBlock.LIT, false);
             level.setBlock(pos, state, 3);
         }
 
@@ -198,47 +198,23 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
                 .getRecipeFor(AlloyingRecipe.Type.INSTANCE, inv, level);
 
         if (this.hasRecipe()) {
-            int[] extracted = new int[]{0, 0, 0}; // how much is removed for every slot
-
-            ItemStack prevItem;
             ItemStack curItem;
-            ItemStack postItem;
-            Ingredient ing;
-            int ingNum;
-            int totalRemove;
-            int avNum;
+            NonNullList<Ingredient> ingredients = recipe.get().getIngredients();
+            int[] recipeRatio = recipe.get().getRecipeRatio();
+            int[] extracted = new int[recipeRatio.length];
 
-            for (int i = 0; i < recipe.get().getIngredients().size(); i++) {
-                ing = recipe.get().getIngredients().get(i);
-                ingNum = recipe.get().getRecipeRatio().get(i);
-                for (int j = 1; j < 4; j++) {
-                    curItem = this.itemHandler.getStackInSlot(j);
-                    prevItem = this.itemHandler.getStackInSlot(j-1 >= 1 ? j-1 : 3);
-                    postItem = this.itemHandler.getStackInSlot(j+1 < 4 ? j+1 : 1);
-                    if (ing.test(curItem)) {
-                        if (prevItem.is(curItem.getItem()) && prevItem.getCount() + curItem.getCount() >= ingNum) {
-                            totalRemove = Math.min(prevItem.getCount(), ingNum);
-                            avNum = totalRemove / 2;
-                            extracted[j-2 >= 0 ? j-2 : 2] = totalRemove % 2 == 0 ? avNum : avNum+1;
-                            extracted[j-1] = avNum;
-                        } else if (postItem.is(curItem.getItem()) && postItem.getCount() + curItem.getCount() >= ingNum) {
-                            totalRemove = Math.min(postItem.getCount(), ingNum);
-                            avNum = totalRemove / 2;
-                            extracted[j-1] = totalRemove % 2 == 0 ? avNum : avNum+1;
-                            extracted[j < 3 ? j : 0] = avNum;
-                        } else if (curItem.getCount() >= ingNum) {
-                            extracted[j-1] = ingNum;
+            while (!TekoraUtilFunctions.arrayMatch(extracted, recipeRatio)) {
+                for (int i = 0; i < ingredients.size(); i++) {
+                    for (int j = 1; j < 4; j++) {
+                        curItem = this.itemHandler.getStackInSlot(j);
+                        if (ingredients.get(i).test(curItem) && extracted[i] <= recipeRatio[i]) {
+                            this.itemHandler.extractItem(j, 1, false);
+                            extracted[i]++;
                         }
-                        // there is a bug where if two items are in the top slots, avNum is ignored somehow
                     }
                 }
             }
-
-            for (int i = 1; i < 4; i++) {
-                if (!this.itemHandler.getStackInSlot(i).isEmpty()) this.itemHandler.extractItem(i, extracted[i-1], false);
-                // basically, removes items if said items adds up to the recipe number
-            }
-            // slot organization, slot 0 = coal input, slot 1-2 = item inputs, slot 3 = output, for the electric variant, slot 1 = residue
+            // slot organization, slot 0 = coal input, slot 1-2 = item inputs, slot 3 = output, for the electric variant, slot 0 = residue
             this.itemHandler.setStackInSlot(this.containerSize - 1, new ItemStack(recipe.get().getResultItem(level.registryAccess()).getItem(),
                     this.itemHandler.getStackInSlot(this.containerSize - 1).getCount() +
                             recipe.get().getResultItem(level.registryAccess()).getCount()));

@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:ores/aquamarine": {
+    "has_aquamarine": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:ores/aquamarine",
+      "has_aquamarine",
       "has_the_recipe"
     ]
   ],

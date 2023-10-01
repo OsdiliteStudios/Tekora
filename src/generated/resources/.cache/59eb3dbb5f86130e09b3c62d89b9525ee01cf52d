@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-14T10:05:51.2295474	Loot Tables
+// 1.20.1	2023-09-25T07:02:19.7230139	Loot Tables
 634e2b2a25fe178575d7614102c6d3ca583c1a52 data/tekora/loot_tables/blocks/alloy_furnace.json
 a78ee92742bc6cfbe9ea60c065311c744c6e5b92 data/tekora/loot_tables/blocks/aluminum_block.json
 70c47b2f333926fff53744f67c21d8da866f93fd data/tekora/loot_tables/blocks/antimony_block.json
@@ -24,6 +24,7 @@ be270a3d5db7c69dec8139b3fdf79d679358da33 data/tekora/loot_tables/blocks/cassiter
 551c6db9b261223beb5a813c5084906c76d33591 data/tekora/loot_tables/blocks/chromium_block.json
 6a4186507051d6be3b4fd057ca51fcde32fa0f9e data/tekora/loot_tables/blocks/cinnabar_ore.json
 098303f32ebc9dc989876c2e66f1f8b7f5610b0f data/tekora/loot_tables/blocks/cobalt_block.json
+bf39603d4342731e13b9fca5f825490d638ca896 data/tekora/loot_tables/blocks/copper_cable.json
 37d4385b563a4cf665873d293a2e45923e0a1253 data/tekora/loot_tables/blocks/crusher.json
 24937917e67f814ae828906881e4ef6804f054ec data/tekora/loot_tables/blocks/deepslate_apatite_ore.json
 5c222c246af05d9a8c5dc463932c2de808652a36 data/tekora/loot_tables/blocks/deepslate_aquamarine_ore.json
@@ -57,6 +58,7 @@ b2446372804f2bb43d795b83090498fe4af192dd data/tekora/loot_tables/blocks/granite_
 265455621943a20143502a761051138c7ef409c8 data/tekora/loot_tables/blocks/graphite_ore.json
 8f09ed84bcd3bbe05fd68f575de4e98ff0ee8aa1 data/tekora/loot_tables/blocks/hafnium_block.json
 992440b00465b419815ff496a3d67e804617e402 data/tekora/loot_tables/blocks/holmium_block.json
+223a3c9793a1d65c515c802642958dc64c269970 data/tekora/loot_tables/blocks/hydroelectric_generator.json
 f5e2eba41dccc8cacc6404fddb101736950ffc47 data/tekora/loot_tables/blocks/indium_block.json
 2a57c2a62aa5522681d43436cc3f3d70d67dd6d0 data/tekora/loot_tables/blocks/infinite_battery.json
 4c24b077a609832898bb82a6b3cf14711e7912fa data/tekora/loot_tables/blocks/infusion_furnace.json

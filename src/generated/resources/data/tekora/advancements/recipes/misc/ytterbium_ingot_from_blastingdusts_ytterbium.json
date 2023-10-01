@@ -1,7 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:dusts/ytterbium": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:ytterbium_ingot_from_blastingdusts_ytterbium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_ytterbium_ingot": {
       "conditions": {
         "items": [
           {
@@ -10,17 +16,11 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "tekora:ytterbium_ingot_from_blastingdusts_ytterbium"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "forge:dusts/ytterbium",
+      "has_ytterbium_ingot",
       "has_the_recipe"
     ]
   ],

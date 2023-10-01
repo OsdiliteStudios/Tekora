@@ -2,6 +2,7 @@ package net.nukollodda.tekora.datagen;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -13,6 +14,7 @@ import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.TekoraBlocks;
 import net.nukollodda.tekora.datagen.tags.TekoraTags;
 import net.nukollodda.tekora.item.TekoraItems;
+import net.nukollodda.tekora.util.TekoraToolsAndArmorList;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -394,12 +396,74 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
         crushingRecipe(pWriter, TekoraTags.Items.VANASTEEL, TekoraItems.VANASTEEL_PLATE.get());
         crushingRecipe(pWriter, TekoraTags.Items.ZIRCALOY, TekoraItems.ZIRCALOY_PLATE.get());
 
+        armorRecipe(pWriter, Ingredient.of(TekoraItems.BORON_PIECE.get()), TekoraToolsAndArmorList.BORON_ARMOR);
+        armorRecipe(pWriter, Ingredient.of(TekoraTags.Items.BRONZE_INGOT), TekoraToolsAndArmorList.BRONZE_ARMOR);
+        armorRecipe(pWriter, Ingredient.of(TekoraTags.Items.PLATINUM_INGOT), TekoraToolsAndArmorList.PLATINUM_ARMOR);
+        armorRecipe(pWriter, Ingredient.of(TekoraTags.Items.SILVER_INGOT), TekoraToolsAndArmorList.SILVER_ARMOR);
+        armorRecipe(pWriter, Ingredient.of(TekoraTags.Items.STEEL_INGOT), TekoraToolsAndArmorList.STEEL_ARMOR);
+
+        toolRecipe(pWriter, Ingredient.of(TekoraItems.BORON_PIECE.get()), TekoraToolsAndArmorList.BORON_TOOLS);
+        toolRecipe(pWriter, Ingredient.of(TekoraTags.Items.BRONZE_INGOT), TekoraToolsAndArmorList.BRONZE_TOOLS);
+        toolRecipe(pWriter, Ingredient.of(TekoraTags.Items.PLATINUM_INGOT), TekoraToolsAndArmorList.PLATINUM_TOOLS);
+        toolRecipe(pWriter, Ingredient.of(TekoraTags.Items.SILVER_INGOT), TekoraToolsAndArmorList.SILVER_TOOLS);
+        toolRecipe(pWriter, Ingredient.of(TekoraTags.Items.STEEL_INGOT), TekoraToolsAndArmorList.STEEL_TOOLS);
+
+        upgradeSmithingRecipe(pWriter, TekoraToolsAndArmorList.STEEL_ARMOR, Ingredient.of(TekoraTags.Items.TITANIUM_INGOT),
+                TekoraItems.TITANIUM_TEMPLATE.get(), TekoraToolsAndArmorList.TITANIUM_ARMOR);
+
+        upgradeSmithingRecipe(pWriter, TekoraToolsAndArmorList.IRON_ARMOR, Ingredient.of(TekoraTags.Items.TUNGSTEN_STEEL_INGOT),
+                TekoraItems.TUNGSTEN_STEEL_TEMPLATE.get(), TekoraToolsAndArmorList.TUNGSTEN_STEEL_ARMOR);
+
+        upgradeSmithingRecipe(pWriter, TekoraToolsAndArmorList.IRON_ARMOR, Ingredient.of(TekoraTags.Items.VANASTEEL_INGOT),
+                TekoraItems.VANASTEEL_TEMPLATE.get(), TekoraToolsAndArmorList.VANASTEEL_ARMOR);
+
+        upgradeSmithingRecipe(pWriter, TekoraToolsAndArmorList.STEEL_TOOLS, Ingredient.of(TekoraTags.Items.TITANIUM_INGOT),
+                TekoraItems.TITANIUM_TEMPLATE.get(), TekoraToolsAndArmorList.TITANIUM_TOOLS);
+
+        upgradeSmithingRecipe(pWriter, TekoraToolsAndArmorList.STEEL_TOOLS, Ingredient.of(TekoraTags.Items.THORIUM_INGOT),
+                TekoraItems.THORIUM_TEMPLATE.get(), TekoraToolsAndArmorList.THORIUM_TOOLS);
+
+        upgradeSmithingRecipe(pWriter, TekoraToolsAndArmorList.IRON_TOOLS, Ingredient.of(TekoraTags.Items.TUNGSTEN_STEEL_INGOT),
+                TekoraItems.TUNGSTEN_STEEL_TEMPLATE.get(), TekoraToolsAndArmorList.TUNGSTEN_STEEL_TOOLS);
+
+        upgradeSmithingRecipe(pWriter, TekoraToolsAndArmorList.IRON_TOOLS, Ingredient.of(TekoraTags.Items.VANASTEEL_INGOT),
+                TekoraItems.VANASTEEL_TEMPLATE.get(), TekoraToolsAndArmorList.VANASTEEL_TOOLS);
+
+        createHammerRecipe(pWriter, Ingredient.of(Items.DIAMOND), TekoraItems.DIAMOND_HAMMER.get());
+        createHammerRecipe(pWriter, Ingredient.of(Items.GOLD_INGOT), TekoraItems.GOLDEN_HAMMER.get());
+        createHammerRecipe(pWriter, Ingredient.of(Items.IRON_INGOT), TekoraItems.IRON_HAMMER.get());
+
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                        Ingredient.of(TekoraItems.DIAMOND_HAMMER.get()),
+                        Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.MISC, TekoraItems.NETHERITE_HAMMER.get())
+                .unlocks(getHasName(TekoraItems.DIAMOND_HAMMER.get()), has(TekoraItems.DIAMOND_HAMMER.get()))
+                .save(pWriter, new ResourceLocation(Tekora.MODID,
+                        getItemName(TekoraItems.NETHERITE_HAMMER.get()) + "_from_" + getItemName(TekoraItems.DIAMOND_HAMMER.get()) + "_smithing"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraBlocks.ALLOY_FURNACE.get())
                 .pattern("111")
                 .pattern("121")
                 .pattern("000")
                 .define('0', Items.SMOOTH_STONE).define('1', TekoraTags.Items.STEEL_INGOT).define('2', Items.FURNACE)
-                .unlockedBy(getHasName(Items.FURNACE), has(Items.FURNACE)).save(pWriter);
+                .unlockedBy(getHasName(Items.FURNACE), has(Items.FURNACE))
+                .save(pWriter, Tekora.MODID + ":alloy_furnace_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraBlocks.INFUSION_FURNACE.get())
+                .pattern("111")
+                .pattern("121")
+                .pattern("000")
+                .define('0', Items.SMOOTH_STONE).define('1', Items.BRICK).define('2', Items.FURNACE)
+                .unlockedBy(getHasName(Items.FURNACE), has(Items.FURNACE))
+                .save(pWriter, Tekora.MODID + ":infusion_furnace_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraBlocks.HYDROELECTRIC_GENERATOR.get())
+                .pattern("222")
+                .pattern("131")
+                .pattern("030")
+                .define('0', TekoraTags.Items.STEEL_PLATE).define('1', TekoraTags.Items.IRON)
+                .define('2', TekoraTags.Items.STEEL_PLATE).define('3', TekoraBlocks.COPPER_CABLE.get())
+                .unlockedBy(getHasName(TekoraBlocks.COPPER_CABLE.get()), has(TekoraBlocks.COPPER_CABLE.get()))
+                .save(pWriter, Tekora.MODID + ":hydroelectric_generator_from_crafting");
     }
 
     protected static void oreBlasting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ItemLike pIngredients, ItemLike pResult) {
@@ -485,5 +549,126 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
                 .requires(pInput).requires(TekoraTags.Items.HAMMER).group(pResult.asItem().toString())
                 .unlockedBy(getHasName(TekoraItems.IRON_HAMMER.get()), has(TekoraItems.IRON_HAMMER.get()))
                 .save(pWriter, getItemName(pResult) + "_from_hammer");
+    }
+
+    protected static void upgradeSmithingRecipe(Consumer<FinishedRecipe> pWriter, ItemLike[] pBase, Ingredient pMaterial, ItemLike pUpgrader,
+                                                     ItemLike[] pResults) {
+        for (int i = 0; i < pBase.length; i++) {
+            SmithingTransformRecipeBuilder.smithing(Ingredient.of(pUpgrader), Ingredient.of(pBase[i]),
+                            pMaterial, RecipeCategory.MISC, pResults[i].asItem())
+                    .unlocks(getHasName(pBase[i]), has(pBase[i]))
+                    .save(pWriter, new ResourceLocation(Tekora.MODID,
+                            getItemName(pResults[i]) + "_from_" + getItemName(pBase[i]) + "_smithing"));
+        }
+    }
+
+    protected static void armorRecipe(Consumer<FinishedRecipe> pWriter, Ingredient pMaterial, ItemLike[] pArmorItems) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pArmorItems[0])
+                .pattern("000")
+                .pattern("0 0")
+                .define('0', pMaterial)
+                .unlockedBy(getHasName(pArmorItems[0]), has(pArmorItems[0]))
+                .save(pWriter, Tekora.MODID + ":" + pArmorItems[0] + "_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pArmorItems[1])
+                .pattern("0 0")
+                .pattern("000")
+                .pattern("000")
+                .define('0', pMaterial)
+                .unlockedBy(getHasName(pArmorItems[1]), has(pArmorItems[1]))
+                .save(pWriter, Tekora.MODID + ":" + pArmorItems[1] + "_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pArmorItems[2])
+                .pattern("000")
+                .pattern("0 0")
+                .pattern("0 0")
+                .define('0', pMaterial)
+                .unlockedBy(getHasName(pArmorItems[2]), has(pArmorItems[2]))
+                .save(pWriter, Tekora.MODID + ":" + pArmorItems[2] + "_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pArmorItems[3])
+                .pattern("0 0")
+                .pattern("0 0")
+                .define('0', pMaterial)
+                .unlockedBy(getHasName(pArmorItems[3]), has(pArmorItems[3]))
+                .save(pWriter, Tekora.MODID + ":" + pArmorItems[3] + "_from_crafting");
+    }
+
+    protected static void toolRecipe(Consumer<FinishedRecipe> pWriter, Ingredient pMaterial, ItemLike[] pToolItems) {
+        toolRecipe(pWriter, pMaterial, Ingredient.of(Items.STICK), pToolItems);
+    }
+
+    protected static void toolRecipe(Consumer<FinishedRecipe> pWriter, Ingredient pMaterial, Ingredient pStick, ItemLike[] pToolItems) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[0])
+                .pattern("0")
+                .pattern("0")
+                .pattern("1")
+                .define('0', pMaterial).define('1', pStick)
+                .unlockedBy(getHasName(pToolItems[0]), has(pToolItems[0]))
+                .save(pWriter, Tekora.MODID + ":" + pToolItems[0] + "_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[1])
+                .pattern("000")
+                .pattern(" 1 ")
+                .pattern(" 1 ")
+                .define('0', pMaterial).define('1', pStick)
+                .unlockedBy(getHasName(pToolItems[1]), has(pToolItems[1]))
+                .save(pWriter, Tekora.MODID + ":" + pToolItems[1] + "_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[2])
+                .pattern("00")
+                .pattern("01")
+                .pattern(" 1")
+                .define('0', pMaterial).define('1', pStick)
+                .unlockedBy(getHasName(pToolItems[2]), has(pToolItems[2]))
+                .save(pWriter, Tekora.MODID + ":" + pToolItems[2] + "_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[2])
+                .pattern("00")
+                .pattern("10")
+                .pattern("1 ")
+                .define('0', pMaterial).define('1', pStick)
+                .unlockedBy(getHasName(pToolItems[2]), has(pToolItems[2]))
+                .save(pWriter, Tekora.MODID + ":" + pToolItems[2] + "_from_crafting_inverted");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[3])
+                .pattern("0")
+                .pattern("1")
+                .pattern("1")
+                .define('0', pMaterial).define('1', pStick)
+                .unlockedBy(getHasName(pToolItems[3]), has(pToolItems[3]))
+                .save(pWriter, Tekora.MODID + ":" + pToolItems[3] + "_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[4])
+                .pattern("00")
+                .pattern(" 1")
+                .pattern(" 1")
+                .define('0', pMaterial).define('1', pStick)
+                .unlockedBy(getHasName(pToolItems[4]), has(pToolItems[4]))
+                .save(pWriter, Tekora.MODID + ":" + pToolItems[4] + "_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[4])
+                .pattern("00")
+                .pattern("1 ")
+                .pattern("1 ")
+                .define('0', pMaterial).define('1', pStick)
+                .unlockedBy(getHasName(pToolItems[4]), has(pToolItems[4]))
+                .save(pWriter, Tekora.MODID + ":" + pToolItems[4] + "_from_crafting_inverted");
+
+        createHammerRecipe(pWriter, pMaterial, pStick, pToolItems[5]);
+    }
+
+    protected static void createHammerRecipe(Consumer<FinishedRecipe> pWriter, Ingredient pMaterial, ItemLike pHammer) {
+        createHammerRecipe(pWriter, pMaterial, Ingredient.of(Items.STICK), pHammer);
+    }
+
+    protected static void createHammerRecipe(Consumer<FinishedRecipe> pWriter, Ingredient pMaterial, Ingredient pStick, ItemLike pHammer) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pHammer)
+                .pattern("000")
+                .pattern("000")
+                .pattern(" 1 ")
+                .define('0', pMaterial).define('1', pStick)
+                .unlockedBy(getHasName(pHammer), has(pHammer))
+                .save(pWriter, Tekora.MODID + ":" + pHammer + "_from_crafting");
     }
 }

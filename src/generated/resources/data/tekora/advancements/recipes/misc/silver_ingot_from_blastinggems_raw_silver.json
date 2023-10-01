@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:gems/raw_silver": {
+    "has_silver_ingot": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:gems/raw_silver",
+      "has_silver_ingot",
       "has_the_recipe"
     ]
   ],

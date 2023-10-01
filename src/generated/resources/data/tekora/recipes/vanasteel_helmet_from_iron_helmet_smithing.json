@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "forge:ingots/vanasteel"
+  },
+  "base": {
+    "item": "minecraft:iron_helmet"
+  },
+  "result": {
+    "item": "tekora:vanasteel_helmet"
+  },
+  "template": {
+    "item": "tekora:vanasteel_upgrade_smithing_template"
+  }
+}

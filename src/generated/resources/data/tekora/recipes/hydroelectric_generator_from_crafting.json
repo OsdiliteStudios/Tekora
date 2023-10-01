@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "tag": "forge:plates/steel"
+    },
+    "1": {
+      "tag": "forge:iron"
+    },
+    "2": {
+      "tag": "forge:plates/steel"
+    },
+    "3": {
+      "item": "tekora:copper_cable"
+    }
+  },
+  "pattern": [
+    "222",
+    "131",
+    "030"
+  ],
+  "result": {
+    "item": "tekora:hydroelectric_generator"
+  },
+  "show_notification": true
+}

@@ -10,8 +10,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.BlastingRecipe;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -25,10 +23,14 @@ import net.nukollodda.tekora.block.entity.blocks.machines.ElectricFurnace;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraMachineEntity;
 import net.nukollodda.tekora.item.TekoraItems;
+import net.nukollodda.tekora.item.mixtures.Residue;
 import net.nukollodda.tekora.menu.ElectricFurnaceMenu;
+import net.nukollodda.tekora.recipes.types.ElectricBlastingRecipe;
+import net.nukollodda.tekora.util.TekoraResidualExtraction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -124,12 +126,13 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
     }
 
     public void drops() {
-        SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
-        for (int i = 0; i < itemHandler.getSlots(); i++) {
-            inv.setItem(i, itemHandler.getStackInSlot(i));
+        if (this.level != null) {
+            SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
+            for (int i = 0; i < itemHandler.getSlots(); i++) {
+                inv.setItem(i, itemHandler.getStackInSlot(i));
+            }
+            Containers.dropContents(this.level, this.worldPosition, inv);
         }
-
-        Containers.dropContents(this.level, this.worldPosition, inv);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ElectricFurnaceEntity entity) {
@@ -138,7 +141,7 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
         }
 
         if (entity.hasElectricity()) {
-            state = state.setValue(AbstractMachineBlock.LIT, entity.hasElectricity());
+            state = state.setValue(AbstractMachineBlock.LIT, true);
             level.setBlock(pos, state, 3);
         }
 
@@ -155,10 +158,6 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
         }
     }
 
-    protected void resetProgress() {
-        this.progress = 0;
-    }
-
     @Override
     public Component getDisplayName() {
         return Component.translatable("block.tekora.electric_blast_furnace");
@@ -171,32 +170,44 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
 
     protected void craftItem() { // extracts one of the ingredients
         Level level = this.level;
+        if (level == null) return;
+
         SimpleContainer inv = new SimpleContainer(this.itemHandler.getSlots());
         inv.setItem(1, this.itemHandler.getStackInSlot(1));
 
-
-        Optional<BlastingRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(RecipeType.BLASTING, inv, level);
+        Optional<ElectricBlastingRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ElectricBlastingRecipe.Type.INSTANCE, inv, level);
 
         if (this.hasRecipe()) {
-            this.itemHandler.extractItem(1,1, false); // checks the slots to make sure
-
+            this.itemHandler.extractItem(1,1, false);
             this.itemHandler.setStackInSlot(2, new ItemStack(recipe.get().getResultItem(level.registryAccess()).getItem(),
                     this.itemHandler.getStackInSlot(2).getCount() + 1));
 
-            this.itemHandler.setStackInSlot(0, new ItemStack(TekoraItems.RESIDUE.get(),
-                    this.itemHandler.getStackInSlot(0).getCount() + 1));
+            ItemStack zerothItem = this.itemHandler.getStackInSlot(0);
+            if ((zerothItem.getItem() instanceof Residue || zerothItem.isEmpty()) &&
+                    TekoraResidualExtraction.recipeHasIons(recipe.get()) && TekoraResidualExtraction.areIonsMergeable(zerothItem, recipe.get())) {
+                this.itemHandler.setStackInSlot(0,
+                        TekoraResidualExtraction.residualIonMerger(zerothItem, recipe.get()));
+            } else if (zerothItem.isEmpty()) {
+                Residue residue = TekoraItems.RESIDUE.get();
+                ItemStack residual = new ItemStack(residue);
+                residual = residue.setIons(residual, recipe.get().getCations(), recipe.get().getAnions());
+                this.itemHandler.setStackInSlot(0, residual);
+            }
+
             this.resetProgress();
         }
     }
 
     protected boolean hasRecipe() {
         Level level = this.level;
+        if (level == null) return false;
+
         SimpleContainer inv = new SimpleContainer(this.itemHandler.getSlots()); // makes an inventory from the block
         inv.setItem(1, this.itemHandler.getStackInSlot(1));
 
-        Optional<BlastingRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(RecipeType.BLASTING, inv, level);
+        Optional<ElectricBlastingRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ElectricBlastingRecipe.Type.INSTANCE, inv, level);
 
         return recipe.isPresent() && this.canInsertAmountIntoOutputSlot(inv) &&
                 this.canInsertItemIntoOutputSlot(inv, recipe.get().getResultItem(level.registryAccess()));

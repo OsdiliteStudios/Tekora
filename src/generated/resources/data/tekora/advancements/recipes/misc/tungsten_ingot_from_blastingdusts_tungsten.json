@@ -1,7 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:dusts/tungsten": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:tungsten_ingot_from_blastingdusts_tungsten"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tungsten_ingot": {
       "conditions": {
         "items": [
           {
@@ -10,17 +16,11 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "tekora:tungsten_ingot_from_blastingdusts_tungsten"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "forge:dusts/tungsten",
+      "has_tungsten_ingot",
       "has_the_recipe"
     ]
   ],

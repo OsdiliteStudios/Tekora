@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "item": "tekora:boron_piece"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "000",
+    " 1 ",
+    " 1 "
+  ],
+  "result": {
+    "item": "tekora:boron_pickaxe"
+  },
+  "show_notification": true
+}

@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "forge:ores/silver": {
+    "has_raw_silver": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "forge:ores/silver",
+      "has_raw_silver",
       "has_the_recipe"
     ]
   ],

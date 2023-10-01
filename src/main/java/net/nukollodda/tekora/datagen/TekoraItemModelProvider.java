@@ -593,9 +593,14 @@ public class TekoraItemModelProvider extends ItemModelProvider {
         simpleItem(TekoraItems.VANASTEEL_PICKAXE);
         simpleItem(TekoraItems.VANASTEEL_AXE);
         simpleItem(TekoraItems.VANASTEEL_HOE);
+
+        simpleItem(TekoraItems.TITANIUM_TEMPLATE);
+        simpleItem(TekoraItems.THORIUM_TEMPLATE);
+        simpleItem(TekoraItems.TUNGSTEN_STEEL_TEMPLATE);
+        simpleItem(TekoraItems.VANASTEEL_TEMPLATE);
     }
 
-    private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
+    private ItemModelBuilder simpleItem(RegistryObject<? extends Item> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(Tekora.MODID,"item/" + item.getId().getPath()));

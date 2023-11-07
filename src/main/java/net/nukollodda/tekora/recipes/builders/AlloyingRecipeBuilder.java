@@ -10,6 +10,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 public class AlloyingRecipeBuilder implements RecipeBuilder {
+    private Item result;
+    private AlloyingRecipeBuilder(Item pResult) {
+        this.result = pResult;
+    }
+
     @Override
     public RecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
         return null;

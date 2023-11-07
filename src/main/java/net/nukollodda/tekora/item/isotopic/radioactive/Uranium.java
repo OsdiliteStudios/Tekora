@@ -1,88 +1,48 @@
 package net.nukollodda.tekora.item.isotopic.radioactive;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.nukollodda.tekora.item.typical.ICompounds;
+import net.nukollodda.tekora.item.typical.IonicParts;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class Uranium extends AbstractRadioactiveItem {
-    public float[] isotopeRatio = new float[5];
-    private float divident;
     public Uranium() {
         super(new Item.Properties());
-    }
-
-    public static AbstractRadioactiveItem.Isotopes[] getIsotopeList() {
-        return new AbstractRadioactiveItem.Isotopes[]{Isotopes.U238,
-                Isotopes.U236, Isotopes.U235, Isotopes.U234, Isotopes.U233};
     }
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(Component.translatable("msg.tekora.isoratio"));
-        pTooltipComponents.add(Component.literal(textMaker()).withStyle(ChatFormatting.GRAY));
+        textMaker(pStack, pTooltipComponents);
         pTooltipComponents.add(Component.translatable("msg.tekora.rad"));
-        pTooltipComponents.add(Component.literal(AbstractRadioactiveItem.formatRad(getRadiation()))
-                .withStyle(AbstractRadioactiveItem.radColor(getRadiation())));
+        pTooltipComponents.add(Component.literal(AbstractRadioactiveItem.formatRad(getRadiation(pStack)))
+                .withStyle(AbstractRadioactiveItem.radColor(getRadiation(pStack))));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
-    protected String textMaker() {
+    protected void textMaker(ItemStack pStack, List<Component> pTooltipComponents) {
         float addedRat = 0;
-        for (float val : isotopeRatio) {
+        float[] ratio = getIsotopicRatio(pStack);
+        for (float val : ratio) {
             addedRat += val;
         }
-        float divident = addedRat > 0 ? addedRat : 100;
-        StringBuilder text = new StringBuilder();
+        float dividend = addedRat > 0 ? addedRat : 100;
         String isoName;
         for (int i = 0; i < 5; i++) {
-            isoName = i == 0 ? "U238 - " : "U23" + (7 - i) + " - ";
-            text.append(isotopeRatio[i] > 0 ? isoName + (int) (isotopeRatio[0] / divident * 100) + "%\n" : "");
+            if (ratio[i] > 0) {
+                isoName = i == 0 ? "U238 - " : "U23" + (7 - i) + " - ";
+                String formatted = isoName + ((int)((ratio[i] / dividend) * 1000)) / 10f + "%";
+                pTooltipComponents.add(Component.literal(formatted)
+                        .withStyle(ChatFormatting.GRAY));
+            }
         }
-        return text.toString();
-    }
-
-    @Override
-    public void saveData(CompoundTag pTag) {
-        if (pTag != null) {
-            pTag.putFloat("U238", isotopeRatio[0]);
-            pTag.putFloat("U236", isotopeRatio[1]);
-            pTag.putFloat("U235", isotopeRatio[2]);
-            pTag.putFloat("U234", isotopeRatio[3]);
-            pTag.putFloat("U233", isotopeRatio[4]);
-        }
-    }
-
-    @Override
-    public void readData(CompoundTag pTag) {
-        if (pTag == null || pTag.isEmpty()) {
-            isotopeRatio = getDefaultIsotopeRatio();
-            divident = 100;
-        } else {
-            isotopeRatio = new float[]{
-                    pTag.getFloat("U238"),
-                    pTag.getFloat("U236"),
-                    pTag.getFloat("U235"),
-                    pTag.getFloat("U234"),
-                    pTag.getFloat("U233")};
-            divident = pTag.getFloat("U238") + pTag.getFloat("U236") +
-                    pTag.getFloat("U235") + pTag.getFloat("U234") + pTag.getFloat("U233");
-        }
-    }
-
-    @Override
-    public CompoundTag getShareTag(ItemStack stack) {
-        if (stack.getTag() != null) {
-            readData(stack.getTag());
-            saveData(stack.getTag());
-        }
-        return super.getShareTag(stack);
     }
 
     @Override
@@ -91,48 +51,67 @@ public class Uranium extends AbstractRadioactiveItem {
     }
 
     @Override
-    public double getRadiation() {
+    public double getRadiation(ItemStack pStack) {
+        float[] ratio = getIsotopicRatio(pStack);
         float totalRad = 0;
+        float divider = 0;
         for (int i = 0; i < 5; i++) {
-            totalRad += (float) (Isotopes.getIsotopeById(i).getRadiationVal() * isotopeRatio[i]);
+            totalRad += (float) (Isotopes.getIsotopeById(i).getRadiationVal() * ratio[i]);
+            divider += ratio[i];
         }
-        return totalRad / divident > 0 ? divident : 100;
+        return totalRad / divider > 0 ? divider : 1;
     }
 
     @Override
-    public double getFissionRate() {
-        float totalRate = 0;
-        for (int i = 0; i < 5; i++) {
-            totalRate += (float) (Isotopes.getIsotopeById(i).getFissionRate() * isotopeRatio[i]);
+    public double getFissionRate(ItemStack pStack) {
+        float[] isotopes = getIsotopicRatio(pStack);
+        Isotopes[] values = Isotopes.values();
+        float total = 0;
+        float divider = 0;
+        for (int i = 0; i < isotopes.length; i++) {
+            total += values[i].fissionRate * isotopes[i];
+            divider += isotopes[i];
         }
-        return totalRate / divident > 0 ? divident : 100;
+        return total / divider > 0 ? divider : 1;
     }
 
     @Override
-    public double getNeutronAbsorptionRate() {
-        float totalAbsorbRate = 0;
-        for (int i = 0; i < 5; i++) {
-            totalAbsorbRate += (float) (Isotopes.getIsotopeById(i).getNeutronAbsorptionRate() * isotopeRatio[i]);
+    public double getNeutronAbsorptionRate(ItemStack pStack) {
+        float[] isotopes = getIsotopicRatio(pStack);
+        Isotopes[] values = Isotopes.values();
+        float total = 0;
+        float divider = 0;
+        for (int i = 0; i < isotopes.length; i++) {
+            total += values[i].neutronAbsorptionRate * isotopes[i];
+            divider += isotopes[i];
         }
-        return totalAbsorbRate /  divident > 0 ? divident : 100;
+        return total / divider > 0 ? divider : 1;
     }
 
     @Override
-    public float getFissionEnergy() {
-        float totalFisEn = 0;
-        for (int i = 0; i < 5; i++) {
-            totalFisEn += (Isotopes.getIsotopeById(i).getFissionEnergy() * isotopeRatio[i]);
+    public float getFissionEnergy(ItemStack pStack) {
+        float[] isotopes = getIsotopicRatio(pStack);
+        Isotopes[] values = Isotopes.values();
+        float total = 0;
+        float divider = 0;
+        for (int i = 0; i < isotopes.length; i++) {
+            total += values[i].fissionEnergy * isotopes[i];
+            divider += isotopes[i];
         }
-        return totalFisEn / divident > 0 ? divident : 100;
+        return total / divider > 0 ? divider : 1;
     }
 
     @Override
-    public float getNeutronAbsorptionEnergy() {
-        float totalnEn = 0;
-        for (int i = 0; i < 5; i++) {
-            totalnEn += (Isotopes.getIsotopeById(i).getNeutronAbsorptionEnergy() * isotopeRatio[i]);
+    public float getNeutronAbsorptionEnergy(ItemStack pStack) {
+        float[] isotopes = getIsotopicRatio(pStack);
+        Isotopes[] values = Isotopes.values();
+        float total = 0;
+        float divider = 0;
+        for (int i = 0; i < isotopes.length; i++) {
+            total += values[i].neutronAbsorptionEnergy * isotopes[i];
+            divider += isotopes[i];
         }
-        return totalnEn / divident > 0 ? divident : 100;
+        return total / divider > 0 ? divider : 1;
     }
 
     public enum Isotopes implements AbstractRadioactiveItem.Isotopes {
@@ -207,23 +186,45 @@ public class Uranium extends AbstractRadioactiveItem {
 
     public static class Nugget extends Uranium {
         @Override
-        public double getRadiation() {
-            return super.getRadiation() / 9;
+        public double getRadiation(ItemStack pStack) {
+            return super.getRadiation(pStack) / 9;
         }
 
         @Override
-        public float getFissionEnergy() {
-            return super.getFissionEnergy() / 9;
+        public float getFissionEnergy(ItemStack pStack) {
+            return super.getFissionEnergy(pStack) / 9;
         }
 
         @Override
-        public float getNeutronAbsorptionEnergy() {
-            return super.getNeutronAbsorptionEnergy() / 9;
+        public float getNeutronAbsorptionEnergy(ItemStack pStack) {
+            return super.getNeutronAbsorptionEnergy(pStack) / 9;
         }
     }
 
-    public static class CompoundDust extends Uranium {
-        public CompoundDust(Item[] items) {
+    public static class CompoundDust extends Uranium implements ICompounds {
+        private final String anion;
+        private final int oxidationState;
+        public CompoundDust(String pAnion) {
+            this(pAnion, 4);
+        }
+        public CompoundDust(String pAnion, int pOxState) {
+            this.anion = pAnion.toUpperCase();
+            this.oxidationState = pOxState == 6 ? pOxState : 4;
+        }
+
+        @Override
+        public IonicParts getCation() {
+            IonicParts.Anions anion = IonicParts.Anions.valueOf(this.anion);
+            int anOxState = Math.abs(anion.getOxidationState());
+            int catCount = anOxState % oxidationState == 0 ? 1 : anOxState;
+            return new IonicParts(IonicParts.Cations.PROTACTINIUM, catCount);
+        }
+
+        @Override
+        public IonicParts getAnion() {
+            IonicParts.Anions anion = IonicParts.Anions.valueOf(this.anion);
+            int anOxState = Math.abs(anion.getOxidationState());
+            return new IonicParts(anion, oxidationState % anOxState == 0 ? 1 : oxidationState);
         }
     }
 }

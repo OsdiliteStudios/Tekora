@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,7 +28,7 @@ import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraFurnaceEntity;
 import net.nukollodda.tekora.menu.AlloyFurnaceMenu;
 import net.nukollodda.tekora.recipes.types.AlloyingRecipe;
-import net.nukollodda.tekora.util.TekoraUtilFunctions;
+import net.nukollodda.tekora.util.UtilFunctions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -203,7 +202,7 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
             int[] recipeRatio = recipe.get().getRecipeRatio();
             int[] extracted = new int[recipeRatio.length];
 
-            while (!TekoraUtilFunctions.arrayMatch(extracted, recipeRatio)) {
+            while (!UtilFunctions.arrayMatch(extracted, recipeRatio)) {
                 for (int i = 0; i < ingredients.size(); i++) {
                     for (int j = 1; j < 4; j++) {
                         curItem = this.itemHandler.getStackInSlot(j);

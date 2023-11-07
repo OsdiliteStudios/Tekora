@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-25T07:02:19.7343194	Item Models: tekora
+// 1.20.1	2023-11-06T19:30:58.4012416	Item Models: tekora
 6c193e6b9656195aca8152173d1218b972da9a03 assets/tekora/models/item/ahcp.json
 a55e411826af6a750e1b50c97c99ba8785bf8c8a assets/tekora/models/item/alumina.json
 05857b8bef41eff143d5cad59fa125caa30eb85c assets/tekora/models/item/aluminum_dust.json
@@ -81,6 +81,7 @@ b374a5bf08fd370cc1714e29d44b57823097e147 assets/tekora/models/item/calcium_chlor
 5292a84288273569cd5f74e984a06282647a9d7c assets/tekora/models/item/calcium_sulfate.json
 d9881e0dfb8764189df5a28944f8f503e89fe457 assets/tekora/models/item/carbon_steel_dust.json
 09bc4cecc8ea2b78f0d42ca048ef8db731d2641b assets/tekora/models/item/carbon_steel_ingot.json
+4b442e2b7992dba0cb584fea90c4f52ab983bfc0 assets/tekora/models/item/carbon_steel_rod.json
 72b2f88a4b881db8c07db7f9c2061594e0c6a41e assets/tekora/models/item/cassiterite.json
 83365484e62724aa3ce26b7795f8781b0f42294c assets/tekora/models/item/cerium_dioxide.json
 df04428bbca6855582178295d0777e7ce66618af assets/tekora/models/item/cerium_dust.json
@@ -99,11 +100,16 @@ cadcf83466851737daef741ffffebc23af469431 assets/tekora/models/item/chromium_dust
 2d4d0df2785a546c6fa40598e5432289ad488c3b assets/tekora/models/item/chromoly_steel_ingot.json
 3d7b5fc13d64254957fd21244caa15f23e22e3c6 assets/tekora/models/item/chromoly_steel_plate.json
 23827397acf868f66d43f7fced32dd8b97e7b239 assets/tekora/models/item/cinnabar.json
+b72d3331821bb18417471c63daaa216a608981d6 assets/tekora/models/item/cleaned_monazite.json
+b894439b5d8a1c60069036c4785293db13adabfa assets/tekora/models/item/cleaned_sperrylite.json
+cd54cf825dcd28ddda76211ad50b76c24fa71e01 assets/tekora/models/item/cleaned_sphalerite.json
+b286025e1ad232b20669a3732ec1ebc4450eaf35 assets/tekora/models/item/cleaned_zircon.json
 0a2ef76c3724382fb3e7cec974e2261649f68141 assets/tekora/models/item/cobalt_dust.json
 24148396ddf5b54598cfb283ba8bb0e61dd7c285 assets/tekora/models/item/cobalt_ingot.json
 088a75b07dceb0f9ab53c9581498ee73c9a668fa assets/tekora/models/item/cobalt_nugget.json
 90c3e12c9497358481415d60979bce228b2482cb assets/tekora/models/item/cobalt_oxide.json
 7d887c32f3ef8109b1ed2ba89d3fb511a192c80c assets/tekora/models/item/cobalt_plate.json
+bc16e82751ab44e4979e03fda7a2aa83f31e1d86 assets/tekora/models/item/coil.json
 8f16f4b2f33eefc2631b6d915369bccf8cb7c2c1 assets/tekora/models/item/coltan.json
 9e890636e707559c92fffe6e684f10bb3d352468 assets/tekora/models/item/coltan_piece.json
 c9de63557e329415923e4953a8d1203d57695e20 assets/tekora/models/item/copper_dust.json
@@ -116,6 +122,7 @@ a1b550fc7a39fd77ea62b6cb4a73e8c38a7fc431 assets/tekora/models/item/copper_steel_
 17c3075c89370dd461a14d4468f8aaf38b848c72 assets/tekora/models/item/copper_sulfide.json
 15e5fe7db4b8f269a8a5cf2119f7211cf64e694d assets/tekora/models/item/diamond_hammer.json
 aa863432422cfbbded4e82ad046c015d50415ffd assets/tekora/models/item/dolomite.json
+a73b2c6a825d129d3f2df8c7f671a219c266804d assets/tekora/models/item/dust.json
 4966c99dc8597ec0e29f629907c7db28061e120b assets/tekora/models/item/dysprosium_dust.json
 96bae58adb021c5ae68a23d8b3871c39b51971fd assets/tekora/models/item/dysprosium_ingot.json
 c8e8d9bfb1d25d6710abcb5b8aab53c403e5e24e assets/tekora/models/item/dysprosium_nugget.json
@@ -135,6 +142,7 @@ e0c6ed0f7879379a0d24ab1a36e81305b425a581 assets/tekora/models/item/ferroboron_du
 293c9b999acee58e6f5540be35fe189c60f021e3 assets/tekora/models/item/ferroboron_plate.json
 96d28da25536cf6203e469088336773842bb68fb assets/tekora/models/item/ferrous_sulfide.json
 45f89a75baea47fad319b83815e8228c18d9eb94 assets/tekora/models/item/fluorite.json
+f3992802d0c20e0a25e760c821072c8b8b7f023f assets/tekora/models/item/fluorocolumbite.json
 af499470de490b241ca92aea864019a56694f871 assets/tekora/models/item/gadolinium_dust.json
 706319d81fde2f732aef5e166ea797a520340dae assets/tekora/models/item/gadolinium_ingot.json
 67f121c4386f72c415fae387d4fddb2d42457ee9 assets/tekora/models/item/gadolinium_nugget.json
@@ -293,10 +301,17 @@ f3522b54c8b739824ba2a8f91ffbf876b46f5c54 assets/tekora/models/item/praseodymium_
 d0f6aa9ae5d683a8bff921f047cd6b78c2423ddb assets/tekora/models/item/praseodymium_nugget.json
 ae6d45125ec46402a5bc58c2dc26450ebd7e1d27 assets/tekora/models/item/praseodymium_oxide.json
 517bacf649f80d8469daab81cc492334a46db5b7 assets/tekora/models/item/protactinium_dioxide.json
+e19e276aa1e976c50a77feac69efa9194a649f3c assets/tekora/models/item/pure_beryl.json
+2016622d93ad90c6dbc55fca06de67ed391aafa6 assets/tekora/models/item/pure_coltan.json
+af89664298dcdde4586513ebac7f4aab3e532082 assets/tekora/models/item/pure_dolomite.json
+79bb541a5e08061ee9ef2567de377a3926091f63 assets/tekora/models/item/pure_monazite.json
+aec158f039fcd753cd35600a052764a2b220bcd2 assets/tekora/models/item/pure_sperrylite.json
+0e32f3379a6831b6aca392f17a1c44eceefc8187 assets/tekora/models/item/pure_zircon.json
 1a9406dcae445eb6e4d539bf8213f5fdca1b186f assets/tekora/models/item/pyrite.json
 648fd84a75c70515f296c65dcff7d94350b13520 assets/tekora/models/item/pyrite_piece.json
 2ac2d12fc90154e91188e61c8b63e0c0f47c9d53 assets/tekora/models/item/pyrolusite.json
 8279916c8c9c2d3c0689f7eddbfa0bee62b9f89d assets/tekora/models/item/pyrolusite_piece.json
+46eaf6f74c93a295c783f4df3fbb932748d8df23 assets/tekora/models/item/quadruplet_bastnasite.json
 9e63bfc6dd52bd7df496a98c0c312328c3027e82 assets/tekora/models/item/raw_silver.json
 151df285f82ca166f0da005675e4e3a22d9768d8 assets/tekora/models/item/reactor_steel_dust.json
 c0ba88ca64df3f064d2ee9907dd4257ce380be7b assets/tekora/models/item/reactor_steel_ingot.json
@@ -373,6 +388,7 @@ d2387ec9e3e977f0ffe29c9e2b7b48d8d31546c2 assets/tekora/models/item/sperrylite.js
 e4572454910ed1d3f2b35dbeafb94a281872754b assets/tekora/models/item/stainless_steel_dust.json
 cf42a32b787e56c2881a798c53a2826cfe7d7dec assets/tekora/models/item/stainless_steel_ingot.json
 e9fcb8009579857506fdca98661e1f58e25b2f3d assets/tekora/models/item/stainless_steel_plate.json
+62f2e05a955d1943e3497ef0c7ed8a0bdeb70286 assets/tekora/models/item/stainless_steel_turbine.json
 094cd077cb2f848e2548238f0e08b1bb2da15c60 assets/tekora/models/item/steel_axe.json
 631d3b817c819b9263730fffec38bbc156ffec4c assets/tekora/models/item/steel_boots.json
 8208815a6bdd86bf63dc7c788d6eb8b481d530c7 assets/tekora/models/item/steel_chestplate.json
@@ -384,6 +400,7 @@ b1d5462fb795f8e2ff6510ddce66a917a5e79cae assets/tekora/models/item/steel_hoe.jso
 6f43ee7f91fe94445bcda4b6138f5e7d751ed425 assets/tekora/models/item/steel_leggings.json
 e73e73105482d827fdf95fa586433e5f1c39f4a7 assets/tekora/models/item/steel_pickaxe.json
 b8dd26fb7c05206bbfb5c5013f435c6d21961e34 assets/tekora/models/item/steel_plate.json
+c6d782801c270cd4d49cc4c2c8acfdd0220bbdc6 assets/tekora/models/item/steel_rod.json
 dc12e795269fa1eed693bc3ac2cd57927f0d2b91 assets/tekora/models/item/steel_shovel.json
 79250c469dff81d78b76a74e87d16208077143d3 assets/tekora/models/item/steel_sword.json
 2b498f14fdcbbdd6b204349bd22994cee3594fad assets/tekora/models/item/stibnite.json
@@ -470,6 +487,9 @@ d71ef68df38458b4011d6462f405c99618433df7 assets/tekora/models/item/tungsten_stee
 3c59a4bbf435782c7ef6f0152263d68cd69dd8ba assets/tekora/models/item/tungsten_steel_shovel.json
 ddf4cfcdb3713f2191716fa95dd8704fd7867197 assets/tekora/models/item/tungsten_steel_sword.json
 de7826f65104011be33c031fbde911f28c9adb34 assets/tekora/models/item/tungsten_steel_upgrade_smithing_template.json
+582c172f0d5e5ab966ce03a2304e16f9bfb54bd8 assets/tekora/models/item/turbine_generator.json
+ad9a5ab4666d87765d6c90b7dedb3d789a805f91 assets/tekora/models/item/turbine_rotor.json
+3601adc730b3b811e6c1693bc6a0db81372670b3 assets/tekora/models/item/turbine_stator.json
 d0052a0b063a21f5c9c461ced99b97a9c6f57530 assets/tekora/models/item/uraninite.json
 07b11da0445976a01e98df63a76ddaa4b6597d58 assets/tekora/models/item/uranium_dioxide.json
 57d83ee6ccc1c39c01c9a54331f1a2ca23e735eb assets/tekora/models/item/uranium_dust.json

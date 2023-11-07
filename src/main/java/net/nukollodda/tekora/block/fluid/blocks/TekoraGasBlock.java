@@ -1,7 +1,10 @@
 package net.nukollodda.tekora.block.fluid.blocks;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -9,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.nukollodda.tekora.block.fluid.TekoraFluidType;
-import net.nukollodda.tekora.util.TekoraFluidFunctions;
+import net.nukollodda.tekora.util.FluidFunctions;
 
 import java.util.function.Supplier;
 
@@ -24,19 +27,31 @@ public class TekoraGasBlock extends AbstractTekoraFluidBlock {
         super.onPlace(pState, pLevel, pPos, pOldState, pIsMoving);
         if (this.getFluid().getFluidType() instanceof TekoraFluidType tekoraFluid) {
             ResourceKey<Level> dimension = pLevel.dimension();
-            float biomeTemp = TekoraFluidFunctions.getForgeTemperature(
-                    pLevel.getBiome(pPos).get().getBaseTemperature());
+            float areaTemp = FluidFunctions.getForgeTemperature(
+                    pLevel.getBiome(pPos).get().getBaseTemperature()) + pLevel.getLightEmission(pPos) / 15f;
 
             float pressure = 1;
             if (dimension.equals(Level.END)) pressure = 0.895f;
             else if (dimension.equals(Level.NETHER)) pressure = 1.121f;
 
-            if (tekoraFluid.getBoilingPoint(pressure) > biomeTemp) {
-                TekoraFluidFunctions.makeCondensationParticles(pLevel, pPos, tekoraFluid.isMetallic());
-            } else if (tekoraFluid.getMeltingPoint() > biomeTemp) {
-                TekoraFluidFunctions.makeHailParticles(pLevel, pPos, tekoraFluid.isMetallic());
+            if (tekoraFluid.getBoilingPoint(pressure) > areaTemp) {
+                makeCondensationParticles(pLevel, pPos, tekoraFluid.isMetallic());
+                pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
+            } else if (tekoraFluid.getMeltingPoint() > areaTemp) {
+                makeHailParticles(pLevel, pPos, tekoraFluid.isMetallic());
+                pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
             }
         }
+    }
+
+    private void makeCondensationParticles(Level pLevel, BlockPos pPos, boolean pIsMetal) {
+        FluidFunctions.makeParticles(pLevel, pPos, pIsMetal ? SoundEvents.COPPER_BREAK : SoundEvents.WEATHER_RAIN,
+                pIsMetal ? ParticleTypes.ASH : ParticleTypes.RAIN);
+    }
+
+    public void makeHailParticles(Level pLevel, BlockPos pPos, boolean pIsMetal) {
+        FluidFunctions.makeParticles(pLevel, pPos, pIsMetal ? SoundEvents.ELDER_GUARDIAN_CURSE : SoundEvents.PLAYER_HURT_FREEZE,
+                pIsMetal ? ParticleTypes.ASH : ParticleTypes.SNOWFLAKE);
     }
 
     @Override

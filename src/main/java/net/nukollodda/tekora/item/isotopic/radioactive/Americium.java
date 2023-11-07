@@ -1,28 +1,12 @@
 package net.nukollodda.tekora.item.isotopic.radioactive;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
-import net.nukollodda.tekora.item.isotopic.AbstractIsotopicItem;
+import net.minecraft.world.item.ItemStack;
 
 public class Americium extends AbstractRadioactiveItem {
-    private int[] isotopeRatio;
 
     public Americium() {
         super(new Item.Properties());
-    }
-
-    public static AbstractRadioactiveItem.Isotopes[] getIsotopeList() {
-        return new AbstractRadioactiveItem.Isotopes[]{Isotopes.AM241};
-    }
-
-    @Override
-    public void saveData(CompoundTag pTag) {
-
-    }
-
-    @Override
-    public void readData(CompoundTag pTag) {
-
     }
 
     @Override
@@ -31,27 +15,27 @@ public class Americium extends AbstractRadioactiveItem {
     }
 
     @Override
-    public double getRadiation() {
+    public double getRadiation(ItemStack pStack) {
         return 0;
     }
 
     @Override
-    public double getFissionRate() {
+    public double getFissionRate(ItemStack pStack) {
         return 0;
     }
 
     @Override
-    public double getNeutronAbsorptionRate() {
+    public double getNeutronAbsorptionRate(ItemStack pStack) {
         return 0;
     }
 
     @Override
-    public float getFissionEnergy() {
+    public float getFissionEnergy(ItemStack pStack) {
         return 0;
     }
 
     @Override
-    public float getNeutronAbsorptionEnergy() {
+    public float getNeutronAbsorptionEnergy(ItemStack pStack) {
         return 0;
     }
 
@@ -113,18 +97,18 @@ public class Americium extends AbstractRadioactiveItem {
 
     public static class Nugget extends Americium {
         @Override
-        public double getRadiation() {
-            return super.getRadiation() / 9;
+        public double getRadiation(ItemStack pStack) {
+            return super.getRadiation(pStack) / 9;
         }
 
         @Override
-        public float getFissionEnergy() {
-            return super.getFissionEnergy() / 9;
+        public float getFissionEnergy(ItemStack pStack) {
+            return super.getFissionEnergy(pStack) / 9;
         }
 
         @Override
-        public float getNeutronAbsorptionEnergy() {
-            return super.getNeutronAbsorptionEnergy() / 9;
+        public float getNeutronAbsorptionEnergy(ItemStack pStack) {
+            return super.getNeutronAbsorptionEnergy(pStack) / 9;
         }
     }
 

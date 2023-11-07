@@ -6,19 +6,22 @@
       "tag": "forge:plates/steel"
     },
     "1": {
-      "tag": "forge:iron"
+      "item": "tekora:stainless_steel_turbine"
     },
     "2": {
-      "tag": "forge:plates/steel"
+      "item": "tekora:turbine_generator"
     },
     "3": {
       "item": "tekora:copper_cable"
+    },
+    "4": {
+      "tag": "forge:rods/carbon_steel"
     }
   },
   "pattern": [
-    "222",
-    "131",
-    "030"
+    "020",
+    "343",
+    "010"
   ],
   "result": {
     "item": "tekora:hydroelectric_generator"

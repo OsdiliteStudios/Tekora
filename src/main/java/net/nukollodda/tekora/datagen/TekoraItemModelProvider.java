@@ -63,6 +63,19 @@ public class TekoraItemModelProvider extends ItemModelProvider {
         simpleItem(TekoraItems.THORITE);
         simpleItem(TekoraItems.WOLFRAMITE);
 
+        simpleItem(TekoraItems.CLEANED_MONAZITE);
+        simpleItem(TekoraItems.CLEANED_SPERRYLITE);
+        simpleItem(TekoraItems.CLEANED_SPHALERITE);
+        simpleItem(TekoraItems.CLEANED_ZIRCON);
+        simpleItem(TekoraItems.PURE_BERYL);
+        simpleItem(TekoraItems.PURE_COLTAN);
+        simpleItem(TekoraItems.PURE_DOLOMITE);
+        simpleItem(TekoraItems.PURE_MONAZITE);
+        simpleItem(TekoraItems.PURE_SPERRYLITE);
+        simpleItem(TekoraItems.PURE_ZIRCON);
+        simpleItem(TekoraItems.FLUOROCOLUMBITE);
+        simpleItem(TekoraItems.QUADRUPLET_BASTNASITE);
+
         simpleItem(TekoraItems.DOLOMITE);
         simpleItem(TekoraItems.FLUORITE);
 
@@ -421,6 +434,7 @@ public class TekoraItemModelProvider extends ItemModelProvider {
         simpleItem(TekoraItems.RHENIUM_DISULFIDE);
         simpleItem(TekoraItems.ARSENIC_TRISULFIDE);
         simpleItem(TekoraItems.RESIDUE);
+        simpleItem(TekoraItems.GENERIC_DUST);
 
         simpleItem(TekoraItems.COPPER_PLATE);
         simpleItem(TekoraItems.GOLD_PLATE);
@@ -593,6 +607,14 @@ public class TekoraItemModelProvider extends ItemModelProvider {
         simpleItem(TekoraItems.VANASTEEL_PICKAXE);
         simpleItem(TekoraItems.VANASTEEL_AXE);
         simpleItem(TekoraItems.VANASTEEL_HOE);
+
+        simpleItem(TekoraItems.STEEL_ROD);
+        simpleItem(TekoraItems.CARBON_STEEL_ROD);
+        simpleItem(TekoraItems.STAINLESS_STEEL_TURBINE);
+        simpleItem(TekoraItems.TURBINE_GENERATOR);
+        simpleItem(TekoraItems.TURBINE_STATOR);
+        simpleItem(TekoraItems.TURBINE_ROTOR);
+        simpleItem(TekoraItems.COIL);
 
         simpleItem(TekoraItems.TITANIUM_TEMPLATE);
         simpleItem(TekoraItems.THORIUM_TEMPLATE);

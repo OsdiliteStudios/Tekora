@@ -26,6 +26,7 @@ public class TekoraCreativeTabs {
                         pOutput.accept(TekoraBlocks.CRUSHER.get());
                         pOutput.accept(TekoraBlocks.INFUSION_FURNACE.get());
                         pOutput.accept(TekoraBlocks.ELECTRIC_FURNACE.get());
+                        pOutput.accept(TekoraBlocks.PULVERIZER.get());
                         pOutput.accept(TekoraBlocks.HYDROELECTRIC_GENERATOR.get());
                     }))).build());
 
@@ -201,6 +202,19 @@ public class TekoraCreativeTabs {
 
                         pOutput.accept(TekoraItems.DOLOMITE.get());
                         pOutput.accept(TekoraItems.FLUORITE.get());
+
+                        pOutput.accept(TekoraItems.CLEANED_MONAZITE.get());
+                        pOutput.accept(TekoraItems.CLEANED_SPERRYLITE.get());
+                        pOutput.accept(TekoraItems.CLEANED_SPHALERITE.get());
+                        pOutput.accept(TekoraItems.CLEANED_ZIRCON.get());
+                        pOutput.accept(TekoraItems.PURE_BERYL.get());
+                        pOutput.accept(TekoraItems.PURE_COLTAN.get());
+                        pOutput.accept(TekoraItems.PURE_DOLOMITE.get());
+                        pOutput.accept(TekoraItems.PURE_MONAZITE.get());
+                        pOutput.accept(TekoraItems.PURE_SPERRYLITE.get());
+                        pOutput.accept(TekoraItems.PURE_ZIRCON.get());
+                        pOutput.accept(TekoraItems.FLUOROCOLUMBITE.get());
+                        pOutput.accept(TekoraItems.QUADRUPLET_BASTNASITE.get());
                     }))).build());
 
     public static RegistryObject<CreativeModeTab> TEKORA_ITEMS = CREATIVE_MODE_TABS.register("tekora_items", () ->
@@ -578,6 +592,14 @@ public class TekoraCreativeTabs {
                     .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
                     .title(Component.translatable("itemGroup.tekora_parts"))
                     .displayItems((((pParameters, pOutput) -> {
+                        pOutput.accept(TekoraItems.STEEL_ROD.get());
+                        pOutput.accept(TekoraItems.CARBON_STEEL_ROD.get());
+                        pOutput.accept(TekoraItems.STAINLESS_STEEL_TURBINE.get());
+                        pOutput.accept(TekoraItems.TURBINE_GENERATOR.get());
+                        pOutput.accept(TekoraItems.TURBINE_STATOR.get());
+                        pOutput.accept(TekoraItems.TURBINE_ROTOR.get());
+                        pOutput.accept(TekoraItems.COIL.get());
+
                         pOutput.accept(TekoraBlocks.COPPER_CABLE.get());
 
                         pOutput.accept(TekoraItems.TITANIUM_TEMPLATE.get());

@@ -9,6 +9,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,17 +25,20 @@ import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraMachineEntity;
 import net.nukollodda.tekora.item.TekoraItems;
 import net.nukollodda.tekora.item.mixtures.Residue;
+import net.nukollodda.tekora.item.typical.DustItem;
+import net.nukollodda.tekora.item.typical.ICompounds;
 import net.nukollodda.tekora.menu.ElectricFurnaceMenu;
 import net.nukollodda.tekora.recipes.types.ElectricBlastingRecipe;
-import net.nukollodda.tekora.util.TekoraResidualExtraction;
+import net.nukollodda.tekora.util.DustUtil;
+import net.nukollodda.tekora.util.ResidualExtraction;
+import net.nukollodda.tekora.util.UtilFunctions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
+public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity { // fluid handling might be dealt with here
     protected final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -145,7 +149,7 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
             level.setBlock(pos, state, 3);
         }
 
-        if (entity.hasRecipe() && entity.hasEnoughElectricity(entity)) {
+        if (entity.hasRecipe() && entity.hasEnoughElectricity()) {
             entity.progress++;
             entity.ENERGY_STORAGE.extractEnergy(ENERGY_REQ, false);
             setChanged(level, pos, state);
@@ -156,11 +160,6 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
             entity.resetProgress();
             setChanged(level, pos, state);
         }
-    }
-
-    @Override
-    public Component getDisplayName() {
-        return Component.translatable("block.tekora.electric_blast_furnace");
     }
 
     @Override
@@ -184,15 +183,24 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
                     this.itemHandler.getStackInSlot(2).getCount() + 1));
 
             ItemStack zerothItem = this.itemHandler.getStackInSlot(0);
-            if ((zerothItem.getItem() instanceof Residue || zerothItem.isEmpty()) &&
-                    TekoraResidualExtraction.recipeHasIons(recipe.get()) && TekoraResidualExtraction.areIonsMergeable(zerothItem, recipe.get())) {
+            Item item = zerothItem.getItem();
+            if ((item instanceof Residue || zerothItem.isEmpty() || item instanceof DustItem || item instanceof ICompounds) &&
+                    ResidualExtraction.recipeHasIons(recipe.get()) && ResidualExtraction.areIonsMergeable(zerothItem, recipe.get())) {
                 this.itemHandler.setStackInSlot(0,
-                        TekoraResidualExtraction.residualIonMerger(zerothItem, recipe.get()));
+                        ResidualExtraction.residualIonMerger(zerothItem, recipe.get()));
             } else if (zerothItem.isEmpty()) {
-                Residue residue = TekoraItems.RESIDUE.get();
-                ItemStack residual = new ItemStack(residue);
-                residual = residue.setIons(residual, recipe.get().getCations(), recipe.get().getAnions());
-                this.itemHandler.setStackInSlot(0, residual);
+                byte[] cations = recipe.get().getCations();
+                byte[] anions = recipe.get().getAnions();
+                if (DustUtil.canCreateDustFromResidue(cations, anions)) {
+                    int catInd = UtilFunctions.getFirstNonZero(cations);
+                    int anInd = UtilFunctions.getFirstNonZero(anions);
+                    this.itemHandler.setStackInSlot(0, DustUtil.createDustFromResidue(catInd, anInd));
+                } else {
+                    Residue residue = TekoraItems.RESIDUE.get();
+                    ItemStack residual = new ItemStack(residue);
+                    residual = residue.setIons(residual, recipe.get().getCations(), recipe.get().getAnions());
+                    this.itemHandler.setStackInSlot(0, residual);
+                }
             }
 
             this.resetProgress();
@@ -204,12 +212,26 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity {
         if (level == null) return false;
 
         SimpleContainer inv = new SimpleContainer(this.itemHandler.getSlots()); // makes an inventory from the block
-        inv.setItem(1, this.itemHandler.getStackInSlot(1));
+        for (int i = 0; i < inv.getContainerSize(); i++) {
+            inv.setItem(i, this.itemHandler.getStackInSlot(i));
+        }
 
         Optional<ElectricBlastingRecipe> recipe = level.getRecipeManager()
                 .getRecipeFor(ElectricBlastingRecipe.Type.INSTANCE, inv, level);
 
         return recipe.isPresent() && this.canInsertAmountIntoOutputSlot(inv) &&
-                this.canInsertItemIntoOutputSlot(inv, recipe.get().getResultItem(level.registryAccess()));
+                this.canInsertItemIntoOutputSlot(inv, recipe.get().getResultItem(level.registryAccess())) &&
+                (ResidualExtraction.areIonsMergeable(inv.getItem(0), recipe.get()) || inv.getItem(0).isEmpty());
+    }
+
+    @Override
+    protected boolean canInsertItemIntoOutputSlot(SimpleContainer inv, ItemStack stack) {
+        boolean hasResidueOrIsEmpty = inv.getItem(0).getItem().equals(TekoraItems.RESIDUE.get()) || inv.getItem(0).equals(ItemStack.EMPTY);
+        return super.canInsertItemIntoOutputSlot(inv, stack) && hasResidueOrIsEmpty;
+    }
+
+    @Override
+    protected boolean canInsertAmountIntoOutputSlot(SimpleContainer inv) {
+        return super.canInsertAmountIntoOutputSlot(inv) && inv.getItem(0).getCount() < 64;
     }
 }

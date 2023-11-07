@@ -123,6 +123,8 @@ public class Tekora {
             event.accept(TekoraItems.VANASTEEL_BOOTS.get());
         }
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            // event.accept(TekoraItems.AMMONIUM_HYDROXIDE_BUCKET);
+
             event.accept(TekoraItems.DIAMOND_HAMMER.get());
             event.accept(TekoraItems.GOLDEN_HAMMER.get());
             event.accept(TekoraItems.IRON_HAMMER.get());
@@ -191,12 +193,17 @@ public class Tekora {
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_AMMONIA.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROGEN_CYANIDE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROGEN_FLUORIDE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROGEN_CHLORIDE.get(), RenderType.translucent());
 
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_ALUMINUM_MOLTEN.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_GALLIUM_FLUID.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_MERCURY_FLUID.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_AMMONIA_FLUID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_AMMONIUM_HYDROXIDE.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROFLUORIC_ACID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROCHLORIC_ACID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_NITRIC_ACID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_SULFURIC_ACID.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_PRUSSIC_ACID.get(), RenderType.solid());
 
             // flowing block rendering
@@ -209,12 +216,17 @@ public class Tekora {
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_AMMONIA.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROGEN_CYANIDE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROGEN_FLUORIDE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROGEN_CHLORIDE.get(), RenderType.translucent());
 
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_ALUMINUM_MOLTEN.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_GALLIUM_FLUID.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_MERCURY_FLUID.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_AMMONIA_FLUID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_AMMONIUM_HYDROXIDE.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROFLUORIC_ACID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_HYDROCHLORIC_ACID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_NITRIC_ACID.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_SULFURIC_ACID.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.FLOWING_PRUSSIC_ACID.get(), RenderType.solid());
 
             MenuScreens.register(TekoraMenuTypes.ALLOY_FURNACE_MENU.get(), AlloyFurnaceScreen::new);

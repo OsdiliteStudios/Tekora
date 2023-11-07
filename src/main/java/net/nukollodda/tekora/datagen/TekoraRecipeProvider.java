@@ -9,6 +9,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.TekoraBlocks;
@@ -43,7 +44,7 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
         oreBlasting(pWriter, TekoraTags.Items.URANINITE_ORE, TekoraItems.URANINITE.get());
         oreBlasting(pWriter, TekoraTags.Items.ZIRCON_ORE, TekoraItems.ZIRCON.get());
 
-        oreBlasting(pWriter, TekoraTags.Items.RAW_SILVER_GEM, TekoraItems.SILVER_INGOT.get());
+        oreBlasting(pWriter, TekoraTags.Items.RAW_SILVER, TekoraItems.SILVER_INGOT.get());
         oreBlasting(pWriter, TekoraTags.Items.BAUXITE_GEM, TekoraItems.ALUMINA.get());
         oreBlasting(pWriter, TekoraItems.APT.get(), TekoraItems.TUNGSTEN_OXIDE.get());
         oreBlasting(pWriter, TekoraItems.RUTILE.get(), TekoraItems.TITANIUM_DIOXIDE.get());
@@ -456,14 +457,82 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
                 .unlockedBy(getHasName(Items.FURNACE), has(Items.FURNACE))
                 .save(pWriter, Tekora.MODID + ":infusion_furnace_from_crafting");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraBlocks.HYDROELECTRIC_GENERATOR.get())
-                .pattern("222")
-                .pattern("131")
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraItems.TURBINE_STATOR.get())
+                .pattern("000")
+                .pattern("0 0")
+                .pattern("000")
+                .define('0', TekoraTags.Items.STEEL_ROD)
+                .unlockedBy(getHasName(TekoraItems.STEEL_ROD.get()), has(TekoraItems.STEEL_ROD.get()))
+                .save(pWriter, Tekora.MODID + ":turbine_stator_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraItems.TURBINE_ROTOR.get())
+                .pattern("101")
+                .pattern("020")
+                .pattern("101")
+                .define('0', TekoraTags.Items.CHROMOLY_STEEL_PLATE).define('1', TekoraTags.Items.STEEL_INGOT)
+                .define('2', TekoraTags.Items.CARBON_STEEL_ROD)
+                .unlockedBy(getHasName(TekoraItems.STEEL_ROD.get()), has(TekoraItems.STEEL_ROD.get()))
+                .save(pWriter, Tekora.MODID + ":turbine_rotor_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraItems.TURBINE_GENERATOR.get())
+                .pattern("010")
+                .pattern("020")
                 .pattern("030")
-                .define('0', TekoraTags.Items.STEEL_PLATE).define('1', TekoraTags.Items.IRON)
-                .define('2', TekoraTags.Items.STEEL_PLATE).define('3', TekoraBlocks.COPPER_CABLE.get())
+                .define('0', TekoraTags.Items.STAINLESS_STEEL_PLATE).define('1', TekoraItems.TURBINE_STATOR.get())
+                .define('2', TekoraItems.TURBINE_ROTOR.get()).define('3', TekoraTags.Items.CARBON_STEEL_ROD)
+                .unlockedBy(getHasName(TekoraItems.CARBON_STEEL_ROD.get()), has(TekoraItems.CARBON_STEEL_ROD.get()))
+                .save(pWriter, Tekora.MODID + ":turbine_generator_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraItems.COIL.get())
+                .pattern("010")
+                .pattern("010")
+                .pattern("010")
+                .define('0', TekoraBlocks.COPPER_CABLE.get()).define('1', TekoraTags.Items.ALUMINUM_INGOT)
+                // remember to replace ingot to rod at some point
+                .unlockedBy(getHasName(TekoraBlocks.COPPER_CABLE.get()), has(TekoraBlocks.COPPER_CABLE.get()))
+                .save(pWriter, Tekora.MODID + ":coil_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraItems.STEEL_ROD.get(), 4)
+                .pattern("0")
+                .pattern("0")
+                .define('0', TekoraTags.Items.STEEL_INGOT)
+                .unlockedBy(getHasName(TekoraItems.STEEL_INGOT.get()), has(TekoraItems.STEEL_INGOT.get()))
+                .save(pWriter, Tekora.MODID + ":steel_rod_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraItems.CARBON_STEEL_ROD.get(), 4)
+                .pattern("0")
+                .pattern("0")
+                .define('0', TekoraTags.Items.CARBON_STEEL_INGOT)
+                .unlockedBy(getHasName(TekoraItems.CARBON_STEEL_INGOT.get()), has(TekoraItems.CARBON_STEEL_INGOT.get()))
+                .save(pWriter, Tekora.MODID + ":carbon_steel_rod_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraItems.STAINLESS_STEEL_TURBINE.get())
+                .pattern("0 0")
+                .pattern(" 1 ")
+                .pattern("0 0")
+                .define('0', TekoraTags.Items.STAINLESS_STEEL_PLATE).define('1', TekoraTags.Items.CARBON_STEEL_ROD)
+                .unlockedBy(getHasName(TekoraItems.STAINLESS_STEEL_PLATE.get()), has(TekoraItems.STAINLESS_STEEL_PLATE.get()))
+                .save(pWriter, Tekora.MODID + ":stainless_steel_turbine_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TekoraBlocks.HYDROELECTRIC_GENERATOR.get())
+                .pattern("020")
+                .pattern("343")
+                .pattern("010")
+                .define('0', TekoraTags.Items.STEEL_PLATE).define('1', TekoraItems.STAINLESS_STEEL_TURBINE.get())
+                .define('2', TekoraItems.TURBINE_GENERATOR.get()).define('3', TekoraBlocks.COPPER_CABLE.get())
+                .define('4', TekoraTags.Items.CARBON_STEEL_ROD)
                 .unlockedBy(getHasName(TekoraBlocks.COPPER_CABLE.get()), has(TekoraBlocks.COPPER_CABLE.get()))
                 .save(pWriter, Tekora.MODID + ":hydroelectric_generator_from_crafting");
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE)
+                .requires(TekoraTags.Items.GOLD_PLATE)
+                .unlockedBy(getHasName(TekoraItems.GOLD_PLATE.get()), has(TekoraItems.GOLD_PLATE.get()))
+                .save(pWriter, Tekora.MODID + ":light_weighted_pressure_plate_from_plate");
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE)
+                .requires(TekoraTags.Items.IRON_PLATE)
+                .unlockedBy(getHasName(TekoraItems.IRON_PLATE.get()), has(TekoraItems.IRON_PLATE.get()))
+                .save(pWriter, Tekora.MODID + ":heavy_weighted_pressure_plate_from_plate");
     }
 
     protected static void oreBlasting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ItemLike pIngredients, ItemLike pResult) {

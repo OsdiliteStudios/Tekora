@@ -1,0 +1,21 @@
+{
+  "type": "tekora:blasting",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/iron"
+    }
+  ],
+  "output": {
+    "item": "minecraft:iron_ingot"
+  },
+  "cations": [
+    {
+      "symbol": "Al"
+    }
+  ],
+  "anions": [
+    {
+      "symbol": "O"
+    }
+  ]
+}

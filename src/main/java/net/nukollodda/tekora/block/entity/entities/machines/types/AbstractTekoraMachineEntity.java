@@ -21,10 +21,7 @@ import net.nukollodda.tekora.util.TekoraEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractTekoraMachineEntity extends BlockEntity implements MenuProvider, IElectricEntity {
-    protected final ItemStackHandler itemHandler;
-
     protected final ContainerData data; // this data is being sent to the menu
-
     protected LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     protected int progress = 0;
     protected int maxProgress = 72;
@@ -36,9 +33,7 @@ public abstract class AbstractTekoraMachineEntity extends BlockEntity implements
 
     public AbstractTekoraMachineEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int containerSize) {
         super(pType, pPos, pBlockState);
-        this.itemHandler = new ItemStackHandler(containerSize);
         this.containerSize = containerSize;
-
         this.data = new ContainerData() {
             @Override
             public int get(int pIndex) {
@@ -83,8 +78,8 @@ public abstract class AbstractTekoraMachineEntity extends BlockEntity implements
     public boolean hasElectricity() {
         return ENERGY_STORAGE.getEnergyStored() > 0;
     }
-    public boolean hasEnoughElectricity(AbstractTekoraMachineEntity pEntity) {
-        return ENERGY_STORAGE.getEnergyStored() >= ENERGY_REQ * pEntity.maxProgress;
+    public boolean hasEnoughElectricity() {
+        return ENERGY_STORAGE.getEnergyStored() >= ENERGY_REQ * this.maxProgress;
     }
 
     protected void resetProgress() {
@@ -96,7 +91,7 @@ public abstract class AbstractTekoraMachineEntity extends BlockEntity implements
     }
 
     protected boolean canInsertItemIntoOutputSlot(SimpleContainer inv, ItemStack stack) {
-        return inv.getItem(this.containerSize - 1).getItem() == stack.getItem() || inv.getItem(this.containerSize - 1).isEmpty();
+        return inv.getItem(this.containerSize - 1).getItem().equals(stack.getItem()) || inv.getItem(this.containerSize - 1).isEmpty();
     }
 
     protected boolean canInsertAmountIntoOutputSlot(SimpleContainer inv) {
@@ -104,7 +99,9 @@ public abstract class AbstractTekoraMachineEntity extends BlockEntity implements
     }
 
     @Override
-    public abstract Component getDisplayName();
+    public Component getDisplayName() {
+        return getBlockState().getBlock().getName();
+    }
     @Nullable
     @Override
     public abstract AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer);

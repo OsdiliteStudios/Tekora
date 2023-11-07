@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-14T10:05:51.2526705	Tags for minecraft:block mod id tekora
+// 1.20.1	2023-11-05T14:58:26.5773557	Tags for minecraft:block mod id tekora
 9ac96919b1766036012a5a3ce7829b40333698a6 data/forge/tags/blocks/ores/apatite.json
 5fc6e61ada1d1d63072c843b79b2a9598e4e4959 data/forge/tags/blocks/ores/aquamarine.json
 fe1312c07b1170403f23841dbba780d98a5bf618 data/forge/tags/blocks/ores/bauxite.json
@@ -72,7 +72,7 @@ de9c0f4384770d71ae7205670c52ab48a5a1e8b4 data/forge/tags/blocks/storage_blocks/y
 c53247780bac4c258cfb29f7df92cc1b97da029f data/forge/tags/blocks/storage_blocks/yttrium.json
 c2ad00f659449e94ed709830c62b25354d480ad7 data/forge/tags/blocks/storage_blocks/zinc.json
 93e24c4ca966654cb50bf517ebecfbf2418231d2 data/forge/tags/blocks/storage_blocks/zirconium.json
-bec5caee3cad7aaf0bfb06e1b87b16ec8cce80f5 data/minecraft/tags/blocks/mineable/pickaxe.json
+4fc11c62244fcce44023309abf383d6681a6831d data/minecraft/tags/blocks/mineable/pickaxe.json
 11e08c2bdbf9e8e451037534e19e642935f6a28d data/minecraft/tags/blocks/mineable/shovel.json
-2684e161815a83a4c912977a001788951a851911 data/minecraft/tags/blocks/needs_iron_tool.json
+b131344bb10c25bd2a41f9cea88ca64cba326252 data/minecraft/tags/blocks/needs_iron_tool.json
 bdd779b1748d10547e799dc5186ecea8d41728f4 data/minecraft/tags/blocks/needs_stone_tool.json

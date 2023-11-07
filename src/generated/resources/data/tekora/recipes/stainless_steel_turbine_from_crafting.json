@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "tag": "forge:plates/stainless_steel"
+    },
+    "1": {
+      "tag": "forge:rods/carbon_steel"
+    }
+  },
+  "pattern": [
+    "0 0",
+    " 1 ",
+    "0 0"
+  ],
+  "result": {
+    "item": "tekora:stainless_steel_turbine"
+  },
+  "show_notification": true
+}

@@ -3,9 +3,11 @@ package net.nukollodda.tekora.menu.types;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractTekoraMenu extends AbstractContainerMenu {
@@ -17,10 +19,19 @@ public abstract class AbstractTekoraMenu extends AbstractContainerMenu {
     protected static final int VANILLA_FIRST_SLOT_INDEX = 0;
     protected static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
     protected final int containerSize;
+    protected final Level level;
+    protected final ContainerData data;
 
-    protected AbstractTekoraMenu(@Nullable MenuType<?> pMenuType, int pContainerId, int pContainerSize) {
+    protected AbstractTekoraMenu(@Nullable MenuType<?> pMenuType, Inventory pInv,
+                                 ContainerData pData, int pContainerId, int pContainerSize) {
         super(pMenuType, pContainerId);
         this.containerSize = pContainerSize;
+        checkContainerSize(pInv, pContainerSize);
+        this.level = pInv.player.level();
+        this.data = pData;
+
+        addPlayerInventory(pInv);
+        addPlayerHotbar(pInv);
     }
 
     /** CREDIT GOES TO: <a href="https://github.com/diesieben07/SevenCommons">diesiebend07</a>

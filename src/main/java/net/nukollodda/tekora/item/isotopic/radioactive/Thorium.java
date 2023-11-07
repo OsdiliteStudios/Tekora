@@ -1,62 +1,55 @@
 package net.nukollodda.tekora.item.isotopic.radioactive;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.nukollodda.tekora.item.isotopic.AbstractIsotopicItem;
+import net.nukollodda.tekora.item.typical.ICompounds;
+import net.nukollodda.tekora.item.typical.IonicParts;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class Thorium extends AbstractRadioactiveItem {
-    private int[] isotopeRatio;
     public Thorium() {
         super(new Item.Properties().fireResistant());
     }
-
-    public static AbstractRadioactiveItem.Isotopes[] getIsotopeList() {
-        return new AbstractRadioactiveItem.Isotopes[]{Isotopes.TH232};
-    }
-
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(Component.translatable("msg.tekora.rad"));
-        pTooltipComponents.add(Component.literal(AbstractRadioactiveItem.formatRad(getRadiation()))
-                .withStyle(AbstractRadioactiveItem.radColor(getRadiation())));
+        pTooltipComponents.add(Component.literal(AbstractRadioactiveItem.formatRad(getRadiation(pStack)))
+                .withStyle(AbstractRadioactiveItem.radColor(getRadiation(pStack))));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
     @Override
-    public double getRadiation() {
+    public double getRadiation(ItemStack pStack) {
         return Isotopes.TH232.getRadiationVal();
     }
 
     @Override
-    public double getFissionRate() {
+    public double getFissionRate(ItemStack pStack) {
         return Isotopes.TH232.getFissionRate();
     }
 
     @Override
-    public double getNeutronAbsorptionRate() {
+    public double getNeutronAbsorptionRate(ItemStack pStack) {
         return Isotopes.TH232.getNeutronAbsorptionRate();
     }
 
     @Override
-    public float getFissionEnergy() {
+    public float getFissionEnergy(ItemStack pStack) {
         return Isotopes.TH232.getFissionEnergy();
     }
 
     @Override
-    public float getNeutronAbsorptionEnergy() {
+    public float getNeutronAbsorptionEnergy(ItemStack pStack) {
         return Isotopes.TH232.getNeutronAbsorptionEnergy();
     }
 
     public enum Isotopes implements AbstractRadioactiveItem.Isotopes {
-        TH232();
+        TH232;
 
         public int getId() {
             return 0;
@@ -95,30 +88,40 @@ public class Thorium extends AbstractRadioactiveItem {
 
     public static class Nugget extends Thorium {
         @Override
-        public double getRadiation() {
-            return super.getRadiation() / 9;
+        public double getRadiation(ItemStack pStack) {
+            return super.getRadiation(pStack) / 9;
         }
 
         @Override
-        public float getFissionEnergy() {
-            return super.getFissionEnergy() / 9;
+        public float getFissionEnergy(ItemStack pStack) {
+            return super.getFissionEnergy(pStack) / 9;
         }
 
         @Override
-        public float getNeutronAbsorptionEnergy() {
-            return super.getNeutronAbsorptionEnergy() / 9;
+        public float getNeutronAbsorptionEnergy(ItemStack pStack) {
+            return super.getNeutronAbsorptionEnergy(pStack) / 9;
         }
     }
 
-    public static class CompoundDust extends Thorium {
-        private final Item decayItem;
-
-        public CompoundDust(Item item) {
-            this.decayItem = item;
+    public static class CompoundDust extends Thorium implements ICompounds {
+        private final String anion;
+        public CompoundDust(String pAnion) {
+            this.anion = pAnion.toUpperCase();
         }
 
-        public Item getDecayItem() {
-            return decayItem;
+        @Override
+        public IonicParts getCation() {
+            IonicParts.Anions anion = IonicParts.Anions.valueOf(this.anion);
+            int anOxState = Math.abs(anion.getOxidationState());
+            int catCount = anOxState % 4 == 0 ? 1 : anOxState;
+            return new IonicParts(IonicParts.Cations.THORIUM, catCount);
+        }
+
+        @Override
+        public IonicParts getAnion() {
+            IonicParts.Anions anion = IonicParts.Anions.valueOf(this.anion);
+            int anOxState = Math.abs(anion.getOxidationState());
+            return new IonicParts(anion, 4 % anOxState == 0 ? 1 : 4);
         }
     }
 }

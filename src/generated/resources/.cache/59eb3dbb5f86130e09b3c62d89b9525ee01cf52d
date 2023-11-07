@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-25T07:02:19.7230139	Loot Tables
+// 1.20.1	2023-11-05T14:58:26.5482745	Loot Tables
 634e2b2a25fe178575d7614102c6d3ca583c1a52 data/tekora/loot_tables/blocks/alloy_furnace.json
 a78ee92742bc6cfbe9ea60c065311c744c6e5b92 data/tekora/loot_tables/blocks/aluminum_block.json
 70c47b2f333926fff53744f67c21d8da866f93fd data/tekora/loot_tables/blocks/antimony_block.json
@@ -79,6 +79,7 @@ e2095ae35f11616287559a35b9e9cc9af0271b5a data/tekora/loot_tables/blocks/palladiu
 3c17b0b1865031a0db7beaeb69a0e98070329691 data/tekora/loot_tables/blocks/pentlandite_ore.json
 b14a6bf3b0d85cf1f6388b3bce92e3e82e4303a9 data/tekora/loot_tables/blocks/platinum_block.json
 0faf739f502f11ce7c94e715c4fa6291a217dc9e data/tekora/loot_tables/blocks/praseodymium_block.json
+03698285f6b65a050131019aa875a110f09b556b data/tekora/loot_tables/blocks/pulverizer.json
 c7475a0080ec903b00e2d05b79ec932df2b25684 data/tekora/loot_tables/blocks/rhenium_block.json
 98159cafbbca6a0c34ab6b6a8cde55e0a3b3cdc8 data/tekora/loot_tables/blocks/rhodium_block.json
 d2e32b2a9a28ea43ce1d4ccf1f7bd375f13f343e data/tekora/loot_tables/blocks/ruby_ore.json

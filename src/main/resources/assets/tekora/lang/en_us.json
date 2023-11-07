@@ -180,6 +180,7 @@
   "item.tekora.vanasteel_dust": "Vanasteel Dust",
   "item.tekora.zircaloy_dust": "Zircaloy Dust",
   "item.tekora.copper_steel_dust": "Copper Steel Composite Powder",
+  "item.tekora.dust": "Dust",
 
   "item.tekora.graphite_bar": "Graphite Bar",
   "item.tekora.iodine_bar": "Iodine Bar",
@@ -237,6 +238,21 @@
   "item.tekora.silicon_piece": "Silicon Piece",
   "item.tekora.tellurium_piece": "Tellurium Piece",
 
+  "item.tekora.cleaned_monazite": "Cleaned Monazite",
+  "item.tekora.cleaned_sperrylite": "Cleaned Speryllite",
+  "item.tekora.cleaned_sphalerite": "Cleaned Sphalerite",
+  "item.tekora.cleaned_zircon": "Cleaned Zircon",
+
+  "item.tekora.pure_beryl": "Pure Beryl",
+  "item.tekora.pure_coltan": "Pure Coltan",
+  "item.tekora.pure_dolomite": "Pure Dolomite",
+  "item.tekora.pure_monazite": "Pure Monazite",
+  "item.tekora.pure_sperrylite": "Pure Sperrylite",
+  "item.tekora.pure_zircon": "Pure Zircon",
+
+  "item.tekora.fluorocolumbite": "Fluorocolumbite",
+  "item.tekora.quadruplet_bastnasite": "Quadruplet Bastnaesite",
+
   "item.tekora.magnesium_diboride": "Magnesium Diboride",
   "item.tekora.niobium_tin": "Niobium Tin",
   "item.tekora.silicon_carbide": "Silicon Carbide",
@@ -246,40 +262,21 @@
 
   "item.tekora.oil_bucket": "Bucket Of Oil",
   "item.tekora.brine_bucket": "Bucket Of Natural Brine",
-
-  "item.tekora.argon_bucket": "Bucket Of Argon",
-  "item.tekora.bromine_bucket": "Bucket Of Bromine",
-  "item.tekora.chlorine_bucket": "Bucket Of Chlorine",
-  "item.tekora.fluorine_bucket": "Bucket Of Fluorine",
-  "item.tekora.helium_bucket": "Bucket Of Helium",
-  "item.tekora.hydrogen_bucket": "Bucket Of Hydrogen",
-  "item.tekora.krypton_bucket": "Bucket Of Krypton",
-  "item.tekora.neon_bucket": "Bucket Of Neon",
-  "item.tekora.nitrogen_bucket": "Bucket Of Nitrogen",
-  "item.tekora.oxygen_bucket": "Bucket Of Oxygen",
-  "item.tekora.xenon_bucket": "Bucket Of Xenon",
+  "item.tekora.ammonium_hydroxide_bucket": "Ammonium Hydroxide Bucket",
+  "item.tekora.aqua_regia_bucket": "Aqua Regia Bucket",
 
   "item.tekora.acetone_bucket": "Bucket Of Acetone",
   "item.tekora.acetylene_bucket": "Bucket Of Acetylene",
   "item.tekora.ammonia_bucket": "Bucket Of Ammonia",
   "item.tekora.benzene_bucket": "Bucket Of Benzene",
-  "item.tekora.borane_bucket": "Bucket Of Borane",
-  "item.tekora.carbon_monoxide_bucket": "Bucket Of Carbon Monoxide",
-  "item.tekora.carbon_dioxide_bucket": "Bucket Of Carbon Dioxide",
   "item.tekora.ethane_bucket": "Bucket Of Ethane",
   "item.tekora.ethanol_bucket": "Bucket Of Ethanol",
-  "item.tekora.ethylene_bucket": "Bucket Of Ethylene",
   "item.tekora.hydrogen_bromide_bucket": "Bucket Of Hydrobromic Acid",
   "item.tekora.hydrogen_chloride_bucket": "Bucket Of Hydrochloric Acid",
   "item.tekora.hydrogen_fluoride_bucket": "Bucket Of Hydrofluoric Acid",
-  "item.tekora.hydrogen_selenide_bucket": "Bucket Of Hydrogen Selenide",
-  "item.tekora.hydrogen_sulfide_bucket": "Bucket Of Hydrogen Sulfide",
   "item.tekora.hydrogen_iodide_bucket": "Bucket Of Hydroiodic Acid",
-  "item.tekora.methane_bucket": "Bucket Of Methane",
-  "item.tekora.methanol_bucket": "Bucket Of Ethanol",
+  "item.tekora.methanol_bucket": "Bucket Of Methanol",
   "item.tekora.nitric_acid_bucket": "Bucket Of Nitric Acid",
-  "item.tekora.nitric_oxide_bucket": "Bucket Of Nitric Oxide",
-  "item.tekora.oxygen_difluoride_bucket": "Bucket Of Oxygen Difluoride",
   "item.tekora.propane_bucket": "Bucket Of Propane",
   "item.tekora.propylene_bucket": "Bucket Of Propylene",
   "item.tekora.hydrogen_cyanide_bucket": "Bucket Of Prussic Acid",
@@ -628,6 +625,17 @@
   "item.tekora.tungsten_steel_helmet": "Tungsten Steel Helmet",
   "item.tekora.vanasteel_helmet": "Vanasteel Helmet",
 
+  "item.tekora.turbine_stator": "Turbine Stator",
+  "item.tekora.turbine_generator": "Turbine Generator",
+  "item.tekora.turbine_rotor": "Turbine Rotor",
+
+  "item.tekora.carbon_steel_rod": "Carbon Steel Rod",
+  "item.tekora.steel_rod": "Steel Rod",
+
+  "item.tekora.coil": "Coil",
+
+  "item.tekora.stainless_steel_turbine": "Stainless Steel Turbine",
+
   "block.tekora.apatite_ore": "Apatite Ore",
   "block.tekora.aquamarine_ore": "Aquamarine Ore",
   "block.tekora.bauxite_ore": "Bauxite Ore",
@@ -794,7 +802,7 @@
   "block.tekora.electric_crusher": "Electric Crusher",
   "block.tekora.electric_metal_former": "Electric Metal Former",
 
-  "block.tekora.pulversizer": "Pulverizer",
+  "block.tekora.pulverizer": "Pulverizer",
 
   "block.tekora.hydroelectric_generator": "Hydroelectric Generator",
 
@@ -853,5 +861,13 @@
   "msg.tekora.rad": "Radiation Value",
   "block.tekora.infinite_battery": "Infinite Battery",
   "ion.tekora.cation": "Cations",
-  "ion.tekora.anions": "Anions"
+  "ion.tekora.anions": "Anions",
+  "tooltip.tekora.melting_point": "Melting Point",
+  "tooltip.tekora.heat_of_fusion": "Heat Of Fusion",
+  "tooltip.tekora.heat_of_vaporization": "Heat Of Vaporization",
+  "tooltip.tekora.specific_heat": "Specific Heat",
+  "tooltip.tekora.hazard_values": "Hazard Values",
+  "tooltip.tekora.health_hazard": "Health Hazard",
+  "tooltip.tekora.flammability": "Flammability",
+  "tooltip.tekora.reactivity": "Reactivity"
 }

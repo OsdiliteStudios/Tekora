@@ -9,6 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.TekoraBlocks;
+import net.nukollodda.tekora.item.TekoraItems;
 
 public class TekoraFluids {
     public static final DeferredRegister<Fluid> FLUIDS =
@@ -31,6 +32,8 @@ public class TekoraFluids {
             () -> new ForgeFlowingFluid.Source(TekoraFluids.HYDROGEN_CYANIDE_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_HYDROGEN_FLUORIDE = FLUIDS.register("hydrogen_fluoride",
             () -> new ForgeFlowingFluid.Source(TekoraFluids.HYDROGEN_FLUORIDE_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> SOURCE_HYDROGEN_CHLORIDE = FLUIDS.register("hydrogen_chloride",
+            () -> new ForgeFlowingFluid.Source(TekoraFluids.HYDROGEN_CHLORIDE_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_AMMONIA = FLUIDS.register("ammonia",
             () -> new ForgeFlowingFluid.Source(TekoraFluids.AMMONIA_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_AMMONIA_FLUID = FLUIDS.register("ammonia_fluid",
@@ -39,12 +42,20 @@ public class TekoraFluids {
             () -> new ForgeFlowingFluid.Source(TekoraFluids.PRUSSIC_ACID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_HYDROFLUORIC_ACID = FLUIDS.register("hydrofluoric_acid",
             () -> new ForgeFlowingFluid.Source(TekoraFluids.HYDROFLUORIC_ACID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> SOURCE_HYDROCHLORIC_ACID = FLUIDS.register("hydrochloric_acid",
+            () -> new ForgeFlowingFluid.Source(TekoraFluids.HYDROCHLORIC_ACID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> SOURCE_NITRIC_ACID = FLUIDS.register("nitric_acid",
+            () -> new ForgeFlowingFluid.Source(TekoraFluids.NITRIC_ACID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> SOURCE_SULFURIC_ACID = FLUIDS.register("sulfuric_acid",
+            () -> new ForgeFlowingFluid.Source(TekoraFluids.SULFURIC_ACID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_ALUMINUM_MOLTEN = FLUIDS.register("molten_aluminum",
             () -> new ForgeFlowingFluid.Source(TekoraFluids.MOLTEN_ALUMINUM_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_GALLIUM_FLUID = FLUIDS.register("gallium_fluid",
             () -> new ForgeFlowingFluid.Source(TekoraFluids.GALLIUM_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_MERCURY_FLUID = FLUIDS.register("mercury_fluid",
             () -> new ForgeFlowingFluid.Source(TekoraFluids.MERCURY_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> SOURCE_AMMONIUM_HYDROXIDE = FLUIDS.register("ammonium_hydroxide",
+            () -> new ForgeFlowingFluid.Source(TekoraFluids.AMMONIUM_HYDROXIDE_PROPERTIES));
 
     // flowing fluids
     public static final RegistryObject<FlowingFluid> FLOWING_HYDROGEN_GAS = FLUIDS.register("flowing_hydrogen_gas",
@@ -65,18 +76,28 @@ public class TekoraFluids {
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.HYDROGEN_CYANIDE_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_HYDROGEN_FLUORIDE = FLUIDS.register("flowing_hydrogen_fluoride",
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.HYDROGEN_FLUORIDE_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_HYDROGEN_CHLORIDE = FLUIDS.register("flowing_hydrogen_chloride",
+            () -> new ForgeFlowingFluid.Flowing(TekoraFluids.HYDROGEN_CHLORIDE_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_AMMONIA_FLUID = FLUIDS.register("flowing_ammonia_fluid",
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.LIQUID_AMMONIA_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_PRUSSIC_ACID = FLUIDS.register("flowing_prussic_acid",
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.PRUSSIC_ACID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_HYDROFLUORIC_ACID = FLUIDS.register("flowing_hydrofluoric_acid",
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.HYDROFLUORIC_ACID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_HYDROCHLORIC_ACID = FLUIDS.register("flowing_hydrochloric_acid",
+            () -> new ForgeFlowingFluid.Flowing(TekoraFluids.HYDROCHLORIC_ACID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_NITRIC_ACID = FLUIDS.register("flowing_nitric_acid",
+            () -> new ForgeFlowingFluid.Flowing(TekoraFluids.NITRIC_ACID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_SULFURIC_ACID = FLUIDS.register("flowing_sulfuric_acid",
+            () -> new ForgeFlowingFluid.Flowing(TekoraFluids.SULFURIC_ACID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_ALUMINUM_MOLTEN = FLUIDS.register("flowing_aluminum",
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.MOLTEN_ALUMINUM_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_GALLIUM_FLUID = FLUIDS.register("flowing_gallium",
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.GALLIUM_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_MERCURY_FLUID = FLUIDS.register("flowing_mercury",
             () -> new ForgeFlowingFluid.Flowing(TekoraFluids.MERCURY_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_AMMONIUM_HYDROXIDE = FLUIDS.register("flowing_ammonium_hydroxide",
+            () -> new ForgeFlowingFluid.Flowing(TekoraFluids.AMMONIUM_HYDROXIDE_PROPERTIES));
 
 
     // property registration
@@ -105,6 +126,10 @@ public class TekoraFluids {
     public static final ForgeFlowingFluid.Properties HYDROGEN_FLUORIDE_PROPERTIES = new ForgeFlowingFluid.Properties(
             TekoraFluidTypes.HYDROGEN_FLUORIDE, SOURCE_HYDROGEN_FLUORIDE, FLOWING_HYDROGEN_FLUORIDE)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.HYDROGEN_FLUORIDE_BLOCK);
+
+    public static final ForgeFlowingFluid.Properties HYDROGEN_CHLORIDE_PROPERTIES = new ForgeFlowingFluid.Properties(
+            TekoraFluidTypes.HYDROGEN_CHLORIDE, SOURCE_HYDROGEN_CHLORIDE, FLOWING_HYDROGEN_CHLORIDE)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.HYDROGEN_CHLORIDE_BLOCK);
     public static final ForgeFlowingFluid.Properties HYDROGEN_CYANIDE_PROPERTIES = new ForgeFlowingFluid.Properties(
             TekoraFluidTypes.HYDROGEN_CYANIDE, SOURCE_HYDROGEN_CYANIDE, FLOWING_HYDROGEN_CYANIDE)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.HYDROGEN_CYANIDE_BLOCK);
@@ -118,6 +143,18 @@ public class TekoraFluids {
     public static final ForgeFlowingFluid.Properties HYDROFLUORIC_ACID_PROPERTIES = new ForgeFlowingFluid.Properties(
             TekoraFluidTypes.HYDROFLUORIC_ACID, SOURCE_HYDROFLUORIC_ACID, FLOWING_HYDROFLUORIC_ACID)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.HYDROFLUORIC_ACID_BLOCK);
+
+    public static final ForgeFlowingFluid.Properties HYDROCHLORIC_ACID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            TekoraFluidTypes.HYDROCHLORIC_ACID, SOURCE_HYDROCHLORIC_ACID, FLOWING_HYDROCHLORIC_ACID)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.HYDROCHLORIC_ACID_BLOCK);
+
+    public static final ForgeFlowingFluid.Properties NITRIC_ACID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            TekoraFluidTypes.NITRIC_ACID, SOURCE_NITRIC_ACID, FLOWING_NITRIC_ACID)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.NITRIC_ACID_BLOCK);
+
+    public static final ForgeFlowingFluid.Properties SULFURIC_ACID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            TekoraFluidTypes.SULFURIC_ACID, SOURCE_SULFURIC_ACID, FLOWING_SULFURIC_ACID)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.SULFURIC_ACID_BLOCK);
     public static final ForgeFlowingFluid.Properties MOLTEN_ALUMINUM_PROPERTIES = new ForgeFlowingFluid.Properties(
             TekoraFluidTypes.MOLTEN_ALUMINUM, SOURCE_ALUMINUM_MOLTEN, FLOWING_ALUMINUM_MOLTEN)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.ALUMINUM_MOLTEN_BLOCK);
@@ -127,6 +164,10 @@ public class TekoraFluids {
     public static final ForgeFlowingFluid.Properties MERCURY_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             TekoraFluidTypes.MERCURY_FLUID, SOURCE_MERCURY_FLUID, FLOWING_MERCURY_FLUID)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.MERCURY_FLUID_BLOCK);
+
+    public static final ForgeFlowingFluid.Properties AMMONIUM_HYDROXIDE_PROPERTIES = new ForgeFlowingFluid.Properties(
+            TekoraFluidTypes.AMMONIUM_HYDROXIDE, SOURCE_AMMONIUM_HYDROXIDE, FLOWING_AMMONIUM_HYDROXIDE)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(TekoraBlocks.AMMONIUM_HYDROXIDE_BLOCK).bucket(TekoraItems.AMMONIUM_HYDROXIDE_BUCKET);
 
 
     public static void register(IEventBus eventBus) {

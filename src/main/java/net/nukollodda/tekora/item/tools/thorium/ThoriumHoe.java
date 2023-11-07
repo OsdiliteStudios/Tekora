@@ -32,7 +32,7 @@ public class ThoriumHoe extends HoeItem implements IRadioactiveItems {
 
 
     @Override
-    public double getRadiation() {
+    public double getRadiation(ItemStack pStack) {
         return Thorium.Isotopes.TH232.getRadiationVal();
     }
 }

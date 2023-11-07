@@ -17,23 +17,14 @@ import net.nukollodda.tekora.menu.types.AbstractTekoraMenu;
 
 public class BatteryMenu extends AbstractTekoraMenu {
     public final BatteryEntity blockEnt;
-    private final Level level;
-    private final ContainerData data;
 
     public BatteryMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
     public BatteryMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(TekoraMenuTypes.BATTERY_MENU.get(), id, 1);
-        checkContainerSize(inv, 1);
-        blockEnt = (BatteryEntity) entity;
-        this.level = inv.player.level();
-        this.data = data;
-
-        addPlayerInventory(inv);
-        addPlayerHotbar(inv);
-
+        super(TekoraMenuTypes.BATTERY_MENU.get(), inv, data, id, 1);
+        this.blockEnt = (BatteryEntity) entity;
         this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             this.addSlot(new SlotItemHandler(handler, 0, 77, 53));
         });
@@ -42,10 +33,10 @@ public class BatteryMenu extends AbstractTekoraMenu {
     }
 
     public int getEnergy() {
-        int energy = this.data.get(0);
-        int maxEn = this.data.get(1);
+        int electricity = this.data.get(2);
+        int maxElectricity = this.data.get(3);
 
-        return maxEn != 0 && energy != 0 ? energy * 48 / maxEn : 0;
+        return maxElectricity != 0 && electricity != 0 ? electricity * 48 / maxElectricity : 0;
     }
 
     @Override

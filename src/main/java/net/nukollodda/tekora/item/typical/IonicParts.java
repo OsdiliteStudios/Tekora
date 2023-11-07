@@ -33,6 +33,30 @@ public class IonicParts {
     private static final Cations[] SOFT_METAL = addToList(addToList(GROUP13, GROUP14), Cations.BISMUTH);
     private static final Cations[] ALKALI = addToList(LIGHT_ALKALI, Cations.RUBIDIUM, Cations.CESIUM);
     private static final Cations[] ALKALINE = addToList(MAIN_ALKALINE, Cations.BERYLLIUM);
+    private final Ions ion;
+    private final int count;
+    public IonicParts(Ions pIon, int num) {
+        this.ion = pIon;
+        this.count = num;
+    }
+
+    public IonicParts(Ions pIon) {
+        this(pIon, pIon.getOxidationState());
+    }
+
+    public Ions getIon() {
+        return ion;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    @Override
+    public String toString() {
+        return ion.getSymbol() + count;
+    }
+
     private static Cations[] addToList(Cations[] pCations, Cations... pNewCations) {
         Cations[] cations = new Cations[pCations.length + pNewCations.length];
         for (int i = pCations.length; i < pNewCations.length; i++) {
@@ -62,92 +86,104 @@ public class IonicParts {
         return cationArray;
     }
 
+    public static final Cations[] ALL_CATIONS = Cations.values();
+    public static final int CATION_SIZE = ALL_CATIONS.length;
+
+    public static final Anions[] ALL_ANIONS = Anions.values();
+    public static final int ANION_SIZE = ALL_ANIONS.length;
+
     public interface Ions {
         String getSymbol();
 
         // function for autogenerating electrolysis recipes
         int getOxidationState();
+
+        float getElectronegativity();
     }
 
     public enum Cations implements Ions {
-        AMMONIUM("NH4", 1),
-        LITHIUM("Li", 1),
-        BERYLLIUM("Be", 2),
-        BORON("B", 3),
-        SODIUM("Na", 1),
-        MAGNESIUM("Mg", 2),
-        ALUMINUM("Al", 3),
-        SILICON("Si", 4),
-        POTASSIUM("K", 1),
-        CALCIUM("Ca", 2),
-        SCANDIUM("Sc", 3),
-        TITANIUM("Ti", 4),
-        VANADIUM("V", 5),
-        CHROMIUM("Cr", 4),
-        MANGANESE("Mn", 4),
-        IRON("Fe", 3), // may have variants
-        COBALT("Co", 3),
-        NICKEL("Ni", 2),
-        COPPER("Cu", 1),
-        ZINC("Zn", 2),
-        GALLIUM("Ga", 3),
-        GERMANIUM("Ge", 4),
-        ARSENIC("As", 5),
-        RUBIDIUM("Rb", 1),
-        STRONTIUM("Sr", 2),
-        YTTRIUM("Y", 3),
-        ZIRCONIUM("Zr", 4),
-        NIOBIUM("Nb", 5),
-        MOLYBDENUM("Mo", 4),
-        RUTHENIUM("Ru", 4),
-        RHODIUM("Rh", 3),
-        PALLADIUM("Pd", 4),
-        SILVER("Ag", 1),
-        CADMIUM("Cd", 2),
-        INDIUM("In", 3),
-        TIN("Sn", 4),
-        ANTIMONY("Sb", 5),
-        TELLURIUM("Te", 4),
-        CESIUM("Cs", 1),
-        BARIUM("Ba", 2),
-        LANTHANUM("La", 3),
-        CERIUM("Ce", 4),
-        PRASEODYMIUM("Pr", 3),
-        NEODYMIUM("Nd", 3),
-        SAMARIUM("Sm", 3),
-        EUROPIUM("Eu", 3),
-        GADOLINIUM("Gd", 3),
-        TERBIUM("Tb", 3),
-        DYSPROSIUM("Dy", 3),
-        HOLMIUM("Ho", 3),
-        ERBIUM("Er", 3),
-        THULIUM("Tm", 3),
-        YTTERBIUM("Yb", 3),
-        LUTETIUM("Lu", 3),
-        HAFNIUM("Hf", 4),
-        TANTALUM("Ta", 5),
-        TUNGSTEN("W", 4),
-        RHENIUM("Re", 7),
-        OSMIUM("Os", 8),
-        IRIDIUM("Ir", 4),
-        PLATINUM("Pt", 4),
-        GOLD("Au", 3),
-        MERCURY("Hg", 2),
-        THALLIUM("Tl", 1),
-        LEAD("Pb", 2),
-        BISMUTH("Bi", 3),
-        THORIUM("Th", 4),
-        PROTACTINIUM("Pa", 5),
-        URANIUM("U", 4),
-        NEPTUNIUM("Np", 4),
-        PLUTONIUM("Pu", 4),
-        AMERICIUM("Am", 3);
-        final String symbol;
-        final int oxidationState;
+        AMMONIUM("NH4", 1, 0.98f),
+        LITHIUM("Li", 1, 0.98f),
+        BERYLLIUM("Be", 2, 1.57f),
+        BORON("B", 3, 2.04f),
+        SODIUM("Na", 1, 0.98f),
+        MAGNESIUM("Mg", 2, 1.31f),
+        ALUMINUM("Al", 3, 1.61f),
+        SILICON("Si", 4, 1.9f),
+        POTASSIUM("K", 1, 0.82f),
+        CALCIUM("Ca", 2, 1f),
+        SCANDIUM("Sc", 3, 1.36f),
+        TITANIUM("Ti", 4, 1.54f),
+        VANADIUM("V", 5, 1.63f),
+        CHROMIUM("Cr", 4, 1.66f),
+        MANGANESE("Mn", 4, 1.55f),
+        IRON("Fe", 3, 1.83f),
+        COBALT("Co", 3, 1.88f),
+        NICKEL("Ni", 2, 1.91f),
+        COPPER("Cu", 1, 1.9f),
+        ZINC("Zn", 2, 1.65f),
+        GALLIUM("Ga", 3, 1.81f),
+        GERMANIUM("Ge", 4, 2.01f),
+        ARSENIC("As", 5, 2.18f),
+        RUBIDIUM("Rb", 1, 0.82f),
+        STRONTIUM("Sr", 2, 0.95f),
+        YTTRIUM("Y", 3, 1.22f),
+        ZIRCONIUM("Zr", 4, 1.33f),
+        NIOBIUM("Nb", 5, 1.6f),
+        MOLYBDENUM("Mo", 4, 2.16f),
+        RUTHENIUM("Ru", 4, 2.2f),
+        RHODIUM("Rh", 3, 2.28f),
+        PALLADIUM("Pd", 4, 2.2f),
+        SILVER("Ag", 1, 1.93f),
+        CADMIUM("Cd", 2, 1.69f),
+        INDIUM("In", 3, 1.78f),
+        TIN("Sn", 4, 1.96f),
+        ANTIMONY("Sb", 5, 2.05f),
+        TELLURIUM("Te", 4, 2.1f),
+        CESIUM("Cs", 1, 0.79f),
+        BARIUM("Ba", 2, 0.89f),
+        LANTHANUM("La", 3, 1.1f),
+        CERIUM("Ce", 4, 1.12f),
+        PRASEODYMIUM("Pr", 3, 1.13f),
+        NEODYMIUM("Nd", 3, 1.14f),
+        SAMARIUM("Sm", 3, 1.17f),
+        EUROPIUM("Eu", 3, 1.2f),
+        GADOLINIUM("Gd", 3, 1.2f),
+        TERBIUM("Tb", 3, 1.22f),
+        DYSPROSIUM("Dy", 3, 1.23f),
+        HOLMIUM("Ho", 3, 1.24f),
+        ERBIUM("Er", 3, 1.24f),
+        THULIUM("Tm", 3, 1.25f),
+        YTTERBIUM("Yb", 3, 1.1f),
+        LUTETIUM("Lu", 3, 1.27f),
+        HAFNIUM("Hf", 4, 1.3f),
+        TANTALUM("Ta", 5, 1.5f),
+        TUNGSTEN("W", 4, 2.36f),
+        RHENIUM("Re", 7, 1.9f),
+        OSMIUM("Os", 8, 2.2f),
+        IRIDIUM("Ir", 4, 2.2f),
+        PLATINUM("Pt", 4, 2.28f),
+        GOLD("Au", 3, 2.54f),
+        MERCURY("Hg", 2, 2f),
+        THALLIUM("Tl", 1, 1.62f),
+        LEAD("Pb", 2, 2.33f),
+        BISMUTH("Bi", 3, 2.02f),
+        THORIUM("Th", 4, 1.3f),
+        PROTACTINIUM("Pa", 5, 1.5f),
+        URANIUM("U", 4, 1.38f),
+        NEPTUNIUM("Np", 4, 1.36f),
+        PLUTONIUM("Pu", 4, 1.28f),
+        AMERICIUM("Am", 3, 1.3f);
+        private final String symbol;
+        private final int oxidationState;
+        private final float electronegativity;
 
-        Cations(String pSymbol, int oxState) { // final param will be the pure form, which will either be a block or a liquid
+        Cations(String pSymbol, int oxState, float pElectronegativity) {
             this.symbol = pSymbol;
             this.oxidationState = oxState;
+            // note: the oxState shows the possible oxState within Tekora residues for the sake of simple calculations
+            // meaning there are dusts that don't follow the oxStates set here
+            this.electronegativity = pElectronegativity;
         }
 
         public String getSymbol() {
@@ -156,6 +192,11 @@ public class IonicParts {
 
         public int getOxidationState() {
             return oxidationState;
+        }
+
+        public float getElectronegativity() {
+            // determines speed of reactions, single displacement reactions, and whether things explode in fluids or not
+            return electronegativity;
         }
 
         public static Cations getCationFromSymbol(String pSymbol) {
@@ -174,7 +215,7 @@ public class IonicParts {
                 new Cations[]{Cations.SODIUM},
                 addToList(ALKALI, Cations.BERYLLIUM, Cations.MAGNESIUM),
                 new Cations[]{Cations.SODIUM},
-                new Cations[]{Cations.SILVER}}, -1, "F"),
+                new Cations[]{Cations.SILVER}}, -1, "F", 3.98f),
 
         CHLORIDE(new Cations[][]{
                 addToList(SILVERY, Cations.LEAD),
@@ -182,7 +223,7 @@ public class IonicParts {
                 new Cations[]{Cations.LITHIUM, Cations.CALCIUM, Cations.STRONTIUM},
                 new Cations[]{Cations.POTASSIUM, Cations.RUBIDIUM, Cations.STRONTIUM, Cations.BARIUM, Cations.LEAD},
                 new Cations[]{},
-                new Cations[]{Cations.SILVER}}, -1, "Cl"),
+                new Cations[]{Cations.SILVER}}, -1, "Cl", 3.16f),
 
         BROMIDE(new Cations[][]{
                 new Cations[]{Cations.SILVER},
@@ -190,7 +231,7 @@ public class IonicParts {
                 new Cations[]{},
                 new Cations[]{},
                 new Cations[]{},
-                new Cations[]{Cations.SILVER}}, -1, "Br"),
+                new Cations[]{Cations.SILVER}}, -1, "Br", 2.96f),
 
         IODIDE(new Cations[][]{
                 addToList(SILVERY, Cations.LEAD),
@@ -198,7 +239,7 @@ public class IonicParts {
                 new Cations[]{},
                 new Cations[]{},
                 new Cations[]{},
-                new Cations[]{Cations.SILVER}}, -1, "I"),
+                new Cations[]{Cations.SILVER}}, -1, "I", 2.66f),
 
         OXIDE(new Cations[][] {
                 addToList(ALKALI, Cations.BERYLLIUM, Cations.CALCIUM, Cations.STRONTIUM, Cations.BARIUM),
@@ -209,15 +250,14 @@ public class IonicParts {
                 LANTHANIDE_WO_HOLMIUM,
                 LANTHANIDE_WO_HOLMIUM,
                 addToList(MAIN_LANTHANIDES, Cations.TERBIUM, Cations.DYSPROSIUM, Cations.YTTERBIUM, Cations.LUTETIUM),
-                LANTHANIDE_WO_HOLMIUM}, -2, "O", false),
+                LANTHANIDE_WO_HOLMIUM}, -2, "O", 3.44f, false),
 
         SULFIDE(new Cations[][]{
                 addToList(ALKALI, ALKALINE)
-        }, -2, "S", false),
+        }, -2, "S", 2.58f, false),
 
-        NITRIDE(new Cations[][]{}, -3, "N"),
-        SELENIDE(new Cations[][]{}, -2, "Se"),
-        ARSENIDE(new Cations[][]{}, -3, "As"),
+        NITRIDE(new Cations[][]{}, -3, "N", 3.04f),
+        SELENIDE(new Cations[][]{}, -2, "Se", 2.55f),
 
         HYDROXIDE(new Cations[][]{
                 addToList(LIGHT_ALKALINE, GROUP14, TRANSITION_METAL, new Cations[]{Cations.ALUMINUM, Cations.GALLIUM, Cations.INDIUM, Cations.BISMUTH}),
@@ -225,28 +265,25 @@ public class IonicParts {
                 new Cations[]{},
                 new Cations[]{},
                 new Cations[]{},
-                new Cations[]{Cations.MAGNESIUM}}, -1, "OH"),
+                new Cations[]{Cations.MAGNESIUM}}, -1, "OH", 1.24f),
 
         SULFATE(new Cations[][]{
             new Cations[]{Cations.BARIUM, Cations.LEAD, Cations.STRONTIUM, Cations.CALCIUM}
-        }, -2, "SO4"),
-        NITRATE(new Cations[][]{}, -1, "NO3"),
+        }, -2, "SO4", 0.86f),
+        NITRATE(new Cations[][]{}, -1, "NO3", 0.4f),
         PHOSPHATE(new Cations[][]{
                 addToList(ALKALINE, SOFT_METAL, TRANSITION_METAL)
-        }, -3, "PO4"),
-        CARBONATE(new Cations[][]{}, -2, "CO3"),
-        ALUMINOSILICATE(new Cations[][]{}, -2, "AlSiO5", false),
-        SILICATE(new Cations[][]{}, -3, "SiO4", false),
-        ARSENATE(new Cations[][]{}, -3, "AsO4", false),
-        PARATUNGSTATE(new Cations[][]{}, -1, "WO4",false);
+        }, -3, "PO4", 1.25f),
+        CARBONATE(new Cations[][]{}, -2, "CO3", 0.89f);
         // HgS is insoluble in nitric acid but soluble in aqua regia
-        final Cations[][] cationList;
+        private final Cations[][] cationList;
         final boolean solubleByDefault;
-        final int oxidationState;
-        final String symbol;
+        private final int oxidationState;
+        private final String symbol;
+        private final float electronegativity;
         /* Formatting
          * for mixtures like aqua regia or ammonium hydroxide, if its soluble in one of the components its soluble in the mixture
-         * in @pInsol, the array lists what cations of the anions are soluble in what substance
+         * in @param pInsol, the array lists what cations of the anions are soluble in what substance
          * the first array lists for water
          * the second array lists for acetone
          * the third for ammonia
@@ -256,16 +293,17 @@ public class IonicParts {
          * the seventh for prussic acid
          * the eight for sulfuric acid - mineral acid
          */
-        Anions(Cations[][] pInsol, int oxState, String pSymbol) {
-            this(pInsol, oxState, pSymbol, true);
+        Anions(Cations[][] pInsol, int oxState, String pSymbol, float pElectronegativity) {
+            this(pInsol, oxState, pSymbol, pElectronegativity, true);
         }
 
 
-        Anions(Cations[][] pSol, int oxState, String pSymbol, boolean pSolByDefault) {
+        Anions(Cations[][] pSol, int oxState, String pSymbol, float pElectronegativity, boolean pSolByDefault) {
             this.cationList = pSol;
             this.oxidationState = oxState;
             this.symbol = pSymbol;
             this.solubleByDefault = pSolByDefault;
+            this.electronegativity = pElectronegativity;
         }
 
         // determines the math for auto recipes
@@ -281,6 +319,11 @@ public class IonicParts {
             return cationList;
         }
 
+        @Override
+        public float getElectronegativity() {
+            return electronegativity;
+        }
+
         public static Anions getAnionFromSymbol(String pSymbol) {
             for (Anions anion : Anions.values()) {
                 if (anion.getSymbol().equals(pSymbol)) {
@@ -290,10 +333,4 @@ public class IonicParts {
             return null;
         }
     }
-
-    public static final Cations[] ALL_CATIONS = Cations.values();
-    public static final int CATION_SIZE = ALL_CATIONS.length;
-
-    public static final Anions[] ALL_ANIONS = Anions.values();
-    public static final int ANION_SIZE = ALL_ANIONS.length;
 }

@@ -15,23 +15,14 @@ import net.nukollodda.tekora.menu.types.AbstractTekoraMenu;
 
 public class ElectricFurnaceMenu extends AbstractTekoraMenu {
     public final ElectricFurnaceEntity blockEnt;
-    private final Level level;
-    private final ContainerData data;
 
     public ElectricFurnaceMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
     public ElectricFurnaceMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(TekoraMenuTypes.ELECTRIC_FURNACE_MENU.get(), id, 3);
-        checkContainerSize(inv, 3);
-        blockEnt = (ElectricFurnaceEntity) entity;
-        this.level = inv.player.level();
-        this.data = data;
-
-        addPlayerInventory(inv);
-        addPlayerHotbar(inv);
-
+        super(TekoraMenuTypes.ELECTRIC_FURNACE_MENU.get(), inv, data, id, 3);
+        this.blockEnt = (ElectricFurnaceEntity) entity;
         this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> { // adds the slots themselves
             this.addSlot(new SlotItemHandler(handler, 0, 79, 53));
             this.addSlot(new SlotItemHandler(handler, 1, 56, 26));

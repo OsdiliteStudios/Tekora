@@ -1,5 +1,6 @@
 package net.nukollodda.tekora.block.entity.entities;
 
+import ca.weblite.objc.Proxy;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -10,10 +11,7 @@ import net.nukollodda.tekora.block.TekoraBlocks;
 import net.nukollodda.tekora.block.entity.entities.connectors.EnergyCableEntity;
 import net.nukollodda.tekora.block.entity.entities.enstorage.InfiniteBatteryEntity;
 import net.nukollodda.tekora.block.entity.entities.generators.HydroelectricGeneratorEntity;
-import net.nukollodda.tekora.block.entity.entities.machines.AlloyFurnaceEntity;
-import net.nukollodda.tekora.block.entity.entities.machines.CrusherEntity;
-import net.nukollodda.tekora.block.entity.entities.machines.ElectricFurnaceEntity;
-import net.nukollodda.tekora.block.entity.entities.machines.InfusionFurnaceEntity;
+import net.nukollodda.tekora.block.entity.entities.machines.*;
 
 public class TekoraBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
@@ -53,6 +51,9 @@ public class TekoraBlockEntities {
             BLOCK_ENTITIES.register("hydroelectric_generator", () ->
                     BlockEntityType.Builder.of(HydroelectricGeneratorEntity::new,
                             TekoraBlocks.HYDROELECTRIC_GENERATOR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PulverizerEntity>> PULVERIZER =
+            BLOCK_ENTITIES.register("pulverizer", () -> BlockEntityType.Builder.of(PulverizerEntity::new,
+                    TekoraBlocks.PULVERIZER.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

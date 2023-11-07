@@ -1,15 +1,14 @@
 package net.nukollodda.tekora.item.isotopic;
 
-import com.google.common.collect.ImmutableMap;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.FloatTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.nukollodda.tekora.item.isotopic.radioactive.AbstractRadioactiveItem;
 
 public abstract class AbstractIsotopicItem extends Item {
-    protected float[] isotopicRatio;
     public AbstractIsotopicItem(Properties pProperties) {
         super(pProperties);
     }
@@ -22,20 +21,28 @@ public abstract class AbstractIsotopicItem extends Item {
         }
     }
 
-    public void setIsotopicRatio(float[] pRatio) {
-        isotopicRatio = pRatio;
+    public float[] getIsotopicRatio(ItemStack pStack) {
+        if (pStack.getTag() != null) {
+            ListTag tag = pStack.getOrCreateTag().getList("isotopes", ListTag.TAG_FLOAT);
+            float[] isotopeRatio = new float[tag.size()];
+            for (int i = 0; i < tag.size(); i++) {
+                isotopeRatio[i] = tag.getFloat(i);
+            }
+            return isotopeRatio;
+        }
+        float[] ratio = getDefaultIsotopeRatio();
+        ListTag isotopeList = new ListTag();
+        for (int i = 0; i < ratio.length; i++) {
+            isotopeList.addTag(i, FloatTag.valueOf(ratio[i]));
+        }
+        pStack.getOrCreateTag().put("isotopes", isotopeList);
+        return ratio;
     }
 
-    public void saveData(CompoundTag pTag) {
-    }
-    public void readData(CompoundTag pTag) {
-        isotopicRatio = new float[]{100f};
-    }
-
-    public abstract double getFissionRate();
-    public abstract double getNeutronAbsorptionRate();
-    public abstract float getFissionEnergy();
-    public abstract float getNeutronAbsorptionEnergy();
+    public abstract double getFissionRate(ItemStack pStack);
+    public abstract double getNeutronAbsorptionRate(ItemStack pStack);
+    public abstract float getFissionEnergy(ItemStack pStack);
+    public abstract float getNeutronAbsorptionEnergy(ItemStack pStack);
 
     public abstract float[] getDefaultIsotopeRatio();
 

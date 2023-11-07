@@ -20,8 +20,8 @@ import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.machines.CrusherEntity;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 
-public class Crusher extends AbstractIrregularBlock {
-    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+public class Crusher extends AbstractElectricMachineBlock {
+    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 15, 16);
     public Crusher() {
         super(6f);
     }
@@ -33,7 +33,7 @@ public class Crusher extends AbstractIrregularBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+        return RenderShape.MODEL; // will be changed to RenderShape.BLOCKENTITY_ANIMATED
     }
 
     @Override
@@ -59,7 +59,6 @@ public class Crusher extends AbstractIrregularBlock {
                 throw new IllegalStateException("Container Provider is missing");
             }
         }
-
         return InteractionResult.sidedSuccess(lvl.isClientSide);
     }
 

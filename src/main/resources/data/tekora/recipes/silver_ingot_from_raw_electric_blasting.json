@@ -1,0 +1,34 @@
+{
+  "type": "tekora:blasting",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/silver"
+    }
+  ],
+  "output": {
+    "item": "tekora:silver_ingot"
+  },
+  "cations": [
+    {
+      "symbol": "Fe"
+    },
+    {
+      "symbol": "Cu",
+      "count": 2
+    },
+    {
+      "symbol": "Sb"
+    },
+    {
+      "symbol": "Pb"
+    }
+  ],
+  "anions": [
+    {
+      "symbol": "O"
+    },
+    {
+      "symbol": "S"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-14T10:05:51.2461407	Tags for minecraft:item mod id tekora
+// 1.20.1	2023-11-06T19:30:58.4077522	Tags for minecraft:item mod id tekora
 d4081f6966f052b0955b24e8057aa8c6755b9201 data/forge/tags/items/aluminum.json
 3040bc60d7a6a6fb9a7b37f976201e3c128a006e data/forge/tags/items/barium.json
 f845c5159bae494074eb26f0935f73f956f1b63c data/forge/tags/items/beryllium.json
@@ -107,7 +107,6 @@ fa42ef32405963a5f54537290c2138595db1561a data/forge/tags/items/gems/chromite.jso
 8f87be2767bbc2d1870f0230a7ef7cfca286f429 data/forge/tags/items/gems/galena.json
 4f98863d78370f651e1ae22657f2929f78ff71a0 data/forge/tags/items/gems/garnet.json
 e2870da39d0334489d3be9eed060c4bf004b64e2 data/forge/tags/items/gems/pentlandite.json
-8cec3c826016ef19e7a0d1716a95699fa698be46 data/forge/tags/items/gems/raw_silver.json
 59072eb520c8fca6b7a9f02ea838af93de02b80d data/forge/tags/items/gems/ruby.json
 f4a7b6d732528696ba4e549f6d399c39f80bbb3d data/forge/tags/items/gems/sapphire.json
 d534cde3cb06acc0b003877696e4648b2ffb5d6b data/forge/tags/items/gems/uraninite.json
@@ -118,6 +117,7 @@ fd6e2fd7c3ebd387a370c7d780c134aa163d3227 data/forge/tags/items/holmium.json
 04e7e3bd135467d00f2bda50579657c1b8831f22 data/forge/tags/items/hsla_steel.json
 0b74deead25e977b8917588cac21672b530d925c data/forge/tags/items/inconel.json
 5d21bbe1353156eac3cd8e37e93b9c33bab9dbd0 data/forge/tags/items/indium.json
+f87262c4e764953438dc21b27176a896dac2190c data/forge/tags/items/ingots.json
 d668c43b67cd79359135685294dea13a5f5e7fe2 data/forge/tags/items/ingots/aluminum.json
 275426ef405a76143ad737af45a280feac722715 data/forge/tags/items/ingots/barium.json
 aaaf4f79bc7214a5e36debe74f64b1d5c3cede78 data/forge/tags/items/ingots/beryllium.json
@@ -208,6 +208,7 @@ cc43d1f05bd289ed2763a3058669008faf83f42b data/forge/tags/items/manganese.json
 aba80be46c3127e70bc9bfe51ed0c3b11d6f2933 data/forge/tags/items/neodymium.json
 49ad7873cc4b4862979c5ea98ce0e0398f248c46 data/forge/tags/items/nickel.json
 bb1a14ed4f236e1d5a137c044ed599b2071d3c40 data/forge/tags/items/niobium.json
+f2699dc57e62bdc7409952f4d48a6bda75857781 data/forge/tags/items/nuggets.json
 db3b8fb7a01a20faf1563d7dff1f3d99381049c7 data/forge/tags/items/nuggets/aluminum.json
 6134fd44d0d5d86fd57638d259a20c409722a66a data/forge/tags/items/nuggets/barium.json
 e6c580c85a9bcc840581363e47dc1b087ea443f1 data/forge/tags/items/nuggets/beryllium.json
@@ -268,6 +269,7 @@ c6d43738e7f875b7b05eb01a39297bb962512e99 data/forge/tags/items/nuggets/zinc.json
 0ec6ba0ff06889121ea0cb62217f45a48ac87cc1 data/forge/tags/items/nuggets/zirconium.json
 53e6751b40cf4890d1ec0fc9550697dab98daa20 data/forge/tags/items/osmium.json
 f904c3b68f43ae7af01071af036a490d29988323 data/forge/tags/items/palladium.json
+dd516a96697523a4e5a471d94f2ad35f99644010 data/forge/tags/items/plates.json
 fce13bcd32748e24859e588ec0823840f10c33d6 data/forge/tags/items/plates/aluminum.json
 ce57f550a553e0c6848d1f0361cde79f8d4e534d data/forge/tags/items/plates/bismuth.json
 02f98a7a5c5d476eb74e99d3e1cb6da924c5c078 data/forge/tags/items/plates/brass.json
@@ -319,9 +321,12 @@ ab4dbd6fa16b4c2158d83b0b1fcd27b34e6e0965 data/forge/tags/items/plates/ytterbium.
 9c2e8a55329ed2949276bbc0f7a42cf6c3f2a530 data/forge/tags/items/platinum.json
 db3d4e74e78f232edbc618a423859bdd7db39510 data/forge/tags/items/potassium.json
 23edc3a8c6a3d31aa1649b8cebd2f8a67c9f9ff0 data/forge/tags/items/praseodymium.json
+8cec3c826016ef19e7a0d1716a95699fa698be46 data/forge/tags/items/raw_materials/silver.json
 b57675302775172cea0a0ee10969f63917705eee data/forge/tags/items/reactor_steel.json
 39109beff382c67f7e0b38cde8b0a3b1590292a9 data/forge/tags/items/rhenium.json
 45bcf182f4ee38256107910ef52bdf0a381eee0f data/forge/tags/items/rhodium.json
+5d636fd6c491df0b49c3bd147a28972ba0597b56 data/forge/tags/items/rods/carbon_steel.json
+552ae49013c0da85010284716b721e2d163ea7cc data/forge/tags/items/rods/steel.json
 4435bb03630ee88354dd8a78cbe94ef410f8cb65 data/forge/tags/items/rubidium.json
 47f6712a0a73c4d076ba0bcd435fff4c4d6bc5dd data/forge/tags/items/ruthenium.json
 ecbc06e70b25d8368a09492fb65ce9c263c2c8fc data/forge/tags/items/samarium.json
@@ -338,6 +343,7 @@ a6bb974e690419ee9755fc9fd4516cacc3dd3351 data/forge/tags/items/thorium.json
 8b1b0d0ea879cb02800977cc6ef00f3a25334f3a data/forge/tags/items/thulium.json
 f6e765816c77bb2f1f17abdb3ec68b1d01043131 data/forge/tags/items/tin.json
 47c8c6c6cba1dc0e3b501d0fd5addb59e699ebcb data/forge/tags/items/titanium.json
+0ecdb627d1e35bf41a9f41a95d60d15b874126ca data/forge/tags/items/tools/hammer.json
 e22c6eac21d4932cf6b9febb5ed28639d9afe912 data/forge/tags/items/tungsten.json
 fda4a5917408300fc2a96b3093f85d4920ac1c5b data/forge/tags/items/tungsten_carbide.json
 46e1e72d00652c737ea0d19a2cd1de64f8b3dfce data/forge/tags/items/tungsten_steel.json

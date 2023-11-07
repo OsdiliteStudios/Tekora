@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.item.typical.IonicParts;
-import net.nukollodda.tekora.util.TekoraResidualExtraction;
+import net.nukollodda.tekora.util.ResidualExtraction;
 import org.jetbrains.annotations.Nullable;
 
 public class ElectricBlastingRecipe implements IResidueRecipes {
@@ -107,7 +107,7 @@ public class ElectricBlastingRecipe implements IResidueRecipes {
             }
 
             return new ElectricBlastingRecipe(pId, output, inputs,
-                    TekoraResidualExtraction.getCationsFromJson(pJson), TekoraResidualExtraction.getAnionsFromJson(pJson));
+                    ResidualExtraction.getCationsFromJson(pJson), ResidualExtraction.getAnionsFromJson(pJson));
         }
 
         @Override

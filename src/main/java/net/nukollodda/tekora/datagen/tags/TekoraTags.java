@@ -128,7 +128,6 @@ public class TekoraTags {
         public static final TagKey<Item> BRASS_INGOT = createForge("ingots/brass");
         public static final TagKey<Item> BRONZE_INGOT = createForge("ingots/bronze");
         public static final TagKey<Item> CARBON_STEEL_INGOT = createForge("ingots/carbon_steel");
-        public static final TagKey<Item> CHROMIUM_STEEL_INGOT = createForge("ingots/chromium_steel");
         public static final TagKey<Item> CHROMOLY_STEEL_INGOT = createForge("ingots/chromoly_steel");
         public static final TagKey<Item> FERROBORON_INGOT = createForge("ingots/ferroboron");
         public static final TagKey<Item> GALVANIZED_STEEL_INGOT = createForge("ingots/galvanized_steel");
@@ -220,7 +219,7 @@ public class TekoraTags {
         public static final TagKey<Item> PENTLANDITE_GEM = createForge("gems/pentlandite");
         public static final TagKey<Item> PYRITE_GEM = createForge("gems/pyrite");
         public static final TagKey<Item> PYROLUSITE_GEM = createForge("gems/pyrolusite");
-        public static final TagKey<Item> RAW_SILVER_GEM = createForge("gems/raw_silver");
+        public static final TagKey<Item> RAW_SILVER = createForge("raw_materials/silver");
         public static final TagKey<Item> RUBY_GEM = createForge("gems/ruby");
         public static final TagKey<Item> RUTILE_GEM = createForge("gems/rutile");
         public static final TagKey<Item> SAPPHIRE_GEM = createForge("gems/sapphire");
@@ -362,7 +361,6 @@ public class TekoraTags {
         public static final TagKey<Item> BRASS_DUST = createForge("dusts/brass");
         public static final TagKey<Item> BRONZE_DUST = createForge("dusts/bronze");
         public static final TagKey<Item> CARBON_STEEL_DUST = createForge("dusts/carbon_steel");
-        public static final TagKey<Item> CHROMIUM_STEEL_DUST = createForge("dusts/chromium_steel");
         public static final TagKey<Item> CHROMOLY_STEEL_DUST = createForge("dusts/chromoly_steel");
         public static final TagKey<Item> FERROBORON_DUST = createForge("dusts/ferroboron");
         public static final TagKey<Item> HSLA_STEEL_DUST = createForge("dusts/hsla_steel");
@@ -377,6 +375,9 @@ public class TekoraTags {
         public static final TagKey<Item> TUNGSTEN_STEEL_DUST = createForge("dusts/tungsten_steel");
         public static final TagKey<Item> VANASTEEL_DUST = createForge("dusts/vanasteel");
         public static final TagKey<Item> ZIRCALOY_DUST = createForge("dusts/zircaloy");
+
+        public static final TagKey<Item> CARBON_STEEL_ROD = createForge("rods/carbon_steel");
+        public static final TagKey<Item> STEEL_ROD = createForge("rods/steel");
 
         public static final TagKey<Item> ALUMINUM = createForge("aluminum");
         public static final TagKey<Item> BARIUM = createForge("barium");
@@ -442,7 +443,6 @@ public class TekoraTags {
         public static final TagKey<Item> BRASS = createForge("brass");
         public static final TagKey<Item> BRONZE = createForge("bronze");
         public static final TagKey<Item> CARBON_STEEL = createForge("carbon_steel");
-        public static final TagKey<Item> CHROMIUM_STEEL = createForge("chromium_steel");
         public static final TagKey<Item> CHROMOLY_STEEL = createForge("chromoly_steel");
         public static final TagKey<Item> FERROBORON = createForge("ferroboron");
         public static final TagKey<Item> GALVANIZED_STEEL = createForge("galvanized_steel");
@@ -461,7 +461,9 @@ public class TekoraTags {
 
         public static final TagKey<Item> HAMMER = createForge("tools/hammer");
         public static final TagKey<Item> CUTTER = createForge("tools/cutter");
-
+        public static final TagKey<Item> INGOTS = createForge("ingots");
+        public static final TagKey<Item> NUGGETS = createForge("nuggets");
+        public static final TagKey<Item> PLATES = createForge("plates");
         private Items() {
         }
         private static TagKey<Item> createForge(String location) {

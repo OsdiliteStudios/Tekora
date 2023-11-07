@@ -19,29 +19,26 @@ import java.util.function.Consumer;
 public class TekoraFluidType extends FluidType {
     private final ResourceLocation stillTexture;
     private final ResourceLocation flowingTexture;
-    private final ResourceLocation overlayTexture;
+    private final ResourceLocation overlayTexture = TekoraFluidTextures.WATER_OVERLAY;
     private final int tintColor;
     private final Vector3f fogColor;
     private final TekoraFluidData fluidData;
     private final boolean isGas;
 
-    public TekoraFluidType(final ResourceLocation overlayTexture, final int tintColor,
-                           final Properties properties, final TekoraFluidData data, final boolean isGas) {
+    public TekoraFluidType(final Properties properties, final TekoraFluidData data, final boolean isGas) {
         super(properties);
         this.stillTexture = isGas ? TekoraFluidTextures.GAS_RL : getTemperature() > 798 ? TekoraFluidTextures.LAVA_STILL_RL : TekoraFluidTextures.WATER_STILL_RL;
         this.flowingTexture = isGas ? TekoraFluidTextures.GAS_RL : getTemperature() > 798 ? TekoraFluidTextures.LAVA_FLOWING_RL : TekoraFluidTextures.WATER_FLOWING_RL;
-        this.overlayTexture = overlayTexture;
-        this.tintColor = tintColor;
-        this.fogColor = colorToVector(tintColor);
+        this.tintColor = isGas ? data.getGasColor() : data.getLiquidColor();
+        this.fogColor = colorToVector(isGas ? data.getGasColor() : data.getLiquidColor());
         this.fluidData = data;
         this.isGas = isGas;
-
     }
 
     private Vector3f colorToVector(int hexVal) {
         int red = hexVal / 0x10000;
-        int green = (hexVal - (red * 0x10000)) / 0x100;
-        int blue = hexVal - ((red * 0x10000) + (green * 0x100));
+        int green = hexVal / 0x100 % 256;
+        int blue = hexVal % 256;
         return new Vector3f(red / 255f, green / 255f, blue / 255f);
     }
 
@@ -71,6 +68,26 @@ public class TekoraFluidType extends FluidType {
 
     public TekoraFluidData getFluidData() {
         return fluidData;
+    }
+
+    public boolean doesBurn(float pTemp, float pPressure) {
+        return switch (fluidData.getBurnability()) {
+            case 1 -> getMeltingPoint() > pTemp;
+            case 2 -> getBoilingPoint(pPressure) > pTemp;
+            default -> false;
+        };
+    }
+
+    public float burnTemp() {
+        return switch (fluidData.getBurnability()) {
+            case 1 -> getMeltingPoint();
+            case 2 -> getBoilingPoint(0);
+            default -> -1;
+        };
+    }
+
+    public String getName() {
+        return isGas ? fluidData.getGasName() : fluidData.getLiquidName();
     }
 
     public float getSpecificHeat() {
@@ -103,6 +120,10 @@ public class TekoraFluidType extends FluidType {
 
     public int getFluidDmg() {
         return fluidData.getFluidDmg();
+    }
+
+    public int getReactivity() {
+        return (fluidData.doesDecompose() ? 1 : 0) + (int)(fluidData.getAcidity() + fluidData.getBasicity()) / 18;
     }
 
     @Override

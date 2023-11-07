@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "forge:plates/gold"
+    }
+  ],
+  "result": {
+    "item": "minecraft:light_weighted_pressure_plate"
+  }
+}

@@ -1,30 +1,53 @@
 package net.nukollodda.tekora.item.isotopic;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.nukollodda.tekora.item.TekoraItems;
+
+import java.util.List;
 
 public class Lithium extends AbstractIsotopicItem {
     public Lithium() {
         super(new Item.Properties());
     }
 
+    protected void textMaker(ItemStack pStack, List<Component> pTooltipComponents) {
+        float addedRat = 0;
+        float[] ratio = getIsotopicRatio(pStack);
+        for (float val : ratio) {
+            addedRat += val;
+        }
+        float dividend = addedRat > 0 ? addedRat : 100;
+        String isoName;
+        for (int i = 0; i < 5; i++) {
+            if (ratio[i] > 0) {
+                isoName = "Li" + (i + 6) + " - ";
+                String formatted = isoName + ((int)((ratio[i] / dividend) * 1000)) / 100 + "%";
+                pTooltipComponents.add(Component.literal(formatted)
+                        .withStyle(ChatFormatting.GRAY));
+            }
+        }
+    }
+
     @Override
-    public double getFissionRate() {
+    public double getFissionRate(ItemStack pStack) {
         return 0;
     }
 
     @Override
-    public double getNeutronAbsorptionRate() {
+    public double getNeutronAbsorptionRate(ItemStack pStack) {
         return 0;
     }
 
     @Override
-    public float getFissionEnergy() {
+    public float getFissionEnergy(ItemStack pStack) {
         return 0;
     }
 
     @Override
-    public float getNeutronAbsorptionEnergy() {
+    public float getNeutronAbsorptionEnergy(ItemStack pStack) {
         return 0;
     }
 

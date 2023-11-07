@@ -88,6 +88,7 @@ public class TekoraBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(TekoraBlocks.INFUSION_FURNACE.get());
         this.dropSelf(TekoraBlocks.ELECTRIC_FURNACE.get());
         this.dropSelf(TekoraBlocks.INFINITE_BATTERY.get());
+        this.dropSelf(TekoraBlocks.PULVERIZER.get());
 
         this.dropSelf(TekoraBlocks.EVAPORITE.get());
         this.dropSelf(TekoraBlocks.LIMESTONE.get());

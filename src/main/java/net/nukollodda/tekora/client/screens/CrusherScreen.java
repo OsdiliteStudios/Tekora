@@ -11,6 +11,7 @@ import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.menu.CrusherMenu;
 
 public class CrusherScreen extends AbstractContainerScreen<CrusherMenu> {
+    // may also apply to the pulverizer screen
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(Tekora.MODID, "textures/screens/crusher_gui.png");
 
@@ -34,13 +35,17 @@ public class CrusherScreen extends AbstractContainerScreen<CrusherMenu> {
         pGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight); // renders texture
 
         renderProgressArrow(pGraphics, x, y);
+        renderElectricityAmount(pGraphics, x, y);
     }
 
     private void renderProgressArrow(GuiGraphics pGraphics, int x, int y) {
         if (menu.isCrafting()) {
-            pGraphics.blit(TEXTURE, x + 70, y + 27, 176, 0, menu.getScaledProgress(), 17);
-            // var 2 & 3 determines pos, var 4 && 5 determines rendered item pos, var 6 & 7 determines size of rendered item
+            pGraphics.blit(TEXTURE, x + 75, y + 27, 176, 0, menu.getScaledProgress(), 17);
         }
+    }
+
+    private void renderElectricityAmount(GuiGraphics pGraphics, int x, int y) {
+        pGraphics.blit(TEXTURE, x + 22, y + 22 + (48 - menu.getEnergy()), 176, 17 + (48 - menu.getEnergy()), 6, menu.getEnergy());
     }
 
     @Override

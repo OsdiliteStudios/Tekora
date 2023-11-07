@@ -30,7 +30,7 @@ public class ThoriumSword extends SwordItem implements IRadioactiveItems {
     }
 
     @Override
-    public double getRadiation() {
+    public double getRadiation(ItemStack pStack) {
         return Thorium.Isotopes.TH232.getRadiationVal();
     }
 }

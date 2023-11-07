@@ -15,18 +15,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.nukollodda.tekora.block.entity.blocks.machines.AbstractIrregularBlock;
+import net.nukollodda.tekora.block.FluidloggedBlock;
 import net.nukollodda.tekora.block.entity.entities.generators.HydroelectricGeneratorEntity;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class HydroelectricGeneratorBlock extends AbstractIrregularBlock implements SimpleWaterloggedBlock {
-    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+public class HydroelectricGeneratorBlock extends AbstractGenerator implements FluidloggedBlock {
+    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 15, 16);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public HydroelectricGeneratorBlock() {
         super(5f);
@@ -78,7 +76,8 @@ public class HydroelectricGeneratorBlock extends AbstractIrregularBlock implemen
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         LevelAccessor levelaccessor = pContext.getLevel();
         BlockPos blockpos = pContext.getClickedPos();
-        return this.defaultBlockState().setValue(WATERLOGGED, levelaccessor.getFluidState(blockpos).getType() == Fluids.WATER);
+        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite())
+                .setValue(WATERLOGGED, levelaccessor.getFluidState(blockpos).getType() == Fluids.WATER);
     }
 
     public FluidState getFluidState(BlockState pState) {

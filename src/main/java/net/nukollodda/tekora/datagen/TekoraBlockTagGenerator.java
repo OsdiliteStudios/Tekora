@@ -159,6 +159,7 @@ public class TekoraBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.NEEDS_IRON_TOOL).add(
                 TekoraBlocks.CRUSHER.get(),
                 TekoraBlocks.ELECTRIC_FURNACE.get(),
+                TekoraBlocks.PULVERIZER.get(),
                 TekoraBlocks.ALUMINUM_BLOCK.get(),
                 TekoraBlocks.ANTIMONY_BLOCK.get(),
                 TekoraBlocks.ARSENIC_BLOCK.get(),
@@ -274,6 +275,7 @@ public class TekoraBlockTagGenerator extends BlockTagsProvider {
                 TekoraBlocks.ELECTRIC_FURNACE.get(),
                 TekoraBlocks.INFUSION_FURNACE.get(),
                 TekoraBlocks.ALLOY_FURNACE.get(),
+                TekoraBlocks.PULVERIZER.get(),
                 TekoraBlocks.EVAPORITE.get(),
                 TekoraBlocks.LIMESTONE.get(),
                 TekoraBlocks.ALUMINUM_BLOCK.get(),

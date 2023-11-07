@@ -1,29 +1,31 @@
-[25Sep2023 07:26:08.563] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\dango\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.0.43, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, tekora, --all, --output, C:\Users\dango\OneDrive\Documents\Nukol's mods\Tekora\src\generated\resources, --existing, C:\Users\dango\OneDrive\Documents\Nukol's mods\Tekora\src\main\resources]
-[25Sep2023 07:26:08.573] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.5 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[25Sep2023 07:26:08.751] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[25Sep2023 07:26:08.847] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/dango/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[25Sep2023 07:26:09.296] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dango\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.0.43\870eb342c587195b95469da1434321420acf8fc\javafmllanguage-1.20.1-47.0.43.jar is missing mods.toml file
-[25Sep2023 07:26:09.301] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dango\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.0.43\bdc0319424069d8d996e0fba1c164f5da37053b4\lowcodelanguage-1.20.1-47.0.43.jar is missing mods.toml file
-[25Sep2023 07:26:09.307] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dango\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.0.43\59eba70cfb25091c9c4a7ddacf22b38fff21665d\mclanguage-1.20.1-47.0.43.jar is missing mods.toml file
-[25Sep2023 07:26:09.314] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dango\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.0.43\574f2099d26299ca1394777c6d20a6aecd2ac9cf\fmlcore-1.20.1-47.0.43.jar is missing mods.toml file
-[25Sep2023 07:26:09.425] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
-[25Sep2023 07:26:12.054] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\dango\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, tekora, --all, --output, C:\Users\dango\OneDrive\Documents\Nukol's mods\Tekora\src\generated\resources, --existing, C:\Users\dango\OneDrive\Documents\Nukol's mods\Tekora\src\main\resources]
-[25Sep2023 07:26:12.692] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [tekora]
-[25Sep2023 07:26:17.989] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.0.43, for MC 1.20.1 with MCP 20230612.114412
-[25Sep2023 07:26:17.994] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.0.43 Initialized
-[25Sep2023 07:26:19.050] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dango/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.0.43_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.0.43_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
-[25Sep2023 07:26:19.051] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dango/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.0.43_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.0.43_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
-[25Sep2023 07:26:19.372] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id tekora
-[25Sep2023 07:26:19.527] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id tekora finished after 154 ms
-[25Sep2023 07:26:19.527] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id tekora
-[25Sep2023 07:26:19.571] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id tekora finished after 43 ms
-[25Sep2023 07:26:19.572] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
-[25Sep2023 07:26:19.789] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 217 ms
-[25Sep2023 07:26:19.789] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[25Sep2023 07:26:19.921] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 131 ms
-[25Sep2023 07:26:19.921] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: tekora
-[25Sep2023 07:26:20.189] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: tekora finished after 266 ms
-[25Sep2023 07:26:20.189] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: tekora
-[25Sep2023 07:26:20.417] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: tekora finished after 228 ms
-[25Sep2023 07:26:20.418] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 1046 ms
-[25Sep2023 07:26:20.521] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 2495, old count: 2487, new count: 2496, removed stale: 0, written: 8
+[06Nov2023 19:30:40.962] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\dango\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.0.43, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, tekora, --all, --output, C:\Users\dango\OneDrive\Documents\Nukol's mods\Tekora\src\generated\resources, --existing, C:\Users\dango\OneDrive\Documents\Nukol's mods\Tekora\src\main\resources]
+[06Nov2023 19:30:40.978] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.5 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[06Nov2023 19:30:41.200] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[06Nov2023 19:30:41.286] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/dango/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[06Nov2023 19:30:41.724] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dango\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.0.43\870eb342c587195b95469da1434321420acf8fc\javafmllanguage-1.20.1-47.0.43.jar is missing mods.toml file
+[06Nov2023 19:30:41.731] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dango\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.0.43\bdc0319424069d8d996e0fba1c164f5da37053b4\lowcodelanguage-1.20.1-47.0.43.jar is missing mods.toml file
+[06Nov2023 19:30:41.740] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dango\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.0.43\59eba70cfb25091c9c4a7ddacf22b38fff21665d\mclanguage-1.20.1-47.0.43.jar is missing mods.toml file
+[06Nov2023 19:30:41.749] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dango\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.0.43\574f2099d26299ca1394777c6d20a6aecd2ac9cf\fmlcore-1.20.1-47.0.43.jar is missing mods.toml file
+[06Nov2023 19:30:41.866] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[06Nov2023 19:30:45.087] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\dango\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, tekora, --all, --output, C:\Users\dango\OneDrive\Documents\Nukol's mods\Tekora\src\generated\resources, --existing, C:\Users\dango\OneDrive\Documents\Nukol's mods\Tekora\src\main\resources]
+[06Nov2023 19:30:45.907] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [tekora]
+[06Nov2023 19:30:55.279] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.0.43, for MC 1.20.1 with MCP 20230612.114412
+[06Nov2023 19:30:55.281] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.0.43 Initialized
+[06Nov2023 19:30:55.804] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager...
+[06Nov2023 19:30:55.816] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager took 8.569 ms
+[06Nov2023 19:30:56.669] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dango/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.0.43_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.0.43_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[06Nov2023 19:30:56.670] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dango/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.0.43_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.0.43_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[06Nov2023 19:30:56.996] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id tekora
+[06Nov2023 19:30:57.230] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id tekora finished after 232 ms
+[06Nov2023 19:30:57.230] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id tekora
+[06Nov2023 19:30:57.290] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id tekora finished after 59 ms
+[06Nov2023 19:30:57.290] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[06Nov2023 19:30:57.499] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 209 ms
+[06Nov2023 19:30:57.500] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[06Nov2023 19:30:57.617] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 117 ms
+[06Nov2023 19:30:57.617] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: tekora
+[06Nov2023 19:30:57.915] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: tekora finished after 296 ms
+[06Nov2023 19:30:57.915] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: tekora
+[06Nov2023 19:30:58.383] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: tekora finished after 468 ms
+[06Nov2023 19:30:58.384] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 1388 ms
+[06Nov2023 19:30:58.504] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 2545, old count: 2539, new count: 2541, removed stale: 5, written: 7

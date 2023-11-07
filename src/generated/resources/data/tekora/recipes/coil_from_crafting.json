@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "0": {
+      "item": "tekora:copper_cable"
+    },
+    "1": {
+      "tag": "forge:ingots/aluminum"
+    }
+  },
+  "pattern": [
+    "010",
+    "010",
+    "010"
+  ],
+  "result": {
+    "item": "tekora:coil"
+  },
+  "show_notification": true
+}

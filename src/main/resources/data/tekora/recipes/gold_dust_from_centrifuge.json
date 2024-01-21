@@ -1,0 +1,25 @@
+{
+  "type": "tekora:centrifuge",
+  "ingredient": {
+    "tag": "forge:raw_materials/gold"
+  },
+  "outputs": [
+    {
+      "item": "tekora:gold_dust",
+      "count": 1,
+      "chance": 0.5
+    },
+    {
+      "item": "tekora:zinc_dust",
+      "chance": 0.11111
+    },
+    {
+      "item": "tekora:silver_dust",
+      "chance": 0.11111
+    },
+    {
+      "item": "tekora:raw_platinum",
+      "chance": 0.037037
+    }
+  ]
+}

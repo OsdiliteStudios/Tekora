@@ -1,19 +1,17 @@
-// 1.20.1	2023-11-05T14:58:26.5773557	Tags for minecraft:block mod id tekora
-9ac96919b1766036012a5a3ce7829b40333698a6 data/forge/tags/blocks/ores/apatite.json
+// 1.20.1	2024-01-20T12:37:23.4228465	Tags for minecraft:block mod id tekora
 5fc6e61ada1d1d63072c843b79b2a9598e4e4959 data/forge/tags/blocks/ores/aquamarine.json
-fe1312c07b1170403f23841dbba780d98a5bf618 data/forge/tags/blocks/ores/bauxite.json
-005493a9de375e60471414bc41539a505253c503 data/forge/tags/blocks/ores/cassiterite.json
-59fe089290d16e7f8e8f505696ba2e302f1fb9b8 data/forge/tags/blocks/ores/chromite.json
+3db0b8a9faed0bd364e47c164bddd955609adfae data/forge/tags/blocks/ores/bauxite.json
 542fcb343c93702ba20ef1782dcd3797ec241e4c data/forge/tags/blocks/ores/cinnabar.json
-b78b1e79903f40032cca5f29c3bca72bbc397d4b data/forge/tags/blocks/ores/galena.json
-dc420dde3cc60f89e767f240d589fa9778b85c06 data/forge/tags/blocks/ores/garnet.json
-5d93b565b7961d2297f819565b0120451dd4a851 data/forge/tags/blocks/ores/graphite.json
-ea8863f27e11de155735c02d2245ef5dc8d96532 data/forge/tags/blocks/ores/pentlandite.json
+ba1743782fa7966261d162b65474220f03c4e74e data/forge/tags/blocks/ores/halite.json
+511b1a6a7938bb79124c7025f911bf4ebe85bd05 data/forge/tags/blocks/ores/lead.json
+ccce85239fa18f14e3c6fc00a3db88424f026bf2 data/forge/tags/blocks/ores/nickel.json
 87ba291a5a7c906ced7a81268da163f2037fa956 data/forge/tags/blocks/ores/ruby.json
 e202ed883b6f560276a0ba1b2c433a11eaceb8f4 data/forge/tags/blocks/ores/sapphire.json
-7a7b4529b2107ca1bb3304dad64e8bf47364efef data/forge/tags/blocks/ores/silver.json
+4b9009aa32ba66f7bbb7945e6562124490661eff data/forge/tags/blocks/ores/tin.json
 b4f71f998a5062f78210a7efc32e2e025454be46 data/forge/tags/blocks/ores/uraninite.json
-a22facad8c2bf8253b4d55878015c54ad18d331a data/forge/tags/blocks/ores/zircon.json
+bef52662e76b07665afa4c3b1dc471fba695860b data/forge/tags/blocks/ores/wolframite.json
+6ad8ffae23acb76cc29cc7611d06bca0c56e15b1 data/forge/tags/blocks/ores/zinc.json
+f7f265947ff92525c56e79b5ae19e9bb9ba2f64e data/forge/tags/blocks/ores/zircon.json
 e48a9d8c5e0fe11f1e3b71467a5f9711a052af85 data/forge/tags/blocks/storage_blocks/aluminum.json
 87f5a082ae8155242acf723c93349449a45f40ed data/forge/tags/blocks/storage_blocks/antimony.json
 bc6b3db137c75f07a515a15bc3eadbf246509554 data/forge/tags/blocks/storage_blocks/arsenic.json
@@ -49,6 +47,12 @@ a9fde3865d24adc2bf794b71e47ad8d9dc70799f data/forge/tags/blocks/storage_blocks/m
 cfe02c7f042ae106b7606cd86a49ca53b98816a8 data/forge/tags/blocks/storage_blocks/palladium.json
 afe0c2f6c4fc05d57544aac041c330d91f21336a data/forge/tags/blocks/storage_blocks/platinum.json
 0c452ebe5ccefe7050e88844cebf9527335125ea data/forge/tags/blocks/storage_blocks/praseodymium.json
+49fc169cc8d818fcd44557b345873d55df93da06 data/forge/tags/blocks/storage_blocks/raw_lead.json
+d9ee37941f5526071dae280b686fc42fe307a097 data/forge/tags/blocks/storage_blocks/raw_nickel.json
+27227b65332fd4da6f403e9df8d337dce23c358e data/forge/tags/blocks/storage_blocks/raw_platinum.json
+18ed0467f5a494991b5f3c1a6a4f98c7cbcd4b8e data/forge/tags/blocks/storage_blocks/raw_silver.json
+ea64c142c76b52ecf252f6bb894a2e2135c2eae6 data/forge/tags/blocks/storage_blocks/raw_tin.json
+38dc3804a9c239336b1c2ec3eca4c489f94aee8e data/forge/tags/blocks/storage_blocks/raw_zinc.json
 d43c4c2d21bb400fb2c980e247faa4cf207d31d3 data/forge/tags/blocks/storage_blocks/rhenium.json
 acb88c1f2a337c30d9927a6d2266a6f814f80c17 data/forge/tags/blocks/storage_blocks/rhodium.json
 d140b93202fa58b7132b416afdea7560b0e51738 data/forge/tags/blocks/storage_blocks/ruthenium.json
@@ -72,7 +76,6 @@ de9c0f4384770d71ae7205670c52ab48a5a1e8b4 data/forge/tags/blocks/storage_blocks/y
 c53247780bac4c258cfb29f7df92cc1b97da029f data/forge/tags/blocks/storage_blocks/yttrium.json
 c2ad00f659449e94ed709830c62b25354d480ad7 data/forge/tags/blocks/storage_blocks/zinc.json
 93e24c4ca966654cb50bf517ebecfbf2418231d2 data/forge/tags/blocks/storage_blocks/zirconium.json
-4fc11c62244fcce44023309abf383d6681a6831d data/minecraft/tags/blocks/mineable/pickaxe.json
-11e08c2bdbf9e8e451037534e19e642935f6a28d data/minecraft/tags/blocks/mineable/shovel.json
-b131344bb10c25bd2a41f9cea88ca64cba326252 data/minecraft/tags/blocks/needs_iron_tool.json
-bdd779b1748d10547e799dc5186ecea8d41728f4 data/minecraft/tags/blocks/needs_stone_tool.json
+7afecd4ad0c64450a74ec8ffe10268bcb81c76ee data/minecraft/tags/blocks/mineable/pickaxe.json
+8b62c26628a32d271d2031f0c06651dad3a67244 data/minecraft/tags/blocks/needs_iron_tool.json
+2b11ac995fd8be044a44726a4fe2e9670199ec17 data/minecraft/tags/blocks/needs_stone_tool.json

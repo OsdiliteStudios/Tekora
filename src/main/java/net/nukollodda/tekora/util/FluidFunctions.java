@@ -1,27 +1,30 @@
 package net.nukollodda.tekora.util;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.nukollodda.tekora.block.fluid.TekoraFluidType;
-import net.nukollodda.tekora.block.fluid.blocks.TekoraLiquidBlock;
-import net.nukollodda.tekora.block.fluid.data.TekoraFluidData;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.nukollodda.tekora.fluid.TekoraChemicalFluidType;
+import net.nukollodda.tekora.fluid.data.TekoraFluidData;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class FluidFunctions {
@@ -87,10 +90,9 @@ public class FluidFunctions {
         pLevel.playSound((Player)null, pPos, pSound, SoundSource.BLOCKS);
     }
 
-    public static void applyBoilingEffectsToEntities(Level pLevel, BlockPos pPos, TekoraFluidType pData, float pPressure) {
-        List<LivingEntity> _entfound = pLevel.getEntitiesOfClass(LivingEntity.class, new AABB(pPos).inflate(8 / 2d), e -> true)
-                .stream().toList();
-        for (LivingEntity ent : _entfound) {
+    public static void applyBoilingEffectsToEntities(Level pLevel, BlockPos pPos, TekoraChemicalFluidType pData, float pPressure) {
+        List<LivingEntity> entities = pLevel.getEntitiesOfClass(LivingEntity.class, new AABB(pPos).inflate(4), e -> true);
+        for (LivingEntity ent : entities) {
             if (pData.getEffects() != null) {
                 for (MobEffect effect : pData.getEffects()) {
                     ent.addEffect(new MobEffectInstance(effect, 1200, (int) pPressure,
@@ -102,9 +104,8 @@ public class FluidFunctions {
     }
 
     public static void applyBoilingEffectsToEntities(Level pLevel, BlockPos pPos, TekoraFluidData pData, float pPressure) {
-        List<LivingEntity> _entfound = pLevel.getEntitiesOfClass(LivingEntity.class, new AABB(pPos).inflate(8 / 2d), e -> true)
-                .stream().toList();
-        for (LivingEntity ent : _entfound) {
+        List<LivingEntity> entities = pLevel.getEntitiesOfClass(LivingEntity.class, new AABB(pPos).inflate(4), e -> true);
+        for (LivingEntity ent : entities) {
             if (pData.getEffects() != null) {
                 for (MobEffect effect : pData.getEffects()) {
                     ent.addEffect(new MobEffectInstance(effect, 1200, (int) pPressure,
@@ -113,5 +114,15 @@ public class FluidFunctions {
             }
             ent.hurt(ent.level().damageSources().generic(), pData.getFluidDmg() * 3);
         }
+    }
+
+    /** Credit to Kaupenjoe for the functions below
+     */
+    public static FluidStack readFluid(JsonObject json) {
+        return json != null ? FluidStack.CODEC.decode(JsonOps.INSTANCE, json).result().orElseThrow().getFirst() : FluidStack.EMPTY;
+    }
+
+    public static JsonElement toJson(FluidStack stack) {
+        return FluidStack.CODEC.encodeStart(JsonOps.INSTANCE, stack).result().orElseThrow();
     }
 }

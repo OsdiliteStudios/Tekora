@@ -1,19 +1,7 @@
 {
   "variants": {
-    "facing=east": {
-      "model": "tekora:block/hydroelectric_generator",
-      "y": 90
-    },
-    "facing=north": {
+    "": {
       "model": "tekora:block/hydroelectric_generator"
-    },
-    "facing=south": {
-      "model": "tekora:block/hydroelectric_generator",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "tekora:block/hydroelectric_generator",
-      "y": 270
     }
   }
 }

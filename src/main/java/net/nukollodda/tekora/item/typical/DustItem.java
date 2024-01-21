@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class DustItem extends TekoraItem {
+public final class DustItem extends TekoraItem {
     // used for all possible tekora dusts that aren't involved in major recipes
     // tekora dusts used for special recipes will be added
     // also, a pattern exists with oxidation states
@@ -32,10 +32,10 @@ public class DustItem extends TekoraItem {
         if (pStack.getItem() instanceof DustItem && pStack.getTag() != null) {
             CompoundTag tag = pStack.getTag();
             IonicParts.Cations cation = IonicParts.Cations.valueOf(tag.getString(Residue.CATION_KEY));
-            IonicParts.Anions anions = IonicParts.Anions.valueOf(tag.getString(Residue.ANION_KEY));
-            int anOxState = Math.abs(anions.getOxidationState());
-            int catCount = anOxState % cation.getOxidationState() == 0 ? 1 : anOxState;
-            return new IonicParts(cation, catCount);
+            IonicParts.Anions anion = IonicParts.Anions.valueOf(tag.getString(Residue.ANION_KEY));
+            int anOxState = Math.abs(anion.getOxidationState());
+            int catOxState = cation.getOxidationState();
+            return new IonicParts(cation, anOxState > 0 && catOxState % anOxState == 0 ? 1 : anOxState);
         }
         return null;
     }
@@ -44,10 +44,10 @@ public class DustItem extends TekoraItem {
         if (pStack.getItem() instanceof DustItem && pStack.getTag() != null) {
             CompoundTag tag = pStack.getTag();
             IonicParts.Cations cation = IonicParts.Cations.valueOf(tag.getString(Residue.CATION_KEY));
-            IonicParts.Anions anions = IonicParts.Anions.valueOf(tag.getString(Residue.ANION_KEY));
-            int anOxState = Math.abs(anions.getOxidationState());
+            IonicParts.Anions anion = IonicParts.Anions.valueOf(tag.getString(Residue.ANION_KEY));
+            int anOxState = Math.abs(anion.getOxidationState());
             int catOxState = cation.getOxidationState();
-            return new IonicParts(anions, catOxState % anOxState == 0 ? 1 : catOxState);
+            return new IonicParts(anion, anOxState > 0 && catOxState % anOxState == 0 ? catOxState / anOxState : catOxState);
         }
         return null;
     }

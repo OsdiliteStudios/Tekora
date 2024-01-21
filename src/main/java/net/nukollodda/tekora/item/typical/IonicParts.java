@@ -37,7 +37,7 @@ public class IonicParts {
     private final int count;
     public IonicParts(Ions pIon, int num) {
         this.ion = pIon;
-        this.count = num;
+        this.count = num > 0 ? num : 1;
     }
 
     public IonicParts(Ions pIon) {
@@ -54,7 +54,17 @@ public class IonicParts {
 
     @Override
     public String toString() {
-        return ion.getSymbol() + count;
+        String symbol = ion.getSymbol();
+        String cnt = (count > 1 ? count : "") + "";
+        if (count > 1) {
+            for (char c : symbol.toCharArray()) {
+                if (Character.isDigit(c)) {
+                    symbol = "(" + symbol + ")";
+                    break;
+                }
+            }
+        }
+        return symbol + cnt;
     }
 
     private static Cations[] addToList(Cations[] pCations, Cations... pNewCations) {

@@ -102,7 +102,7 @@ public class InfusionRecipe implements Recipe<SimpleContainer> {
     public static class Serializer implements RecipeSerializer<InfusionRecipe> {
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID =
-                new ResourceLocation(Tekora.MODID, "infusion");
+                new ResourceLocation(Tekora.MODID, Type.ID);
 
         @Override
         public InfusionRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {

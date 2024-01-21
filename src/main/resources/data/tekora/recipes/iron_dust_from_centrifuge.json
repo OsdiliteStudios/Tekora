@@ -1,0 +1,17 @@
+{
+  "type": "tekora:centrifuge",
+  "ingredient": {
+    "tag": "forge:raw_materials/iron"
+  },
+  "outputs": [
+    {
+      "item": "tekora:iron_dust",
+      "count": 1,
+      "chance": 0.5
+    },
+    {
+      "item": "tekora:manganese_dust",
+      "chance": 0.11111
+    }
+  ]
+}

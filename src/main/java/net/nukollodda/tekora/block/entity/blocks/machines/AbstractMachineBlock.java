@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class AbstractMachineBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    public static final BooleanProperty PROCESSING = BooleanProperty.create("processing"); // will be used later on
     public AbstractMachineBlock(float strength, SoundType sound) {
         super(Properties.of()
                 .strength(strength).requiresCorrectToolForDrops().sound(sound).noOcclusion());

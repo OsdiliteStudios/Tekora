@@ -1,0 +1,17 @@
+{
+  "type": "tekora:pulverization",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/tin"
+    }
+  ],
+  "output": {
+    "item": "tekora:tin_dust",
+    "count": 1,
+    "chance": 0.5
+  },
+  "residue": {
+    "item": "tekora:wolframite_piece",
+    "chance": 0.25
+  }
+}

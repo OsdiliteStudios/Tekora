@@ -8,18 +8,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.fluids.FluidType;
 import net.nukollodda.tekora.block.entity.blocks.generators.HydroelectricGeneratorBlock;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
-import net.nukollodda.tekora.block.fluid.TekoraFluidType;
-import net.nukollodda.tekora.block.fluid.blocks.TekoraGasBlock;
+import net.nukollodda.tekora.fluid.TekoraChemicalFluidType;
+import net.nukollodda.tekora.block.fluids.TekoraGasBlock;
 import net.nukollodda.tekora.menu.HydroelectricGeneratorMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class HydroelectricGeneratorEntity extends AbstractElectricGeneratorEntity {
     public HydroelectricGeneratorEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.HYDROELECTRIC_GENERATOR.get(), pPos, pBlockState, 2048, 64);
+        this(pPos, pBlockState, 1);
+    }
+    public HydroelectricGeneratorEntity(BlockPos pPos, BlockState pBlockState, int tier) {
+        super(TekoraBlockEntities.HYDROELECTRIC_GENERATOR.get(), pPos, pBlockState, (int)(Math.pow(2, 11 + tier)), (int)(Math.pow(2, 5 + tier)));
     }
 
     @Nullable
@@ -52,12 +54,10 @@ public class HydroelectricGeneratorEntity extends AbstractElectricGeneratorEntit
                             state.getValue(HydroelectricGeneratorBlock.WATERLOGGED) &&
                             state.hasProperty(HydroelectricGeneratorBlock.FACING)) {
                         int energyMade = 0;
-                        Direction entDir = state.getValue(HydroelectricGeneratorBlock.FACING);
                         final BlockState above = this.level.getBlockState(this.getBlockPos().relative(Direction.UP));
-                        final BlockState behind = this.level.getBlockState(this.getBlockPos().relative(entDir));
                         if (state.hasProperty(HydroelectricGeneratorBlock.WATERLOGGED) &&
                                 state.getValue(HydroelectricGeneratorBlock.WATERLOGGED)) {
-                            energyMade += makeEnergy(above) + makeEnergy(behind);
+                            energyMade += makeEnergy(above);
                         }
                         this.changeEnergy(energyMade);
                     }
@@ -72,7 +72,7 @@ public class HydroelectricGeneratorEntity extends AbstractElectricGeneratorEntit
         if (pState.getBlock() instanceof LiquidBlock liquid && liquid.getFluid().getFluidType().getTemperature() < 400) {
             FluidType type = liquid.getFluid().getFluidType();
             if (!(liquid instanceof TekoraGasBlock) &&
-                    !(type instanceof TekoraFluidType fluid && fluid.isMetallic())) {
+                    !(type instanceof TekoraChemicalFluidType fluid && fluid.isMetallic())) {
                 final int viscosity = type.getViscosity() / 20;
                 final int density = type.getDensity() / 100;
                 return viscosity / density;

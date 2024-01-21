@@ -1,0 +1,21 @@
+{
+  "type": "tekora:centrifuge",
+  "ingredient": {
+    "tag": "forge:raw_materials/copper"
+  },
+  "outputs": [
+    {
+      "item": "tekora:copper_dust",
+      "count": 1,
+      "chance": 0.5
+    },
+    {
+      "item": "tekora:molybdenum_dust",
+      "chance": 0.11111
+    },
+    {
+      "item": "tekora:arsenic_dust",
+      "chance": 0.11111
+    }
+  ]
+}

@@ -13,11 +13,11 @@ import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekora
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ElectricInfuserEntity extends AbstractTekoraMachineEntity { // note: fluid handling will be dealt with here
+public class ElectricInfuserEntity { // note: fluid handling will be dealt with here
     protected final ItemStackHandler itemHandler = new ItemStackHandler(4) {
         @Override
         protected void onContentsChanged(int slot) {
-            setChanged(); // if a change happens to this block, the block gets reloaded
+            // setChanged(); // if a change happens to this block, the block gets reloaded
         }
 
         @Override
@@ -27,21 +27,21 @@ public class ElectricInfuserEntity extends AbstractTekoraMachineEntity { // note
     };
 
     public ElectricInfuserEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int containerSize) {
-        super(pType, pPos, pBlockState, containerSize);
+        // super(pType, pPos, pBlockState, containerSize);
     }
 
-    @Override
+    //@Override
     public @Nullable AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return null;
     }
 
-    @Override
+    //@Override
     protected boolean hasRecipe() {
         // note: for all instances where coal is the catalyst and the input is a carbonate/oxide, the material will purify
         return false;
     }
 
-    @Override
+    //@Override
     protected void craftItem() {
 
     }

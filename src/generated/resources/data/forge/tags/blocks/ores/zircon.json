@@ -1,8 +1,6 @@
 {
   "values": [
     "tekora:deepslate_zircon_ore",
-    "tekora:granite_zircon_ore",
-    "tekora:sandstone_zircon_ore",
     "tekora:zircon_ore"
   ]
 }

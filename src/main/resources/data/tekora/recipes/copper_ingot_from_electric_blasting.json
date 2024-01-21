@@ -7,34 +7,5 @@
   ],
   "output": {
     "item": "minecraft:copper_ingot"
-  },
-  "cations": [
-    {
-      "symbol": "Al",
-      "count": 3
-    },
-    {
-      "symbol": "Si",
-      "count": 2
-    },
-    {
-      "symbol": "Zn",
-      "count": 2
-    },
-    {
-      "symbol": "As"
-    },
-    {
-      "symbol": "Mo"
-    }
-  ],
-  "anions": [
-    {
-      "symbol": "O",
-      "count": 2
-    },
-    {
-      "symbol": "S"
-    }
-  ]
+  }
 }

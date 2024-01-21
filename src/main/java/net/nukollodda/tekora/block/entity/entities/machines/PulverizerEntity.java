@@ -19,28 +19,28 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.nukollodda.tekora.block.entity.blocks.machines.AbstractMachineBlock;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraBasicMachineEntity;
-import net.nukollodda.tekora.menu.CrusherMenu;
+import net.nukollodda.tekora.menu.PulverizerMenu;
 import net.nukollodda.tekora.recipes.types.PulverizingRecipe;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class PulverizerEntity extends AbstractTekoraBasicMachineEntity {
+public class PulverizerEntity extends AbstractTekoraBasicMachineEntity<PulverizingRecipe> {
+
     public PulverizerEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.PULVERIZER.get(), pPos, pBlockState);
     }
-
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
-        return new CrusherMenu(id, inv, this, this.data);
+        return new PulverizerMenu(id, inv, this, this.data);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         tag.put("inventory", itemHandler.serializeNBT());
         tag.putInt("pulverizer.progress", this.progress);
-        tag.putInt("pulverizer.electricity", ENERGY_STORAGE.getEnergyStored());
+        tag.putInt("pulverizer.electricity", energyStorage.getEnergyStored());
         super.saveAdditional(tag);
     }
 
@@ -49,7 +49,7 @@ public class PulverizerEntity extends AbstractTekoraBasicMachineEntity {
         super.load(tag);
         itemHandler.deserializeNBT(tag.getCompound("inventory"));
         this.progress = tag.getInt("pulverizer.progress");
-        this.ENERGY_STORAGE.setEnergy(tag.getInt("pulverizer.electricity"));
+        this.energyStorage.setEnergy(tag.getInt("pulverizer.electricity"));
     }
 
     public void drops() {
@@ -65,18 +65,26 @@ public class PulverizerEntity extends AbstractTekoraBasicMachineEntity {
     public static void tick(Level level, BlockPos pos, BlockState state, PulverizerEntity entity) {
         if (level.isClientSide()) {
             return;
-        } // if a recipe exists, the tick does something
+        }
         if (entity.hasElectricity()) {
             state = state.setValue(AbstractMachineBlock.LIT, true);
             level.setBlock(pos, state, 3);
+        } else {
+            state = state.setValue(AbstractMachineBlock.LIT, false);
+            level.setBlock(pos, state, 3);
         }
 
-        if ((entity.hasRecipe() || entity.hasHardCodedRecipe()) && entity.hasEnoughElectricity()) {
-            entity.progress++;
-            entity.ENERGY_STORAGE.extractEnergy(ENERGY_REQ, false);
-            setChanged(level, pos, state);
-            if (entity.progress > entity.maxProgress) { // crafts the item
-                entity.craftItem();
+        SimpleContainer inv = entity.getContainer();
+        Optional<PulverizingRecipe> recipe = entity.getRecipe(inv);
+        if (recipe.isPresent()) {
+            PulverizingRecipe obtRecipe = recipe.get();
+            if ((entity.hasRecipe(obtRecipe, inv) || entity.hasHardCodedRecipe()) && entity.hasEnoughElectricity()) {
+                entity.progress++;
+                entity.energyStorage.extractEnergy(ENERGY_REQ, false);
+                setChanged(level, pos, state);
+                if (entity.progress > entity.maxProgress) { // crafts the item
+                    entity.craftItem(obtRecipe, inv);
+                }
             }
         } else {
             entity.resetProgress();
@@ -85,21 +93,26 @@ public class PulverizerEntity extends AbstractTekoraBasicMachineEntity {
     }
 
     @Override
-    protected boolean hasRecipe() {
-        Level level = this.level;
+    protected boolean hasRecipe(PulverizingRecipe pRecipe, SimpleContainer pContainer) {
+        return canInsertItemIntoOutputSlot(pContainer, pRecipe.getResultItem(level.registryAccess()))
+                && canInsertAmountIntoResidueSlot(pContainer) && canInsertItemIntoResidueSlot(pContainer, pRecipe.getResidue());
+    }
+
+    @Override
+    protected SimpleContainer getContainer() {
         SimpleContainer inv = new SimpleContainer(this.itemHandler.getSlots()); // makes an inventory from the block
         for (int i = 0; i < this.itemHandler.getSlots(); i++) {
             inv.setItem(i, this.itemHandler.getStackInSlot(i));
         }
-
-        Optional<PulverizingRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(PulverizingRecipe.Type.INSTANCE, inv, level);
-
-        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inv) &&
-                canInsertItemIntoOutputSlot(inv, recipe.get().getResultItem(level.registryAccess()));
+        return inv;
     }
 
     @Override
+    protected Optional<PulverizingRecipe> getRecipe(SimpleContainer pContainer) {
+        return level.getRecipeManager()
+                .getRecipeFor(PulverizingRecipe.Type.INSTANCE, pContainer, level);
+    }
+
     protected ItemStack getHardCodedRecipeResult() {
         SimpleContainer inv = new SimpleContainer(this.itemHandler.getSlots());
         inv.setItem(0, this.itemHandler.getStackInSlot(0));
@@ -110,17 +123,26 @@ public class PulverizerEntity extends AbstractTekoraBasicMachineEntity {
         Ingredient.TagValue items = new Ingredient.TagValue(itemTag);
         ItemStack tagItem = items.getItems().toArray(new ItemStack[0])[0];
         if (!tagItem.getItem().equals(Items.BARRIER) &&
-                canInsertItemIntoOutputSlot(inv, tagItem) && canInsertAmountIntoOutputSlot(inv)) {
-            tagItem.setCount(this.itemHandler.getStackInSlot(1).getCount() + 1);
+                canInsertItemIntoOutputSlot(inv, tagItem)) {
+            tagItem.setCount(this.itemHandler.getStackInSlot(2).getCount() + 1);
             return tagItem;
         }
         return null;
     }
 
-    @Override
-    protected Item getJsonRecipeOutput(SimpleContainer inv, Level level) {
+    protected ItemStack getJsonRecipeOutput(SimpleContainer inv, Level level) {
         Optional<PulverizingRecipe> recipe = level.getRecipeManager()
                 .getRecipeFor(PulverizingRecipe.Type.INSTANCE, inv, level);
-        return recipe.get().getResultItem(level.registryAccess()).getItem();
+        ItemStack result = recipe.get().getResultItem(level.registryAccess());
+        result.setCount(result.getCount() + (recipe.get().getExtraOutputChance() > Math.random() ? 1 : 0) + inv.getItem(2).getCount());
+        return result;
+    }
+
+    protected ItemStack getJsonRecipeResidue(SimpleContainer inv, Level level) {
+        Optional<PulverizingRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(PulverizingRecipe.Type.INSTANCE, inv, level);
+        ItemStack residue = recipe.get().getResidue();
+        residue.setCount(residue.getCount() - (recipe.get().getExtraResidueChance() > Math.random() ? 0 : 1) + inv.getItem(1).getCount());
+        return residue;
     }
 }

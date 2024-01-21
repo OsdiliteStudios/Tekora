@@ -2,8 +2,8 @@
   "parent": "minecraft:block/orientable",
   "textures": {
     "front": "tekora:block/pulverizer_front_on",
-    "side": "tekora:block/electric_furnace_side",
-    "top": "tekora:block/electric_furnace_top",
-    "bottom": "tekora:block/electric_furnace_bottom"
+    "side": "tekora:block/basic_machine_side",
+    "top": "tekora:block/basic_machine_top",
+    "bottom": "tekora:block/basic_machine_bottom"
   }
 }

@@ -11,9 +11,10 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 import net.nukollodda.tekora.block.TekoraBlocks;
 import net.nukollodda.tekora.block.entity.entities.machines.ElectricFurnaceEntity;
+import net.nukollodda.tekora.menu.types.AbstractTekoraElectricMenu;
 import net.nukollodda.tekora.menu.types.AbstractTekoraMenu;
 
-public class ElectricFurnaceMenu extends AbstractTekoraMenu {
+public class ElectricFurnaceMenu extends AbstractTekoraElectricMenu {
     public final ElectricFurnaceEntity blockEnt;
 
     public ElectricFurnaceMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
@@ -21,12 +22,11 @@ public class ElectricFurnaceMenu extends AbstractTekoraMenu {
     }
 
     public ElectricFurnaceMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(TekoraMenuTypes.ELECTRIC_FURNACE_MENU.get(), inv, data, id, 3);
+        super(TekoraMenuTypes.ELECTRIC_FURNACE_MENU.get(), inv, data, id, 2);
         this.blockEnt = (ElectricFurnaceEntity) entity;
-        this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> { // adds the slots themselves
-            this.addSlot(new SlotItemHandler(handler, 0, 79, 53));
-            this.addSlot(new SlotItemHandler(handler, 1, 56, 26));
-            this.addSlot(new SlotItemHandler(handler, 2, 116, 26));
+        this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+            this.addSlot(new SlotItemHandler(handler, 0, 56, 26));
+            this.addSlot(new SlotItemHandler(handler, 1, 116, 26));
         });
 
         addDataSlots(data);

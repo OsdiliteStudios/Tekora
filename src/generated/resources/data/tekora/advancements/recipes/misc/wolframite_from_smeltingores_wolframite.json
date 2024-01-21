@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:wolframite_from_smeltingores_wolframite"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wolframite": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ores/wolframite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_wolframite",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:wolframite_from_smeltingores_wolframite"
+    ]
+  },
+  "sends_telemetry_event": false
+}

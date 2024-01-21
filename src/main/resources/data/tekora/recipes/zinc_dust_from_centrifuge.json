@@ -1,0 +1,17 @@
+{
+  "type": "tekora:centrifuge",
+  "ingredient": {
+    "tag": "forge:raw_materials/zinc"
+  },
+  "outputs": [
+    {
+      "item": "tekora:zinc_dust",
+      "count": 1,
+      "chance": 0.5
+    },
+    {
+      "item": "tekora:cadmium_dust",
+      "chance": 0.11111
+    }
+  ]
+}

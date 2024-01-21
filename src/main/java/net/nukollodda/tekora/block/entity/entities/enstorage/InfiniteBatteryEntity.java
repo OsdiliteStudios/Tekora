@@ -10,6 +10,10 @@ public class InfiniteBatteryEntity extends BatteryEntity {
     }
 
     @Override
+    public void changeEnergy(int pAmount) {
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (maxEnergy() > currentEnergy()) {

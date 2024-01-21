@@ -23,8 +23,14 @@ public class TekoraMenuTypes {
     public static final RegistryObject<MenuType<ElectricFurnaceMenu>> ELECTRIC_FURNACE_MENU =
             registerMenuType(ElectricFurnaceMenu::new, "electric_furnace_menu");
 
-    public static final RegistryObject<MenuType<CrusherMenu>> CRUSHER_MENU =
-            registerMenuType(CrusherMenu::new, "crusher_menu");
+    public static final RegistryObject<MenuType<CompressorMenu>> COMPRESSOR_MENU =
+            registerMenuType(CompressorMenu::new, "compressor_menu");
+
+    public static final RegistryObject<MenuType<PulverizerMenu>> PULVERIZER_MENU =
+            registerMenuType(PulverizerMenu::new, "pulverizer_menu");
+
+    public static final RegistryObject<MenuType<CentrifugeMenu>> CENTRIFUGE_MENU =
+            registerMenuType(CentrifugeMenu::new, "centrifuge_menu");
 
     public static final RegistryObject<MenuType<BatteryMenu>> BATTERY_MENU =
             registerMenuType(BatteryMenu::new, "battery_menu");

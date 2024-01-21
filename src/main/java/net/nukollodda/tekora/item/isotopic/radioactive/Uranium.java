@@ -22,8 +22,7 @@ public class Uranium extends AbstractRadioactiveItem {
         pTooltipComponents.add(Component.translatable("msg.tekora.isoratio"));
         textMaker(pStack, pTooltipComponents);
         pTooltipComponents.add(Component.translatable("msg.tekora.rad"));
-        pTooltipComponents.add(Component.literal(AbstractRadioactiveItem.formatRad(getRadiation(pStack)))
-                .withStyle(AbstractRadioactiveItem.radColor(getRadiation(pStack))));
+        pTooltipComponents.add(AbstractRadioactiveItem.radComponent(getRadiation(pStack)));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
@@ -211,20 +210,28 @@ public class Uranium extends AbstractRadioactiveItem {
             this.anion = pAnion.toUpperCase();
             this.oxidationState = pOxState == 6 ? pOxState : 4;
         }
+        @Override
+        public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+            IonicParts cation = getCation();
+            IonicParts anion = getAnion();
+            if (cation != null && anion != null) {
+                pTooltipComponents.add(Component.literal(cation.toString() + anion.toString()).withStyle(ChatFormatting.GRAY));
+            }
+            super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        }
 
         @Override
         public IonicParts getCation() {
             IonicParts.Anions anion = IonicParts.Anions.valueOf(this.anion);
             int anOxState = Math.abs(anion.getOxidationState());
-            int catCount = anOxState % oxidationState == 0 ? 1 : anOxState;
-            return new IonicParts(IonicParts.Cations.PROTACTINIUM, catCount);
+            return new IonicParts(IonicParts.Cations.URANIUM, anOxState > 0 && oxidationState % anOxState == 0 ? 1 : oxidationState);
         }
 
         @Override
         public IonicParts getAnion() {
             IonicParts.Anions anion = IonicParts.Anions.valueOf(this.anion);
             int anOxState = Math.abs(anion.getOxidationState());
-            return new IonicParts(anion, oxidationState % anOxState == 0 ? 1 : oxidationState);
+            return new IonicParts(anion, anOxState > 0 && oxidationState % anOxState == 0 ? oxidationState / anOxState : oxidationState);
         }
     }
 }

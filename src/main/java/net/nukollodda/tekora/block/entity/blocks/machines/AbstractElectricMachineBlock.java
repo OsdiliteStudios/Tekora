@@ -25,6 +25,7 @@ public abstract class AbstractElectricMachineBlock extends AbstractMachineBlock 
             double d0 = pPos.getX() + 0.5;
             double d1 = pPos.getY();
             double d2 = pPos.getZ() + 0.5;
+            // todo, make a custom sound
             if (pRandom.nextDouble() < 0.1) {
                 pLevel.playLocalSound(d0, d1, d2, SoundEvents.BEE_LOOP, SoundSource.BLOCKS, 1.0f, 1.0f, false);
             }

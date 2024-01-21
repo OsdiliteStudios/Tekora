@@ -1,0 +1,11 @@
+{
+  "type": "tekora:blasting",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/zinc"
+    }
+  ],
+  "output": {
+    "item": "tekora:zinc_ingot"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:raw_lead_block}",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/lead"
+    },
+    {
+      "tag": "forge:raw_materials/lead"
+    },
+    {
+      "tag": "forge:raw_materials/lead"
+    },
+    {
+      "tag": "forge:raw_materials/lead"
+    },
+    {
+      "tag": "forge:raw_materials/lead"
+    },
+    {
+      "tag": "forge:raw_materials/lead"
+    },
+    {
+      "tag": "forge:raw_materials/lead"
+    },
+    {
+      "tag": "forge:raw_materials/lead"
+    },
+    {
+      "tag": "forge:raw_materials/lead"
+    }
+  ],
+  "result": {
+    "item": "tekora:raw_lead_block"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "tag": "forge:dusts/coal"
+  },
+  "output": {
+    "item": "minecraft:coal"
+  }
+}

@@ -6,10 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
-import net.nukollodda.tekora.recipes.types.AlloyingRecipe;
-import net.nukollodda.tekora.recipes.types.CrushingRecipe;
-import net.nukollodda.tekora.recipes.types.ElectricBlastingRecipe;
-import net.nukollodda.tekora.recipes.types.InfusionRecipe;
+import net.nukollodda.tekora.recipes.types.*;
 
 public class TekoraRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
@@ -21,11 +18,23 @@ public class TekoraRecipes {
     public static final RegistryObject<RecipeSerializer<AlloyingRecipe>> ALLOYING_SERIALIZER =
             SERIALIZERS.register("alloying", () -> AlloyingRecipe.Serializer.INSTANCE);
 
-    public static final RegistryObject<RecipeSerializer<CrushingRecipe>> CRUSHING_SERIALIZER =
-            SERIALIZERS.register("crushing", () -> CrushingRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<CentrifugeRecipe>> CENTRIFUGE_SERIALIZER =
+            SERIALIZERS.register("centrifuge", () -> CentrifugeRecipe.Serializer.INSTANCE);
+
+    public static final RegistryObject<RecipeSerializer<CompressionRecipe>> COMPRESSION_SERIALIZER =
+            SERIALIZERS.register("compression", () -> CompressionRecipe.Serializer.INSTANCE);
+
+    public static final RegistryObject<RecipeSerializer<CuttingRecipe>> CUTTING_SERIALIZER =
+            SERIALIZERS.register("cutting", () -> CuttingRecipe.Serializer.INSTANCE);
+
+    public static final RegistryObject<RecipeSerializer<ExtrusionRecipe>> EXTRUSION_SERIALIZER =
+            SERIALIZERS.register("extrusion", () -> ExtrusionRecipe.Serializer.INSTANCE);
 
     public static final RegistryObject<RecipeSerializer<ElectricBlastingRecipe>> BLASTING_SERIALIZER =
             SERIALIZERS.register("blasting", () -> ElectricBlastingRecipe.Serializer.INSTANCE);
+
+    public static final RegistryObject<RecipeSerializer<PulverizingRecipe>> PULVERIZATION_SERIALIZER =
+            SERIALIZERS.register("pulverization", () -> PulverizingRecipe.Serializer.INSTANCE);
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);
     }

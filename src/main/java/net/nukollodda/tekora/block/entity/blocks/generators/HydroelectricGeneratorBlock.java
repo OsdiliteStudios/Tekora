@@ -43,7 +43,7 @@ public class HydroelectricGeneratorBlock extends AbstractGenerator implements Fl
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new HydroelectricGeneratorEntity(pPos, pState);
+        return new HydroelectricGeneratorEntity(pPos, pState, 2);
     }
 
     @Override

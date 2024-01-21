@@ -13,11 +13,11 @@ import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekora
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ElectricAlloyerEntity extends AbstractTekoraMachineEntity {
+public class ElectricAlloyerEntity {
     protected final ItemStackHandler itemHandler = new ItemStackHandler(6) {
         @Override
         protected void onContentsChanged(int slot) {
-            setChanged(); // if a change happens to this block, the block gets reloaded
+            // setChanged();
         }
 
         @Override
@@ -27,20 +27,20 @@ public class ElectricAlloyerEntity extends AbstractTekoraMachineEntity {
     };
 
     public ElectricAlloyerEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int containerSize) {
-        super(pType, pPos, pBlockState, containerSize);
+        // super(pType, pPos, pBlockState, containerSize);
     }
 
-    @Override
+    // @Override
     public @Nullable AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return null;
     }
 
-    @Override
+    // @Override
     protected boolean hasRecipe() {
         return false;
     }
 
-    @Override
+    // @Override
     protected void craftItem() {
 
     }

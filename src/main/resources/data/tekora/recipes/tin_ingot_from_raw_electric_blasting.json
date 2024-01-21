@@ -1,0 +1,11 @@
+{
+  "type": "tekora:blasting",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/tin"
+    }
+  ],
+  "output": {
+    "item": "tekora:tin_ingot"
+  }
+}

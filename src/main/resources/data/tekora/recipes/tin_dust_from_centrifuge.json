@@ -1,0 +1,17 @@
+{
+  "type": "tekora:centrifuge",
+  "ingredient": {
+    "tag": "forge:raw_materials/tin"
+  },
+  "outputs": [
+    {
+      "item": "tekora:tin_dust",
+      "count": 1,
+      "chance": 0.5
+    },
+    {
+      "item": "tekora:wolframite",
+      "chance": 0.11111
+    }
+  ]
+}

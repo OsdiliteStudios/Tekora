@@ -1,6 +1,5 @@
 package net.nukollodda.tekora.block.entity.entities;
 
-import ca.weblite.objc.Proxy;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -27,15 +26,31 @@ public class TekoraBlockEntities {
                 BlockEntityType.Builder.of(InfusionFurnaceEntity::new,
                     TekoraBlocks.INFUSION_FURNACE.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<CrusherEntity>> CRUSHER =
-            BLOCK_ENTITIES.register("crusher", () ->
-                BlockEntityType.Builder.of(CrusherEntity::new,
-                    TekoraBlocks.CRUSHER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<CompressorEntity>> COMPRESSOR =
+            BLOCK_ENTITIES.register("compressor", () ->
+                BlockEntityType.Builder.of(CompressorEntity::new,
+                    TekoraBlocks.COMPRESSOR.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<CutterEntity>> CUTTER =
+            BLOCK_ENTITIES.register("cutter", () ->
+                    BlockEntityType.Builder.of(CutterEntity::new,
+                            TekoraBlocks.CUTTER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ExtruderEntity>> EXTRUDER =
+            BLOCK_ENTITIES.register("extruder", () ->
+                    BlockEntityType.Builder.of(ExtruderEntity::new,
+                            TekoraBlocks.EXTRUDER.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<ElectricFurnaceEntity>> ELECTRIC_FURNACE =
             BLOCK_ENTITIES.register("electric_furnace", () ->
                 BlockEntityType.Builder.of(ElectricFurnaceEntity::new,
                     TekoraBlocks.ELECTRIC_FURNACE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<CentrifugeEntity>> CENTRIFUGE =
+            BLOCK_ENTITIES.register("centrifuge", () ->
+                    BlockEntityType.Builder.of(CentrifugeEntity::new,
+                            TekoraBlocks.CENTRIFUGE.get()).build(null));
+
 
     public static final RegistryObject<BlockEntityType<InfiniteBatteryEntity>> INFINITE_BATTERY =
             BLOCK_ENTITIES.register("infinite_battery", () ->

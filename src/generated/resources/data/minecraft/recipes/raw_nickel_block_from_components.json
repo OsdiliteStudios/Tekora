@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:raw_nickel_block}",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/nickel"
+    },
+    {
+      "tag": "forge:raw_materials/nickel"
+    },
+    {
+      "tag": "forge:raw_materials/nickel"
+    },
+    {
+      "tag": "forge:raw_materials/nickel"
+    },
+    {
+      "tag": "forge:raw_materials/nickel"
+    },
+    {
+      "tag": "forge:raw_materials/nickel"
+    },
+    {
+      "tag": "forge:raw_materials/nickel"
+    },
+    {
+      "tag": "forge:raw_materials/nickel"
+    },
+    {
+      "tag": "forge:raw_materials/nickel"
+    }
+  ],
+  "result": {
+    "item": "tekora:raw_nickel_block"
+  }
+}

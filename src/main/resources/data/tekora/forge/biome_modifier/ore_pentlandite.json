@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#minecraft:is_overworld",
-  "features": "tekora:ore_pentlandite",
-  "step": "underground_decoration"
-}

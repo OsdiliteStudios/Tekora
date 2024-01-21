@@ -9,6 +9,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.item.TekoraItems;
+import net.nukollodda.tekora.item.containers.TekoraBucketItem;
 
 public class TekoraItemModelProvider extends ItemModelProvider {
     public TekoraItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -17,64 +18,51 @@ public class TekoraItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        simpleItem(TekoraItems.APATITE);
+        simpleItem(TekoraItems.RAW_LEAD);
+        simpleItem(TekoraItems.RAW_SILVER);
+        simpleItem(TekoraItems.RAW_PLATINUM);
+        simpleItem(TekoraItems.RAW_TIN);
+        simpleItem(TekoraItems.RAW_ZINC);
+
         simpleItem(TekoraItems.AQUAMARINE);
         simpleItem(TekoraItems.BAUXITE);
-        simpleItem(TekoraItems.CASSITERITE);
         simpleItem(TekoraItems.CHROMITE);
         simpleItem(TekoraItems.CINNABAR);
-        simpleItem(TekoraItems.GALENA);
-        simpleItem(TekoraItems.GARNET);
-        simpleItem(TekoraItems.PENTLANDITE);
-        simpleItem(TekoraItems.RAW_SILVER);
+        simpleItem(TekoraItems.RAW_NICKEL);
         simpleItem(TekoraItems.RUBY);
         simpleItem(TekoraItems.SAPPHIRE);
         simpleItem(TekoraItems.URANINITE);
         simpleItem(TekoraItems.ZIRCON);
 
-        simpleItem(TekoraItems.BASTNAESITE_SHARD);
-        simpleItem(TekoraItems.MAGNETITE_SHARD);
         simpleItem(TekoraItems.MONAZITE_SHARD);
-        simpleItem(TekoraItems.ORPIMENT_SHARD);
         simpleItem(TekoraItems.RUTILE_SHARD);
-        simpleItem(TekoraItems.SCHEELITE_SHARD);
-        simpleItem(TekoraItems.SPERRYLITE_SHARD);
-        simpleItem(TekoraItems.STIBNITE_SHARD);
 
         simpleItem(TekoraItems.COLTAN_PIECE);
-        simpleItem(TekoraItems.PYRITE_PIECE);
         simpleItem(TekoraItems.PYROLUSITE_PIECE);
-        simpleItem(TekoraItems.SPHALERITE_PIECE);
-        simpleItem(TekoraItems.THORITE_PIECE);
         simpleItem(TekoraItems.WOLFRAMITE_PIECE);
 
-        simpleItem(TekoraItems.BASTNAESITE);
         simpleItem(TekoraItems.COLTAN);
-        simpleItem(TekoraItems.MAGNETITE);
         simpleItem(TekoraItems.MONAZITE);
-        simpleItem(TekoraItems.ORPIMENT);
-        simpleItem(TekoraItems.PYRITE);
         simpleItem(TekoraItems.PYROLUSITE);
-        simpleItem(TekoraItems.RUTILE);
-        simpleItem(TekoraItems.SCHEELITE);
-        simpleItem(TekoraItems.SPERRYLITE);
-        simpleItem(TekoraItems.SPHALERITE);
-        simpleItem(TekoraItems.STIBNITE);
-        simpleItem(TekoraItems.THORITE);
         simpleItem(TekoraItems.WOLFRAMITE);
+        simpleItem(TekoraItems.RUTILE);
 
-        simpleItem(TekoraItems.CLEANED_MONAZITE);
-        simpleItem(TekoraItems.CLEANED_SPERRYLITE);
-        simpleItem(TekoraItems.CLEANED_SPHALERITE);
-        simpleItem(TekoraItems.CLEANED_ZIRCON);
-        simpleItem(TekoraItems.PURE_BERYL);
-        simpleItem(TekoraItems.PURE_COLTAN);
-        simpleItem(TekoraItems.PURE_DOLOMITE);
-        simpleItem(TekoraItems.PURE_MONAZITE);
-        simpleItem(TekoraItems.PURE_SPERRYLITE);
-        simpleItem(TekoraItems.PURE_ZIRCON);
-        simpleItem(TekoraItems.FLUOROCOLUMBITE);
-        simpleItem(TekoraItems.QUADRUPLET_BASTNASITE);
+        simpleItem(TekoraItems.PULVERIZED_ANCIENT_DEBRIS);
+        simpleItem(TekoraItems.PULVERIZED_AQUAMARINE_ORE);
+        simpleItem(TekoraItems.PULVERIZED_BAUXITE_ORE);
+        simpleItem(TekoraItems.PULVERIZED_CINNABAR_ORE);
+        simpleItem(TekoraItems.PULVERIZED_COAL_ORE);
+        simpleItem(TekoraItems.PULVERIZED_DIAMOND_ORE);
+        simpleItem(TekoraItems.PULVERIZED_EMERALD_ORE);
+        simpleItem(TekoraItems.PULVERIZED_HALITE_ORE);
+        simpleItem(TekoraItems.PULVERIZED_LAPIS_ORE);
+        simpleItem(TekoraItems.PULVERIZED_QUARTZ_ORE);
+        simpleItem(TekoraItems.PULVERIZED_REDSTONE_ORE);
+        simpleItem(TekoraItems.PULVERIZED_RUBY_ORE);
+        simpleItem(TekoraItems.PULVERIZED_SAPPHIRE_ORE);
+        simpleItem(TekoraItems.PULVERIZED_URANINITE_ORE);
+        simpleItem(TekoraItems.PULVERIZED_WOLFRAMITE_ORE);
+        simpleItem(TekoraItems.PULVERIZED_ZIRCON_ORE);
 
         simpleItem(TekoraItems.DOLOMITE);
         simpleItem(TekoraItems.FLUORITE);
@@ -302,6 +290,13 @@ public class TekoraItemModelProvider extends ItemModelProvider {
 
         simpleItem(TekoraItems.COPPER_STEEL_DUST);
 
+        simpleItem(TekoraItems.ARSENIC_DUST);
+        simpleItem(TekoraItems.ANTIMONY_DUST);
+        simpleItem(TekoraItems.BORON_DUST);
+        simpleItem(TekoraItems.GERMANIUM_DUST);
+        simpleItem(TekoraItems.SILICON_DUST);
+        simpleItem(TekoraItems.TELLURIUM_DUST);
+
         simpleItem(TekoraItems.BRASS_DUST);
         simpleItem(TekoraItems.BRONZE_DUST);
         simpleItem(TekoraItems.CARBON_STEEL_DUST);
@@ -329,111 +324,13 @@ public class TekoraItemModelProvider extends ItemModelProvider {
         simpleItem(TekoraItems.POTASSIUM_PM);
         simpleItem(TekoraItems.SALT);
         simpleItem(TekoraItems.SILICA);
-        simpleItem(TekoraItems.SODIUM_CYANIDE);
 
-        simpleItem(TekoraItems.AMMONIUM_CHLORIDE);
-        simpleItem(TekoraItems.BERYLLIUM_CHLORIDE);
-        simpleItem(TekoraItems.CALCIUM_CHLORIDE);
-        simpleItem(TekoraItems.MAGNESIUM_CHLORIDE);
-        simpleItem(TekoraItems.POTASSIUM_CHLORIDE);
-
-        simpleItem(TekoraItems.ALUMINUM_FLUORIDE);
-        simpleItem(TekoraItems.BERYLLIUM_FLUORIDE);
-        simpleItem(TekoraItems.CALCIUM_FLUORIDE);
-        simpleItem(TekoraItems.LITHIUM_FLUORIDE);
-        simpleItem(TekoraItems.MAGNESIUM_FLUORIDE);
-        simpleItem(TekoraItems.SODIUM_FLUORIDE);
-        simpleItem(TekoraItems.THORIUM_TETRAFLUORIDE);
-        simpleItem(TekoraItems.URANIUM_TETRAFLUORIDE);
-        simpleItem(TekoraItems.NIOBIUM_PENTAFLUORIDE);
-        simpleItem(TekoraItems.TANTALUM_PENTAFLUORIDE);
-        simpleItem(TekoraItems.URANIUM_HEXAFLUORIDE);
-
-        simpleItem(TekoraItems.NICKEL_IODIDE);
         simpleItem(TekoraItems.POTASSIUM_IODIDE);
 
         simpleItem(TekoraItems.BORIC_ACID);
         simpleItem(TekoraItems.PHOSPHORIC_ACID);
         simpleItem(TekoraItems.SODIUM_HYDRIDE);
 
-        simpleItem(TekoraItems.CALCIUM_CARBONATE);
-        simpleItem(TekoraItems.MAGNESIUM_CARBONATE);
-        simpleItem(TekoraItems.NICKEL_CARBONATE);
-        itemSpecifiedTexture(TekoraItems.SODIUM_CARBONATE, "sodium_compound");
-        simpleItem(TekoraItems.PRASEODYMIUM_HYDROXIDE);
-        simpleItem(TekoraItems.POTASSIUM_HYDROXIDE);
-        itemSpecifiedTexture(TekoraItems.SODIUM_HYDROXIDE, "sodium_compound");
-        simpleItem(TekoraItems.CALCIUM_PHOSPHATE);
-        simpleItem(TekoraItems.COPPER_NITRATE);
-        simpleItem(TekoraItems.SILVER_NITRATE);
-        simpleItem(TekoraItems.ZINC_NITRATE);
-        itemSpecifiedTexture(TekoraItems.SODIUM_SULFITE, "sodium_compound");
-        simpleItem(TekoraItems.BARIUM_SULFATE);
-        simpleItem(TekoraItems.BERYLLIUM_SULFATE);
-        simpleItem(TekoraItems.CALCIUM_SULFATE);
-        simpleItem(TekoraItems.MAGNESIUM_SULFATE);
-        simpleItem(TekoraItems.POTASSIUM_SULFATE);
-        itemSpecifiedTexture(TekoraItems.SODIUM_SULFATE, "sodium_compound");
-        simpleItem(TekoraItems.STRONTIUM_SULFATE);
-        itemSpecifiedTexture(TekoraItems.SODIUM_THIOSULFATE, "sodium_compound");
-
-        simpleItem(TekoraItems.BARIUM_OXIDE);
-        simpleItem(TekoraItems.CADMIUM_OXIDE);
-        simpleItem(TekoraItems.CALCIUM_OXIDE);
-        simpleItem(TekoraItems.CHROMIUM_OXIDE);
-        simpleItem(TekoraItems.COBALT_OXIDE);
-        simpleItem(TekoraItems.DYSPROSIUM_OXIDE);
-        simpleItem(TekoraItems.ERBIUM_OXIDE);
-        simpleItem(TekoraItems.EUROPIUM_OXIDE);
-        simpleItem(TekoraItems.FERRIC_OXIDE);
-        simpleItem(TekoraItems.GADOLINIUM_OXIDE);
-        simpleItem(TekoraItems.HOLMIUM_OXIDE);
-        simpleItem(TekoraItems.LANTHANUM_OXIDE);
-        simpleItem(TekoraItems.LEAD_OXIDE);
-        simpleItem(TekoraItems.LUTETIUM_OXIDE);
-        simpleItem(TekoraItems.MAGNESIUM_OXIDE);
-        simpleItem(TekoraItems.MANGANESE_OXIDE);
-        simpleItem(TekoraItems.MOLYBDENUM_OXIDE);
-        simpleItem(TekoraItems.NEODYMIUM_OXIDE);
-        simpleItem(TekoraItems.POTASSIUM_OXIDE);
-        simpleItem(TekoraItems.PRASEODYMIUM_OXIDE);
-        simpleItem(TekoraItems.PROTACTINIUM_DIOXIDE);
-        simpleItem(TekoraItems.SAMARIUM_OXIDE);
-        simpleItem(TekoraItems.SCANDIUM_OXIDE);
-        itemSpecifiedTexture(TekoraItems.SODIUM_OXIDE, "sodium_compound");
-        simpleItem(TekoraItems.STRONTIUM_OXIDE);
-        simpleItem(TekoraItems.TERBIUM_OXIDE);
-        simpleItem(TekoraItems.THULIUM_OXIDE);
-        simpleItem(TekoraItems.TUNGSTEN_OXIDE);
-        simpleItem(TekoraItems.YTTERBIUM_OXIDE);
-        simpleItem(TekoraItems.YTTRIUM_OXIDE);
-        simpleItem(TekoraItems.CERIUM_DIOXIDE);
-        simpleItem(TekoraItems.MANGANESE_DIOXIDE);
-        simpleItem(TekoraItems.SELENIUM_DIOXIDE);
-        simpleItem(TekoraItems.THORIUM_DIOXIDE);
-        simpleItem(TekoraItems.TIN_DIOXIDE);
-        simpleItem(TekoraItems.TITANIUM_DIOXIDE);
-        simpleItem(TekoraItems.URANIUM_DIOXIDE);
-        simpleItem(TekoraItems.BORON_TRIOXIDE);
-        simpleItem(TekoraItems.PHOSPHORUS_PENTOXIDE);
-        simpleItem(TekoraItems.VANADIUM_PENTOXIDE);
-        simpleItem(TekoraItems.RHENIUM_HEPTOXIDE);
-
-        simpleItem(TekoraItems.BISMUTH_SULFIDE);
-        simpleItem(TekoraItems.CADMIUM_SULFIDE);
-        simpleItem(TekoraItems.COPPER_SULFIDE);
-        simpleItem(TekoraItems.FERRIC_SULFIDE);
-        simpleItem(TekoraItems.FERROUS_SULFIDE);
-        simpleItem(TekoraItems.GERMANIUM_SULFIDE);
-        simpleItem(TekoraItems.LEAD_SULFIDE);
-        simpleItem(TekoraItems.MANGANESE_SULFIDE);
-        simpleItem(TekoraItems.SODIUM_SULFIDE);
-        simpleItem(TekoraItems.THALLIUM_SULFIDE);
-        simpleItem(TekoraItems.ZINC_SULFIDE);
-        simpleItem(TekoraItems.MOLYBDENUM_DISULFIDE);
-        simpleItem(TekoraItems.RHENIUM_DISULFIDE);
-        simpleItem(TekoraItems.ARSENIC_TRISULFIDE);
-        simpleItem(TekoraItems.RESIDUE);
         simpleItem(TekoraItems.GENERIC_DUST);
 
         simpleItem(TekoraItems.COPPER_PLATE);
@@ -620,12 +517,36 @@ public class TekoraItemModelProvider extends ItemModelProvider {
         simpleItem(TekoraItems.THORIUM_TEMPLATE);
         simpleItem(TekoraItems.TUNGSTEN_STEEL_TEMPLATE);
         simpleItem(TekoraItems.VANASTEEL_TEMPLATE);
+
+        bucketItem(TekoraItems.AMMONIUM_HYDROXIDE_BUCKET);
+        bucketItem(TekoraItems.BROMINE_BUCKET);
+        bucketItem(TekoraItems.HYDROFLUORIC_ACID_BUCKET);
+        bucketItem(TekoraItems.NITRIC_ACID_BUCKET);
+        bucketItem(TekoraItems.SULFURIC_ACID_BUCKET);
+        bucketItem(TekoraItems.GALLIUM_BUCKET);
+        bucketItem(TekoraItems.MERCURY_BUCKET);
+
+        canisterItem(TekoraItems.TIN_CANISTER);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<? extends Item> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(Tekora.MODID,"item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder bucketItem(RegistryObject<? extends Item> item) {
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated"))
+                .texture("layer0", new ResourceLocation("tekora:item/bucket_liquid"))
+                .texture("layer1", new ResourceLocation("tekora:item/bucket"));
+    }
+
+    private ItemModelBuilder canisterItem(RegistryObject<? extends Item> item) {
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated"))
+                .texture("layer0", new ResourceLocation("tekora:item/canister_interior"))
+                .texture("layer1", new ResourceLocation("tekora:item/" + item.getId().getPath() + "_exterior"));
     }
 
     private ItemModelBuilder itemSpecifiedTexture(RegistryObject<Item> item, String texture) {

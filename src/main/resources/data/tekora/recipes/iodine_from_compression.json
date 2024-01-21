@@ -1,0 +1,9 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "tag": "forge:dusts/iodine"
+  },
+  "output": {
+    "item": "tekora:iodine_bar"
+  }
+}

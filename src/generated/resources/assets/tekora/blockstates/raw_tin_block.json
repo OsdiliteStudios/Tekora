@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "tekora:block/raw_tin_block"
+    }
+  }
+}

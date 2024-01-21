@@ -1,5 +1,9 @@
 package net.nukollodda.tekora.item.isotopic.radioactive;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.FloatTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -7,6 +11,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.nukollodda.tekora.item.typical.ICompounds;
 import net.nukollodda.tekora.item.typical.IonicParts;
+import net.nukollodda.tekora.util.DustUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -18,8 +23,7 @@ public class Thorium extends AbstractRadioactiveItem {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(Component.translatable("msg.tekora.rad"));
-        pTooltipComponents.add(Component.literal(AbstractRadioactiveItem.formatRad(getRadiation(pStack)))
-                .withStyle(AbstractRadioactiveItem.radColor(getRadiation(pStack))));
+        pTooltipComponents.add(AbstractRadioactiveItem.radComponent(getRadiation(pStack)));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
@@ -109,19 +113,41 @@ public class Thorium extends AbstractRadioactiveItem {
             this.anion = pAnion.toUpperCase();
         }
 
+        public ItemStack getDecayItem() {
+            ItemStack decayed = DustUtil.createDustFromIons(IonicParts.Cations.URANIUM.ordinal(), IonicParts.Anions.valueOf(anion).ordinal());
+            CompoundTag tag = decayed.getOrCreateTag();
+            ListTag list = new ListTag();
+            for (int i = 0; i < 4; i++) {
+                list.addTag(i, FloatTag.valueOf(0));
+            }
+            list.addTag(4, FloatTag.valueOf(1));
+            tag.put("isotopes", list);
+            decayed.setTag(tag);
+            return decayed;
+        }
+
+        @Override
+        public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+            IonicParts cation = getCation();
+            IonicParts anion = getAnion();
+            if (cation != null && anion != null) {
+                pTooltipComponents.add(Component.literal(cation.toString() + anion.toString()).withStyle(ChatFormatting.GRAY));
+            }
+            super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        }
+
         @Override
         public IonicParts getCation() {
             IonicParts.Anions anion = IonicParts.Anions.valueOf(this.anion);
             int anOxState = Math.abs(anion.getOxidationState());
-            int catCount = anOxState % 4 == 0 ? 1 : anOxState;
-            return new IonicParts(IonicParts.Cations.THORIUM, catCount);
+            return new IonicParts(IonicParts.Cations.THORIUM, anOxState > 0 && 4 % anOxState == 0 ? 1 : anOxState);
         }
 
         @Override
         public IonicParts getAnion() {
             IonicParts.Anions anion = IonicParts.Anions.valueOf(this.anion);
             int anOxState = Math.abs(anion.getOxidationState());
-            return new IonicParts(anion, 4 % anOxState == 0 ? 1 : 4);
+            return new IonicParts(anion, anOxState > 0 && 4 % anOxState == 0 ? 4 / anOxState : 4);
         }
     }
 }

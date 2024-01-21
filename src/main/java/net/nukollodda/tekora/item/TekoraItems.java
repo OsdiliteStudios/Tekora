@@ -1,7 +1,9 @@
 package net.nukollodda.tekora.item;
 
-import net.nukollodda.tekora.block.fluid.TekoraFluids;
+import net.nukollodda.tekora.fluid.TekoraFluids;
 import net.nukollodda.tekora.item.armors.TekoraArmor;
+import net.nukollodda.tekora.item.containers.Canister;
+import net.nukollodda.tekora.item.containers.TekoraBucketItem;
 import net.nukollodda.tekora.item.isotopic.Lithium;
 import net.nukollodda.tekora.item.isotopic.radioactive.*;
 import net.nukollodda.tekora.item.mixtures.Residue;
@@ -23,68 +25,52 @@ public class TekoraItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Tekora.MODID);
 
-    public static final RegistryObject<Item> APATITE = ITEMS.register("apatite", TekoraItem::new);
     public static final RegistryObject<Item> AQUAMARINE = ITEMS.register("aquamarine", TekoraItem::new);
-    public static final RegistryObject<Item> BASTNAESITE = ITEMS.register("bastnaesite", TekoraItem::new);
     public static final RegistryObject<Item> BAUXITE = ITEMS.register("bauxite", TekoraItem::new);
-    public static final RegistryObject<Item> CASSITERITE = ITEMS.register("cassiterite", TekoraItem::new);
     public static final RegistryObject<Item> CHROMITE = ITEMS.register("chromite", TekoraItem::new);
     public static final RegistryObject<Item> CINNABAR = ITEMS.register("cinnabar", TekoraItem::new);
     public static final RegistryObject<Item> COLTAN = ITEMS.register("coltan", TekoraItem::new);
     public static final RegistryObject<Item> DOLOMITE = ITEMS.register("dolomite", TekoraItem::new);
     public static final RegistryObject<Item> FLUORITE = ITEMS.register("fluorite", TekoraItem::new);
-    public static final RegistryObject<Item> GALENA = ITEMS.register("galena", TekoraItem::new);
-    public static final RegistryObject<Item> GARNET = ITEMS.register("garnet", TekoraItem::new);
-    public static final RegistryObject<Item> MAGNETITE = ITEMS.register("magnetite", TekoraItem::new);
+    public static final RegistryObject<Item> HALITE = ITEMS.register("halite", TekoraItem::new);
     public static final RegistryObject<Item> MONAZITE = ITEMS.register("monazite", TekoraItem::new);
-    public static final RegistryObject<Item> ORPIMENT = ITEMS.register("orpiment", TekoraItem::new);
-    public static final RegistryObject<Item> PENTLANDITE = ITEMS.register("pentlandite", TekoraItem::new);
-    public static final RegistryObject<Item> PYRITE = ITEMS.register("pyrite", TekoraItem::new);
     public static final RegistryObject<Item> PYROLUSITE = ITEMS.register("pyrolusite", TekoraItem::new);
-    public static final RegistryObject<Item> RAW_SILVER = ITEMS.register("raw_silver", TekoraItem::new);
     public static final RegistryObject<Item> RUBY = ITEMS.register("ruby", TekoraItem::new);
     public static final RegistryObject<Item> RUTILE = ITEMS.register("rutile", TekoraItem::new);
     public static final RegistryObject<Item> SAPPHIRE = ITEMS.register("sapphire", TekoraItem::new);
-    public static final RegistryObject<Item> SCHEELITE = ITEMS.register("scheelite", TekoraItem::new);
-    public static final RegistryObject<Item> SPERRYLITE = ITEMS.register("sperrylite", TekoraItem::new);
-    public static final RegistryObject<Item> SPHALERITE = ITEMS.register("sphalerite", TekoraItem::new);
-    public static final RegistryObject<Item> STIBNITE = ITEMS.register("stibnite", TekoraItem::new);
-    public static final RegistryObject<Item> THORITE = ITEMS.register("thorite", TekoraItem::new);
     public static final RegistryObject<Item> URANINITE = ITEMS.register("uraninite", TekoraItem::new);
     public static final RegistryObject<Item> WOLFRAMITE = ITEMS.register("wolframite", TekoraItem::new);
     public static final RegistryObject<Item> ZIRCON = ITEMS.register("zircon", TekoraItem::new);
 
-    public static final RegistryObject<Item> BASTNAESITE_SHARD = ITEMS.register("bastnaesite_shard", TekoraItem::new);
+    public static final RegistryObject<Item> RAW_LEAD = ITEMS.register("raw_lead", TekoraItem::new);
+    public static final RegistryObject<Item> RAW_NICKEL = ITEMS.register("raw_nickel", TekoraItem::new);
+    public static final RegistryObject<Item> RAW_SILVER = ITEMS.register("raw_silver", TekoraItem::new);
+    public static final RegistryObject<Item> RAW_PLATINUM = ITEMS.register("raw_platinum", TekoraItem::new);
+    public static final RegistryObject<Item> RAW_TIN = ITEMS.register("raw_tin", TekoraItem::new);
+    public static final RegistryObject<Item> RAW_ZINC = ITEMS.register("raw_zinc", TekoraItem::new);
+
     public static final RegistryObject<Item> COLTAN_PIECE = ITEMS.register("coltan_piece", TekoraItem::new);
-    public static final RegistryObject<Item> MAGNETITE_SHARD = ITEMS.register("magnetite_shard", TekoraItem::new);
     public static final RegistryObject<Item> MONAZITE_SHARD = ITEMS.register("monazite_shard", TekoraItem::new);
-    public static final RegistryObject<Item> ORPIMENT_SHARD = ITEMS.register("orpiment_shard", TekoraItem::new);
-    public static final RegistryObject<Item> PYRITE_PIECE = ITEMS.register("pyrite_piece", TekoraItem::new);
     public static final RegistryObject<Item> PYROLUSITE_PIECE = ITEMS.register("pyrolusite_piece", TekoraItem::new);
     public static final RegistryObject<Item> RUTILE_SHARD = ITEMS.register("rutile_shard", TekoraItem::new);
-    public static final RegistryObject<Item> SCHEELITE_SHARD = ITEMS.register("scheelite_shard", TekoraItem::new);
-    public static final RegistryObject<Item> SPERRYLITE_SHARD = ITEMS.register("sperrylite_shard", TekoraItem::new);
-    public static final RegistryObject<Item> SPHALERITE_PIECE = ITEMS.register("sphalerite_piece", TekoraItem::new);
-    public static final RegistryObject<Item> STIBNITE_SHARD = ITEMS.register("stibnite_shard", TekoraItem::new);
-    public static final RegistryObject<Item> THORITE_PIECE = ITEMS.register("thorite_piece", TekoraItem::new);
     public static final RegistryObject<Item> WOLFRAMITE_PIECE = ITEMS.register("wolframite_piece", TekoraItem::new);
 
-
-    public static final RegistryObject<Item> CLEANED_MONAZITE = ITEMS.register("cleaned_monazite", TekoraItem::new);
-    public static final RegistryObject<Item> CLEANED_SPERRYLITE = ITEMS.register("cleaned_sperrylite", TekoraItem::new);
-    public static final RegistryObject<Item> CLEANED_SPHALERITE = ITEMS.register("cleaned_sphalerite", TekoraItem::new);
-    public static final RegistryObject<Item> CLEANED_ZIRCON = ITEMS.register("cleaned_zircon", TekoraItem::new);
-
-    public static final RegistryObject<Item> PURE_BERYL = ITEMS.register("pure_beryl", TekoraItem::new);
-    public static final RegistryObject<Item> PURE_COLTAN = ITEMS.register("pure_coltan", TekoraItem::new);
-    public static final RegistryObject<Item> PURE_DOLOMITE = ITEMS.register("pure_dolomite", TekoraItem::new);
-    public static final RegistryObject<Item> PURE_MONAZITE = ITEMS.register("pure_monazite", TekoraItem::new);
-    public static final RegistryObject<Item> PURE_SPERRYLITE = ITEMS.register("pure_sperrylite", TekoraItem::new);
-    public static final RegistryObject<Item> PURE_ZIRCON = ITEMS.register("pure_zircon", TekoraItem::new);
-
-    public static final RegistryObject<Item> FLUOROCOLUMBITE = ITEMS.register("fluorocolumbite", TekoraItem::new);
-    // public static final RegistryObject<Item> TRIPLET_BASTNASITE = ITEMS.register("triplet_bastnasite", TekoraItem::new);
-    public static final RegistryObject<Item> QUADRUPLET_BASTNASITE = ITEMS.register("quadruplet_bastnasite", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_ANCIENT_DEBRIS = ITEMS.register("pulverized_ancient_debris", () -> new TekoraItem(true));
+    public static final RegistryObject<Item> PULVERIZED_AQUAMARINE_ORE = ITEMS.register("pulverized_aquamarine_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_BAUXITE_ORE = ITEMS.register("pulverized_bauxite_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_CINNABAR_ORE = ITEMS.register("pulverized_cinnabar_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_COAL_ORE = ITEMS.register("pulverized_coal_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_DIAMOND_ORE = ITEMS.register("pulverized_diamond_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_EMERALD_ORE = ITEMS.register("pulverized_emerald_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_HALITE_ORE = ITEMS.register("pulverized_halite_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_LAPIS_ORE = ITEMS.register("pulverized_lapis_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_QUARTZ_ORE = ITEMS.register("pulverized_quartz_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_REDSTONE_ORE = ITEMS.register("pulverized_redstone_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_RUBY_ORE = ITEMS.register("pulverized_ruby_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_SAPPHIRE_ORE = ITEMS.register("pulverized_sapphire_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_URANINITE_ORE = ITEMS.register("pulverized_uraninite_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_WOLFRAMITE_ORE = ITEMS.register("pulverized_wolframite_ore", TekoraItem::new);
+    public static final RegistryObject<Item> PULVERIZED_ZIRCON_ORE = ITEMS.register("pulverized_zircon_ore", TekoraItem::new);
 
     public static final RegistryObject<Item> GRAPHITE_BAR = ITEMS.register("graphite_bar", TekoraItem::new);
     public static final RegistryObject<Item> IODINE_BAR = ITEMS.register("iodine_bar", TekoraItem::new);
@@ -303,6 +289,13 @@ public class TekoraItems {
     public static final RegistryObject<Item> ZINC_DUST = ITEMS.register("zinc_dust", TekoraItem::new);
     public static final RegistryObject<Item> ZIRCONIUM_DUST = ITEMS.register("zirconium_dust", HeatResistantItem::new);
 
+    public static final RegistryObject<Item> ARSENIC_DUST = ITEMS.register("arsenic_dust", TekoraItem::new);
+    public static final RegistryObject<Item> ANTIMONY_DUST = ITEMS.register("antimony_dust", TekoraItem::new);
+    public static final RegistryObject<Item> BORON_DUST = ITEMS.register("boron_dust", HeatResistantItem::new);
+    public static final RegistryObject<Item> GERMANIUM_DUST = ITEMS.register("germanium_dust", TekoraItem::new);
+    public static final RegistryObject<Item> SILICON_DUST = ITEMS.register("silicon_dust", TekoraItem::new);
+    public static final RegistryObject<Item> TELLURIUM_DUST = ITEMS.register("tellurium_dust", TekoraItem::new);
+
     public static final RegistryObject<Item> BRASS_DUST = ITEMS.register("brass_dust", TekoraItem::new);
     public static final RegistryObject<Item> BRONZE_DUST = ITEMS.register("bronze_dust", TekoraItem::new);
     public static final RegistryObject<Item> CARBON_STEEL_DUST = ITEMS.register("carbon_steel_dust", TekoraItem::new);
@@ -325,200 +318,26 @@ public class TekoraItems {
 
     public static final RegistryObject<Item> ALUMINA = ITEMS.register("alumina",
             () -> new CompoundItem("aluminum", "oxide", true));
-    public static final RegistryObject<Item> ALUMINUM_FLUORIDE = ITEMS.register("aluminum_fluoride",
-            () -> new CompoundItem("aluminum", "fluoride"));
-    public static final RegistryObject<Item> AMMONIUM_CHLORIDE = ITEMS.register("ammonium_chloride",
-            () -> new CompoundItem("ammonium", "chloride"));
     public static final RegistryObject<Item> AHCP = ITEMS.register("ahcp", TekoraItem::new); // ammonium hexachloroplatinate
     public static final RegistryObject<Item> APT = ITEMS.register("apt", TekoraItem::new); // ammonium paratungstate
-    public static final RegistryObject<Item> ARSENIC_TRISULFIDE = ITEMS.register("arsenic_trisulfide",
-            () -> new CompoundItem("arsenic", "sulfide"));
     public static final RegistryObject<Item> BAKING_SODA = ITEMS.register("baking_soda", TekoraItem::new);
-    public static final RegistryObject<Item> BARIUM_OXIDE = ITEMS.register("barium_oxide",
-            () -> new CompoundItem("barium", "oxide", true));
-    public static final RegistryObject<Item> BARIUM_SULFATE = ITEMS.register("barium_sulfate",
-            () -> new CompoundItem("barium", "sulfate", true));
-    public static final RegistryObject<Item> BERYLLIUM_CHLORIDE = ITEMS.register("beryllium_chloride",
-            () -> new CompoundItem("beryllium", "chloride"));
-    public static final RegistryObject<Item> BERYLLIUM_FLUORIDE = ITEMS.register("beryllium_fluoride",
-            () -> new CompoundItem("beryllium", "fluoride"));
-    public static final RegistryObject<Item> BERYLLIUM_SULFATE = ITEMS.register("beryllium_sulfate",
-            () -> new CompoundItem("beryllium", "sulfate"));
-    public static final RegistryObject<Item> BISMUTH_SULFIDE = ITEMS.register("bismuth_sulfide",
-            () -> new CompoundItem("bismuth", "sulfide"));
     public static final RegistryObject<Item> BN_DUST = ITEMS.register("bn_dust",
             () -> new CompoundItem("boron", "nitride"));
     public static final RegistryObject<Item> BORAX = ITEMS.register("borax", TekoraItem::new);
     public static final RegistryObject<Item> BORIC_ACID = ITEMS.register("boric_acid", TekoraItem::new);
-    public static final RegistryObject<Item> BORON_TRIOXIDE = ITEMS.register("boron_trioxide",
-            () -> new CompoundItem("boron", "oxide"));
-    public static final RegistryObject<Item> CADMIUM_OXIDE = ITEMS.register("cadmium_oxide",
-            () -> new CompoundItem("cadmium", "oxide"));
-    public static final RegistryObject<Item> CADMIUM_SULFIDE = ITEMS.register("cadmium_sulfide",
-            () -> new CompoundItem("cadmium", "sulfide", true));
-    public static final RegistryObject<Item> CALCIUM_CARBONATE = ITEMS.register("calcium_carbonate",
-            () -> new CompoundItem("calcium", "carbonate"));
-    public static final RegistryObject<Item> CALCIUM_CHLORIDE = ITEMS.register("calcium_chloride",
-            () -> new CompoundItem("calcium", "chloride"));
-    public static final RegistryObject<Item> CALCIUM_FLUORIDE = ITEMS.register("calcium_fluoride",
-            () -> new CompoundItem("calcium", "fluoride", true));
-    public static final RegistryObject<Item> CALCIUM_OXIDE = ITEMS.register("calcium_oxide",
-            () -> new CompoundItem("calcium", "oxide", true));
-    public static final RegistryObject<Item> CALCIUM_PHOSPHATE = ITEMS.register("calcium_phosphate",
-            () -> new CompoundItem("calcium", "phosphate"));
-    public static final RegistryObject<Item> CALCIUM_SULFATE = ITEMS.register("calcium_sulfate",
-            () -> new CompoundItem("calcium", "sulfate", true));
-    public static final RegistryObject<Item> CERIUM_DIOXIDE = ITEMS.register("cerium_dioxide",
-            () -> new CompoundItem("cerium", "oxide", true));
-    public static final RegistryObject<Item> CHROMIUM_OXIDE = ITEMS.register("chromium_oxide",
-            () -> new CompoundItem("chromium", "oxide", true));
-    public static final RegistryObject<Item> COBALT_OXIDE = ITEMS.register("cobalt_oxide",
-            () -> new CompoundItem("cobalt", "oxide", true));
-    public static final RegistryObject<Item> COPPER_NITRATE = ITEMS.register("copper_nitrate",
-            () -> new CompoundItem("copper", "nitrate"));
-    public static final RegistryObject<Item> COPPER_SULFIDE = ITEMS.register("copper_sulfide",
-            () -> new CompoundItem("copper", "sulfide"));
-    public static final RegistryObject<Item> DYSPROSIUM_OXIDE = ITEMS.register("dysprosium_oxide",
-            () -> new CompoundItem("dysprosium", "oxide", true));
-    public static final RegistryObject<Item> ERBIUM_OXIDE = ITEMS.register("erbium_oxide",
-            () -> new CompoundItem("erbium", "oxide", true));
-    public static final RegistryObject<Item> EUROPIUM_OXIDE = ITEMS.register("europium_oxide",
-            () -> new CompoundItem("europium", "oxide", true));
-    public static final RegistryObject<Item> FERRIC_SULFIDE = ITEMS.register("ferric_sulfide", TekoraItem::new);
-    public static final RegistryObject<Item> FERRIC_OXIDE = ITEMS.register("ferric_oxide", HeatResistantItem::new);
-    public static final RegistryObject<Item> FERROUS_SULFIDE = ITEMS.register("ferrous_sulfide", TekoraItem::new);
-    public static final RegistryObject<Item> GADOLINIUM_OXIDE = ITEMS.register("gadolinium_oxide",
-            () -> new CompoundItem("gadolinium", "oxide", true));
-    public static final RegistryObject<Item> GERMANIUM_SULFIDE = ITEMS.register("germanium_sulfide",
-            () -> new CompoundItem("germanium", "sulfide"));
-    public static final RegistryObject<Item> HOLMIUM_OXIDE = ITEMS.register("holmium_oxide",
-            () -> new CompoundItem("holmium", "oxide", true));
-    public static final RegistryObject<Item> LANTHANUM_OXIDE = ITEMS.register("lanthanum_oxide",
-            () -> new CompoundItem("lanthanum", "sulfide"));
-    public static final RegistryObject<Item> LEAD_OXIDE = ITEMS.register("lead_oxide",
-            () -> new CompoundItem("lead", "oxide"));
-    public static final RegistryObject<Item> LEAD_SULFIDE = ITEMS.register("lead_sulfide",
-            () -> new CompoundItem("lead", "sulfide"));
-    public static final RegistryObject<Item> LITHIUM_FLUORIDE = ITEMS.register("lithium_fluoride",
-            () -> new CompoundItem("lithium", "fluoride"));
-    public static final RegistryObject<Item> LUTETIUM_OXIDE = ITEMS.register("lutetium_oxide",
-            () -> new CompoundItem("lutetium", "oxide", true));
-    public static final RegistryObject<Item> MAGNESIUM_CARBONATE = ITEMS.register("magnesium_carbonate",
-            () -> new CompoundItem("magnesium", "carbonate"));
-    public static final RegistryObject<Item> MAGNESIUM_CHLORIDE = ITEMS.register("magnesium_chloride",
-            () -> new CompoundItem("magnesium", "chloride"));
-    public static final RegistryObject<Item> MAGNESIUM_FLUORIDE = ITEMS.register("magnesium_fluoride",
-            () -> new CompoundItem("magnesium", "fluoride"));
-    public static final RegistryObject<Item> MAGNESIUM_OXIDE = ITEMS.register("magnesium_oxide",
-            () -> new CompoundItem("magnesium", "oxide", true));
-    public static final RegistryObject<Item> MAGNESIUM_SULFATE = ITEMS.register("magnesium_sulfate",
-            () -> new CompoundItem("magnesium", "sulfate"));
-    public static final RegistryObject<Item> MANGANESE_DIOXIDE = ITEMS.register("manganese_dioxide",
-            () -> new CompoundItem("manganese", "oxide"));
-    public static final RegistryObject<Item> MANGANESE_OXIDE = ITEMS.register("manganese_oxide",
-            () -> new CompoundItem("manganese", "oxide", 2));
-    public static final RegistryObject<Item> MANGANESE_SULFIDE = ITEMS.register("manganese_sulfide",
-            () -> new CompoundItem("manganese", "sulfide", 2));
-    public static final RegistryObject<Item> MOLYBDENUM_DISULFIDE = ITEMS.register("molybdenum_disulfide",
-            () -> new CompoundItem("manganese", "sulfide", true));
-    public static final RegistryObject<Item> MOLYBDENUM_OXIDE = ITEMS.register("molybdenum_oxide",
-            () -> new CompoundItem("manganese", "oxide"));
-    public static final RegistryObject<Item> NEODYMIUM_OXIDE = ITEMS.register("neodymium_oxide",
-            () -> new CompoundItem("neodymium", "oxide", true));
-    public static final RegistryObject<Item> NICKEL_CARBONATE = ITEMS.register("nickel_carbonate",
-            () -> new CompoundItem("nickel", "carbonate"));
-    public static final RegistryObject<Item> NICKEL_IODIDE = ITEMS.register("nickel_iodide",
-            () -> new CompoundItem("nickel", "iodide"));
-    public static final RegistryObject<Item> NIOBIUM_PENTAFLUORIDE = ITEMS.register("niobium_pentafluoride",
-            () -> new CompoundItem("niobium", "fluoride"));
     public static final RegistryObject<Item> PHOSPHORIC_ACID = ITEMS.register("phosphoric_acid", TekoraItem::new);
-    public static final RegistryObject<Item> PHOSPHORUS_PENTOXIDE = ITEMS.register("phosphorus_pentoxide", TekoraItem::new);
-    public static final RegistryObject<Item> POTASSIUM_CHLORIDE = ITEMS.register("potassium_chloride",
-            () -> new CompoundItem("potassium", "chloride"));
-    public static final RegistryObject<Item> POTASSIUM_HYDROXIDE = ITEMS.register("potassium_hydroxide",
-            () -> new CompoundItem("potassium", "hydroxide"));
     public static final RegistryObject<Item> POTASSIUM_IODIDE = ITEMS.register("potassium_iodide",
             () -> new CompoundItem("potassium", "iodide"));
-    public static final RegistryObject<Item> POTASSIUM_OXIDE = ITEMS.register("potassium_oxide",
-            () -> new CompoundItem("potassium", "oxide"));
     public static final RegistryObject<Item> POTASSIUM_PM = ITEMS.register("potassium_pm", TekoraItem::new);
-    public static final RegistryObject<Item> POTASSIUM_SULFATE = ITEMS.register("potassium_sulfate",
-            () -> new CompoundItem("potassium", "sulfate"));
-    public static final RegistryObject<Item> PRASEODYMIUM_OXIDE = ITEMS.register("praseodymium_oxide",
-            () -> new CompoundItem("praseodymium", "oxide", true));
-    public static final RegistryObject<Item> PRASEODYMIUM_HYDROXIDE = ITEMS.register("praseodymium_hydroxide",
-            () -> new CompoundItem("praseodymium", "hydroxide"));
-    public static final RegistryObject<Item> PROTACTINIUM_DIOXIDE = ITEMS.register("protactinium_dioxide", () ->
-            new Protactinium.CompoundDust(TekoraItems.THORIUM_INGOT.get(), "oxide"));
-    public static final RegistryObject<Item> RHENIUM_DISULFIDE = ITEMS.register("rhenium_disulfide",
-            () -> new CompoundItem("rhenium", "sulfide", 4));
-    public static final RegistryObject<Item> RHENIUM_HEPTOXIDE = ITEMS.register("rhenium_heptoxide",
-            () -> new CompoundItem("rhenium", "sulfide"));
     public static final RegistryObject<Item> SALT = ITEMS.register("salt",
             () -> new CompoundItem("sodium", "chloride"));
-    public static final RegistryObject<Item> SAMARIUM_OXIDE = ITEMS.register("samarium_oxide",
-            () -> new CompoundItem("samarium", "oxide", true));
-    public static final RegistryObject<Item> SCANDIUM_OXIDE = ITEMS.register("scandium_oxide",
-            () -> new CompoundItem("scandium", "oxide", true));
-    public static final RegistryObject<Item> SELENIUM_DIOXIDE = ITEMS.register("selenium_dioxide", TekoraItem::new);
     public static final RegistryObject<Item> SILICA = ITEMS.register("silica",
             () -> new CompoundItem("silicon", "oxide", true));
-    public static final RegistryObject<Item> SILVER_NITRATE = ITEMS.register("silver_nitrate",
-            () -> new CompoundItem("silver", "nitrate"));
-    public static final RegistryObject<Item> SODIUM_CARBONATE = ITEMS.register("sodium_carbonate",
-            () -> new CompoundItem("sodium", "carbonate"));
-    public static final RegistryObject<Item> SODIUM_CYANIDE = ITEMS.register("sodium_cyanide", TekoraItem::new);
-    public static final RegistryObject<Item> SODIUM_FLUORIDE = ITEMS.register("sodium_fluoride",
-            () -> new CompoundItem("sodium", "fluoride"));
     public static final RegistryObject<Item> SODIUM_HYDRIDE = ITEMS.register("sodium_hydride", TekoraItem::new);
-    public static final RegistryObject<Item> SODIUM_HYDROXIDE = ITEMS.register("sodium_hydroxide",
-            () -> new CompoundItem("sodium", "hydroxide"));
-    public static final RegistryObject<Item> SODIUM_OXIDE = ITEMS.register("sodium_oxide",
-            () -> new CompoundItem("sodium", "oxide"));
-    public static final RegistryObject<Item> SODIUM_SULFATE = ITEMS.register("sodium_sulfate",
-            () -> new CompoundItem("sodium", "sulfate"));
-    public static final RegistryObject<Item> SODIUM_SULFIDE = ITEMS.register("sodium_sulfide",
-            () -> new CompoundItem("sodium", "sulfide"));
-    public static final RegistryObject<Item> SODIUM_SULFITE = ITEMS.register("sodium_sulfite", TekoraItem::new);
-    public static final RegistryObject<Item> SODIUM_THIOSULFATE = ITEMS.register("sodium_thiosulfate", TekoraItem::new);
-    public static final RegistryObject<Item> STRONTIUM_OXIDE = ITEMS.register("strontium_oxide",
-            () -> new CompoundItem("strontium", "oxide", true));
-    public static final RegistryObject<Item> STRONTIUM_SULFATE = ITEMS.register("strontium_sulfate",
-            () -> new CompoundItem("strontium", "sulfate", true));
-    public static final RegistryObject<Item> TANTALUM_PENTAFLUORIDE = ITEMS.register("tantalum_pentafluoride",
-            () -> new CompoundItem("tantalum", "fluoride"));
-    public static final RegistryObject<Item> TERBIUM_OXIDE = ITEMS.register("terbium_oxide",
-            () -> new CompoundItem("terbium", "oxide", true));
-    public static final RegistryObject<Item> TIN_DIOXIDE = ITEMS.register("tin_dioxide",
-            () -> new CompoundItem("tin", "oxide", true));
     public static final RegistryObject<Item> TITANIUM_DIOXIDE = ITEMS.register("titanium_dioxide",
             () -> new CompoundItem("titanium", "oxide", true));
-    public static final RegistryObject<Item> THALLIUM_SULFIDE = ITEMS.register("thallium_sulfide",
-            () -> new CompoundItem("thallium", "sulfide"));
-    public static final RegistryObject<Item> THORIUM_DIOXIDE = ITEMS.register("thorium_dioxide",
-            () -> new Thorium.CompoundDust("oxide"));
-    public static final RegistryObject<Item> THORIUM_TETRAFLUORIDE = ITEMS.register("thorium_tetrafluoride",
-            () -> new Thorium.CompoundDust("fluoride"));
-    public static final RegistryObject<Item> THULIUM_OXIDE = ITEMS.register("thulium_oxide",
-            () -> new CompoundItem("thulium", "oxide", true));
     public static final RegistryObject<Item> TUNGSTEN_OXIDE = ITEMS.register("tungsten_oxide",
             () -> new CompoundItem("tungsten", "oxide", true));
-    public static final RegistryObject<Item> URANIUM_DIOXIDE = ITEMS.register("uranium_dioxide",
-            () -> new Uranium.CompoundDust("oxide"));
-    public static final RegistryObject<Item> URANIUM_TETRAFLUORIDE = ITEMS.register("uranium_tetrafluoride",
-            () -> new Uranium.CompoundDust("fluoride"));
-    public static final RegistryObject<Item> URANIUM_HEXAFLUORIDE = ITEMS.register("uranium_hexafluoride",
-            () -> new Uranium.CompoundDust("fluoride", 6));
-    public static final RegistryObject<Item> VANADIUM_PENTOXIDE = ITEMS.register("vanadium_pentoxide",
-            () -> new CompoundItem("vanadium", "oxide"));
-    public static final RegistryObject<Item> YTTERBIUM_OXIDE = ITEMS.register("ytterbium_oxide",
-            () -> new CompoundItem("ytterbium", "oxide", true));
-    public static final RegistryObject<Item> YTTRIUM_OXIDE = ITEMS.register("yttrium_oxide",
-            () -> new CompoundItem("yttrium", "oxide", true));
-    public static final RegistryObject<Item> ZINC_NITRATE = ITEMS.register("zinc_nitrate",
-            () -> new CompoundItem("zinc", "nitrate"));
-    public static final RegistryObject<Item> ZINC_SULFIDE = ITEMS.register("zinc_sulfide",
-            () -> new CompoundItem("zinc", "sulfide"));
     public static final RegistryObject<Item> GENERIC_DUST = ITEMS.register("dust", DustItem::new);
 
     public static final RegistryObject<Residue> RESIDUE = ITEMS.register("residue", Residue::new);
@@ -811,6 +630,20 @@ public class TekoraItems {
 
     public static final RegistryObject<Item> AMMONIUM_HYDROXIDE_BUCKET = ITEMS.register("ammonium_hydroxide_bucket",
             () -> new TekoraBucketItem(TekoraFluids.SOURCE_AMMONIUM_HYDROXIDE));
+    public static final RegistryObject<Item> GALLIUM_BUCKET = ITEMS.register("gallium_bucket",
+            () -> new TekoraBucketItem(TekoraFluids.SOURCE_GALLIUM_FLUID));
+    public static final RegistryObject<Item> MERCURY_BUCKET = ITEMS.register("mercury_bucket",
+            () -> new TekoraBucketItem(TekoraFluids.SOURCE_MERCURY_FLUID));
+    public static final RegistryObject<Item> BROMINE_BUCKET = ITEMS.register("bromine_bucket",
+            () -> new TekoraBucketItem(TekoraFluids.SOURCE_BROMINE_FLUID));
+    public static final RegistryObject<Item> HYDROFLUORIC_ACID_BUCKET = ITEMS.register("hydrofluoric_acid_bucket",
+            () -> new TekoraBucketItem(TekoraFluids.SOURCE_HYDROFLUORIC_ACID));
+    public static final RegistryObject<Item> NITRIC_ACID_BUCKET = ITEMS.register("nitric_acid_bucket",
+            () -> new TekoraBucketItem(TekoraFluids.SOURCE_NITRIC_ACID));
+    public static final RegistryObject<Item> SULFURIC_ACID_BUCKET = ITEMS.register("sulfuric_acid_bucket",
+            () -> new TekoraBucketItem(TekoraFluids.SOURCE_SULFURIC_ACID));
+
+    public static final RegistryObject<Item> TIN_CANISTER = ITEMS.register("tin_canister", () -> new Canister(500, 4));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

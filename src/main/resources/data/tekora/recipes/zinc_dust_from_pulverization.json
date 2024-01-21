@@ -1,0 +1,13 @@
+{
+  "type": "tekora:pulverization",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/zinc"
+    }
+  ],
+  "output": {
+    "item": "tekora:zinc_dust",
+    "count": 1,
+    "chance": 0.5
+  }
+}

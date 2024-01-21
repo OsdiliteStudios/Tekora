@@ -12,7 +12,12 @@ import net.nukollodda.tekora.item.typical.ICompounds;
 import net.nukollodda.tekora.item.typical.IonicParts;
 
 public class DustUtil {
-    public static ItemStack createDustFromResidue(int pCatInd, int pAnInd) {
+    public static boolean isResidueCategory(Item pItem) {
+        return pItem.equals(TekoraItems.GENERIC_DUST.get()) || pItem.equals(TekoraItems.RESIDUE.get())
+                || pItem instanceof ICompounds;
+    }
+
+    public static ItemStack createDustFromIons(int pCatInd, int pAnInd) {
         IonicParts.Cations cation = IonicParts.ALL_CATIONS[pCatInd];
         IonicParts.Anions anion = IonicParts.ALL_ANIONS[pAnInd];
         ItemStack specialDust = convertGenericDustToSpecialDust(cation, anion);
@@ -27,7 +32,7 @@ public class DustUtil {
         return dust;
     }
 
-    public static boolean canCreateDustFromResidue(byte[] pCatInd, byte[] pAnInd) {
+    public static boolean canCreateDustFromIons(byte[] pCatInd, byte[] pAnInd) {
         int cationCount = 0;
         int anionCount = 0;
         for (byte val : pCatInd) {

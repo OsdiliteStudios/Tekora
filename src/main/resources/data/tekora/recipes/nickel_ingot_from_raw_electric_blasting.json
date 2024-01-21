@@ -1,0 +1,11 @@
+{
+  "type": "tekora:blasting",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/nickel"
+    }
+  ],
+  "output": {
+    "item": "tekora:nickel_ingot"
+  }
+}

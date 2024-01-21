@@ -120,7 +120,7 @@ public class AlloyingRecipe implements Recipe<SimpleContainer> {
     public static class Serializer implements RecipeSerializer<AlloyingRecipe> {
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID =
-                new ResourceLocation(Tekora.MODID, "alloying");
+                new ResourceLocation(Tekora.MODID, Type.ID);
 
         @Override
         public AlloyingRecipe fromJson(ResourceLocation pId, JsonObject pJson) {

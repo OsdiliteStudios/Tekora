@@ -1,0 +1,37 @@
+package net.nukollodda.tekora.item.containers;
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
+import net.nukollodda.tekora.fluid.TekoraChemicalFluidType;
+import net.nukollodda.tekora.block.fluids.AbstractTekoraFluidBlock;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.function.Supplier;
+
+public class TekoraBucketItem extends BucketItem {
+    public TekoraBucketItem(Supplier<? extends Fluid> supplier) {
+        super(supplier, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET));
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        Block block = getFluid().defaultFluidState().createLegacyBlock().getBlock();
+        if (block instanceof AbstractTekoraFluidBlock fluidBlock) {
+            fluidBlock.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        }
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+    }
+
+    public int getColor() {
+        if (getFluid().getFluidType() instanceof TekoraChemicalFluidType tekoraFluid) {
+            try {
+                return tekoraFluid.getTintColor();
+            } catch (Exception ignored) {}
+        }
+        return 0x1165b0;
+    }
+}

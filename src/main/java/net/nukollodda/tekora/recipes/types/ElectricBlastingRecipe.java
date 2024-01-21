@@ -12,24 +12,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.nukollodda.tekora.Tekora;
-import net.nukollodda.tekora.item.typical.IonicParts;
-import net.nukollodda.tekora.util.ResidualExtraction;
 import org.jetbrains.annotations.Nullable;
 
-public class ElectricBlastingRecipe implements IResidueRecipes {
+public class ElectricBlastingRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
-    private final byte[] cations;
-    private final byte[] anions;
 
-    public ElectricBlastingRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems,
-                                  byte[] cations, byte[] anions) {
+    public ElectricBlastingRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
-        this.cations = cations;
-        this.anions = anions;
     }
 
     @Override
@@ -37,16 +30,7 @@ public class ElectricBlastingRecipe implements IResidueRecipes {
         if (pLevel.isClientSide()) {
             return false;
         }
-
-        return recipeItems.get(0).test(pContainer.getItem(1));
-    }
-
-    public byte[] getCations() {
-        return cations;
-    }
-
-    public byte[] getAnions() {
-        return anions;
+        return recipeItems.get(0).test(pContainer.getItem(0));
     }
 
     @Override
@@ -106,8 +90,7 @@ public class ElectricBlastingRecipe implements IResidueRecipes {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
 
-            return new ElectricBlastingRecipe(pId, output, inputs,
-                    ResidualExtraction.getCationsFromJson(pJson), ResidualExtraction.getAnionsFromJson(pJson));
+            return new ElectricBlastingRecipe(pId, output, inputs);
         }
 
         @Override
@@ -117,18 +100,7 @@ public class ElectricBlastingRecipe implements IResidueRecipes {
                 inputs.set(i, Ingredient.fromNetwork(pBuffer));
             }
             ItemStack output = pBuffer.readItem();
-
-            byte[] cationList = new byte[IonicParts.CATION_SIZE];
-            for (int i = 0; i < IonicParts.CATION_SIZE; i++) {
-                cationList[i] = pBuffer.readByte();
-            }
-
-            byte[] anionList = new byte[IonicParts.ANION_SIZE];
-            for (int i = 0; i < pBuffer.readInt(); i++) {
-                anionList[i] = pBuffer.readByte();
-            }
-
-            return new ElectricBlastingRecipe(pId, output, inputs, cationList, anionList);
+            return new ElectricBlastingRecipe(pId, output, inputs);
         }
 
         @Override
@@ -137,14 +109,6 @@ public class ElectricBlastingRecipe implements IResidueRecipes {
 
             for (Ingredient ing : pRecipe.getIngredients()) {
                 ing.toNetwork(pBuffer);
-            }
-
-            for (int i = 0; i < pRecipe.getCations().length; i++) {
-                pBuffer.writeByte(pRecipe.getCations()[i]);
-            }
-
-            for (int i = 0; i < pRecipe.getAnions().length; i++) {
-                pBuffer.writeByte(pRecipe.getAnions()[i]);
             }
         }
     }

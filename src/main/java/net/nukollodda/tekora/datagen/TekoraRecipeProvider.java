@@ -15,7 +15,7 @@ import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.TekoraBlocks;
 import net.nukollodda.tekora.datagen.tags.TekoraTags;
 import net.nukollodda.tekora.item.TekoraItems;
-import net.nukollodda.tekora.util.TekoraToolsAndArmorList;
+import net.nukollodda.tekora.item.TekoraToolsAndArmorList;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -28,27 +28,30 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
-        oreBlasting(pWriter, TekoraTags.Items.APATITE_ORE, TekoraItems.APATITE.get().asItem());
         oreBlasting(pWriter, TekoraTags.Items.AQUAMARINE_ORE, TekoraItems.AQUAMARINE.get());
         oreBlasting(pWriter, TekoraTags.Items.BAUXITE_ORE, TekoraItems.BAUXITE.get());
-        oreBlasting(pWriter, TekoraTags.Items.CASSITERITE_ORE, TekoraItems.CASSITERITE.get());
-        oreBlasting(pWriter, TekoraTags.Items.CHROMITE_ORE, TekoraItems.CHROMITE.get());
         oreBlasting(pWriter, TekoraTags.Items.CINNABAR_ORE, TekoraItems.CINNABAR.get());
-        oreBlasting(pWriter, TekoraTags.Items.GALENA_ORE, TekoraItems.GALENA.get());
-        oreBlasting(pWriter, TekoraTags.Items.GARNET_ORE, TekoraItems.GARNET.get());
-        oreBlasting(pWriter, TekoraTags.Items.GRAPHITE_ORE, TekoraItems.GRAPHITE_BAR.get());
-        oreBlasting(pWriter, TekoraTags.Items.PENTLANDITE_ORE, TekoraItems.PENTLANDITE.get());
+        oreBlasting(pWriter, TekoraTags.Items.HALITE_ORE, TekoraItems.HALITE.get());
         oreBlasting(pWriter, TekoraTags.Items.RUBY_ORE, TekoraItems.RUBY.get());
         oreBlasting(pWriter, TekoraTags.Items.SAPPHIRE_ORE, TekoraItems.SAPPHIRE.get());
-        oreBlasting(pWriter, TekoraTags.Items.SILVER_ORE, TekoraItems.RAW_SILVER.get());
         oreBlasting(pWriter, TekoraTags.Items.URANINITE_ORE, TekoraItems.URANINITE.get());
+        oreBlasting(pWriter, TekoraTags.Items.WOLFRAMITE_ORE, TekoraItems.WOLFRAMITE.get());
         oreBlasting(pWriter, TekoraTags.Items.ZIRCON_ORE, TekoraItems.ZIRCON.get());
 
+        oreBlasting(pWriter, TekoraTags.Items.LEAD_ORE, TekoraItems.LEAD_INGOT.get());
+        oreBlasting(pWriter, TekoraTags.Items.NICKEL_ORE, TekoraItems.NICKEL_INGOT.get());
+        oreBlasting(pWriter, TekoraTags.Items.TIN_ORE, TekoraItems.TIN_INGOT.get());
+        oreBlasting(pWriter, TekoraTags.Items.ZINC_ORE, TekoraItems.ZINC_INGOT.get());
+
+        oreBlasting(pWriter, TekoraTags.Items.RAW_LEAD, TekoraItems.LEAD_INGOT.get());
+        oreBlasting(pWriter, TekoraTags.Items.RAW_NICKEL, TekoraItems.NICKEL_INGOT.get());
         oreBlasting(pWriter, TekoraTags.Items.RAW_SILVER, TekoraItems.SILVER_INGOT.get());
+        oreBlasting(pWriter, TekoraTags.Items.RAW_TIN, TekoraItems.TIN_INGOT.get());
+        oreBlasting(pWriter, TekoraTags.Items.RAW_ZINC, TekoraItems.ZINC_INGOT.get());
+
         oreBlasting(pWriter, TekoraTags.Items.BAUXITE_GEM, TekoraItems.ALUMINA.get());
         oreBlasting(pWriter, TekoraItems.APT.get(), TekoraItems.TUNGSTEN_OXIDE.get());
         oreBlasting(pWriter, TekoraItems.RUTILE.get(), TekoraItems.TITANIUM_DIOXIDE.get());
-        oreBlasting(pWriter, TekoraItems.THORITE.get(), TekoraItems.THORIUM_DIOXIDE.get());
 
         oreBlasting(pWriter, TekoraTags.Items.ALUMINUM_DUST, TekoraItems.ALUMINUM_INGOT.get());
         oreBlasting(pWriter, TekoraTags.Items.BARIUM_DUST, TekoraItems.BARIUM_INGOT.get());
@@ -229,12 +232,12 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
         storageBlockRecipe(pWriter, TekoraItems.ZINC_INGOT.get(), TekoraTags.Items.ZINC_NUGGET);
         storageBlockRecipe(pWriter, TekoraItems.ZIRCONIUM_INGOT.get(), TekoraTags.Items.ZIRCONIUM_NUGGET);
 
-        storageBlockRecipe(pWriter, TekoraBlocks.ANTIMONY_BLOCK.get(), TekoraItems.ANTIMONY_PIECE.get());
-        storageBlockRecipe(pWriter, TekoraBlocks.ARSENIC_BLOCK.get(), TekoraItems.ARSENIC_PIECE.get());
-        storageBlockRecipe(pWriter, TekoraBlocks.BORON_BLOCK.get(), TekoraItems.BORON_PIECE.get());
-        storageBlockRecipe(pWriter, TekoraBlocks.GERMANIUM_BLOCK.get(), TekoraItems.GERMANIUM_PIECE.get());
-        storageBlockRecipe(pWriter, TekoraBlocks.SILICON_BLOCK.get(), TekoraItems.SILICON_PIECE.get());
-        storageBlockRecipe(pWriter, TekoraBlocks.TELLURIUM_BLOCK.get(), TekoraItems.TELLURIUM_PIECE.get());
+        storageBlockRecipe(pWriter, TekoraBlocks.RAW_LEAD_BLOCK.get(), TekoraTags.Items.RAW_LEAD);
+        storageBlockRecipe(pWriter, TekoraBlocks.RAW_NICKEL_BLOCK.get(), TekoraTags.Items.RAW_NICKEL);
+        storageBlockRecipe(pWriter, TekoraBlocks.RAW_PLATINUM_BLOCK.get(), TekoraTags.Items.RAW_PLATINUM);
+        storageBlockRecipe(pWriter, TekoraBlocks.RAW_SILVER_BLOCK.get(), TekoraTags.Items.RAW_SILVER);
+        storageBlockRecipe(pWriter, TekoraBlocks.RAW_TIN_BLOCK.get(), TekoraTags.Items.RAW_TIN);
+        storageBlockRecipe(pWriter, TekoraBlocks.RAW_ZINC_BLOCK.get(), TekoraTags.Items.RAW_ZINC);
 
         nineBlockStorageRecipes(pWriter, TekoraItems.ALUMINUM_INGOT.get(), TekoraTags.Items.ALUMINUM_BLOCK);
         nineBlockStorageRecipes(pWriter, TekoraItems.BARIUM_INGOT.get(), TekoraTags.Items.BARIUM_BLOCK);
@@ -288,6 +291,13 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
         nineBlockStorageRecipes(pWriter, TekoraItems.YTTRIUM_INGOT.get(), TekoraTags.Items.YTTRIUM_BLOCK);
         nineBlockStorageRecipes(pWriter, TekoraItems.ZINC_INGOT.get(), TekoraTags.Items.ZINC_BLOCK);
         nineBlockStorageRecipes(pWriter, TekoraItems.ZIRCONIUM_INGOT.get(), TekoraTags.Items.ZIRCONIUM_BLOCK);
+
+        nineBlockStorageRecipes(pWriter, TekoraItems.RAW_LEAD.get(), TekoraTags.Items.RAW_LEAD_BLOCK);
+        nineBlockStorageRecipes(pWriter, TekoraItems.RAW_NICKEL.get(), TekoraTags.Items.RAW_NICKEL_BLOCK);
+        nineBlockStorageRecipes(pWriter, TekoraItems.RAW_PLATINUM.get(), TekoraTags.Items.RAW_PLATINUM_BLOCK);
+        nineBlockStorageRecipes(pWriter, TekoraItems.RAW_SILVER.get(), TekoraTags.Items.RAW_SILVER_BLOCK);
+        nineBlockStorageRecipes(pWriter, TekoraItems.RAW_TIN.get(), TekoraTags.Items.RAW_TIN_BLOCK);
+        nineBlockStorageRecipes(pWriter, TekoraItems.RAW_ZINC.get(), TekoraTags.Items.RAW_ZINC_BLOCK);
 
         nineBlockStorageRecipes(pWriter, TekoraItems.ALUMINUM_NUGGET.get(), TekoraTags.Items.ALUMINUM_INGOT);
         nineBlockStorageRecipes(pWriter, TekoraItems.BARIUM_NUGGET.get(), TekoraTags.Items.BARIUM_INGOT);
@@ -434,6 +444,18 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
         createHammerRecipe(pWriter, Ingredient.of(Items.GOLD_INGOT), TekoraItems.GOLDEN_HAMMER.get());
         createHammerRecipe(pWriter, Ingredient.of(Items.IRON_INGOT), TekoraItems.IRON_HAMMER.get());
 
+        createMixingRecipe(pWriter, TekoraItems.BRASS_DUST.get(), 3, new byte[]{1, 3},
+                Ingredient.of(TekoraTags.Items.ZINC_DUST), Ingredient.of(TekoraTags.Items.COPPER_DUST));
+
+        createMixingRecipe(pWriter, TekoraItems.BRONZE_DUST.get(), 3, new byte[]{1, 3},
+                Ingredient.of(TekoraTags.Items.TIN_DUST), Ingredient.of(TekoraTags.Items.COPPER_DUST));
+
+        createMixingRecipe(pWriter, TekoraItems.STEEL_DUST.get(), 1, new byte[]{1, 3},
+                Ingredient.of(TekoraTags.Items.IRON_DUST), Ingredient.of(Items.COAL)); // temp recipe, will be replaced
+
+        createMixingRecipe(pWriter, TekoraItems.INVAR_DUST.get(), 2, new byte[]{1, 1},
+                Ingredient.of(TekoraTags.Items.IRON_DUST), Ingredient.of(TekoraTags.Items.NICKEL_DUST));
+
         SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                         Ingredient.of(TekoraItems.DIAMOND_HAMMER.get()),
                         Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.MISC, TekoraItems.NETHERITE_HAMMER.get())
@@ -539,10 +561,6 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
         oreBlasting(pFinishedRecipeConsumer, List.of(pIngredients), pResult, getItemName(pResult.asItem()));
     }
 
-    protected static void oreBlasting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, TagKey<Item> pIngredients, ItemLike pResult) {
-        oreBlasting(pFinishedRecipeConsumer, pIngredients, pResult, getItemName(pResult.asItem()));
-    }
-
     protected static void oreBlasting(Consumer<FinishedRecipe> pFinishedRecipeConsumer,
                                      List<ItemLike> pIngredients, ItemLike pResult, String pGroup) {
         for(ItemLike itemlike : pIngredients) {
@@ -559,7 +577,7 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
     }
 
     protected static void oreBlasting(Consumer<FinishedRecipe> pFinishedRecipeConsumer,
-                                     TagKey<Item> pIngredients, ItemLike pResult, String pGroup) {
+                                     TagKey<Item> pIngredients, ItemLike pResult) {
         SimpleCookingRecipeBuilder.generic(Ingredient.of(pIngredients), RecipeCategory.MISC, pResult, 1, 100, RecipeSerializer.BLASTING_RECIPE)
              .group(getItemName(pResult)).unlockedBy(getHasName(pResult), has(pIngredients))
              .save(pFinishedRecipeConsumer,
@@ -739,5 +757,20 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
                 .define('0', pMaterial).define('1', pStick)
                 .unlockedBy(getHasName(pHammer), has(pHammer))
                 .save(pWriter, Tekora.MODID + ":" + pHammer + "_from_crafting");
+    }
+
+    protected static void createMixingRecipe(Consumer<FinishedRecipe> pWriter, ItemLike pOutput, int pOutCount, byte[] pIngCounts,
+                                             Ingredient... pIngredients) {
+        ShapelessRecipeBuilder unbuilt = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, pOutput, pOutCount);
+        int ind = 0;
+        int cnt = 0;
+        for (Ingredient ing : pIngredients) {
+            if (cnt >= 9) break;
+            unbuilt.requires(ing, pIngCounts[ind]);
+            cnt += pIngCounts[ind];
+            ind++;
+        }
+        unbuilt.unlockedBy(getHasName(pOutput), has(pOutput))
+                .save(pWriter, Tekora.MODID + ":" + pOutput + "_from_mixing");
     }
 }

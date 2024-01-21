@@ -27,61 +27,27 @@
               "name": "tekora:bauxite_ore"
             },
             {
-              "type": "minecraft:group",
-              "children": [
+              "type": "minecraft:item",
+              "functions": [
                 {
-                  "type": "minecraft:item",
-                  "functions": [
-                    {
-                      "add": false,
-                      "count": {
-                        "type": "minecraft:uniform",
-                        "max": 2.0,
-                        "min": 5.0
-                      },
-                      "function": "minecraft:set_count"
-                    },
-                    {
-                      "enchantment": "minecraft:fortune",
-                      "formula": "minecraft:ore_drops",
-                      "function": "minecraft:apply_bonus"
-                    },
-                    {
-                      "function": "minecraft:explosion_decay"
-                    }
-                  ],
-                  "name": "tekora:bauxite"
+                  "add": false,
+                  "count": {
+                    "type": "minecraft:uniform",
+                    "max": 1.0,
+                    "min": 2.0
+                  },
+                  "function": "minecraft:set_count"
                 },
                 {
-                  "type": "minecraft:item",
-                  "functions": [
-                    {
-                      "add": false,
-                      "conditions": [
-                        {
-                          "chance": 0.08,
-                          "condition": "minecraft:random_chance"
-                        }
-                      ],
-                      "count": {
-                        "type": "minecraft:uniform",
-                        "max": 1.0,
-                        "min": 1.0
-                      },
-                      "function": "minecraft:set_count"
-                    },
-                    {
-                      "enchantment": "minecraft:fortune",
-                      "formula": "minecraft:ore_drops",
-                      "function": "minecraft:apply_bonus"
-                    },
-                    {
-                      "function": "minecraft:explosion_decay"
-                    }
-                  ],
-                  "name": "tekora:bastnaesite_shard"
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:ore_drops",
+                  "function": "minecraft:apply_bonus"
+                },
+                {
+                  "function": "minecraft:explosion_decay"
                 }
-              ]
+              ],
+              "name": "tekora:bauxite"
             }
           ]
         }

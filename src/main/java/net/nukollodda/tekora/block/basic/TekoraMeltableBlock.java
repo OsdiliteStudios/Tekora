@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.nukollodda.tekora.Tekora;
-import net.nukollodda.tekora.block.fluid.data.TekoraFluidData;
+import net.nukollodda.tekora.fluid.data.TekoraFluidData;
 import net.nukollodda.tekora.util.FluidFunctions;
 
 public class TekoraMeltableBlock extends TekoraBaseBlock {

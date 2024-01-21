@@ -2,8 +2,10 @@ package net.nukollodda.tekora.datagen;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.TekoraBlocks;
@@ -15,8 +17,15 @@ public class TekoraBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        // may be replaceable with a massive for loop
+        // such as
+        /*
+        for (Block block : ForgeRegistries.BLOCKS.getValues()) {
+            if (!block.defaultBlockState().hasProperty(BlockStateProperties.FACING)) {
+                blockWithItem(block);
+            }
+        }*/
         blockWithItem(TekoraBlocks.BORAX_BLOCK);
-        blockWithItem(TekoraBlocks.EPSOMITE_BLOCK);
         blockWithItem(TekoraBlocks.SALT_BLOCK);
         blockWithItem(TekoraBlocks.EVAPORITE);
         blockWithItem(TekoraBlocks.LIMESTONE);
@@ -80,58 +89,46 @@ public class TekoraBlockStateProvider extends BlockStateProvider {
         blockWithItem(TekoraBlocks.ZINC_BLOCK);
         blockWithItem(TekoraBlocks.ZIRCONIUM_BLOCK);
 
-        blockWithItem(TekoraBlocks.APATITE_ORE);
-        blockWithItem(TekoraBlocks.CALCITE_APATITE_ORE);
-        blockWithItem(TekoraBlocks.DEEPSLATE_APATITE_ORE);
-        blockWithItem(TekoraBlocks.GRANITE_APATITE_ORE);
+        blockWithItem(TekoraBlocks.RAW_LEAD_BLOCK);
+        blockWithItem(TekoraBlocks.RAW_NICKEL_BLOCK);
+        blockWithItem(TekoraBlocks.RAW_PLATINUM_BLOCK);
+        blockWithItem(TekoraBlocks.RAW_SILVER_BLOCK);
+        blockWithItem(TekoraBlocks.RAW_TIN_BLOCK);
+        blockWithItem(TekoraBlocks.RAW_ZINC_BLOCK);
+
         blockWithItem(TekoraBlocks.AQUAMARINE_ORE);
         blockWithItem(TekoraBlocks.DEEPSLATE_AQUAMARINE_ORE);
         blockWithItem(TekoraBlocks.BAUXITE_ORE);
         blockWithItem(TekoraBlocks.DEEPSLATE_BAUXITE_ORE);
-        blockWithItem(TekoraBlocks.SAND_BAUXITE_ORE);
-        blockWithItem(TekoraBlocks.CASSITERITE_ORE);
-        blockWithItem(TekoraBlocks.DEEPSLATE_CASSITERITE_ORE);
-        blockWithItem(TekoraBlocks.CHROMITE_ORE);
-        blockWithItem(TekoraBlocks.BASALT_CHROMITE_ORE);
-        blockWithItem(TekoraBlocks.DEEPSLATE_CHROMITE_ORE);
-        blockWithItem(TekoraBlocks.NETHER_BASALT_CHROMITE_ORE);
-        blockWithItem(TekoraBlocks.TUFF_CHROMITE_ORE);
+        blockWithItem(TekoraBlocks.TIN_ORE);
+        blockWithItem(TekoraBlocks.DEEPSLATE_TIN_ORE);
         blockWithItem(TekoraBlocks.CINNABAR_ORE);
         blockWithItem(TekoraBlocks.DEEPSLATE_CINNABAR_ORE);
-        blockWithItem(TekoraBlocks.GALENA_ORE);
-        blockWithItem(TekoraBlocks.BASALT_GALENA_ORE);
-        blockWithItem(TekoraBlocks.CALCITE_GALENA_ORE);
-        blockWithItem(TekoraBlocks.DEEPSLATE_GALENA_ORE);
-        blockWithItem(TekoraBlocks.TUFF_GALENA_ORE);
-        blockWithItem(TekoraBlocks.GARNET_ORE);
-        blockWithItem(TekoraBlocks.DEEPSLATE_GARNET_ORE);
-        blockWithItem(TekoraBlocks.GRAPHITE_ORE);
-        blockWithItem(TekoraBlocks.DEEPSLATE_GRAPHITE_ORE);
-        blockWithItem(TekoraBlocks.TUFF_GRAPHITE_ORE);
-        blockWithItem(TekoraBlocks.PENTLANDITE_ORE);
-        blockWithItem(TekoraBlocks.BASALT_PENTLANDITE_ORE);
-        blockWithItem(TekoraBlocks.DEEPSLATE_PENTLANDITE_ORE);
-        blockWithItem(TekoraBlocks.GRANITE_PENTLANDITE_ORE);
-        blockWithItem(TekoraBlocks.TUFF_PENTLANDITE_ORE);
+        blockWithItem(TekoraBlocks.HALITE_ORE);
+        blockWithItem(TekoraBlocks.DEEPSLATE_HALITE_ORE);
+        blockWithItem(TekoraBlocks.LEAD_ORE);
+        blockWithItem(TekoraBlocks.DEEPSLATE_LEAD_ORE);
+        blockWithItem(TekoraBlocks.NICKEL_ORE);
+        blockWithItem(TekoraBlocks.DEEPSLATE_NICKEL_ORE);
         blockWithItem(TekoraBlocks.RUBY_ORE);
         blockWithItem(TekoraBlocks.DEEPSLATE_RUBY_ORE);
         blockWithItem(TekoraBlocks.SAPPHIRE_ORE);
         blockWithItem(TekoraBlocks.DEEPSLATE_SAPPHIRE_ORE);
-        blockWithItem(TekoraBlocks.SILVER_ORE);
-        blockWithItem(TekoraBlocks.DEEPSLATE_SILVER_ORE);
         blockWithItem(TekoraBlocks.URANINITE_ORE);
         blockWithItem(TekoraBlocks.DEEPSLATE_URANINITE_ORE);
+        blockWithItem(TekoraBlocks.WOLFRAMITE_ORE);
+        blockWithItem(TekoraBlocks.DEEPSLATE_WOLFRAMITE_ORE);
+        blockWithItem(TekoraBlocks.ZINC_ORE);
+        blockWithItem(TekoraBlocks.DEEPSLATE_ZINC_ORE);
         blockWithItem(TekoraBlocks.ZIRCON_ORE);
         blockWithItem(TekoraBlocks.DEEPSLATE_ZIRCON_ORE);
-        blockWithItem(TekoraBlocks.GRANITE_ZIRCON_ORE);
-        blockWithItem(TekoraBlocks.SANDSTONE_ZIRCON_ORE);
     }
 
     private void blockWithItem(RegistryObject<Block> registryObject) {
         simpleBlockWithItem(registryObject.get(), cubeAll(registryObject.get()));
     }
 
-    private void directionalBlock(RegistryObject<Block> registryObject) {
-
+    private void blockWithItem(Block block) {
+        simpleBlockWithItem(block, cubeAll(block));
     }
 }

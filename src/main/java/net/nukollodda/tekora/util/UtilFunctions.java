@@ -136,4 +136,46 @@ public class UtilFunctions {
         }
         return 0;
     }
+
+    public static <T> int countValues(T[] values, T val) {
+        int num = 0;
+        for (T value : values) {
+            if (value.equals(val)) {
+                num++;
+            }
+        }
+        return num;
+    }
+
+    public static int countTrueValues(boolean[] values) {
+        int num = 0;
+        for (boolean value : values) {
+            if (value) {
+                num++;
+            }
+        }
+        return num;
+    }
+
+    public static int countFalseValues(boolean[] values) {
+        int num = 0;
+        for (boolean value : values) {
+            if (!value) {
+                num++;
+            }
+        }
+        return num;
+    }
+
+    public static int getBooleanAsNum(boolean bool) {
+        return bool ? 1 : 0;
+    }
+
+    public static int getNotBooleanAsNum(boolean bool) {
+        return bool ? 0 : 1;
+    }
+
+    public static int isNegative(int val) {
+        return val < 0 ? 0 : 1;
+    }
 }

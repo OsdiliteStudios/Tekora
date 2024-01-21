@@ -1,0 +1,17 @@
+{
+  "type": "tekora:pulverization",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/nickel"
+    }
+  ],
+  "output": {
+    "item": "tekora:nickel_dust",
+    "count": 1,
+    "chance": 0.5
+  },
+  "residue": {
+    "item": "tekora:cobalt_dust",
+    "chance": 0.25
+  }
+}

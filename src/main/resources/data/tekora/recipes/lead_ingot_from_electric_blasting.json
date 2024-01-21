@@ -1,0 +1,11 @@
+{
+  "type": "tekora:blasting",
+  "ingredients": [
+    {
+      "tag": "forge:ores/lead"
+    }
+  ],
+  "output": {
+    "item": "tekora:lead_ingot"
+  }
+}

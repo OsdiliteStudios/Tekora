@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "tekora:block/granite_pentlandite_ore"
-  }
-}

@@ -1,0 +1,25 @@
+{
+  "type": "tekora:centrifuge",
+  "ingredient": {
+    "tag": "forge:raw_materials/lead"
+  },
+  "outputs": [
+    {
+      "item": "tekora:lead_dust",
+      "count": 1,
+      "chance": 0.5
+    },
+    {
+      "item": "tekora:antimony_dust",
+      "chance": 0.11111
+    },
+    {
+      "item": "tekora:bismuth_dust",
+      "chance": 0.11111
+    },
+    {
+      "item": "tekora:thallium_dust",
+      "chance": 0.037037
+    }
+  ]
+}

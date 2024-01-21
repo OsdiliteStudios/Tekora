@@ -8,21 +8,21 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class TekoraExperienceBlock extends DropExperienceBlock {
-    public TekoraExperienceBlock(float strength, float destroyTime, Block material, SoundType sound, UniformInt uniform) {
+    public TekoraExperienceBlock(float strength, float destroyTime, Block material, SoundType sound, int min, int max) {
         super(BlockBehaviour.Properties.copy(material).requiresCorrectToolForDrops()
-                .strength(destroyTime, strength).sound(sound), uniform);
+                .strength(destroyTime, strength).sound(sound), UniformInt.of(min, max));
     }
 
     public TekoraExperienceBlock(float strength, float destroyTime, Block material, SoundType sound) {
-        this(strength, destroyTime, material, sound, UniformInt.of(1, 5));
+        this(strength, destroyTime, material, sound, 1, 5);
     }
 
-    public TekoraExperienceBlock(float strength, float destroyTime, SoundType sound, UniformInt uniform) {
-        this(strength, destroyTime, Blocks.STONE, sound, uniform);
+    public TekoraExperienceBlock(float strength, float destroyTime, SoundType sound, int min, int max) {
+        this(strength, destroyTime, Blocks.STONE, sound, min, max);
     }
 
-    public TekoraExperienceBlock(float strength, float destroyTime, Block material, UniformInt uniform) {
-        this(strength, destroyTime, material, SoundType.STONE, uniform);
+    public TekoraExperienceBlock(float strength, float destroyTime, Block material, int min, int max) {
+        this(strength, destroyTime, material, SoundType.STONE, min, max);
     }
     public TekoraExperienceBlock(float strength, float destroyTime, Block material) {
         this(strength, destroyTime, material, SoundType.STONE);
@@ -31,8 +31,8 @@ public class TekoraExperienceBlock extends DropExperienceBlock {
         this(strength, destroyTime, Blocks.STONE, sound);
     }
 
-    public TekoraExperienceBlock(float strength, float destroyTime, UniformInt uniform) {
-        this(strength, destroyTime, Blocks.STONE, uniform);
+    public TekoraExperienceBlock(float strength, float destroyTime, int min, int max) {
+        this(strength, destroyTime, Blocks.STONE, min, max);
     }
 
     public TekoraExperienceBlock(float strength, float destroyTime) {

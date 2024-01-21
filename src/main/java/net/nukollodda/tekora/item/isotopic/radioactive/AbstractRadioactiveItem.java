@@ -1,6 +1,8 @@
 package net.nukollodda.tekora.item.isotopic.radioactive;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,21 +26,6 @@ public abstract class AbstractRadioactiveItem extends AbstractIsotopicItem imple
         return new float[]{100};
     }
 
-    public static String formatRad(double pRadVal) {
-        if (pRadVal > 1000000) {
-            return (int)(pRadVal / 1000000) + "Sv";
-        } else if (pRadVal > 1000) {
-            return (int)(pRadVal / 1000) + "mSv";
-        } else if (pRadVal > 1) {
-            return (int)(pRadVal) + "μSv";
-        } else if (pRadVal > 0.001) {
-            return (int)(pRadVal * 1000) + "nSv";
-        } else if (pRadVal > 0.000001) {
-            return (long)(pRadVal * 1000000) + "pSv";
-        }
-        return "0Sv";
-    }
-
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
         if (getRadiation(pStack) > 0.001) {
@@ -59,11 +46,20 @@ public abstract class AbstractRadioactiveItem extends AbstractIsotopicItem imple
         return super.hurtEnemy(pStack, pTarget, pAttacker);
     }
 
-    /* Basic Idea:
-     * There should be nbt values stored using only percents and a key, ie the id
-     * something akin to the size of the enum being the number of keys of the nbt value
-     * the nbt should also be readable as to return numerous important values
-     */
+    protected static String formatRad(double pRadVal) {
+        if (pRadVal > 1000000) {
+            return (int)(pRadVal / 1000000) + "Sv";
+        } else if (pRadVal > 1000) {
+            return (int)(pRadVal / 1000) + "mSv";
+        } else if (pRadVal > 1) {
+            return (int)(pRadVal) + "μSv";
+        } else if (pRadVal > 0.001) {
+            return (int)(pRadVal * 1000) + "nSv";
+        } else if (pRadVal > 0.000001) {
+            return (long)(pRadVal * 1000000) + "pSv";
+        }
+        return "0Sv";
+    }
 
     protected static ChatFormatting radColor(double pRadVal) {
         if (pRadVal > 1000000) {
@@ -76,12 +72,20 @@ public abstract class AbstractRadioactiveItem extends AbstractIsotopicItem imple
         return ChatFormatting.WHITE;
     }
 
+    public static Component radComponent(double pRadVal) {
+        return Component.literal(formatRad(pRadVal)).withStyle(radColor(pRadVal));
+    }
+
     public interface Isotopes extends AbstractIsotopicItem.Isotopes {
-        default Item getItem(int[] pRatio) {
+        default ItemStack getItem(int[] pRatio) {
             if (this instanceof Uranium.Isotopes) {
-                return TekoraItems.URANIUM_INGOT.get();
+                ItemStack item = new ItemStack(TekoraItems.URANIUM_INGOT.get());
+                CompoundTag tag = item.getOrCreateTag();
+                tag.putIntArray("isotopes", pRatio);
+                item.setTag(tag);
+                return item;
             } else if (this instanceof Thorium.Isotopes) {
-                return TekoraItems.THORIUM_INGOT.get();
+                return new ItemStack(TekoraItems.THORIUM_INGOT.get());
             }
 
             return null;

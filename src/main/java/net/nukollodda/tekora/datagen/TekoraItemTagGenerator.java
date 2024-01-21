@@ -283,20 +283,37 @@ public class TekoraItemTagGenerator extends ItemTagsProvider {
         this.tag(TekoraTags.Items.VANASTEEL_DUST).add(TekoraItems.VANASTEEL_DUST.get());
         this.tag(TekoraTags.Items.ZIRCALOY_DUST).add(TekoraItems.ZIRCALOY_DUST.get());
 
-        this.tag(TekoraTags.Items.APATITE_GEM).add(TekoraItems.APATITE.get());
+        this.tag(TekoraTags.Items.ANTIMONY_DUST).add(TekoraItems.ANTIMONY_DUST.get());
+        this.tag(TekoraTags.Items.ARSENIC_DUST).add(TekoraItems.ARSENIC_DUST.get());
+        this.tag(TekoraTags.Items.BORON_DUST).add(TekoraItems.BORON_DUST.get());
+        this.tag(TekoraTags.Items.GERMANIUM_DUST).add(TekoraItems.GERMANIUM_DUST.get());
+        this.tag(TekoraTags.Items.SILICON_DUST).add(TekoraItems.SILICON_DUST.get());
+        this.tag(TekoraTags.Items.TELLURIUM_DUST).add(TekoraItems.TELLURIUM_DUST.get());
+
+        this.tag(TekoraTags.Items.GRAPHITE_DUST).add(TekoraItems.GRAPHITE_DUST.get());
+        this.tag(TekoraTags.Items.IODINE_DUST).add(TekoraItems.IODINE_DUST.get());
+
         this.tag(TekoraTags.Items.AQUAMARINE_GEM).add(TekoraItems.AQUAMARINE.get());
         this.tag(TekoraTags.Items.BAUXITE_GEM).add(TekoraItems.BAUXITE.get());
-        this.tag(TekoraTags.Items.CASSITERITE_GEM).add(TekoraItems.CASSITERITE.get());
         this.tag(TekoraTags.Items.CHROMITE_GEM).add(TekoraItems.CHROMITE.get());
         this.tag(TekoraTags.Items.CINNABAR_GEM).add(TekoraItems.CINNABAR.get());
-        this.tag(TekoraTags.Items.GALENA_GEM).add(TekoraItems.GALENA.get());
-        this.tag(TekoraTags.Items.GARNET_GEM).add(TekoraItems.GARNET.get());
-        this.tag(TekoraTags.Items.PENTLANDITE_GEM).add(TekoraItems.PENTLANDITE.get());
+        this.tag(TekoraTags.Items.COLTAN_GEM).add(TekoraItems.COLTAN.get());
+        this.tag(TekoraTags.Items.HALITE_GEM).add(TekoraItems.HALITE.get());
+        this.tag(TekoraTags.Items.MONAZITE_GEM).add(TekoraItems.MONAZITE.get());
+        this.tag(TekoraTags.Items.PYROLUSITE_GEM).add(TekoraItems.PYROLUSITE.get());
         this.tag(TekoraTags.Items.RUBY_GEM).add(TekoraItems.RUBY.get());
+        this.tag(TekoraTags.Items.RUTILE_GEM).add(TekoraItems.RUTILE.get());
         this.tag(TekoraTags.Items.SAPPHIRE_GEM).add(TekoraItems.SAPPHIRE.get());
-        this.tag(TekoraTags.Items.RAW_SILVER).add(TekoraItems.RAW_SILVER.get());
         this.tag(TekoraTags.Items.URANINITE_GEM).add(TekoraItems.URANINITE.get());
+        this.tag(TekoraTags.Items.WOLFRAMITE_GEM).add(TekoraItems.WOLFRAMITE.get());
         this.tag(TekoraTags.Items.ZIRCON_GEM).add(TekoraItems.ZIRCON.get());
+
+        this.tag(TekoraTags.Items.RAW_LEAD).add(TekoraItems.RAW_LEAD.get());
+        this.tag(TekoraTags.Items.RAW_NICKEL).add(TekoraItems.RAW_NICKEL.get());
+        this.tag(TekoraTags.Items.RAW_PLATINUM).add(TekoraItems.RAW_PLATINUM.get());
+        this.tag(TekoraTags.Items.RAW_SILVER).add(TekoraItems.RAW_SILVER.get());
+        this.tag(TekoraTags.Items.RAW_TIN).add(TekoraItems.RAW_TIN.get());
+        this.tag(TekoraTags.Items.RAW_ZINC).add(TekoraItems.RAW_ZINC.get());
 
         this.tag(TekoraTags.Items.CARBON_STEEL_ROD).add(TekoraItems.CARBON_STEEL_ROD.get());
         this.tag(TekoraTags.Items.STEEL_ROD).add(TekoraItems.STEEL_ROD.get());
@@ -655,6 +672,39 @@ public class TekoraItemTagGenerator extends ItemTagsProvider {
                 TekoraTags.Items.VANASTEEL_INGOT,
                 TekoraTags.Items.ZIRCALOY_INGOT
         );
+
+        this.tag(TekoraTags.Items.CRUSHED_ANCIENT_DEBRIS_ORE).add(TekoraItems.PULVERIZED_ANCIENT_DEBRIS.get());
+        this.tag(TekoraTags.Items.PULVERIZED_ANCIENT_DEBRIS_ORE).add(TekoraItems.PULVERIZED_ANCIENT_DEBRIS.get());
+        this.tag(TekoraTags.Items.CRUSHED_AQUAMARINE_ORE).add(TekoraItems.PULVERIZED_AQUAMARINE_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_AQUAMARINE_ORE).add(TekoraItems.PULVERIZED_AQUAMARINE_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_BAUXITE_ORE).add(TekoraItems.PULVERIZED_BAUXITE_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_BAUXITE_ORE).add(TekoraItems.PULVERIZED_BAUXITE_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_CINNABAR_ORE).add(TekoraItems.PULVERIZED_CINNABAR_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_CINNABAR_ORE).add(TekoraItems.PULVERIZED_CINNABAR_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_COAL_ORE).add(TekoraItems.PULVERIZED_COAL_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_COAL_ORE).add(TekoraItems.PULVERIZED_COAL_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_DIAMOND_ORE).add(TekoraItems.PULVERIZED_DIAMOND_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_DIAMOND_ORE).add(TekoraItems.PULVERIZED_DIAMOND_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_EMERALD_ORE).add(TekoraItems.PULVERIZED_EMERALD_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_EMERALD_ORE).add(TekoraItems.PULVERIZED_EMERALD_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_HALITE_ORE).add(TekoraItems.PULVERIZED_HALITE_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_HALITE_ORE).add(TekoraItems.PULVERIZED_HALITE_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_LAPIS_ORE).add(TekoraItems.PULVERIZED_LAPIS_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_LAPIS_ORE).add(TekoraItems.PULVERIZED_LAPIS_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_QUARTZ_ORE).add(TekoraItems.PULVERIZED_QUARTZ_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_QUARTZ_ORE).add(TekoraItems.PULVERIZED_QUARTZ_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_REDSTONE_ORE).add(TekoraItems.PULVERIZED_REDSTONE_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_REDSTONE_ORE).add(TekoraItems.PULVERIZED_REDSTONE_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_RUBY_ORE).add(TekoraItems.PULVERIZED_RUBY_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_RUBY_ORE).add(TekoraItems.PULVERIZED_RUBY_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_SAPPHIRE_ORE).add(TekoraItems.PULVERIZED_SAPPHIRE_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_SAPPHIRE_ORE).add(TekoraItems.PULVERIZED_SAPPHIRE_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_URANINITE_ORE).add(TekoraItems.PULVERIZED_URANINITE_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_URANINITE_ORE).add(TekoraItems.PULVERIZED_URANINITE_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_WOLFRAMITE_ORE).add(TekoraItems.PULVERIZED_WOLFRAMITE_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_WOLFRAMITE_ORE).add(TekoraItems.PULVERIZED_WOLFRAMITE_ORE.get());
+        this.tag(TekoraTags.Items.CRUSHED_ZIRCON_ORE).add(TekoraItems.PULVERIZED_ZIRCON_ORE.get());
+        this.tag(TekoraTags.Items.PULVERIZED_ZIRCON_ORE).add(TekoraItems.PULVERIZED_ZIRCON_ORE.get());
 
         this.tag(TekoraTags.Items.NUGGETS).addTags(
                 TekoraTags.Items.ALUMINUM_NUGGET,

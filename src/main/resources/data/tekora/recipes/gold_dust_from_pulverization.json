@@ -1,0 +1,17 @@
+{
+  "type": "tekora:pulverization",
+  "ingredients": [
+    {
+      "tag": "forge:raw_materials/gold"
+    }
+  ],
+  "output": {
+    "item": "tekora:gold_dust",
+    "count": 1,
+    "chance": 0.5
+  },
+  "residue": {
+    "item": "tekora:silver_dust",
+    "chance": 0.25
+  }
+}

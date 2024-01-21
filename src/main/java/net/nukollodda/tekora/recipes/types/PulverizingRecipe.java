@@ -17,25 +17,44 @@ import org.jetbrains.annotations.Nullable;
 public class PulverizingRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
-    private final NonNullList<Ingredient> recipeItems;
+    private final float extraOutputChance;
+    private final ItemStack residue;
+    private final float extraResidueChance;
+    private final Ingredient recipeItem;
 
-    public PulverizingRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems) {
+    public PulverizingRecipe(ResourceLocation id, ItemStack output, float extraOutputChance, Ingredient recipeItem, ItemStack residue,
+                             float extraResidueChance) {
         this.id = id;
         this.output = output;
-        this.recipeItems = recipeItems;
+        this.extraOutputChance = extraOutputChance;
+        this.recipeItem = recipeItem;
+        this.residue = residue;
+        this.extraResidueChance = extraResidueChance;
     }
     @Override
     public boolean matches(SimpleContainer pContainer, Level pLevel) {
         if (pLevel.isClientSide()) {
             return false;
         }
+        return recipeItem.test(pContainer.getItem(0));
+    }
 
-        return recipeItems.get(0).test(pContainer.getItem(0));
+    public float getExtraOutputChance() {
+        return extraOutputChance;
+    }
+
+    public float getExtraResidueChance() {
+        return extraResidueChance;
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return NonNullList.of(this.recipeItem);
     }
 
     @Override
     public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
-        return output;
+        return this.output;
     }
 
     @Override
@@ -45,7 +64,11 @@ public class PulverizingRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
-        return output.copy();
+        return this.output.copy();
+    }
+
+    public ItemStack getResidue() {
+        return this.residue.copy();
     }
 
     @Override
@@ -76,35 +99,40 @@ public class PulverizingRecipe implements Recipe<SimpleContainer> {
                 new ResourceLocation(Tekora.MODID, "pulverization");
         @Override
         public PulverizingRecipe fromJson(ResourceLocation pId, JsonObject pJson) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "output"));
+            JsonObject outObj = GsonHelper.getAsJsonObject(pJson, "output");
+            ItemStack output = ShapedRecipe.itemStackFromJson(outObj);
+            float outChance = outObj.has("chance") ? outObj.get("chance").getAsFloat() : 1f;
 
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pJson, "ingredients"); // make the input number matter
-            NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
+            ItemStack residue = ItemStack.EMPTY;
+            float resChance = 0;
 
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(0, Ingredient.fromJson(ingredients.get(0)));
+            if (pJson.has("residue")) {
+                JsonObject resObj = GsonHelper.getAsJsonObject(pJson, "residue");
+                residue = ShapedRecipe.itemStackFromJson(resObj);
+                resChance = resObj.has("chance") ? resObj.get("chance").getAsFloat() : 0.25f;
             }
-            return new PulverizingRecipe(pId, output, inputs);
+
+            JsonArray ingredients = GsonHelper.getAsJsonArray(pJson, "ingredients");
+            return new PulverizingRecipe(pId, output, outChance, Ingredient.fromJson(ingredients.get(0)), residue, resChance);
         }
 
         @Override
         public @Nullable PulverizingRecipe fromNetwork(ResourceLocation pId, FriendlyByteBuf pBuffer) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromNetwork(pBuffer));
-            }
-
+            Ingredient input = Ingredient.fromNetwork(pBuffer);
             ItemStack output = pBuffer.readItem();
-            return new PulverizingRecipe(pId, output, inputs);
+            ItemStack residue = pBuffer.readItem();
+            float outputCnt = pBuffer.readFloat();
+            float residueCnt = pBuffer.readFloat();
+            return new PulverizingRecipe(pId, output, outputCnt, input, residue, residueCnt);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf pBuffer, PulverizingRecipe pRecipe) {
-            pBuffer.writeInt(pRecipe.getIngredients().size());
-
-            for (Ingredient ing : pRecipe.getIngredients()) {
-                ing.toNetwork(pBuffer);
-            }
+            pRecipe.recipeItem.toNetwork(pBuffer);
+            pBuffer.writeItem(pRecipe.output);
+            pBuffer.writeItem(pRecipe.residue);
+            pBuffer.writeFloat(pRecipe.extraOutputChance);
+            pBuffer.writeFloat(pRecipe.extraResidueChance);
         }
     }
 }

@@ -23,7 +23,7 @@ public class AlloyingCategory implements IRecipeCategory<AlloyingRecipe> {
     private final IDrawable icon;
 
     public AlloyingCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0,0,176,85);
+        this.background = helper.createDrawable(TEXTURE, 0,0,114,50);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK,
                 new ItemStack(TekoraBlocks.ALLOY_FURNACE.get()));
     }
@@ -36,7 +36,7 @@ public class AlloyingCategory implements IRecipeCategory<AlloyingRecipe> {
 
     @Override
     public Component getTitle() {
-        return Component.literal("Alloying Furnace");
+        return Component.translatable("block.tekora.alloy_furnace");
     }
 
     @Override
@@ -51,10 +51,9 @@ public class AlloyingCategory implements IRecipeCategory<AlloyingRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, AlloyingRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 52, 26).addIngredients(recipe.getIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.INPUT, 34, 26).addIngredients(recipe.getIngredients().get(1));
-        builder.addSlot(RecipeIngredientRole.INPUT, 43, 44).addIngredients(recipe.getIngredients().get(2));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 117, 26).addItemStack(recipe.getResultItem(null));
-
+        builder.addSlot(RecipeIngredientRole.INPUT, 6, 9).addIngredients(recipe.getIngredients().get(0));
+        builder.addSlot(RecipeIngredientRole.INPUT, 24, 9).addIngredients(recipe.getIngredients().get(1));
+        builder.addSlot(RecipeIngredientRole.INPUT, 15, 27).addIngredients(recipe.getIngredients().get(2));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 90, 9).addItemStack(recipe.getResultItem(null));
     }
 }

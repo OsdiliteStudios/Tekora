@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "barium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/barium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:barium_tiny_dust"
+  }
+}

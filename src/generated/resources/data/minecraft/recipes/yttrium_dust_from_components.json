@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "yttrium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/yttrium"
+    },
+    {
+      "tag": "forge:tiny_dusts/yttrium"
+    },
+    {
+      "tag": "forge:tiny_dusts/yttrium"
+    },
+    {
+      "tag": "forge:tiny_dusts/yttrium"
+    },
+    {
+      "tag": "forge:tiny_dusts/yttrium"
+    },
+    {
+      "tag": "forge:tiny_dusts/yttrium"
+    },
+    {
+      "tag": "forge:tiny_dusts/yttrium"
+    },
+    {
+      "tag": "forge:tiny_dusts/yttrium"
+    },
+    {
+      "tag": "forge:tiny_dusts/yttrium"
+    }
+  ],
+  "result": {
+    "item": "tekora:yttrium_dust"
+  }
+}

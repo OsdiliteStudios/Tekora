@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "chromium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/chromium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:chromium_tiny_dust"
+  }
+}

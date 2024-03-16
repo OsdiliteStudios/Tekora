@@ -98,6 +98,21 @@
     "tekora:raw_silver_block",
     "tekora:raw_tin_block",
     "tekora:raw_zinc_block",
-    "tekora:zircon_ore"
+    "tekora:zircon_ore",
+    "tekora:aquamarine_block",
+    "tekora:bauxite_block",
+    "tekora:chromite_block",
+    "tekora:cinnabar_block",
+    "tekora:coltan_block",
+    "tekora:dolomite_block",
+    "tekora:fluorite_block",
+    "tekora:halite_block",
+    "tekora:monazite_block",
+    "tekora:ruby_block",
+    "tekora:rutile_block",
+    "tekora:sapphire_block",
+    "tekora:uraninite_block",
+    "tekora:wolframite_block",
+    "tekora:zircon_block"
   ]
 }

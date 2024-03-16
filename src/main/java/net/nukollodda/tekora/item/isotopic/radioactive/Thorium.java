@@ -5,12 +5,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.nukollodda.tekora.item.typical.ICompounds;
 import net.nukollodda.tekora.item.typical.IonicParts;
+import net.nukollodda.tekora.item.typical.RawItem;
 import net.nukollodda.tekora.util.DustUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Thorium extends AbstractRadioactiveItem {
     public Thorium() {
-        super(new Item.Properties().fireResistant());
+        super(true, RawItem.THORIUM);
     }
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {

@@ -4,7 +4,7 @@
   "group": "invar_plate",
   "ingredients": [
     {
-      "tag": "forge:invar"
+      "tag": "forge:ingots/invar"
     },
     {
       "tag": "forge:tools/hammer"

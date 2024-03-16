@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/antimony_dust"
+    "layer0": "tekora:item/items/dust"
   }
 }

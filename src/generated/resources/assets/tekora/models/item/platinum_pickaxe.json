@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/platinum_pickaxe"
+    "layer0": "tekora:item/tools/digstick",
+    "layer1": "tekora:item/tools/pickaxe"
   }
 }

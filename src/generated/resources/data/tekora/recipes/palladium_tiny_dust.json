@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "palladium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/palladium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:palladium_tiny_dust"
+  }
+}

@@ -4,7 +4,7 @@
   "group": "niobium_plate",
   "ingredients": [
     {
-      "tag": "forge:niobium"
+      "tag": "forge:ingots/niobium"
     },
     {
       "tag": "forge:tools/hammer"

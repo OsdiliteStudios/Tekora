@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "dysprosium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/dysprosium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:dysprosium_tiny_dust"
+  }
+}

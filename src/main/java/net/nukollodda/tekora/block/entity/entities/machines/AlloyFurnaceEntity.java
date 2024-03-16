@@ -154,17 +154,9 @@ public class AlloyFurnaceEntity extends AbstractTekoraFurnaceEntity {
         } // if a recipe exists, the tick does something
 
         ItemStack itemFuel = new ItemStack(entity.itemHandler.getStackInSlot(0).getItem());
-
-        if (entity.isLit()) {
-            entity.fuel--;
+        if (entity.hasRecipe()) {
             state = state.setValue(AbstractMachineBlock.LIT, true);
             level.setBlock(pos, state, 3);
-        } else {
-            state = state.setValue(AbstractMachineBlock.LIT, false);
-            level.setBlock(pos, state, 3);
-        }
-
-        if (entity.hasRecipe()) {
             if (FurnaceBlockEntity.isFuel(itemFuel) && entity.fuel == 0) {
                 entity.maxFuel = ForgeHooks.getBurnTime(itemFuel, RecipeType.BLASTING);
                 entity.fuel = entity.maxFuel;

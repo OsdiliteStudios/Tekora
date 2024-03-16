@@ -4,7 +4,7 @@
   "group": "tin_plate",
   "ingredients": [
     {
-      "tag": "forge:tin"
+      "tag": "forge:ingots/tin"
     },
     {
       "tag": "forge:tools/hammer"

@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/indium"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:indium_plate"
+  },
+  "time": 200
+}

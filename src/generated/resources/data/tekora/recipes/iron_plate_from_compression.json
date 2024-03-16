@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/iron"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:iron_plate"
+  },
+  "time": 200
+}

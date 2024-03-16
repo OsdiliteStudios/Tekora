@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "erbium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/erbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/erbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/erbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/erbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/erbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/erbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/erbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/erbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/erbium"
+    }
+  ],
+  "result": {
+    "item": "tekora:erbium_dust"
+  }
+}

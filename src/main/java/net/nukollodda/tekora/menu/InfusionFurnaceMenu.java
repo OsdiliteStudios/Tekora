@@ -4,8 +4,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
@@ -23,7 +21,7 @@ public class InfusionFurnaceMenu extends AbstractTekoraMenu {
     public InfusionFurnaceMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(TekoraMenuTypes.INFUSION_FURNACE_MENU.get(), inv, data, id, 4);
         this.blockEnt = (InfusionFurnaceEntity) entity;
-        this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> { // adds the slots themselves
+        this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             this.addSlot(new SlotItemHandler(handler, 0, 79, 53));
             this.addSlot(new SlotItemHandler(handler, 1, 52, 26));
             this.addSlot(new SlotItemHandler(handler, 2, 34, 26));
@@ -55,7 +53,7 @@ public class InfusionFurnaceMenu extends AbstractTekoraMenu {
 
     @Override
     public boolean stillValid(Player pPlayer) {
-        return stillValid(ContainerLevelAccess.create(level, blockEnt.getBlockPos()),
-                pPlayer, TekoraBlocks.INFUSION_FURNACE.get());
+        return stillValid(ContainerLevelAccess.create(level, blockEnt.getBlockPos()), pPlayer,
+                TekoraBlocks.INFUSION_FURNACE.get());
     }
 }

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "scandium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/scandium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:scandium_tiny_dust"
+  }
+}

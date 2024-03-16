@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "thallium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/thallium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:thallium_tiny_dust"
+  }
+}

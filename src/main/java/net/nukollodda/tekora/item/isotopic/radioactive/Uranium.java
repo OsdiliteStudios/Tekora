@@ -2,19 +2,19 @@ package net.nukollodda.tekora.item.isotopic.radioactive;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.nukollodda.tekora.item.typical.ICompounds;
 import net.nukollodda.tekora.item.typical.IonicParts;
+import net.nukollodda.tekora.item.typical.RawItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class Uranium extends AbstractRadioactiveItem {
     public Uranium() {
-        super(new Item.Properties());
+        super(false, RawItem.URANIUM);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Uranium extends AbstractRadioactiveItem {
         }
         float dividend = addedRat > 0 ? addedRat : 100;
         String isoName;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < ratio.length; i++) {
             if (ratio[i] > 0) {
                 isoName = i == 0 ? "U238 - " : "U23" + (7 - i) + " - ";
                 String formatted = isoName + ((int)((ratio[i] / dividend) * 1000)) / 10f + "%";
@@ -68,7 +68,7 @@ public class Uranium extends AbstractRadioactiveItem {
         float total = 0;
         float divider = 0;
         for (int i = 0; i < isotopes.length; i++) {
-            total += values[i].fissionRate * isotopes[i];
+            total += (float) (values[i].fissionRate * isotopes[i]);
             divider += isotopes[i];
         }
         return total / divider > 0 ? divider : 1;
@@ -81,7 +81,7 @@ public class Uranium extends AbstractRadioactiveItem {
         float total = 0;
         float divider = 0;
         for (int i = 0; i < isotopes.length; i++) {
-            total += values[i].neutronAbsorptionRate * isotopes[i];
+            total += (float) (values[i].neutronAbsorptionRate * isotopes[i]);
             divider += isotopes[i];
         }
         return total / divider > 0 ? divider : 1;

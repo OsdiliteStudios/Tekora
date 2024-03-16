@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/iridium"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:iridium_plate"
+  },
+  "time": 200
+}

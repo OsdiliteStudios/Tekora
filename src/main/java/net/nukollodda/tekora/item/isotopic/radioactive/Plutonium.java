@@ -4,12 +4,13 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.nukollodda.tekora.item.typical.RawItem;
 
 import java.util.List;
 
 public class Plutonium extends AbstractRadioactiveItem {
     public Plutonium() {
-        super(new Item.Properties());
+        super(false, RawItem.PLUTONIUM);
     }
 
     @Override

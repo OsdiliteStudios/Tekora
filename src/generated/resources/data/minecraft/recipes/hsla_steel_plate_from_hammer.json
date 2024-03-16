@@ -4,7 +4,7 @@
   "group": "hsla_steel_plate",
   "ingredients": [
     {
-      "tag": "forge:hsla_steel"
+      "tag": "forge:ingots/hsla_steel"
     },
     {
       "tag": "forge:tools/hammer"

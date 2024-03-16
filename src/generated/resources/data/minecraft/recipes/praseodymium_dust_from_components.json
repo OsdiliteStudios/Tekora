@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "praseodymium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/praseodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/praseodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/praseodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/praseodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/praseodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/praseodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/praseodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/praseodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/praseodymium"
+    }
+  ],
+  "result": {
+    "item": "tekora:praseodymium_dust"
+  }
+}

@@ -23,7 +23,7 @@ public class CentrifugeMenu extends AbstractTekoraElectricMenu {
     public CentrifugeMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(TekoraMenuTypes.CENTRIFUGE_MENU.get(), inv, data, id, 10);
         this.blockEnt = (AbstractTekoraMachineEntity) entity;
-        this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> { // adds the slots themselves
+        this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             this.addSlot(new SlotItemHandler(handler, 0, 35, 18));
             this.addSlot(new SlotItemHandler(handler, 1, 56, 26));
             for (int i = 0; i < 2; i++) {

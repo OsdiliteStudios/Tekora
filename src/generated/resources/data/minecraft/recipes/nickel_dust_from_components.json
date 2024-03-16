@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "nickel_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/nickel"
+    },
+    {
+      "tag": "forge:tiny_dusts/nickel"
+    },
+    {
+      "tag": "forge:tiny_dusts/nickel"
+    },
+    {
+      "tag": "forge:tiny_dusts/nickel"
+    },
+    {
+      "tag": "forge:tiny_dusts/nickel"
+    },
+    {
+      "tag": "forge:tiny_dusts/nickel"
+    },
+    {
+      "tag": "forge:tiny_dusts/nickel"
+    },
+    {
+      "tag": "forge:tiny_dusts/nickel"
+    },
+    {
+      "tag": "forge:tiny_dusts/nickel"
+    }
+  ],
+  "result": {
+    "item": "tekora:nickel_dust"
+  }
+}

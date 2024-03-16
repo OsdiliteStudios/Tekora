@@ -4,7 +4,7 @@
   "group": "indium_plate",
   "ingredients": [
     {
-      "tag": "forge:indium"
+      "tag": "forge:ingots/indium"
     },
     {
       "tag": "forge:tools/hammer"

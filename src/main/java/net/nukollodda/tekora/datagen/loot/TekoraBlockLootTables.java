@@ -88,6 +88,21 @@ public class TekoraBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(TekoraBlocks.RAW_SILVER_BLOCK.get());
         this.dropSelf(TekoraBlocks.RAW_TIN_BLOCK.get());
         this.dropSelf(TekoraBlocks.RAW_ZINC_BLOCK.get());
+        this.dropSelf(TekoraBlocks.AQUAMARINE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.BAUXITE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.CHROMITE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.CINNABAR_BLOCK.get());
+        this.dropSelf(TekoraBlocks.COLTAN_BLOCK.get());
+        this.dropSelf(TekoraBlocks.DOLOMITE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.FLUORITE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.HALITE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.MONAZITE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.RUBY_BLOCK.get());
+        this.dropSelf(TekoraBlocks.RUTILE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.SAPPHIRE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.URANINITE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.WOLFRAMITE_BLOCK.get());
+        this.dropSelf(TekoraBlocks.ZIRCON_BLOCK.get());
 
         this.dropSelf(TekoraBlocks.COMPRESSOR.get());
         this.dropSelf(TekoraBlocks.ALLOY_FURNACE.get());
@@ -103,7 +118,22 @@ public class TekoraBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(TekoraBlocks.EVAPORITE.get());
         this.dropSelf(TekoraBlocks.LIMESTONE.get());
 
+        this.dropSelf(TekoraBlocks.ALUMINUM_CABLE.get());
         this.dropSelf(TekoraBlocks.COPPER_CABLE.get());
+        this.dropSelf(TekoraBlocks.CUPRONICKEL_CABLE.get());
+        this.dropSelf(TekoraBlocks.ELECTRUM_CABLE.get());
+        this.dropSelf(TekoraBlocks.GOLD_CABLE.get());
+        this.dropSelf(TekoraBlocks.SILVER_CABLE.get());
+        this.dropSelf(TekoraBlocks.TIN_CABLE.get());
+
+        this.dropOther(TekoraBlocks.ALUMINUM_CABLE_FACADE.get(), TekoraBlocks.ALUMINUM_CABLE.get());
+        this.dropOther(TekoraBlocks.COPPER_CABLE_FACADE.get(), TekoraBlocks.COPPER_CABLE.get());
+        this.dropOther(TekoraBlocks.CUPRONICKEL_CABLE_FACADE.get(), TekoraBlocks.CUPRONICKEL_CABLE.get());
+        this.dropOther(TekoraBlocks.ELECTRUM_CABLE_FACADE.get(), TekoraBlocks.ELECTRUM_CABLE.get());
+        this.dropOther(TekoraBlocks.GOLD_CABLE_FACADE.get(), TekoraBlocks.GOLD_CABLE.get());
+        this.dropOther(TekoraBlocks.SILVER_CABLE_FACADE.get(), TekoraBlocks.SILVER_CABLE.get());
+        this.dropOther(TekoraBlocks.TIN_CABLE_FACADE.get(), TekoraBlocks.TIN_CABLE.get());
+
         this.dropSelf(TekoraBlocks.HYDROELECTRIC_GENERATOR.get());
 
         this.add(TekoraBlocks.AQUAMARINE_ORE.get(), block -> createTekoraOreDrops(block, TekoraItems.AQUAMARINE.get()));

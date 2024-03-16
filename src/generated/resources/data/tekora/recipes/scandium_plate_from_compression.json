@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/scandium"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:scandium_plate"
+  },
+  "time": 200
+}

@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/chromium"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:chromium_plate"
+  },
+  "time": 200
+}

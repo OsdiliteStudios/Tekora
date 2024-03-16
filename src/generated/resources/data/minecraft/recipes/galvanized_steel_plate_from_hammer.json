@@ -4,7 +4,7 @@
   "group": "galvanized_steel_plate",
   "ingredients": [
     {
-      "tag": "forge:galvanized_steel"
+      "tag": "forge:ingots/galvanized_steel"
     },
     {
       "tag": "forge:tools/hammer"

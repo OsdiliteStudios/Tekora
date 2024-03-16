@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/brass_dust"
+    "layer0": "tekora:item/items/dust"
   }
 }

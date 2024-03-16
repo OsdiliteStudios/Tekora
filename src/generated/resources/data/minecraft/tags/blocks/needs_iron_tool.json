@@ -76,6 +76,16 @@
     "tekora:deepslate_wolframite_ore",
     "tekora:wolframite_ore",
     "tekora:deepslate_zircon_ore",
-    "tekora:zircon_ore"
+    "tekora:zircon_ore",
+    "tekora:aquamarine_block",
+    "tekora:chromite_block",
+    "tekora:coltan_block",
+    "tekora:monazite_block",
+    "tekora:ruby_block",
+    "tekora:rutile_block",
+    "tekora:sapphire_block",
+    "tekora:uraninite_block",
+    "tekora:wolframite_block",
+    "tekora:zircon_block"
   ]
 }

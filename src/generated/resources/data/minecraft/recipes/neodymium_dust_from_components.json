@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "neodymium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/neodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/neodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/neodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/neodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/neodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/neodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/neodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/neodymium"
+    },
+    {
+      "tag": "forge:tiny_dusts/neodymium"
+    }
+  ],
+  "result": {
+    "item": "tekora:neodymium_dust"
+  }
+}

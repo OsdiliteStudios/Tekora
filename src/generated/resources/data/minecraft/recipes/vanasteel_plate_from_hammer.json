@@ -4,7 +4,7 @@
   "group": "vanasteel_plate",
   "ingredients": [
     {
-      "tag": "forge:vanasteel"
+      "tag": "forge:ingots/vanasteel"
     },
     {
       "tag": "forge:tools/hammer"

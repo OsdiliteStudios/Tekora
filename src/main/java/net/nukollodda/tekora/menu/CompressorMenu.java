@@ -10,7 +10,6 @@ import net.minecraftforge.items.SlotItemHandler;
 import net.nukollodda.tekora.block.TekoraBlocks;
 import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekoraMachineEntity;
 import net.nukollodda.tekora.menu.types.AbstractTekoraElectricMenu;
-import net.nukollodda.tekora.menu.types.AbstractTekoraMenu;
 
 public class CompressorMenu extends AbstractTekoraElectricMenu {
     public final AbstractTekoraMachineEntity blockEnt;
@@ -22,7 +21,7 @@ public class CompressorMenu extends AbstractTekoraElectricMenu {
     public CompressorMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(TekoraMenuTypes.COMPRESSOR_MENU.get(), inv, data, id, 2);
         this.blockEnt = (AbstractTekoraMachineEntity) entity;
-        this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> { // adds the slots themselves
+        this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             this.addSlot(new SlotItemHandler(handler, 0, 43, 26));
             this.addSlot(new SlotItemHandler(handler, 1, 117, 26));
         });

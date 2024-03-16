@@ -21,6 +21,11 @@
     "tekora:raw_lead_block",
     "tekora:raw_nickel_block",
     "tekora:raw_tin_block",
-    "tekora:raw_zinc_block"
+    "tekora:raw_zinc_block",
+    "tekora:bauxite_block",
+    "tekora:cinnabar_block",
+    "tekora:dolomite_block",
+    "tekora:fluorite_block",
+    "tekora:halite_block"
   ]
 }

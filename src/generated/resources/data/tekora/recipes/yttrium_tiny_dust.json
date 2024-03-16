@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "yttrium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/yttrium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:yttrium_tiny_dust"
+  }
+}

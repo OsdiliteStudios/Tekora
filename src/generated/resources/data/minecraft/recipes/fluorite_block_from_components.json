@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:fluorite_block}",
+  "ingredients": [
+    {
+      "item": "tekora:fluorite"
+    },
+    {
+      "item": "tekora:fluorite"
+    },
+    {
+      "item": "tekora:fluorite"
+    },
+    {
+      "item": "tekora:fluorite"
+    },
+    {
+      "item": "tekora:fluorite"
+    },
+    {
+      "item": "tekora:fluorite"
+    },
+    {
+      "item": "tekora:fluorite"
+    },
+    {
+      "item": "tekora:fluorite"
+    },
+    {
+      "item": "tekora:fluorite"
+    }
+  ],
+  "result": {
+    "item": "tekora:fluorite_block"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "magnesium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/magnesium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:magnesium_tiny_dust"
+  }
+}

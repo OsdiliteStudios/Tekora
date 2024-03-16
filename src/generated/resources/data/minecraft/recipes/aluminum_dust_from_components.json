@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "aluminum_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/aluminum"
+    },
+    {
+      "tag": "forge:tiny_dusts/aluminum"
+    },
+    {
+      "tag": "forge:tiny_dusts/aluminum"
+    },
+    {
+      "tag": "forge:tiny_dusts/aluminum"
+    },
+    {
+      "tag": "forge:tiny_dusts/aluminum"
+    },
+    {
+      "tag": "forge:tiny_dusts/aluminum"
+    },
+    {
+      "tag": "forge:tiny_dusts/aluminum"
+    },
+    {
+      "tag": "forge:tiny_dusts/aluminum"
+    },
+    {
+      "tag": "forge:tiny_dusts/aluminum"
+    }
+  ],
+  "result": {
+    "item": "tekora:aluminum_dust"
+  }
+}

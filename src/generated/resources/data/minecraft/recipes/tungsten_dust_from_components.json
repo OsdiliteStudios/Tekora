@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tungsten_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/tungsten"
+    },
+    {
+      "tag": "forge:tiny_dusts/tungsten"
+    },
+    {
+      "tag": "forge:tiny_dusts/tungsten"
+    },
+    {
+      "tag": "forge:tiny_dusts/tungsten"
+    },
+    {
+      "tag": "forge:tiny_dusts/tungsten"
+    },
+    {
+      "tag": "forge:tiny_dusts/tungsten"
+    },
+    {
+      "tag": "forge:tiny_dusts/tungsten"
+    },
+    {
+      "tag": "forge:tiny_dusts/tungsten"
+    },
+    {
+      "tag": "forge:tiny_dusts/tungsten"
+    }
+  ],
+  "result": {
+    "item": "tekora:tungsten_dust"
+  }
+}

@@ -1,9 +1,9 @@
 # Tekora
-Source code of Tekora
+![](https://github.com/NukolLodda/Tekora/blob/master/logo.png)Technologic Ores And More!
 
 Tekora is a tech based mod for Minecraft and a base mod for future mods planned for the Tekora Development Team.
 <br>
-Tekora plans to implement a whole host of machines into Minecraft using most naturally occuring elements of the<br>
+Tekora plans to implement a whole host of machines into Minecraft using most naturally occurring elements of the<br>
 periodic table
 
 Here's the <a href="https://discord.gg/qAWK7Se4KC">discord server</a> for Tekora
@@ -14,14 +14,14 @@ Here's the <a href="https://discord.gg/qAWK7Se4KC">discord server</a> for Tekora
 I mainly take bug fix requests and they will generally be my top priority
 however, I will still take some requests to add or remove specific features
 <br>
-Tekora has a doc of planned features that should all be realized by version 4,
-so unlike Modussy, Tekora just isn't as flexible.
+Tekora has a doc of planned features that should all be realized by version 4
+and as such is not flexible to new ideas.
 
 -----
 **Addons**
 
 Tekora will likely have a couple of dependencies to it since some of the code
-in Tekora is rudementary for features I plan for other mods I may make in the
+in Tekora is rudimentary for features I plan for other mods I may make in the
 future.
 <br>
 Currently, I plan for 3 addons, those being BioTekora, TekoraTransport, and

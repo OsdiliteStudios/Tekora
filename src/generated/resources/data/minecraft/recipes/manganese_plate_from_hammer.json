@@ -4,7 +4,7 @@
   "group": "manganese_plate",
   "ingredients": [
     {
-      "tag": "forge:manganese"
+      "tag": "forge:ingots/manganese"
     },
     {
       "tag": "forge:tools/hammer"

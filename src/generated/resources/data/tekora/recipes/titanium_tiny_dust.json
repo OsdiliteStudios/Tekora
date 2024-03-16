@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "titanium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/titanium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:titanium_tiny_dust"
+  }
+}

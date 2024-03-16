@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/invar"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:invar_plate"
+  },
+  "time": 200
+}

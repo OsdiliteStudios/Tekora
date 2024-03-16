@@ -92,19 +92,4 @@ public class Canister extends Item implements DispensibleContainerItem {
         Fluid fluidIncan = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(tag.getString("fluid_in")));
         return fluidIncan == null ? Fluids.EMPTY : fluidIncan;
     }
-
-    public static int getColor(ItemStack itemStack) {
-        if (itemStack.getItem() instanceof Canister canister) {
-            if (canister.getFluid(itemStack).getFluidType() instanceof TekoraChemicalFluidType tekoraChemical) {
-                try {
-                    return tekoraChemical.getTintColor();
-                } catch (Exception ignored) {}
-            } else {
-                return 0x1165b0;
-            }
-        } else if (itemStack.getItem() instanceof TekoraBucketItem bucket) {
-            return bucket.getColor();
-        }
-        return 0;
-    }
 }

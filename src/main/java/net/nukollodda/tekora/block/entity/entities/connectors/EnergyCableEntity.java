@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -11,25 +12,30 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.nukollodda.tekora.block.entity.entities.IElectricEntity;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
-import net.nukollodda.tekora.block.entity.entities.enstorage.BatteryEntity;
 import net.nukollodda.tekora.util.TekoraEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Consumer;
+
 public class EnergyCableEntity extends AbstractConnectorEntity implements IElectricEntity {
-    protected final TekoraEnergyStorage ENERGY_STORAGE;
+    protected final TekoraEnergyStorage energyStorage;
 
     private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
-    private final int maxTransfer;
 
-    public EnergyCableEntity(BlockPos pPos, BlockState pBlockState, int pCapacity, int pMaxTrans) {
-        super(TekoraBlockEntities.ENERGY_CABLE.get(), pPos, pBlockState);
-        this.ENERGY_STORAGE = new TekoraEnergyStorage(this, pCapacity, pMaxTrans);
-        maxTransfer = pMaxTrans;
+    protected EnergyCableEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pState, int pCapacity) {
+        super(pType, pPos, pState);
+        this.energyStorage = new TekoraEnergyStorage(this, pCapacity, pCapacity);
+    }
+
+    public EnergyCableEntity(BlockPos pPos, BlockState pBlockState, int pCapacity) {
+        this(TekoraBlockEntities.ENERGY_CABLE.get(), pPos, pBlockState, pCapacity);
     }
 
     public EnergyCableEntity(BlockPos pPos, BlockState pBlockState) {
-        this(pPos, pBlockState, 256, 1024);
+        this(pPos, pBlockState, 256);
     }
 
     @Override
@@ -37,10 +43,27 @@ public class EnergyCableEntity extends AbstractConnectorEntity implements IElect
         return cap == ForgeCapabilities.ENERGY ? lazyEnergyHandler.cast() : super.getCapability(cap, side);
     }
 
+    private void checkOutputs() {
+        if (outputs == null && getLevel() != null) {
+            outputs = new HashSet<>();
+            traverse(getBlockPos(), blockEntity -> {
+                for (Direction direction : Direction.values()) {
+                    BlockPos pos = blockEntity.getBlockPos().relative(direction);
+                    BlockEntity entity = getLevel().getBlockEntity(pos);
+                    if (entity != null) {
+                        entity.getCapability(ForgeCapabilities.ENERGY).ifPresent(storage -> {
+                            if (storage.canReceive()) outputs.add(pos);
+                        });
+                    }
+                }
+            });
+        }
+    }
+
     @Override
     public void onLoad() {
         super.onLoad();
-        lazyEnergyHandler = LazyOptional.of(() -> ENERGY_STORAGE);
+        lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
     }
 
     @Override
@@ -50,47 +73,71 @@ public class EnergyCableEntity extends AbstractConnectorEntity implements IElect
     }
 
     public void changeEnergy(int pAmount) {
-        int curEn = this.ENERGY_STORAGE.getEnergyStored();
-        this.ENERGY_STORAGE.setEnergy(curEn + pAmount);
+        int curEn = this.energyStorage.getEnergyStored();
+        this.energyStorage.setEnergy(curEn + pAmount);
+    }
+
+    @Override
+    public void markDirty() {
+        traverse(worldPosition, cable -> cable.outputs = null);
+    }
+
+    private void traverse(BlockPos pPos, Consumer<EnergyCableEntity> pConsumer) {
+        Set<BlockPos> traversed = new HashSet<>();
+        traversed.add(pPos);
+        pConsumer.accept(this);
+        traverse(pPos, traversed, pConsumer);
+    }
+
+    private void traverse(BlockPos pPos, Set<BlockPos> pTraversed, Consumer<EnergyCableEntity> pConsumer) {
+        for (Direction direction : Direction.values()) {
+            BlockPos pos = pPos.relative(direction);
+            if (!pTraversed.contains(pPos)) {
+                pTraversed.add(pos);
+                if (level != null && level.getBlockEntity(pos) instanceof EnergyCableEntity cable) {
+                    pConsumer.accept(cable);
+                    cable.traverse(pos, pTraversed, pConsumer);
+                }
+            }
+        }
     }
 
     public int maxEnergy() {
-        return this.ENERGY_STORAGE.getMaxEnergyStored();
+        return this.energyStorage.getMaxEnergyStored();
     }
 
     public int currentEnergy() {
-        return this.ENERGY_STORAGE.getEnergyStored();
+        return this.energyStorage.getEnergyStored();
     }
 
     public boolean hasElectricity() {
-        return ENERGY_STORAGE.getEnergyStored() > 0;
+        return energyStorage.getEnergyStored() > 0;
     }
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
-        pTag.putInt("cable.electricity", ENERGY_STORAGE.getEnergyStored());
+        pTag.putInt("cable.electricity", energyStorage.getEnergyStored());
     }
 
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-        ENERGY_STORAGE.setEnergy(pTag.getInt("cable.electricity"));
+        energyStorage.setEnergy(pTag.getInt("cable.electricity"));
     }
 
+    // https://www.mcjty.eu/docs/1.20/ep5
+
     public void tick() {
-        if (this.level != null && !this.level.isClientSide) {
-            if (this.ENERGY_STORAGE.getEnergyStored() >= maxTransfer) {
-                for (final Direction direction : Direction.values()) {
-                    final BlockEntity dirEnt = this.level.getBlockEntity(this.getBlockPos().relative(direction));
-                    if (dirEnt != null && dirEnt.getCapability(ForgeCapabilities.ENERGY).isPresent() &&
-                            !(dirEnt instanceof BatteryEntity && direction == Direction.NORTH)) {
-                        dirEnt.getCapability(ForgeCapabilities.ENERGY, direction.getOpposite()).ifPresent(storage -> {
-                            if (storage.getEnergyStored() < storage.getMaxEnergyStored()) {
-                                final int extracted = this.ENERGY_STORAGE.extractEnergy(16, false);
-                                final int received = storage.receiveEnergy(extracted, false);
-                                this.changeEnergy(extracted - received);
-                            }
+        if (currentEnergy() > 0) {
+            checkOutputs();
+            if (!outputs.isEmpty() && getLevel() != null) {
+                int amount = currentEnergy() / outputs.size();
+                for (BlockPos pos : outputs) {
+                    BlockEntity entity = getLevel().getBlockEntity(pos);
+                    if (entity != null) {
+                        entity.getCapability(ForgeCapabilities.ENERGY).ifPresent(storage -> {
+                            if (storage.canReceive()) energyStorage.extractEnergy(storage.receiveEnergy(amount, false), false);
                         });
                     }
                 }

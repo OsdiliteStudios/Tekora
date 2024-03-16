@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:aquamarine_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/aquamarine"
+    },
+    {
+      "tag": "forge:gems/aquamarine"
+    },
+    {
+      "tag": "forge:gems/aquamarine"
+    },
+    {
+      "tag": "forge:gems/aquamarine"
+    },
+    {
+      "tag": "forge:gems/aquamarine"
+    },
+    {
+      "tag": "forge:gems/aquamarine"
+    },
+    {
+      "tag": "forge:gems/aquamarine"
+    },
+    {
+      "tag": "forge:gems/aquamarine"
+    },
+    {
+      "tag": "forge:gems/aquamarine"
+    }
+  ],
+  "result": {
+    "item": "tekora:aquamarine_block"
+  }
+}

@@ -4,7 +4,7 @@
   "group": "thulium_plate",
   "ingredients": [
     {
-      "tag": "forge:thulium"
+      "tag": "forge:ingots/thulium"
     },
     {
       "tag": "forge:tools/hammer"

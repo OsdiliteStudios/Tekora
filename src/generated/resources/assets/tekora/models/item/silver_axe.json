@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/silver_axe"
+    "layer0": "tekora:item/tools/attackstick",
+    "layer1": "tekora:item/tools/axe"
   }
 }

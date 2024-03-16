@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:halite_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/halite"
+    },
+    {
+      "tag": "forge:gems/halite"
+    },
+    {
+      "tag": "forge:gems/halite"
+    },
+    {
+      "tag": "forge:gems/halite"
+    },
+    {
+      "tag": "forge:gems/halite"
+    },
+    {
+      "tag": "forge:gems/halite"
+    },
+    {
+      "tag": "forge:gems/halite"
+    },
+    {
+      "tag": "forge:gems/halite"
+    },
+    {
+      "tag": "forge:gems/halite"
+    }
+  ],
+  "result": {
+    "item": "tekora:halite_block"
+  }
+}

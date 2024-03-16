@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/titanium_shovel"
+    "layer0": "tekora:item/tools/digstick",
+    "layer1": "tekora:item/tools/shovel"
   }
 }

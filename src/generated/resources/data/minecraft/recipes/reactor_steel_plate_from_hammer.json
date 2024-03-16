@@ -4,7 +4,7 @@
   "group": "reactor_steel_plate",
   "ingredients": [
     {
-      "tag": "forge:reactor_steel"
+      "tag": "forge:ingots/reactor_steel"
     },
     {
       "tag": "forge:tools/hammer"

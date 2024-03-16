@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "gadolinium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/gadolinium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:gadolinium_tiny_dust"
+  }
+}

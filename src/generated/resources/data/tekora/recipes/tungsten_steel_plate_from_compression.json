@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/tungsten_steel"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:tungsten_steel_plate"
+  },
+  "time": 200
+}

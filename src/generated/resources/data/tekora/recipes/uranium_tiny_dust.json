@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "uranium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/uranium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:uranium_tiny_dust"
+  }
+}

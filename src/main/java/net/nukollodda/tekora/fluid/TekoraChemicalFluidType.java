@@ -72,8 +72,10 @@ public class TekoraChemicalFluidType extends FluidType {
 
     public boolean doesBurn(float pTemp, float pPressure) {
         return switch (fluidData.getBurnability()) {
-            case 1 -> getMeltingPoint() > pTemp;
+            case 1 -> getBoilingPoint(pPressure) + 500 > pTemp;
             case 2 -> getBoilingPoint(pPressure) > pTemp;
+            case 3 -> getMeltingPoint() > pTemp;
+            case 4 -> Math.max(getMeltingPoint() - 50, 0) > pTemp;
             default -> false;
         };
     }
@@ -84,8 +86,10 @@ public class TekoraChemicalFluidType extends FluidType {
 
     public float burnTemp() {
         return switch (fluidData.getBurnability()) {
-            case 1 -> getMeltingPoint();
+            case 1 -> getBoilingPoint(0) + 500;
             case 2 -> getBoilingPoint(0);
+            case 3 -> getMeltingPoint();
+            case 4 -> Math.max(getMeltingPoint() - 50, 0);
             default -> -1;
         };
     }

@@ -1,0 +1,13 @@
+{
+  "type": "tekora:pulverization",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:raw_materials/copper"
+  },
+  "output": {
+    "chance": 0.0,
+    "count": 1,
+    "item": "tekora:copper_dust"
+  },
+  "time": 200
+}

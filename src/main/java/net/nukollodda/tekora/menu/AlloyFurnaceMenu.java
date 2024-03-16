@@ -21,7 +21,7 @@ public class AlloyFurnaceMenu extends AbstractTekoraMenu {
     public AlloyFurnaceMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(TekoraMenuTypes.ALLOY_FURNACE_MENU.get(), inv, data, id, 5);
         this.blockEnt = (AlloyFurnaceEntity)entity;
-        this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> { // adds the slots themselves
+        this.blockEnt.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             this.addSlot(new SlotItemHandler(handler, 0, 79, 53));
             this.addSlot(new SlotItemHandler(handler, 1, 52, 26));
             this.addSlot(new SlotItemHandler(handler, 2, 34, 26));

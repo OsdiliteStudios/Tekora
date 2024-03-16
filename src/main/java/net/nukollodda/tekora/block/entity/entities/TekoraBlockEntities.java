@@ -8,6 +8,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.TekoraBlocks;
 import net.nukollodda.tekora.block.entity.entities.connectors.EnergyCableEntity;
+import net.nukollodda.tekora.block.entity.entities.connectors.EnergyCableFacadeEntity;
 import net.nukollodda.tekora.block.entity.entities.enstorage.InfiniteBatteryEntity;
 import net.nukollodda.tekora.block.entity.entities.generators.HydroelectricGeneratorEntity;
 import net.nukollodda.tekora.block.entity.entities.machines.*;
@@ -60,7 +61,9 @@ public class TekoraBlockEntities {
     public static final RegistryObject<BlockEntityType<EnergyCableEntity>> ENERGY_CABLE =
             BLOCK_ENTITIES.register("energy_cable", () ->
                     BlockEntityType.Builder.of(EnergyCableEntity::new,
-                            TekoraBlocks.COPPER_CABLE.get()).build(null));
+                            TekoraBlocks.ALUMINUM_CABLE.get(), TekoraBlocks.COPPER_CABLE.get(), TekoraBlocks.CUPRONICKEL_CABLE.get(),
+                            TekoraBlocks.ELECTRUM_CABLE.get(), TekoraBlocks.GOLD_CABLE.get(), TekoraBlocks.SILVER_CABLE.get(),
+                            TekoraBlocks.TIN_CABLE.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<HydroelectricGeneratorEntity>> HYDROELECTRIC_GENERATOR =
             BLOCK_ENTITIES.register("hydroelectric_generator", () ->
@@ -69,6 +72,11 @@ public class TekoraBlockEntities {
     public static final RegistryObject<BlockEntityType<PulverizerEntity>> PULVERIZER =
             BLOCK_ENTITIES.register("pulverizer", () -> BlockEntityType.Builder.of(PulverizerEntity::new,
                     TekoraBlocks.PULVERIZER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<EnergyCableFacadeEntity>> ENERGY_CABLE_FACADE =
+            BLOCK_ENTITIES.register("energy_cable_facade", () -> BlockEntityType.Builder.of(EnergyCableFacadeEntity::new,
+                    TekoraBlocks.ALUMINUM_CABLE_FACADE.get(), TekoraBlocks.COPPER_CABLE_FACADE.get(), TekoraBlocks.CUPRONICKEL_CABLE_FACADE.get(),
+                    TekoraBlocks.ELECTRUM_CABLE_FACADE.get(), TekoraBlocks.GOLD_CABLE_FACADE.get(), TekoraBlocks.SILVER_CABLE_FACADE.get(),
+                    TekoraBlocks.TIN_CABLE_FACADE.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

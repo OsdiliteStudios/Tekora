@@ -1,9 +1,0 @@
-{
-  "type": "tekora:compression",
-  "ingredient": {
-    "tag": "forge:dusts/graphite"
-  },
-  "output": {
-    "item": "tekora:graphite_bar"
-  }
-}

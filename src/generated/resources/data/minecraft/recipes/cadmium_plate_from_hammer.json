@@ -4,7 +4,7 @@
   "group": "cadmium_plate",
   "ingredients": [
     {
-      "tag": "forge:cadmium"
+      "tag": "forge:ingots/cadmium"
     },
     {
       "tag": "forge:tools/hammer"

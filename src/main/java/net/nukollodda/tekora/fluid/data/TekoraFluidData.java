@@ -1,8 +1,10 @@
 package net.nukollodda.tekora.fluid.data;
 
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TekoraFluidData {
     private final String liquidName;
@@ -22,7 +24,7 @@ public class TekoraFluidData {
     private final int gasColor;
     private final float hydrogenationRate;
     private final boolean decompose;
-    private final byte burnability;
+    private final int burnability;
     private final float radioactivity;
     public TekoraFluidData(Properties properties) {
         this.liquidName = properties.liquidName;
@@ -96,7 +98,7 @@ public class TekoraFluidData {
         return hydrogenationRate;
     }
 
-    public byte getBurnability() {
+    public int getBurnability() {
         return burnability;
     }
 
@@ -138,6 +140,7 @@ public class TekoraFluidData {
 
         private int fluidDmg = 0;
         private MobEffect[] effects = null;
+        private float healthHazard = 0;
 
         // pH is temporary,
         // possible replacements, rate of hydrogenation/dehydrogenation, along with oxidation/reduction properties
@@ -146,9 +149,11 @@ public class TekoraFluidData {
         private int liquidColor;
         private int gasColor;
         private boolean decompose = false;
-        private byte burns = 0;
+        private int burns = 0;
         private float radioactivity = 0;
         private float amountOfGasPerLiquid = 1000;
+
+        private Properties() {}
 
         public Properties setLiquidName(String pName) {
             this.liquidName = pName;
@@ -247,23 +252,25 @@ public class TekoraFluidData {
             return this;
         }
 
-        /*
-         * In the future, setFluidDmg may be removed and damage will be determined based on
-         * pH, reactivity, radioactivity, and other measures and be specific towards entities,
-         * but for now there is an explicit setter.
-         */
-        /** Determines how much damage a mod swimming in a fluid takes.
-         * It is measured by hearts removed as opposed to being proportional.
-         * */
-        public Properties setFluidDmg(int fluidDmg) {
-            if (fusHeat < 0)
+        public Properties setHealthHazard(int healthHazard) {
+            if (healthHazard < 0) {
                 throw new IllegalArgumentException("Number Must Be Positive");
-            this.fluidDmg = fluidDmg;
-            return this;
-        }
-
-        public Properties addEffects(MobEffect[] effects) {
-            this.effects = effects;
+            }
+            this.fluidDmg = healthHazard;
+            List<MobEffect> mobEffects = new ArrayList<>();
+            switch (healthHazard) {
+                case 4: mobEffects.add(MobEffects.WITHER);
+                case 3:
+                    mobEffects.add(MobEffects.HUNGER);
+                    mobEffects.add(MobEffects.BLINDNESS);
+                    mobEffects.add(MobEffects.POISON);
+                case 2:
+                    mobEffects.add(MobEffects.DIG_SLOWDOWN);
+                    mobEffects.add(MobEffects.WEAKNESS);
+                    mobEffects.add(MobEffects.CONFUSION);
+                case 1: mobEffects.add(MobEffects.MOVEMENT_SLOWDOWN);
+            }
+            this.effects = mobEffects.toArray(new MobEffect[]{});
             return this;
         }
 
@@ -292,46 +299,6 @@ public class TekoraFluidData {
             return this;
         }
 
-        // only used for Tekora Mixtures - note molar ratios will be taken into consideration in the future
-        public Properties setComponents(TekoraFluidData... pDatas) {
-            this.decompose = true;
-            int length = pDatas.length;
-            float pHSum = 0;
-            int liquidRed = 0, liquidGreen = 0, liquidBlue = 0, gasRed = 0, gasGreen = 0, gasBlue = 0;
-            int fluidDmgSum = 0;
-            float bp = 0, bPower = 0, bCoef = 0;
-            ArrayList<MobEffect> effects = new ArrayList<>();
-            for (TekoraFluidData data : pDatas) {
-                pHSum += data.getHydrogenationRate();
-                fluidDmgSum += data.getFluidDmg();
-
-                liquidRed += (data.getLiquidColor() / 0x10000);
-                liquidGreen += (data.getLiquidColor() / 0x100) % 256;
-                liquidBlue += data.getLiquidColor() % 256;
-                gasRed += (data.getGasColor() / 0x10000);
-                gasGreen += (data.getGasColor() / 0x100) % 256;
-                gasBlue += data.getGasColor() % 256;
-                bp += data.boilingLowest;
-                bPower += data.boilingPower;
-                bCoef += data.boilingCoefficient;
-                if (data.effects != null) {
-                    for (MobEffect effect : data.effects) {
-                        if (!effects.contains(effect))
-                            effects.add(effect);
-                    }
-                }
-            }
-            this.effects = effects.toArray(new MobEffect[0]);
-            this.hydrogenationRate = pHSum / length;
-            this.fluidDmg = fluidDmgSum / length;
-            this.liquidColor = (liquidRed / length * 0x10000) + (liquidGreen / length * 0x100) + (liquidBlue / length);
-            this.gasColor = (gasRed / length * 0x10000) + (gasGreen / length * 0x100) + (gasBlue / length);
-            this.boilingLowest = bp / length;
-            this.boilingPower = bPower / length;
-            this.boilingCoefficient = bCoef / length;
-            return this;
-        }
-
         /*Some substances decompose instead of melting, (pure carbonic acid and some xenon compounds are examples),
         * this is due to change in the future. */
         public Properties decomposesInsteadOfBoiling() {
@@ -346,8 +313,14 @@ public class TekoraFluidData {
             return setName(pName, (byte)3);
         }
 
+        // may be replaced with flammability
         public Properties setFlammable(boolean postBoil) {
             this.burns = (byte)(postBoil ? 2 : 1);
+            return this;
+        }
+
+        public Properties setFlammability(int flammability) {
+            this.burns = flammability;
             return this;
         }
 
@@ -379,6 +352,42 @@ public class TekoraFluidData {
         public Properties setAmountOfGasPerLiquid(float amountOfGasPerLiquid) {
             this.amountOfGasPerLiquid = amountOfGasPerLiquid;
             return this;
+        }
+
+        // only used for Tekora Mixtures - note molar ratios will be taken into consideration in the future
+        public static Properties of(TekoraFluidData... pDatas) {
+            Properties properties = new Properties();
+            properties.decompose = true;
+            int length = pDatas.length;
+            float pHSum = 0;
+            int liquidRed = 0, liquidGreen = 0, liquidBlue = 0, gasRed = 0, gasGreen = 0, gasBlue = 0;
+            int fluidDmgSum = 0;
+            float bp = 0, bPower = 0, bCoef = 0;
+            for (TekoraFluidData data : pDatas) {
+                pHSum += data.getHydrogenationRate();
+                fluidDmgSum += data.getFluidDmg();
+
+                liquidRed += (data.getLiquidColor() / 0x10000);
+                liquidGreen += (data.getLiquidColor() / 0x100) % 256;
+                liquidBlue += data.getLiquidColor() % 256;
+                gasRed += (data.getGasColor() / 0x10000);
+                gasGreen += (data.getGasColor() / 0x100) % 256;
+                gasBlue += data.getGasColor() % 256;
+                bp += data.boilingLowest;
+                bPower += data.boilingPower;
+                bCoef += data.boilingCoefficient;
+            }
+            properties.hydrogenationRate = pHSum / length;
+            properties.liquidColor = (liquidRed / length * 0x10000) + (liquidGreen / length * 0x100) + (liquidBlue / length);
+            properties.gasColor = (gasRed / length * 0x10000) + (gasGreen / length * 0x100) + (gasBlue / length);
+            properties.boilingLowest = bp / length;
+            properties.boilingPower = bPower / length;
+            properties.boilingCoefficient = bCoef / length;
+            return properties.setHealthHazard(fluidDmgSum / length);
+        }
+
+        public static Properties create() {
+            return new Properties();
         }
     }
 }

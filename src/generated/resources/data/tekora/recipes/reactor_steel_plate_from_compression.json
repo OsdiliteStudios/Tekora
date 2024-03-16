@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/reactor_steel"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:reactor_steel_plate"
+  },
+  "time": 200
+}

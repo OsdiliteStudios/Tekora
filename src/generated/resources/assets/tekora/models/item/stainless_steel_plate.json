@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/stainless_steel_plate"
+    "layer0": "tekora:item/items/plate"
   }
 }

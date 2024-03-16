@@ -12,6 +12,7 @@ import net.nukollodda.tekora.block.basic.TekoraBaseBlock;
 import net.nukollodda.tekora.block.basic.TekoraExperienceBlock;
 import net.nukollodda.tekora.block.basic.TekoraMeltableBlock;
 import net.nukollodda.tekora.block.entity.blocks.connecters.EnergyCable;
+import net.nukollodda.tekora.block.entity.blocks.connecters.EnergyCableFacade;
 import net.nukollodda.tekora.block.entity.blocks.enstorage.InfiniteBattery;
 import net.nukollodda.tekora.block.entity.blocks.generators.HydroelectricGeneratorBlock;
 import net.nukollodda.tekora.block.entity.blocks.machines.*;
@@ -21,7 +22,7 @@ import net.nukollodda.tekora.block.fluids.TekoraLiquidBlock;
 import net.nukollodda.tekora.block.fluids.TekoraLiquidMixtureBlock;
 import net.nukollodda.tekora.fluid.data.TekoraFluidPresets;
 import net.nukollodda.tekora.item.TekoraItems;
-import net.nukollodda.tekora.item.typical.TekoraItem;
+import net.nukollodda.tekora.item.typical.RawItem;
 
 import java.util.function.Supplier;
 
@@ -138,10 +139,6 @@ public class TekoraBlocks {
             () -> new TekoraExperienceBlock(2.68f,1.5f, 1, 2));
     public static final RegistryObject<Block> DEEPSLATE_HALITE_ORE = registerBlock("deepslate_halite_ore",
             () -> new TekoraExperienceBlock(4.18f,2f, SoundType.DEEPSLATE, 1, 2));
-    public static final RegistryObject<Block> TIN_ORE = registerBlock("tin_ore",
-            () -> new TekoraExperienceBlock(4f,3f, 1, 2));
-    public static final RegistryObject<Block> DEEPSLATE_TIN_ORE = registerBlock("deepslate_tin_ore",
-            () -> new TekoraExperienceBlock(6.5f,3f, SoundType.DEEPSLATE, 1, 2));
     public static final RegistryObject<Block> LEAD_ORE = registerBlock("lead_ore",
             () -> new TekoraExperienceBlock(2.68f,1.5f, 1, 2));
     public static final RegistryObject<Block> DEEPSLATE_LEAD_ORE = registerBlock("deepslate_lead_ore",
@@ -160,6 +157,10 @@ public class TekoraBlocks {
             () -> new TekoraExperienceBlock(15f,5.6f, SoundType.DEEPSLATE, 1, 4));
     public static final RegistryObject<Block> URANINITE_ORE = registerBlock("uraninite_ore",
             () -> new TekoraExperienceBlock(5.5f,3f, 1, 3));
+    public static final RegistryObject<Block> TIN_ORE = registerBlock("tin_ore",
+            () -> new TekoraExperienceBlock(4f,3f, 1, 2));
+    public static final RegistryObject<Block> DEEPSLATE_TIN_ORE = registerBlock("deepslate_tin_ore",
+            () -> new TekoraExperienceBlock(6.5f,3f, SoundType.DEEPSLATE, 1, 2));
     public static final RegistryObject<Block> DEEPSLATE_URANINITE_ORE = registerBlock("deepslate_uraninite_ore",
             () -> new TekoraExperienceBlock(7f,3.5f, SoundType.DEEPSLATE, 1, 3));
     public static final RegistryObject<Block> WOLFRAMITE_ORE = registerBlock("wolframite_ore",
@@ -175,9 +176,35 @@ public class TekoraBlocks {
     public static final RegistryObject<Block> DEEPSLATE_ZIRCON_ORE = registerBlock("deepslate_zircon_ore",
             () -> new TekoraExperienceBlock(8.25f,4.5f, SoundType.DEEPSLATE));
 
-
+    public static final RegistryObject<Block> ALUMINUM_CABLE = registerBlock("aluminum_cable", () ->
+            new EnergyCable(3f, RawItem.ALUMINUM, 512));
+    public static final RegistryObject<Block> ALUMINUM_CABLE_FACADE = BLOCKS.register("aluminum_cable_facade", () ->
+            new EnergyCableFacade(3f, RawItem.ALUMINUM, 512));
     public static final RegistryObject<Block> COPPER_CABLE = registerBlock("copper_cable", () ->
-            new EnergyCable(3f, 16219222, 256, 2048)); // silver is 4096, steel in 1028
+            new EnergyCable(3f, RawItem.COPPER, 256));
+    public static final RegistryObject<Block> COPPER_CABLE_FACADE = BLOCKS.register("copper_cable_facade", () ->
+            new EnergyCableFacade(3f, RawItem.COPPER, 256));
+    public static final RegistryObject<Block> CUPRONICKEL_CABLE = registerBlock("cupronickel_cable", () ->
+            new EnergyCable(3f, RawItem.CUPRONICKEL, 1024));
+    public static final RegistryObject<Block> CUPRONICKEL_CABLE_FACADE = BLOCKS.register("cupronickel_cable_facade", () ->
+            new EnergyCableFacade(3f, RawItem.CUPRONICKEL, 1024));
+    public static final RegistryObject<Block> ELECTRUM_CABLE = registerBlock("electrum_cable", () ->
+            new EnergyCable(3f, RawItem.ELECTRUM, 1024));
+    public static final RegistryObject<Block> ELECTRUM_CABLE_FACADE = BLOCKS.register("electrum_cable_facade", () ->
+            new EnergyCableFacade(3f, RawItem.ELECTRUM, 1024));
+    public static final RegistryObject<Block> GOLD_CABLE = registerBlock("gold_cable", () ->
+            new EnergyCable(3f, RawItem.GOLD, 512));
+    public static final RegistryObject<Block> GOLD_CABLE_FACADE = BLOCKS.register("gold_cable_facade", () ->
+            new EnergyCableFacade(3f, RawItem.GOLD, 512));
+    public static final RegistryObject<Block> SILVER_CABLE = registerBlock("silver_cable", () ->
+            new EnergyCable(3f, RawItem.SILVER, 512));
+    public static final RegistryObject<Block> SILVER_CABLE_FACADE = BLOCKS.register("silver_cable_facade", () ->
+            new EnergyCableFacade(3f, RawItem.SILVER, 512));
+    public static final RegistryObject<Block> TIN_CABLE = registerBlock("tin_cable", () ->
+            new EnergyCable(3f, RawItem.TIN, 256));
+    public static final RegistryObject<Block> TIN_CABLE_FACADE = BLOCKS.register("tin_cable_facade", () ->
+            new EnergyCableFacade(3f, RawItem.TIN, 256));
+
     public static final RegistryObject<Block> ALLOY_FURNACE = registerBlock("alloy_furnace", AlloyFurnace::new);
     public static final RegistryObject<Block> INFUSION_FURNACE = registerBlock("infusion_furnace", InfusionFurnace::new);
     public static final RegistryObject<Block> COMPRESSOR = registerBlock("compressor", Compressor::new);
@@ -252,6 +279,14 @@ public class TekoraBlocks {
 
     public static final RegistryObject<LiquidBlock> BROMINE_BLOCK = BLOCKS.register("bromine",
             () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_BROMINE_FLUID));
+
+    private static RegistryObject<EnergyCable> registerCable(String name, int strength, int color, int transfer) {
+        RegistryObject<EnergyCable> cable = BLOCKS.register(name, () -> new EnergyCable(strength, color, transfer));
+        RegistryObject<EnergyCableFacade> facade = BLOCKS.register(name + "_facade", () -> new EnergyCableFacade(strength, color, transfer));
+
+        registerBlockItem(name, cable, false);
+        return cable;
+    }
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         return registerBlock(name, block, false);

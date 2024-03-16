@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "scandium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/scandium"
+    },
+    {
+      "tag": "forge:tiny_dusts/scandium"
+    },
+    {
+      "tag": "forge:tiny_dusts/scandium"
+    },
+    {
+      "tag": "forge:tiny_dusts/scandium"
+    },
+    {
+      "tag": "forge:tiny_dusts/scandium"
+    },
+    {
+      "tag": "forge:tiny_dusts/scandium"
+    },
+    {
+      "tag": "forge:tiny_dusts/scandium"
+    },
+    {
+      "tag": "forge:tiny_dusts/scandium"
+    },
+    {
+      "tag": "forge:tiny_dusts/scandium"
+    }
+  ],
+  "result": {
+    "item": "tekora:scandium_dust"
+  }
+}

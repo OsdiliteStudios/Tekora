@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "thallium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/thallium"
+    },
+    {
+      "tag": "forge:tiny_dusts/thallium"
+    },
+    {
+      "tag": "forge:tiny_dusts/thallium"
+    },
+    {
+      "tag": "forge:tiny_dusts/thallium"
+    },
+    {
+      "tag": "forge:tiny_dusts/thallium"
+    },
+    {
+      "tag": "forge:tiny_dusts/thallium"
+    },
+    {
+      "tag": "forge:tiny_dusts/thallium"
+    },
+    {
+      "tag": "forge:tiny_dusts/thallium"
+    },
+    {
+      "tag": "forge:tiny_dusts/thallium"
+    }
+  ],
+  "result": {
+    "item": "tekora:thallium_dust"
+  }
+}

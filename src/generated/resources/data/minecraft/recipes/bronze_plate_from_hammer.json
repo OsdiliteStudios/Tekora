@@ -4,7 +4,7 @@
   "group": "bronze_plate",
   "ingredients": [
     {
-      "tag": "forge:bronze"
+      "tag": "forge:ingots/bronze"
     },
     {
       "tag": "forge:tools/hammer"

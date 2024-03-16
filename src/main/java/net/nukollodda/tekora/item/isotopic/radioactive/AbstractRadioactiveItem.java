@@ -13,8 +13,8 @@ import net.nukollodda.tekora.item.IRadioactiveItems;
 import net.nukollodda.tekora.item.isotopic.AbstractIsotopicItem;
 
 public abstract class AbstractRadioactiveItem extends AbstractIsotopicItem implements IRadioactiveItems {
-    public AbstractRadioactiveItem(Properties pProperties) {
-        super(pProperties);
+    public AbstractRadioactiveItem(boolean fireRes, int color) {
+        super(fireRes, color);
     }
 
     public Item getAbsorbedItem() {

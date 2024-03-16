@@ -6,7 +6,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -36,9 +35,9 @@ public abstract class AbstractTekoraFluidBlock extends LiquidBlock {
             pTooltip.add(Component.translatable("tooltip.tekora.hazard_values")
                     .append(":").withStyle(ChatFormatting.GRAY));
             pTooltip.add(Component.literal("   ").append(Component.translatable("tooltip.tekora.health_hazard"))
-                    .append(": " + getHealthRiskValue(type)).withStyle(ChatFormatting.BLUE));
+                    .append(": " + type.getFluidDmg()).withStyle(ChatFormatting.BLUE));
             pTooltip.add(Component.literal("   ").append(Component.translatable("tooltip.tekora.flammability"))
-                    .append(": " + getFlammabilityRiskValue(type.burnTemp())).withStyle(ChatFormatting.RED));
+                    .append(": " + type.getFluidData().getBurnability()).withStyle(ChatFormatting.RED));
             pTooltip.add(Component.literal("   ").append(Component.translatable("tooltip.tekora.reactivity")
                     .append(": " + getReactivityValue(type)).withStyle(ChatFormatting.YELLOW)));
 
@@ -90,42 +89,6 @@ public abstract class AbstractTekoraFluidBlock extends LiquidBlock {
             }
         }
         super.entityInside(pState, pLevel, pPos, pEntity);
-    }
-
-    private byte getFlammabilityRiskValue(float burnTemp) {
-        if (burnTemp <= 298 && burnTemp > 0) {
-            return (byte)4;
-        } else if (burnTemp <= 310 && burnTemp > 298) {
-            return (byte)3;
-        } else if (burnTemp <= 366 && burnTemp > 310) {
-            return (byte)2;
-        } else if (burnTemp > 366) {
-            return (byte)1;
-        } else {
-            return 0;
-        }
-    }
-
-    private byte getHealthRiskValue(TekoraChemicalFluidType pType) {
-        float value = 1 - (float)Math.pow(2, -pType.getFluidDmg() - 1);
-        MobEffect[] effects = pType.getEffects();
-        if (effects != null) {
-            for (MobEffect effect : effects) {
-                if (effect.equals(MobEffects.WITHER)) {
-                    value *= 1.8f;
-                } else if (effect.equals(MobEffects.POISON) || effect.equals(MobEffects.HARM)) {
-                    value *= 1.5f;
-                } else if (effect.equals(MobEffects.BLINDNESS) || effect.equals(MobEffects.DARKNESS)) {
-                    value *= 1.15f;
-                } else if (effect.equals(MobEffects.CONFUSION) || effect.equals(MobEffects.HUNGER) ||
-                        effect.equals(MobEffects.DIG_SLOWDOWN) || effect.equals(MobEffects.WEAKNESS)) {
-                    value *= 1.1f;
-                } else if (effect.equals(MobEffects.MOVEMENT_SLOWDOWN)) {
-                    value *= 1.05f;
-                }
-            }
-        }
-        return (byte)value;
     }
 
     private byte getReactivityValue(TekoraChemicalFluidType pType) {

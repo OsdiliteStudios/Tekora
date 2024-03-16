@@ -79,6 +79,22 @@ public class TekoraBlockTagGenerator extends BlockTagsProvider {
         this.tag(TekoraTags.Blocks.ZINC_BLOCK).add(TekoraBlocks.ZINC_BLOCK.get());
         this.tag(TekoraTags.Blocks.ZIRCONIUM_BLOCK).add(TekoraBlocks.ZIRCONIUM_BLOCK.get());
 
+        this.tag(TekoraTags.Blocks.AQUAMARINE_BLOCK).add(TekoraBlocks.AQUAMARINE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.BAUXITE_BLOCK).add(TekoraBlocks.BAUXITE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.CHROMITE_BLOCK).add(TekoraBlocks.CHROMITE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.CINNABAR_BLOCK).add(TekoraBlocks.CINNABAR_BLOCK.get());
+        this.tag(TekoraTags.Blocks.COLTAN_BLOCK).add(TekoraBlocks.COLTAN_BLOCK.get());
+        this.tag(TekoraTags.Blocks.DOLOMITE_BLOCK).add(TekoraBlocks.DOLOMITE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.FLUORITE_BLOCK).add(TekoraBlocks.FLUORITE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.HALITE_BLOCK).add(TekoraBlocks.HALITE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.MONAZITE_BLOCK).add(TekoraBlocks.MONAZITE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.RUBY_BLOCK).add(TekoraBlocks.RUBY_BLOCK.get());
+        this.tag(TekoraTags.Blocks.RUTILE_BLOCK).add(TekoraBlocks.RUTILE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.SAPPHIRE_BLOCK).add(TekoraBlocks.SAPPHIRE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.URANINITE_BLOCK).add(TekoraBlocks.URANINITE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.WOLFRAMITE_BLOCK).add(TekoraBlocks.WOLFRAMITE_BLOCK.get());
+        this.tag(TekoraTags.Blocks.ZIRCON_BLOCK).add(TekoraBlocks.ZIRCON_BLOCK.get());
+
         this.tag(TekoraTags.Blocks.AQUAMARINE_ORE).add(
                 TekoraBlocks.DEEPSLATE_AQUAMARINE_ORE.get(),
                 TekoraBlocks.AQUAMARINE_ORE.get());
@@ -139,7 +155,6 @@ public class TekoraBlockTagGenerator extends BlockTagsProvider {
         this.tag(TekoraTags.Blocks.RAW_ZINC_BLOCK).add(TekoraBlocks.RAW_ZINC_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL).add(
-                // may be changed in the future
                 TekoraBlocks.COMPRESSOR.get(),
                 TekoraBlocks.CUTTER.get(),
                 TekoraBlocks.ELECTRIC_FURNACE.get(),
@@ -216,7 +231,17 @@ public class TekoraBlockTagGenerator extends BlockTagsProvider {
                 TekoraBlocks.DEEPSLATE_WOLFRAMITE_ORE.get(),
                 TekoraBlocks.WOLFRAMITE_ORE.get(),
                 TekoraBlocks.DEEPSLATE_ZIRCON_ORE.get(),
-                TekoraBlocks.ZIRCON_ORE.get());
+                TekoraBlocks.ZIRCON_ORE.get(),
+                TekoraBlocks.AQUAMARINE_BLOCK.get(),
+                TekoraBlocks.CHROMITE_BLOCK.get(),
+                TekoraBlocks.COLTAN_BLOCK.get(),
+                TekoraBlocks.MONAZITE_BLOCK.get(),
+                TekoraBlocks.RUBY_BLOCK.get(),
+                TekoraBlocks.RUTILE_BLOCK.get(),
+                TekoraBlocks.SAPPHIRE_BLOCK.get(),
+                TekoraBlocks.URANINITE_BLOCK.get(),
+                TekoraBlocks.WOLFRAMITE_BLOCK.get(),
+                TekoraBlocks.ZIRCON_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_STONE_TOOL).add(
                 TekoraBlocks.INFUSION_FURNACE.get(),
@@ -240,7 +265,12 @@ public class TekoraBlockTagGenerator extends BlockTagsProvider {
                 TekoraBlocks.RAW_LEAD_BLOCK.get(),
                 TekoraBlocks.RAW_NICKEL_BLOCK.get(),
                 TekoraBlocks.RAW_TIN_BLOCK.get(),
-                TekoraBlocks.RAW_ZINC_BLOCK.get());
+                TekoraBlocks.RAW_ZINC_BLOCK.get(),
+                TekoraBlocks.BAUXITE_BLOCK.get(),
+                TekoraBlocks.CINNABAR_BLOCK.get(),
+                TekoraBlocks.DOLOMITE_BLOCK.get(),
+                TekoraBlocks.FLUORITE_BLOCK.get(),
+                TekoraBlocks.HALITE_BLOCK.get());
 
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
@@ -342,6 +372,23 @@ public class TekoraBlockTagGenerator extends BlockTagsProvider {
                 TekoraBlocks.RAW_SILVER_BLOCK.get(),
                 TekoraBlocks.RAW_TIN_BLOCK.get(),
                 TekoraBlocks.RAW_ZINC_BLOCK.get(),
-                TekoraBlocks.ZIRCON_ORE.get());
+                TekoraBlocks.ZIRCON_ORE.get(),
+                TekoraBlocks.AQUAMARINE_BLOCK.get(),
+                TekoraBlocks.BAUXITE_BLOCK.get(),
+                TekoraBlocks.CHROMITE_BLOCK.get(),
+                TekoraBlocks.CINNABAR_BLOCK.get(),
+                TekoraBlocks.COLTAN_BLOCK.get(),
+                TekoraBlocks.DOLOMITE_BLOCK.get(),
+                TekoraBlocks.FLUORITE_BLOCK.get(),
+                TekoraBlocks.HALITE_BLOCK.get(),
+                TekoraBlocks.MONAZITE_BLOCK.get(),
+                TekoraBlocks.RUBY_BLOCK.get(),
+                TekoraBlocks.RUTILE_BLOCK.get(),
+                TekoraBlocks.SAPPHIRE_BLOCK.get(),
+                TekoraBlocks.URANINITE_BLOCK.get(),
+                TekoraBlocks.WOLFRAMITE_BLOCK.get(),
+                TekoraBlocks.ZIRCON_BLOCK.get());
+
+        this.tag(TekoraTags.Blocks.MINEABLE_WITH_DRILL).addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL);
     }
 }

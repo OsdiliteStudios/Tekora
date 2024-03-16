@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/tellurium_piece"
+    "layer0": "tekora:item/items/piece"
   }
 }

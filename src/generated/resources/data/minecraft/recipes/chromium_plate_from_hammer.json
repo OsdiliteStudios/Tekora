@@ -4,7 +4,7 @@
   "group": "chromium_plate",
   "ingredients": [
     {
-      "tag": "forge:chromium"
+      "tag": "forge:ingots/chromium"
     },
     {
       "tag": "forge:tools/hammer"

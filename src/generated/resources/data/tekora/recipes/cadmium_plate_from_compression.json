@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/cadmium"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:cadmium_plate"
+  },
+  "time": 200
+}

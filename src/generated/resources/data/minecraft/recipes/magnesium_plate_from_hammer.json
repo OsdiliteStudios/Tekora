@@ -4,7 +4,7 @@
   "group": "magnesium_plate",
   "ingredients": [
     {
-      "tag": "forge:magnesium"
+      "tag": "forge:ingots/magnesium"
     },
     {
       "tag": "forge:tools/hammer"

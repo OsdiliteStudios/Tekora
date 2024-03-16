@@ -2,15 +2,14 @@ package net.nukollodda.tekora.item.isotopic;
 
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.nukollodda.tekora.item.typical.RawItem;
 
-public abstract class AbstractIsotopicItem extends Item {
-    public AbstractIsotopicItem(Properties pProperties) {
-        super(pProperties);
+public abstract class AbstractIsotopicItem extends RawItem {
+    public AbstractIsotopicItem(boolean fireRes, int color) {
+        super(fireRes, color);
     }
 
     @Override
@@ -24,7 +23,7 @@ public abstract class AbstractIsotopicItem extends Item {
     public float[] getIsotopicRatio(ItemStack pStack) {
         if (pStack.getTag() != null) {
             ListTag tag = pStack.getOrCreateTag().getList("isotopes", ListTag.TAG_FLOAT);
-            float[] isotopeRatio = new float[tag.size()];
+            float[] isotopeRatio = new float[5];
             for (int i = 0; i < tag.size(); i++) {
                 isotopeRatio[i] = tag.getFloat(i);
             }

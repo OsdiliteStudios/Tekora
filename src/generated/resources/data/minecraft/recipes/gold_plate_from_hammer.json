@@ -4,7 +4,7 @@
   "group": "gold_plate",
   "ingredients": [
     {
-      "tag": "forge:gold"
+      "tag": "forge:ingots/gold"
     },
     {
       "tag": "forge:tools/hammer"

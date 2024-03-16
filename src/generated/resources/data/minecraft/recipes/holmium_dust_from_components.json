@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "holmium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/holmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/holmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/holmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/holmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/holmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/holmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/holmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/holmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/holmium"
+    }
+  ],
+  "result": {
+    "item": "tekora:holmium_dust"
+  }
+}

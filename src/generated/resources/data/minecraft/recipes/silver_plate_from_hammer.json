@@ -4,7 +4,7 @@
   "group": "silver_plate",
   "ingredients": [
     {
-      "tag": "forge:silver"
+      "tag": "forge:ingots/silver"
     },
     {
       "tag": "forge:tools/hammer"

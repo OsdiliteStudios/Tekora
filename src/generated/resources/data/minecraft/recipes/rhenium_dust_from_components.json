@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "rhenium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/rhenium"
+    },
+    {
+      "tag": "forge:tiny_dusts/rhenium"
+    },
+    {
+      "tag": "forge:tiny_dusts/rhenium"
+    },
+    {
+      "tag": "forge:tiny_dusts/rhenium"
+    },
+    {
+      "tag": "forge:tiny_dusts/rhenium"
+    },
+    {
+      "tag": "forge:tiny_dusts/rhenium"
+    },
+    {
+      "tag": "forge:tiny_dusts/rhenium"
+    },
+    {
+      "tag": "forge:tiny_dusts/rhenium"
+    },
+    {
+      "tag": "forge:tiny_dusts/rhenium"
+    }
+  ],
+  "result": {
+    "item": "tekora:rhenium_dust"
+  }
+}

@@ -4,7 +4,7 @@
   "group": "zircaloy_plate",
   "ingredients": [
     {
-      "tag": "forge:zircaloy"
+      "tag": "forge:ingots/zircaloy"
     },
     {
       "tag": "forge:tools/hammer"

@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/brass"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:brass_plate"
+  },
+  "time": 200
+}

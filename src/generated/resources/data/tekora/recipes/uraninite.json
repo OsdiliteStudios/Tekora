@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "uraninite",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/uraninite"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:uraninite"
+  }
+}

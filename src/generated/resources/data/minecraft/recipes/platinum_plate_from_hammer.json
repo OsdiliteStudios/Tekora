@@ -4,7 +4,7 @@
   "group": "platinum_plate",
   "ingredients": [
     {
-      "tag": "forge:platinum"
+      "tag": "forge:ingots/platinum"
     },
     {
       "tag": "forge:tools/hammer"

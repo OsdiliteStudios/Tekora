@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/titanium_helmet"
+    "layer0": "tekora:item/armors/heavy_helmet"
   }
 }

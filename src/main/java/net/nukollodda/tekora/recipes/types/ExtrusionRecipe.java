@@ -1,6 +1,5 @@
 package net.nukollodda.tekora.recipes.types;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -17,19 +16,12 @@ import org.jetbrains.annotations.Nullable;
 public class ExtrusionRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
-    private final float extraOutputChance;
-    private final ItemStack residue;
-    private final float extraResidueChance;
     private final Ingredient recipeItem;
 
-    public ExtrusionRecipe(ResourceLocation id, ItemStack output, float extraOutputChance, Ingredient recipeItem, ItemStack residue,
-                             float extraResidueChance) {
+    public ExtrusionRecipe(ResourceLocation id, ItemStack output, Ingredient recipeItem) {
         this.id = id;
         this.output = output;
-        this.extraOutputChance = extraOutputChance;
         this.recipeItem = recipeItem;
-        this.residue = residue;
-        this.extraResidueChance = extraResidueChance;
     }
     @Override
     public boolean matches(SimpleContainer pContainer, Level pLevel) {
@@ -39,17 +31,13 @@ public class ExtrusionRecipe implements Recipe<SimpleContainer> {
         return recipeItem.test(pContainer.getItem(0));
     }
 
-    public float getExtraOutputChance() {
-        return extraOutputChance;
-    }
-
-    public float getExtraResidueChance() {
-        return extraResidueChance;
-    }
-
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return NonNullList.of(this.recipeItem);
+    }
+
+    public Ingredient getRecipeItem() {
+        return recipeItem;
     }
 
     @Override
@@ -67,10 +55,6 @@ public class ExtrusionRecipe implements Recipe<SimpleContainer> {
         return this.output.copy();
     }
 
-    public ItemStack getResidue() {
-        return this.residue.copy();
-    }
-
     @Override
     public ResourceLocation getId() {
         return id;
@@ -78,12 +62,12 @@ public class ExtrusionRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ExtrusionRecipe.Serializer.INSTANCE;
+        return Serializer.INSTANCE;
     }
 
     @Override
     public RecipeType<?> getType() {
-        return ExtrusionRecipe.Type.INSTANCE;
+        return Type.INSTANCE;
     }
 
     public static class Type implements RecipeType<ExtrusionRecipe> {
@@ -99,40 +83,22 @@ public class ExtrusionRecipe implements Recipe<SimpleContainer> {
                 new ResourceLocation(Tekora.MODID, "extrusion");
         @Override
         public ExtrusionRecipe fromJson(ResourceLocation pId, JsonObject pJson) {
-            JsonObject outObj = GsonHelper.getAsJsonObject(pJson, "output");
-            ItemStack output = ShapedRecipe.itemStackFromJson(outObj);
-            float outChance = outObj.has("chance") ? outObj.get("chance").getAsFloat() : 1f;
-
-            ItemStack residue = ItemStack.EMPTY;
-            float resChance = 0;
-
-            if (pJson.has("residue")) {
-                JsonObject resObj = GsonHelper.getAsJsonObject(pJson, "residue");
-                residue = ShapedRecipe.itemStackFromJson(resObj);
-                resChance = resObj.has("chance") ? resObj.get("chance").getAsFloat() : 0.25f;
-            }
-
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pJson, "ingredients");
-            return new ExtrusionRecipe(pId, output, outChance, Ingredient.fromJson(ingredients.get(0)), residue, resChance);
+            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "output"));
+            JsonObject ingredient = GsonHelper.getAsJsonObject(pJson, "ingredient");
+            return new ExtrusionRecipe(pId, output, Ingredient.fromJson(ingredient));
         }
 
         @Override
         public @Nullable ExtrusionRecipe fromNetwork(ResourceLocation pId, FriendlyByteBuf pBuffer) {
             Ingredient input = Ingredient.fromNetwork(pBuffer);
             ItemStack output = pBuffer.readItem();
-            ItemStack residue = pBuffer.readItem();
-            float outputCnt = pBuffer.readFloat();
-            float residueCnt = pBuffer.readFloat();
-            return new ExtrusionRecipe(pId, output, outputCnt, input, residue, residueCnt);
+            return new ExtrusionRecipe(pId, output, input);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf pBuffer, ExtrusionRecipe pRecipe) {
             pRecipe.recipeItem.toNetwork(pBuffer);
             pBuffer.writeItem(pRecipe.output);
-            pBuffer.writeItem(pRecipe.residue);
-            pBuffer.writeFloat(pRecipe.extraOutputChance);
-            pBuffer.writeFloat(pRecipe.extraResidueChance);
         }
     }
 }

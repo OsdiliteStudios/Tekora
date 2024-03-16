@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "terbium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/terbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/terbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/terbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/terbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/terbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/terbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/terbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/terbium"
+    },
+    {
+      "tag": "forge:tiny_dusts/terbium"
+    }
+  ],
+  "result": {
+    "item": "tekora:terbium_dust"
+  }
+}

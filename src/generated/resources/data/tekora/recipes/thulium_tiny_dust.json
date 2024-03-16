@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "thulium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/thulium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:thulium_tiny_dust"
+  }
+}

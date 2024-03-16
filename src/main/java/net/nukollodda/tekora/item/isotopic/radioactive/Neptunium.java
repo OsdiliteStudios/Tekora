@@ -2,10 +2,11 @@ package net.nukollodda.tekora.item.isotopic.radioactive;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.nukollodda.tekora.item.typical.RawItem;
 
 public class Neptunium extends AbstractRadioactiveItem {
     public Neptunium() {
-        super(new Item.Properties());
+        super(false, RawItem.NEPTUNIUM);
     }
     @Override
     public double getRadiation(ItemStack pStack) {

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cadmium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/cadmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/cadmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/cadmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/cadmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/cadmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/cadmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/cadmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/cadmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/cadmium"
+    }
+  ],
+  "result": {
+    "item": "tekora:cadmium_dust"
+  }
+}

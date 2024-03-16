@@ -1,0 +1,12 @@
+{
+  "type": "tekora:extrusion",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:plates/cupronickel"
+  },
+  "output": {
+    "count": 3,
+    "item": "tekora:cupronickel_wire"
+  },
+  "time": 200
+}

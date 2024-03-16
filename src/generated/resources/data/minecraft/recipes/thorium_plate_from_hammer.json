@@ -4,7 +4,7 @@
   "group": "thorium_plate",
   "ingredients": [
     {
-      "tag": "forge:thorium"
+      "tag": "forge:ingots/thorium"
     },
     {
       "tag": "forge:tools/hammer"

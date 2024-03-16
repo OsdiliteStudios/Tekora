@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "terbium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/terbium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:terbium_tiny_dust"
+  }
+}

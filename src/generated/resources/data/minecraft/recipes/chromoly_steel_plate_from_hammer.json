@@ -4,7 +4,7 @@
   "group": "chromoly_steel_plate",
   "ingredients": [
     {
-      "tag": "forge:chromoly_steel"
+      "tag": "forge:ingots/chromoly_steel"
     },
     {
       "tag": "forge:tools/hammer"

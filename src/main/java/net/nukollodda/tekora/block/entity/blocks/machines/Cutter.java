@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.CutterEntity;
 
-public class Cutter extends AbstractMachineBlock {
+public class Cutter extends AbstractElectricMachineBlock {
     public Cutter() {
         super(6f);
     }

@@ -73,6 +73,23 @@ public class TekoraTags {
         public static final TagKey<Item> RAW_TIN_BLOCK = createForge("storage_blocks/raw_tin");
         public static final TagKey<Item> RAW_ZINC_BLOCK = createForge("storage_blocks/raw_zinc");
 
+
+        public static final TagKey<Item> AQUAMARINE_BLOCK = createForge("storage_blocks/aquamarine");
+        public static final TagKey<Item> BAUXITE_BLOCK = createForge("storage_blocks/bauxite");
+        public static final TagKey<Item> CHROMITE_BLOCK = createForge("storage_blocks/chromite");
+        public static final TagKey<Item> CINNABAR_BLOCK = createForge("storage_blocks/cinnabar");
+        public static final TagKey<Item> COLTAN_BLOCK = createForge("storage_blocks/coltan");
+        public static final TagKey<Item> DOLOMITE_BLOCK = createForge("storage_blocks/dolomite");
+        public static final TagKey<Item> FLUORITE_BLOCK = createForge("storage_blocks/fluorite");
+        public static final TagKey<Item> HALITE_BLOCK = createForge("storage_blocks/halite");
+        public static final TagKey<Item> MONAZITE_BLOCK = createForge("storage_blocks/monazite");
+        public static final TagKey<Item> RUBY_BLOCK = createForge("storage_blocks/ruby");
+        public static final TagKey<Item> RUTILE_BLOCK = createForge("storage_blocks/rutile");
+        public static final TagKey<Item> SAPPHIRE_BLOCK = createForge("storage_blocks/sapphire");
+        public static final TagKey<Item> URANINITE_BLOCK = createForge("storage_blocks/uraninite");
+        public static final TagKey<Item> WOLFRAMITE_BLOCK = createForge("storage_blocks/wolframite");
+        public static final TagKey<Item> ZIRCON_BLOCK = createForge("storage_blocks/zircon");
+
         public static final TagKey<Item> ALUMINUM_INGOT = createForge("ingots/aluminum");
         public static final TagKey<Item> BARIUM_INGOT = createForge("ingots/barium");
         public static final TagKey<Item> BERYLLIUM_INGOT = createForge("ingots/beryllium");
@@ -135,6 +152,8 @@ public class TekoraTags {
         public static final TagKey<Item> BRONZE_INGOT = createForge("ingots/bronze");
         public static final TagKey<Item> CARBON_STEEL_INGOT = createForge("ingots/carbon_steel");
         public static final TagKey<Item> CHROMOLY_STEEL_INGOT = createForge("ingots/chromoly_steel");
+        public static final TagKey<Item> CUPRONICKEL_INGOT = createForge("ingots/cupronickel");
+        public static final TagKey<Item> ELECTRUM_INGOT = createForge("ingots/electrum");
         public static final TagKey<Item> FERROBORON_INGOT = createForge("ingots/ferroboron");
         public static final TagKey<Item> GALVANIZED_STEEL_INGOT = createForge("ingots/galvanized_steel");
         public static final TagKey<Item> HSLA_STEEL_INGOT = createForge("ingots/hsla_steel");
@@ -208,6 +227,26 @@ public class TekoraTags {
         public static final TagKey<Item> YTTRIUM_NUGGET = createForge("nuggets/yttrium");
         public static final TagKey<Item> ZINC_NUGGET = createForge("nuggets/zinc");
         public static final TagKey<Item> ZIRCONIUM_NUGGET = createForge("nuggets/zirconium");
+        public static final TagKey<Item> BRASS_NUGGET = createForge("nuggets/brass");
+        public static final TagKey<Item> BRONZE_NUGGET = createForge("nuggets/bronze");
+        public static final TagKey<Item> CARBON_STEEL_NUGGET = createForge("nuggets/carbon_steel");
+        public static final TagKey<Item> CHROMOLY_STEEL_NUGGET = createForge("nuggets/chromoly_steel");
+        public static final TagKey<Item> CUPRONICKEL_NUGGET = createForge("nuggets/cupronickel");
+        public static final TagKey<Item> ELECTRUM_NUGGET = createForge("nuggets/electrum");
+        public static final TagKey<Item> FERROBORON_NUGGET = createForge("nuggets/ferroboron");
+        public static final TagKey<Item> HSLA_STEEL_NUGGET = createForge("nuggets/hsla_steel");
+        public static final TagKey<Item> INCONEL_NUGGET = createForge("nuggets/inconel");
+        public static final TagKey<Item> INVAR_NUGGET = createForge("nuggets/invar");
+        public static final TagKey<Item> MAGNETIC_NEODYMIUM_NUGGET = createForge("nuggets/magnetic_neodymium");
+        public static final TagKey<Item> MU_METAL_NUGGET = createForge("nuggets/mu_metal");
+        public static final TagKey<Item> REACTOR_STEEL_NUGGET = createForge("nuggets/reactor_steel");
+        public static final TagKey<Item> STAINLESS_STEEL_NUGGET = createForge("nuggets/stainless_steel");
+        public static final TagKey<Item> STEEL_NUGGET = createForge("nuggets/steel");
+        public static final TagKey<Item> TUNGSTEN_CARBIDE_NUGGET = createForge("nuggets/tungsten_carbide");
+        public static final TagKey<Item> TUNGSTEN_STEEL_NUGGET = createForge("nuggets/tungsten_steel");
+        public static final TagKey<Item> VANASTEEL_NUGGET = createForge("nuggets/vanasteel");
+        public static final TagKey<Item> ZIRCALOY_NUGGET = createForge("nuggets/zircaloy");
+
         public static final TagKey<Item> AQUAMARINE_GEM = createForge("gems/aquamarine");
         public static final TagKey<Item> BAUXITE_GEM = createForge("gems/bauxite");
         public static final TagKey<Item> CHROMITE_GEM = createForge("gems/chromite");
@@ -255,6 +294,8 @@ public class TekoraTags {
         public static final TagKey<Item> COBALT_PLATE = createForge("plates/cobalt");
         public static final TagKey<Item> COPPER_PLATE = createForge("plates/copper");
         public static final TagKey<Item> COPPER_STEEL_PLATE = createForge("plates/copper_steel");
+        public static final TagKey<Item> CUPRONICKEL_PLATE = createForge("plates/cupronickel");
+        public static final TagKey<Item> ELECTRUM_PLATE = createForge("plates/electrum");
         public static final TagKey<Item> FERROBORON_PLATE = createForge("plates/ferroboron");
         public static final TagKey<Item> GALVANIZED_STEEL_PLATE = createForge("plates/galvanized_steel");
         public static final TagKey<Item> GOLD_PLATE = createForge("plates/gold");
@@ -355,10 +396,103 @@ public class TekoraTags {
         public static final TagKey<Item> ZINC_DUST = createForge("dusts/zinc");
         public static final TagKey<Item> ZIRCONIUM_DUST = createForge("dusts/zirconium");
 
+
+        public static final TagKey<Item> ALUMINUM_TINY_DUST = createForge("tiny_dusts/aluminum");
+        public static final TagKey<Item> BARIUM_TINY_DUST = createForge("tiny_dusts/barium");
+        public static final TagKey<Item> BERYLLIUM_TINY_DUST = createForge("tiny_dusts/beryllium");
+        public static final TagKey<Item> BISMUTH_TINY_DUST = createForge("tiny_dusts/bismuth");
+        public static final TagKey<Item> CADMIUM_TINY_DUST = createForge("tiny_dusts/cadmium");
+        public static final TagKey<Item> CALCIUM_TINY_DUST = createForge("tiny_dusts/calcium");
+        public static final TagKey<Item> CERIUM_TINY_DUST = createForge("tiny_dusts/cerium");
+        public static final TagKey<Item> CESIUM_TINY_DUST = createForge("tiny_dusts/cesium");
+        public static final TagKey<Item> COPPER_TINY_DUST = createForge("tiny_dusts/copper");
+        public static final TagKey<Item> CHROMIUM_TINY_DUST = createForge("tiny_dusts/chromium");
+        public static final TagKey<Item> COBALT_TINY_DUST = createForge("tiny_dusts/cobalt");
+        public static final TagKey<Item> DYSPROSIUM_TINY_DUST = createForge("tiny_dusts/dysprosium");
+        public static final TagKey<Item> ERBIUM_TINY_DUST = createForge("tiny_dusts/erbium");
+        public static final TagKey<Item> EUROPIUM_TINY_DUST = createForge("tiny_dusts/europium");
+        public static final TagKey<Item> GADOLINIUM_TINY_DUST = createForge("tiny_dusts/gadolinium");
+        public static final TagKey<Item> GALLIUM_TINY_DUST = createForge("tiny_dusts/gallium");
+        public static final TagKey<Item> GOLD_TINY_DUST = createForge("tiny_dusts/gold");
+        public static final TagKey<Item> HAFNIUM_TINY_DUST = createForge("tiny_dusts/hafnium");
+        public static final TagKey<Item> HOLMIUM_TINY_DUST = createForge("tiny_dusts/holmium");
+        public static final TagKey<Item> INDIUM_TINY_DUST = createForge("tiny_dusts/indium");
+        public static final TagKey<Item> IRIDIUM_TINY_DUST = createForge("tiny_dusts/iridium");
+        public static final TagKey<Item> IRON_TINY_DUST = createForge("tiny_dusts/iron");
+        public static final TagKey<Item> LANTHANUM_TINY_DUST = createForge("tiny_dusts/lanthanum");
+        public static final TagKey<Item> LEAD_TINY_DUST = createForge("tiny_dusts/lead");
+        public static final TagKey<Item> LITHIUM_TINY_DUST = createForge("tiny_dusts/lithium");
+        public static final TagKey<Item> LUTETIUM_TINY_DUST = createForge("tiny_dusts/lutetium");
+        public static final TagKey<Item> MAGNESIUM_TINY_DUST = createForge("tiny_dusts/magnesium");
+        public static final TagKey<Item> MANGANESE_TINY_DUST = createForge("tiny_dusts/manganese");
+        public static final TagKey<Item> MOLYBDENUM_TINY_DUST = createForge("tiny_dusts/molybdenum");
+        public static final TagKey<Item> NEODYMIUM_TINY_DUST = createForge("tiny_dusts/neodymium");
+        public static final TagKey<Item> NICKEL_TINY_DUST = createForge("tiny_dusts/nickel");
+        public static final TagKey<Item> NIOBIUM_TINY_DUST = createForge("tiny_dusts/niobium");
+        public static final TagKey<Item> OSMIUM_TINY_DUST = createForge("tiny_dusts/osmium");
+        public static final TagKey<Item> PALLADIUM_TINY_DUST = createForge("tiny_dusts/palladium");
+        public static final TagKey<Item> PLATINUM_TINY_DUST = createForge("tiny_dusts/platinum");
+        public static final TagKey<Item> POTASSIUM_TINY_DUST = createForge("tiny_dusts/potassium");
+        public static final TagKey<Item> PRASEODYMIUM_TINY_DUST = createForge("tiny_dusts/praseodymium");
+        public static final TagKey<Item> RHENIUM_TINY_DUST = createForge("tiny_dusts/rhenium");
+        public static final TagKey<Item> RHODIUM_TINY_DUST = createForge("tiny_dusts/rhodium");
+        public static final TagKey<Item> RUBIDIUM_TINY_DUST = createForge("tiny_dusts/rubidium");
+        public static final TagKey<Item> RUTHENIUM_TINY_DUST = createForge("tiny_dusts/ruthenium");
+        public static final TagKey<Item> SAMARIUM_TINY_DUST = createForge("tiny_dusts/samarium");
+        public static final TagKey<Item> SCANDIUM_TINY_DUST = createForge("tiny_dusts/scandium");
+        public static final TagKey<Item> SILVER_TINY_DUST = createForge("tiny_dusts/silver");
+        public static final TagKey<Item> SODIUM_TINY_DUST = createForge("tiny_dusts/sodium");
+        public static final TagKey<Item> STRONTIUM_TINY_DUST = createForge("tiny_dusts/strontium");
+        public static final TagKey<Item> TANTALUM_TINY_DUST = createForge("tiny_dusts/tantalum");
+        public static final TagKey<Item> TERBIUM_TINY_DUST = createForge("tiny_dusts/terbium");
+        public static final TagKey<Item> THALLIUM_TINY_DUST = createForge("tiny_dusts/thallium");
+        public static final TagKey<Item> THORIUM_TINY_DUST = createForge("tiny_dusts/thorium");
+        public static final TagKey<Item> THULIUM_TINY_DUST = createForge("tiny_dusts/thulium");
+        public static final TagKey<Item> TIN_TINY_DUST = createForge("tiny_dusts/tin");
+        public static final TagKey<Item> TITANIUM_TINY_DUST = createForge("tiny_dusts/titanium");
+        public static final TagKey<Item> TUNGSTEN_TINY_DUST = createForge("tiny_dusts/tungsten");
+        public static final TagKey<Item> URANIUM_TINY_DUST = createForge("tiny_dusts/uranium");
+        public static final TagKey<Item> VANADIUM_TINY_DUST = createForge("tiny_dusts/vanadium");
+        public static final TagKey<Item> YTTERBIUM_TINY_DUST = createForge("tiny_dusts/ytterbium");
+        public static final TagKey<Item> YTTRIUM_TINY_DUST = createForge("tiny_dusts/yttrium");
+        public static final TagKey<Item> ZINC_TINY_DUST = createForge("tiny_dusts/zinc");
+        public static final TagKey<Item> ZIRCONIUM_TINY_DUST = createForge("tiny_dusts/zirconium");
+
+        public static final TagKey<Item> BRASS_TINY_DUST = createForge("tiny_dusts/brass");
+        public static final TagKey<Item> BRONZE_TINY_DUST = createForge("tiny_dusts/bronze");
+        public static final TagKey<Item> CARBON_STEEL_TINY_DUST = createForge("tiny_dusts/carbon_steel");
+        public static final TagKey<Item> CHROMOLY_STEEL_TINY_DUST = createForge("tiny_dusts/chromoly_steel");
+        public static final TagKey<Item> CUPRONICKEL_TINY_DUST = createForge("tiny_dusts/cupronickel");
+        public static final TagKey<Item> ELECTRUM_TINY_DUST = createForge("tiny_dusts/electrum");
+        public static final TagKey<Item> FERROBORON_TINY_DUST = createForge("tiny_dusts/ferroboron");
+        public static final TagKey<Item> HSLA_STEEL_TINY_DUST = createForge("tiny_dusts/hsla_steel");
+        public static final TagKey<Item> INCONEL_TINY_DUST = createForge("tiny_dusts/inconel");
+        public static final TagKey<Item> INVAR_TINY_DUST = createForge("tiny_dusts/invar");
+        public static final TagKey<Item> MAGNETIC_NEODYMIUM_TINY_DUST = createForge("tiny_dusts/magnetic_neodymium");
+        public static final TagKey<Item> MU_METAL_TINY_DUST = createForge("tiny_dusts/mu_metal");
+        public static final TagKey<Item> REACTOR_STEEL_TINY_DUST = createForge("tiny_dusts/reactor_steel");
+        public static final TagKey<Item> STAINLESS_STEEL_TINY_DUST = createForge("tiny_dusts/stainless_steel");
+        public static final TagKey<Item> STEEL_TINY_DUST = createForge("tiny_dusts/steel");
+        public static final TagKey<Item> TUNGSTEN_CARBIDE_TINY_DUST = createForge("tiny_dusts/tungsten_carbide");
+        public static final TagKey<Item> TUNGSTEN_STEEL_TINY_DUST = createForge("tiny_dusts/tungsten_steel");
+        public static final TagKey<Item> VANASTEEL_TINY_DUST = createForge("tiny_dusts/vanasteel");
+        public static final TagKey<Item> ZIRCALOY_TINY_DUST = createForge("tiny_dusts/zircaloy");
+
+        public static final TagKey<Item> ANTIMONY_TINY_DUST = createForge("tiny_dusts/antimony");
+        public static final TagKey<Item> ARSENIC_TINY_DUST = createForge("tiny_dusts/arsenic");
+        public static final TagKey<Item> BORON_TINY_DUST = createForge("tiny_dusts/boron");
+        public static final TagKey<Item> GERMANIUM_TINY_DUST = createForge("tiny_dusts/germanium");
+        public static final TagKey<Item> SILICON_TINY_DUST = createForge("tiny_dusts/silicon");
+        public static final TagKey<Item> TELLURIUM_TINY_DUST = createForge("tiny_dusts/tellurium");
+        public static final TagKey<Item> GRAPHITE_TINY_DUST = createForge("tiny_dusts/graphite");
+        public static final TagKey<Item> IODINE_TINY_DUST = createForge("tiny_dusts/iodine");
+
         public static final TagKey<Item> BRASS_DUST = createForge("dusts/brass");
         public static final TagKey<Item> BRONZE_DUST = createForge("dusts/bronze");
         public static final TagKey<Item> CARBON_STEEL_DUST = createForge("dusts/carbon_steel");
         public static final TagKey<Item> CHROMOLY_STEEL_DUST = createForge("dusts/chromoly_steel");
+        public static final TagKey<Item> CUPRONICKEL_DUST = createForge("dusts/cupronickel");
+        public static final TagKey<Item> ELECTRUM_DUST = createForge("dusts/electrum");
         public static final TagKey<Item> FERROBORON_DUST = createForge("dusts/ferroboron");
         public static final TagKey<Item> HSLA_STEEL_DUST = createForge("dusts/hsla_steel");
         public static final TagKey<Item> INCONEL_DUST = createForge("dusts/inconel");
@@ -384,6 +518,15 @@ public class TekoraTags {
 
         public static final TagKey<Item> CARBON_STEEL_ROD = createForge("rods/carbon_steel");
         public static final TagKey<Item> STEEL_ROD = createForge("rods/steel");
+
+        public static final TagKey<Item> ALUMINUM_WIRE = createForge("wires/aluminum");
+        public static final TagKey<Item> COPPER_WIRE = createForge("wires/copper");
+        public static final TagKey<Item> CUPRONICKEL_WIRE = createForge("wires/cupronickel");
+        public static final TagKey<Item> ELECTRUM_WIRE = createForge("wires/electrum");
+        public static final TagKey<Item> GOLD_WIRE = createForge("wires/gold");
+        public static final TagKey<Item> NIOBIUM_TIN_WIRE = createForge("wires/niobium_tin");
+        public static final TagKey<Item> SILVER_WIRE = createForge("wires/silver");
+        public static final TagKey<Item> TIN_WIRE = createForge("wires/tin");
 
         public static final TagKey<Item> ALUMINUM = createForge("aluminum");
         public static final TagKey<Item> BARIUM = createForge("barium");
@@ -450,6 +593,8 @@ public class TekoraTags {
         public static final TagKey<Item> BRONZE = createForge("bronze");
         public static final TagKey<Item> CARBON_STEEL = createForge("carbon_steel");
         public static final TagKey<Item> CHROMOLY_STEEL = createForge("chromoly_steel");
+        public static final TagKey<Item> CUPRONICKEL = createForge("cupronickel");
+        public static final TagKey<Item> ELECTRUM = createForge("electrum");
         public static final TagKey<Item> FERROBORON = createForge("ferroboron");
         public static final TagKey<Item> GALVANIZED_STEEL = createForge("galvanized_steel");
         public static final TagKey<Item> HSLA_STEEL = createForge("hsla_steel");
@@ -504,6 +649,7 @@ public class TekoraTags {
         public static final TagKey<Item> PULVERIZED_URANINITE_ORE = createForge("pulverized_ores/uraninite");
         public static final TagKey<Item> PULVERIZED_WOLFRAMITE_ORE = createForge("pulverized_ores/wolframite");
         public static final TagKey<Item> PULVERIZED_ZIRCON_ORE = createForge("pulverized_ores/zircon");
+
         private Items() {
         }
         private static TagKey<Item> createForge(String location) {
@@ -578,6 +724,22 @@ public class TekoraTags {
         public static final TagKey<Block> ZINC_BLOCK = createForge("storage_blocks/zinc");
         public static final TagKey<Block> ZIRCONIUM_BLOCK = createForge("storage_blocks/zirconium");
 
+        public static final TagKey<Block> AQUAMARINE_BLOCK = createForge("storage_blocks/aquamarine");
+        public static final TagKey<Block> BAUXITE_BLOCK = createForge("storage_blocks/bauxite");
+        public static final TagKey<Block> CHROMITE_BLOCK = createForge("storage_blocks/chromite");
+        public static final TagKey<Block> CINNABAR_BLOCK = createForge("storage_blocks/cinnabar");
+        public static final TagKey<Block> COLTAN_BLOCK = createForge("storage_blocks/coltan");
+        public static final TagKey<Block> DOLOMITE_BLOCK = createForge("storage_blocks/dolomite");
+        public static final TagKey<Block> FLUORITE_BLOCK = createForge("storage_blocks/fluorite");
+        public static final TagKey<Block> HALITE_BLOCK = createForge("storage_blocks/halite");
+        public static final TagKey<Block> MONAZITE_BLOCK = createForge("storage_blocks/monazite");
+        public static final TagKey<Block> RUBY_BLOCK = createForge("storage_blocks/ruby");
+        public static final TagKey<Block> RUTILE_BLOCK = createForge("storage_blocks/rutile");
+        public static final TagKey<Block> SAPPHIRE_BLOCK = createForge("storage_blocks/sapphire");
+        public static final TagKey<Block> URANINITE_BLOCK = createForge("storage_blocks/uraninite");
+        public static final TagKey<Block> WOLFRAMITE_BLOCK = createForge("storage_blocks/wolframite");
+        public static final TagKey<Block> ZIRCON_BLOCK = createForge("storage_blocks/zircon");
+
         public static final TagKey<Block> AQUAMARINE_ORE = createForge("ores/aquamarine");
         public static final TagKey<Block> BAUXITE_ORE = createForge("ores/bauxite");
         public static final TagKey<Block> TIN_ORE = createForge("ores/tin");
@@ -597,6 +759,7 @@ public class TekoraTags {
         public static final TagKey<Block> RAW_SILVER_BLOCK = createForge("storage_blocks/raw_silver");
         public static final TagKey<Block> RAW_TIN_BLOCK = createForge("storage_blocks/raw_tin");
         public static final TagKey<Block> RAW_ZINC_BLOCK = createForge("storage_blocks/raw_zinc");
+        public static final TagKey<Block> MINEABLE_WITH_DRILL = net.minecraft.tags.BlockTags.create(new ResourceLocation("mineable/drill"));
 
         private Blocks() {
         }

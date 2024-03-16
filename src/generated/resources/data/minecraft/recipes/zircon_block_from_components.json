@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:zircon_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/zircon"
+    },
+    {
+      "tag": "forge:gems/zircon"
+    },
+    {
+      "tag": "forge:gems/zircon"
+    },
+    {
+      "tag": "forge:gems/zircon"
+    },
+    {
+      "tag": "forge:gems/zircon"
+    },
+    {
+      "tag": "forge:gems/zircon"
+    },
+    {
+      "tag": "forge:gems/zircon"
+    },
+    {
+      "tag": "forge:gems/zircon"
+    },
+    {
+      "tag": "forge:gems/zircon"
+    }
+  ],
+  "result": {
+    "item": "tekora:zircon_block"
+  }
+}

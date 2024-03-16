@@ -4,7 +4,7 @@
   "group": "inconel_plate",
   "ingredients": [
     {
-      "tag": "forge:inconel"
+      "tag": "forge:ingots/inconel"
     },
     {
       "tag": "forge:tools/hammer"

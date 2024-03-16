@@ -4,7 +4,7 @@
   "group": "copper_plate",
   "ingredients": [
     {
-      "tag": "forge:copper"
+      "tag": "forge:ingots/copper"
     },
     {
       "tag": "forge:tools/hammer"

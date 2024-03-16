@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "rhenium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/rhenium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:rhenium_tiny_dust"
+  }
+}

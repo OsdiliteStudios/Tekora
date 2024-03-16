@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
 import net.nukollodda.tekora.block.entity.entities.machines.ExtruderEntity;
 
-public class Extruder extends AbstractMachineBlock {
+public class Extruder extends AbstractElectricMachineBlock {
     public Extruder() {
         super(6f);
     }

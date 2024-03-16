@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:uraninite_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/uraninite"
+    },
+    {
+      "tag": "forge:gems/uraninite"
+    },
+    {
+      "tag": "forge:gems/uraninite"
+    },
+    {
+      "tag": "forge:gems/uraninite"
+    },
+    {
+      "tag": "forge:gems/uraninite"
+    },
+    {
+      "tag": "forge:gems/uraninite"
+    },
+    {
+      "tag": "forge:gems/uraninite"
+    },
+    {
+      "tag": "forge:gems/uraninite"
+    },
+    {
+      "tag": "forge:gems/uraninite"
+    }
+  ],
+  "result": {
+    "item": "tekora:uraninite_block"
+  }
+}

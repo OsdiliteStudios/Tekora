@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "platinum_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/platinum"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:platinum_tiny_dust"
+  }
+}

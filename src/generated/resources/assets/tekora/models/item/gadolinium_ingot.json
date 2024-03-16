@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/gadolinium_ingot"
+    "layer0": "tekora:item/items/rough_ingot"
   }
 }

@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/vanasteel"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:vanasteel_plate"
+  },
+  "time": 200
+}

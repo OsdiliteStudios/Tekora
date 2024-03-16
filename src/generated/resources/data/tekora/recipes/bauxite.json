@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "bauxite",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/bauxite"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:bauxite"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "zirconium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/zirconium"
+    },
+    {
+      "tag": "forge:tiny_dusts/zirconium"
+    },
+    {
+      "tag": "forge:tiny_dusts/zirconium"
+    },
+    {
+      "tag": "forge:tiny_dusts/zirconium"
+    },
+    {
+      "tag": "forge:tiny_dusts/zirconium"
+    },
+    {
+      "tag": "forge:tiny_dusts/zirconium"
+    },
+    {
+      "tag": "forge:tiny_dusts/zirconium"
+    },
+    {
+      "tag": "forge:tiny_dusts/zirconium"
+    },
+    {
+      "tag": "forge:tiny_dusts/zirconium"
+    }
+  ],
+  "result": {
+    "item": "tekora:zirconium_dust"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "platinum_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/platinum"
+    },
+    {
+      "tag": "forge:tiny_dusts/platinum"
+    },
+    {
+      "tag": "forge:tiny_dusts/platinum"
+    },
+    {
+      "tag": "forge:tiny_dusts/platinum"
+    },
+    {
+      "tag": "forge:tiny_dusts/platinum"
+    },
+    {
+      "tag": "forge:tiny_dusts/platinum"
+    },
+    {
+      "tag": "forge:tiny_dusts/platinum"
+    },
+    {
+      "tag": "forge:tiny_dusts/platinum"
+    },
+    {
+      "tag": "forge:tiny_dusts/platinum"
+    }
+  ],
+  "result": {
+    "item": "tekora:platinum_dust"
+  }
+}

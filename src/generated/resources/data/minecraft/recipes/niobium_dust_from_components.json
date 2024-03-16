@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "niobium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/niobium"
+    },
+    {
+      "tag": "forge:tiny_dusts/niobium"
+    },
+    {
+      "tag": "forge:tiny_dusts/niobium"
+    },
+    {
+      "tag": "forge:tiny_dusts/niobium"
+    },
+    {
+      "tag": "forge:tiny_dusts/niobium"
+    },
+    {
+      "tag": "forge:tiny_dusts/niobium"
+    },
+    {
+      "tag": "forge:tiny_dusts/niobium"
+    },
+    {
+      "tag": "forge:tiny_dusts/niobium"
+    },
+    {
+      "tag": "forge:tiny_dusts/niobium"
+    }
+  ],
+  "result": {
+    "item": "tekora:niobium_dust"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "lead_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/lead"
+    },
+    {
+      "tag": "forge:tiny_dusts/lead"
+    },
+    {
+      "tag": "forge:tiny_dusts/lead"
+    },
+    {
+      "tag": "forge:tiny_dusts/lead"
+    },
+    {
+      "tag": "forge:tiny_dusts/lead"
+    },
+    {
+      "tag": "forge:tiny_dusts/lead"
+    },
+    {
+      "tag": "forge:tiny_dusts/lead"
+    },
+    {
+      "tag": "forge:tiny_dusts/lead"
+    },
+    {
+      "tag": "forge:tiny_dusts/lead"
+    }
+  ],
+  "result": {
+    "item": "tekora:lead_dust"
+  }
+}

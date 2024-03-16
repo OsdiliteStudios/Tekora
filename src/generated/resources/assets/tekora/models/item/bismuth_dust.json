@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/bismuth_dust"
+    "layer0": "tekora:item/items/dust"
   }
 }

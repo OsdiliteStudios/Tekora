@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.BlastingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -29,16 +31,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.Optional;
 
-public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity<SimpleContainer, ElectricBlastingRecipe> { // fluid handling might be dealt with here
+public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity<SimpleContainer, ElectricBlastingRecipe> {
     protected final ItemStackHandler itemHandler = new ItemStackHandler(2) {
         @Override
         protected void onContentsChanged(int slot) {
-            setChanged(); // if a change happens to this block, the block gets reloaded
+            setChanged();
         }
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return switch (slot) { // temporary
+            return switch (slot) {
                 case 1 -> false;
                 case 0 -> true;
                 default -> super.isItemValid(slot, stack);
@@ -134,25 +136,40 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity<SimpleCon
         if (level.isClientSide()) {
             return;
         }
-        if (entity.hasElectricity()) {
-            state = state.setValue(AbstractMachineBlock.LIT, true);
-            level.setBlock(pos, state, 3);
-        } else {
-            state = state.setValue(AbstractMachineBlock.LIT, false);
-            level.setBlock(pos, state, 3);
-        }
 
         SimpleContainer inv = entity.getContainer();
         Optional<ElectricBlastingRecipe> recipe = level.getRecipeManager()
                 .getRecipeFor(ElectricBlastingRecipe.Type.INSTANCE, inv, level);
+        Optional<BlastingRecipe> blasting = level.getRecipeManager()
+                .getRecipeFor(RecipeType.BLASTING, inv, level);
         if (recipe.isPresent()) {
+            state = state.setValue(AbstractMachineBlock.LIT, true);
+            level.setBlock(pos, state, 3);
             ElectricBlastingRecipe obtRecipe = recipe.get();
             if (entity.hasRecipe(obtRecipe, inv) && entity.hasEnoughElectricity()) {
                 entity.progress++;
                 entity.energyStorage.extractEnergy(ENERGY_REQ, false);
                 setChanged(level, pos, state);
-                if (entity.progress > entity.maxProgress) { // crafts the item
+                if (entity.progress > entity.maxProgress) {
                     entity.craftItem(obtRecipe, inv);
+                }
+            }
+        } else if (blasting.isPresent()) {
+            state = state.setValue(AbstractMachineBlock.LIT, true);
+            level.setBlock(pos, state, 3);
+            BlastingRecipe obtRecipe = blasting.get();
+            if (entity.level != null &&
+                    entity.canInsertItemIntoOutputSlot(inv, obtRecipe.getResultItem(level.registryAccess()))) {
+                entity.progress++;
+                entity.energyStorage.extractEnergy(ENERGY_REQ, false);
+                setChanged(level, pos, state);
+                if (entity.progress > entity.maxProgress && entity.level != null &&
+                            entity.canInsertItemIntoOutputSlot(inv, obtRecipe.getResultItem(level.registryAccess()))) {
+                    entity.itemHandler.extractItem(0,1, false);
+                    entity.itemHandler.setStackInSlot(1, new ItemStack(obtRecipe.getResultItem(level.registryAccess()).getItem(),
+                            entity.itemHandler.getStackInSlot(1).getCount() + 1));
+
+                    entity.resetProgress();
                 }
             }
         } else {
@@ -167,7 +184,7 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity<SimpleCon
     }
 
     @Override
-    protected void craftItem(ElectricBlastingRecipe pRecipe, SimpleContainer pContainer) { // extracts one of the ingredients
+    protected void craftItem(ElectricBlastingRecipe pRecipe, SimpleContainer pContainer) {
         if (this.hasRecipe(pRecipe, pContainer)) {
             this.itemHandler.extractItem(0,1, false);
             this.itemHandler.setStackInSlot(1, new ItemStack(pRecipe.getResultItem(level.registryAccess()).getItem(),
@@ -180,7 +197,7 @@ public class ElectricFurnaceEntity extends AbstractTekoraMachineEntity<SimpleCon
     @Override
     protected boolean hasRecipe(ElectricBlastingRecipe pRecipe, SimpleContainer pContainer) {
         return this.level != null &&
-                this.canInsertItemIntoOutputSlot(pContainer, pRecipe .getResultItem(level.registryAccess()));
+                this.canInsertItemIntoOutputSlot(pContainer, pRecipe.getResultItem(level.registryAccess()));
     }
 
     @Override

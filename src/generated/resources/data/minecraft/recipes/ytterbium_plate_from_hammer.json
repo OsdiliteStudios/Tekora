@@ -4,7 +4,7 @@
   "group": "ytterbium_plate",
   "ingredients": [
     {
-      "tag": "forge:ytterbium"
+      "tag": "forge:ingots/ytterbium"
     },
     {
       "tag": "forge:tools/hammer"

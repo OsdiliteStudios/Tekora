@@ -14,12 +14,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import net.nukollodda.tekora.block.entity.entities.TekoraBlockEntities;
-import net.nukollodda.tekora.block.entity.entities.connectors.EnergyCableEntity;
 import net.nukollodda.tekora.block.entity.entities.enstorage.InfiniteBatteryEntity;
 import org.jetbrains.annotations.Nullable;
 
-public class InfiniteBattery extends AbstractBattery {
+public class InfiniteBattery extends Battery {
     public InfiniteBattery() {
         super();
     }

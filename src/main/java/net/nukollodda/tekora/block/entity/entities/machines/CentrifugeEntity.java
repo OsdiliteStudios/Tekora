@@ -25,7 +25,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.WrappedHandler;
 import net.nukollodda.tekora.block.entity.blocks.machines.AbstractMachineBlock;
 import net.nukollodda.tekora.block.entity.blocks.machines.Centrifuge;
@@ -210,17 +209,12 @@ public class CentrifugeEntity extends AbstractTekoraMachineEntity<ItemFluidConta
         if (level.isClientSide()) {
             return;
         }
-        if (entity.hasElectricity()) {
-            state = state.setValue(AbstractMachineBlock.LIT, true);
-            level.setBlock(pos, state, 3);
-        } else {
-            state = state.setValue(AbstractMachineBlock.LIT, false);
-            level.setBlock(pos, state, 3);
-        }
         ItemFluidContainer inv = entity.getContainer();
         Optional<CentrifugeRecipe> recipe = level.getRecipeManager()
                 .getRecipeFor(CentrifugeRecipe.Type.INSTANCE, inv, level);
         if (recipe.isPresent()) {
+            state = state.setValue(AbstractMachineBlock.LIT, true);
+            level.setBlock(pos, state, 3);
             CentrifugeRecipe obtRecipe = recipe.get();
             if (entity.hasRecipe(obtRecipe, inv) && entity.hasEnoughElectricity()) {
                 entity.progress++;

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "uranium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/uranium"
+    },
+    {
+      "tag": "forge:tiny_dusts/uranium"
+    },
+    {
+      "tag": "forge:tiny_dusts/uranium"
+    },
+    {
+      "tag": "forge:tiny_dusts/uranium"
+    },
+    {
+      "tag": "forge:tiny_dusts/uranium"
+    },
+    {
+      "tag": "forge:tiny_dusts/uranium"
+    },
+    {
+      "tag": "forge:tiny_dusts/uranium"
+    },
+    {
+      "tag": "forge:tiny_dusts/uranium"
+    },
+    {
+      "tag": "forge:tiny_dusts/uranium"
+    }
+  ],
+  "result": {
+    "item": "tekora:uranium_dust"
+  }
+}

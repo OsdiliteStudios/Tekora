@@ -4,7 +4,7 @@
   "group": "molybdenum_plate",
   "ingredients": [
     {
-      "tag": "forge:molybdenum"
+      "tag": "forge:ingots/molybdenum"
     },
     {
       "tag": "forge:tools/hammer"

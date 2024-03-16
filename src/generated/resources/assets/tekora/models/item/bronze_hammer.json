@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/bronze_hammer"
+    "layer0": "tekora:item/tools/hammerstick",
+    "layer1": "tekora:item/tools/hammer"
   }
 }

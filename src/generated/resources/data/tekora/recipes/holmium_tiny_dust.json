@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "holmium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/holmium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:holmium_tiny_dust"
+  }
+}

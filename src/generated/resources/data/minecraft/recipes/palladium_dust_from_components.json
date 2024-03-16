@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "palladium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/palladium"
+    },
+    {
+      "tag": "forge:tiny_dusts/palladium"
+    },
+    {
+      "tag": "forge:tiny_dusts/palladium"
+    },
+    {
+      "tag": "forge:tiny_dusts/palladium"
+    },
+    {
+      "tag": "forge:tiny_dusts/palladium"
+    },
+    {
+      "tag": "forge:tiny_dusts/palladium"
+    },
+    {
+      "tag": "forge:tiny_dusts/palladium"
+    },
+    {
+      "tag": "forge:tiny_dusts/palladium"
+    },
+    {
+      "tag": "forge:tiny_dusts/palladium"
+    }
+  ],
+  "result": {
+    "item": "tekora:palladium_dust"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "dolomite",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/dolomite"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:dolomite"
+  }
+}

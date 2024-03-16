@@ -5,12 +5,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.nukollodda.tekora.item.TekoraItems;
+import net.nukollodda.tekora.item.typical.RawItem;
 
 import java.util.List;
 
 public class Lithium extends AbstractIsotopicItem {
     public Lithium() {
-        super(new Item.Properties());
+        super(false, RawItem.LITHIUM);
     }
 
     protected void textMaker(ItemStack pStack, List<Component> pTooltipComponents) {

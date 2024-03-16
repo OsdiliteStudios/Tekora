@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "calcium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/calcium"
+    },
+    {
+      "tag": "forge:tiny_dusts/calcium"
+    },
+    {
+      "tag": "forge:tiny_dusts/calcium"
+    },
+    {
+      "tag": "forge:tiny_dusts/calcium"
+    },
+    {
+      "tag": "forge:tiny_dusts/calcium"
+    },
+    {
+      "tag": "forge:tiny_dusts/calcium"
+    },
+    {
+      "tag": "forge:tiny_dusts/calcium"
+    },
+    {
+      "tag": "forge:tiny_dusts/calcium"
+    },
+    {
+      "tag": "forge:tiny_dusts/calcium"
+    }
+  ],
+  "result": {
+    "item": "tekora:calcium_dust"
+  }
+}

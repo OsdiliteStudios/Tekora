@@ -4,17 +4,17 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.HoeItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.nukollodda.tekora.item.IRadioactiveItems;
 import net.nukollodda.tekora.item.isotopic.radioactive.Thorium;
+import net.nukollodda.tekora.item.tools.TekoraHoeItem;
+import net.nukollodda.tekora.item.typical.RawItem;
 import net.nukollodda.tekora.tiers.TekoraTiers;
 import org.jetbrains.annotations.NotNull;
 
-public class ThoriumHoe extends HoeItem implements IRadioactiveItems {
+public class ThoriumHoe extends TekoraHoeItem implements IRadioactiveItems {
     public ThoriumHoe() {
-        super(TekoraTiers.THORIUM, -3, 0, new Item.Properties().fireResistant());
+        super(TekoraTiers.THORIUM, -3, 0, true, RawItem.THORIUM);
     }
 
     @Override

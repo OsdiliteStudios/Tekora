@@ -1,5 +1,12 @@
 package net.nukollodda.tekora.util;
 
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.nukollodda.tekora.block.entity.blocks.connecters.EnergyCable;
+import net.nukollodda.tekora.fluid.TekoraChemicalFluidType;
+import net.nukollodda.tekora.item.containers.Canister;
+import net.nukollodda.tekora.item.tools.*;
+
 public class UtilFunctions {
     public static byte[] combineArrays(byte[] pOriginal, byte[] pNew, byte pOrgMult) {
         int larger = Math.max(pOriginal.length, pNew.length);
@@ -61,6 +68,7 @@ public class UtilFunctions {
         }
         return pArray;
     }
+
     public static String convertToPercentage(double pNumerator, double pDenominator) {
         double divided = pNumerator / (pDenominator > 0 ? pDenominator : 1);
         return (int)(divided * 100) + "%";
@@ -97,7 +105,7 @@ public class UtilFunctions {
     }
 
     public static String addPrefix(String pStr, int num) {
-        if (pStr.length() > 0) {
+        if (!pStr.isEmpty()) {
             String prefix = getPrefix(num);
             if (isVowel(pStr.charAt(0))) {
                 return prefix + pStr.substring(1);
@@ -167,15 +175,20 @@ public class UtilFunctions {
         return num;
     }
 
-    public static int getBooleanAsNum(boolean bool) {
-        return bool ? 1 : 0;
-    }
-
-    public static int getNotBooleanAsNum(boolean bool) {
-        return bool ? 0 : 1;
-    }
-
-    public static int isNegative(int val) {
-        return val < 0 ? 0 : 1;
+    public static int getColor(ItemStack stack) {
+        if (stack.getItem() instanceof Canister canister) {
+            if (canister.getFluid(stack).getFluidType() instanceof TekoraChemicalFluidType tekoraChemical) {
+                try {
+                    return tekoraChemical.getTintColor();
+                } catch (Exception ignored) {}
+            } else {
+                return 0x1165b0;
+            }
+        } else if (stack.getItem() instanceof ITekoraColored tools) {
+            return tools.getColor();
+        } else if (stack.getItem() instanceof BlockItem block && block.getBlock() instanceof EnergyCable cable) {
+            return cable.getColor();
+        }
+        return -1;
     }
 }

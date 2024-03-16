@@ -4,7 +4,7 @@
   "group": "magnetic_neodymium_plate",
   "ingredients": [
     {
-      "tag": "forge:magnetic_neodymium"
+      "tag": "forge:ingots/magnetic_neodymium"
     },
     {
       "tag": "forge:tools/hammer"

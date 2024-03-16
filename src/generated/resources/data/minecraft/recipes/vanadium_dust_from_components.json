@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "vanadium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/vanadium"
+    },
+    {
+      "tag": "forge:tiny_dusts/vanadium"
+    },
+    {
+      "tag": "forge:tiny_dusts/vanadium"
+    },
+    {
+      "tag": "forge:tiny_dusts/vanadium"
+    },
+    {
+      "tag": "forge:tiny_dusts/vanadium"
+    },
+    {
+      "tag": "forge:tiny_dusts/vanadium"
+    },
+    {
+      "tag": "forge:tiny_dusts/vanadium"
+    },
+    {
+      "tag": "forge:tiny_dusts/vanadium"
+    },
+    {
+      "tag": "forge:tiny_dusts/vanadium"
+    }
+  ],
+  "result": {
+    "item": "tekora:vanadium_dust"
+  }
+}

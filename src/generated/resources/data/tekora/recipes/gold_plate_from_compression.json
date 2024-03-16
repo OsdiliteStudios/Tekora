@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/gold"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:gold_plate"
+  },
+  "time": 200
+}

@@ -1,6 +1,5 @@
 package net.nukollodda.tekora.recipes.types;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -36,6 +35,10 @@ public class CompressionRecipe implements Recipe<SimpleContainer> {
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return NonNullList.of(this.recipeItem);
+    }
+
+    public Ingredient getRecipeItem() {
+        return recipeItem;
     }
 
     @Override

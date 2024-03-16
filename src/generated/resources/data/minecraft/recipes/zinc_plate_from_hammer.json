@@ -4,7 +4,7 @@
   "group": "zinc_plate",
   "ingredients": [
     {
-      "tag": "forge:zinc"
+      "tag": "forge:ingots/zinc"
     },
     {
       "tag": "forge:tools/hammer"

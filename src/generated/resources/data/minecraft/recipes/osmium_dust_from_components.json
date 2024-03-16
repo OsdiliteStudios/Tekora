@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "osmium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/osmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/osmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/osmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/osmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/osmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/osmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/osmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/osmium"
+    },
+    {
+      "tag": "forge:tiny_dusts/osmium"
+    }
+  ],
+  "result": {
+    "item": "tekora:osmium_dust"
+  }
+}

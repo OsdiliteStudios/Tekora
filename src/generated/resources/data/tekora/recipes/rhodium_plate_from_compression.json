@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/rhodium"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:rhodium_plate"
+  },
+  "time": 200
+}

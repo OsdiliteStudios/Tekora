@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "iridium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/iridium"
+    },
+    {
+      "tag": "forge:tiny_dusts/iridium"
+    },
+    {
+      "tag": "forge:tiny_dusts/iridium"
+    },
+    {
+      "tag": "forge:tiny_dusts/iridium"
+    },
+    {
+      "tag": "forge:tiny_dusts/iridium"
+    },
+    {
+      "tag": "forge:tiny_dusts/iridium"
+    },
+    {
+      "tag": "forge:tiny_dusts/iridium"
+    },
+    {
+      "tag": "forge:tiny_dusts/iridium"
+    },
+    {
+      "tag": "forge:tiny_dusts/iridium"
+    }
+  ],
+  "result": {
+    "item": "tekora:iridium_dust"
+  }
+}

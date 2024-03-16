@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/silicon_carbide"
+    "layer0": "tekora:item/items/piece"
   }
 }

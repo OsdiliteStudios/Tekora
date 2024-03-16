@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cobalt_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/cobalt"
+    },
+    {
+      "tag": "forge:tiny_dusts/cobalt"
+    },
+    {
+      "tag": "forge:tiny_dusts/cobalt"
+    },
+    {
+      "tag": "forge:tiny_dusts/cobalt"
+    },
+    {
+      "tag": "forge:tiny_dusts/cobalt"
+    },
+    {
+      "tag": "forge:tiny_dusts/cobalt"
+    },
+    {
+      "tag": "forge:tiny_dusts/cobalt"
+    },
+    {
+      "tag": "forge:tiny_dusts/cobalt"
+    },
+    {
+      "tag": "forge:tiny_dusts/cobalt"
+    }
+  ],
+  "result": {
+    "item": "tekora:cobalt_dust"
+  }
+}

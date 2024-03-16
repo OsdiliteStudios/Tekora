@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:chromite_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/chromite"
+    },
+    {
+      "tag": "forge:gems/chromite"
+    },
+    {
+      "tag": "forge:gems/chromite"
+    },
+    {
+      "tag": "forge:gems/chromite"
+    },
+    {
+      "tag": "forge:gems/chromite"
+    },
+    {
+      "tag": "forge:gems/chromite"
+    },
+    {
+      "tag": "forge:gems/chromite"
+    },
+    {
+      "tag": "forge:gems/chromite"
+    },
+    {
+      "tag": "forge:gems/chromite"
+    }
+  ],
+  "result": {
+    "item": "tekora:chromite_block"
+  }
+}

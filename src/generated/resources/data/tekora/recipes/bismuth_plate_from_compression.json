@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:ingots/bismuth"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:bismuth_plate"
+  },
+  "time": 200
+}

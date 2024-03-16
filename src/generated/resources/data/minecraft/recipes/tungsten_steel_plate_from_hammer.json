@@ -4,7 +4,7 @@
   "group": "tungsten_steel_plate",
   "ingredients": [
     {
-      "tag": "forge:tungsten_steel"
+      "tag": "forge:ingots/tungsten_steel"
     },
     {
       "tag": "forge:tools/hammer"

@@ -1,6 +1,5 @@
 package net.nukollodda.tekora.recipes.types;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -50,6 +49,10 @@ public class PulverizingRecipe implements Recipe<SimpleContainer> {
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return NonNullList.of(this.recipeItem);
+    }
+
+    public Ingredient getRecipeItem() {
+        return recipeItem;
     }
 
     @Override
@@ -112,8 +115,8 @@ public class PulverizingRecipe implements Recipe<SimpleContainer> {
                 resChance = resObj.has("chance") ? resObj.get("chance").getAsFloat() : 0.25f;
             }
 
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pJson, "ingredients");
-            return new PulverizingRecipe(pId, output, outChance, Ingredient.fromJson(ingredients.get(0)), residue, resChance);
+            return new PulverizingRecipe(pId, output, outChance,
+                    Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient")), residue, resChance);
         }
 
         @Override

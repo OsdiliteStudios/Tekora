@@ -4,7 +4,7 @@
   "group": "brass_plate",
   "ingredients": [
     {
-      "tag": "forge:brass"
+      "tag": "forge:ingots/brass"
     },
     {
       "tag": "forge:tools/hammer"

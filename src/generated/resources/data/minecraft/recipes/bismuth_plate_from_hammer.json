@@ -4,7 +4,7 @@
   "group": "bismuth_plate",
   "ingredients": [
     {
-      "tag": "forge:bismuth"
+      "tag": "forge:ingots/bismuth"
     },
     {
       "tag": "forge:tools/hammer"

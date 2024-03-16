@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "barium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/barium"
+    },
+    {
+      "tag": "forge:tiny_dusts/barium"
+    },
+    {
+      "tag": "forge:tiny_dusts/barium"
+    },
+    {
+      "tag": "forge:tiny_dusts/barium"
+    },
+    {
+      "tag": "forge:tiny_dusts/barium"
+    },
+    {
+      "tag": "forge:tiny_dusts/barium"
+    },
+    {
+      "tag": "forge:tiny_dusts/barium"
+    },
+    {
+      "tag": "forge:tiny_dusts/barium"
+    },
+    {
+      "tag": "forge:tiny_dusts/barium"
+    }
+  ],
+  "result": {
+    "item": "tekora:barium_dust"
+  }
+}

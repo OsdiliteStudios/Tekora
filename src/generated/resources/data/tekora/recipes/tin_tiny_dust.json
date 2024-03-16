@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tin_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/tin"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:tin_tiny_dust"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cobalt_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/cobalt"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:cobalt_tiny_dust"
+  }
+}

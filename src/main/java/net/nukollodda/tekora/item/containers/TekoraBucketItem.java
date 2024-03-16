@@ -7,12 +7,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.nukollodda.tekora.fluid.TekoraChemicalFluidType;
 import net.nukollodda.tekora.block.fluids.AbstractTekoraFluidBlock;
+import net.nukollodda.tekora.item.tools.ITekoraColored;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Supplier;
 
-public class TekoraBucketItem extends BucketItem {
+public class TekoraBucketItem extends BucketItem implements ITekoraColored {
     public TekoraBucketItem(Supplier<? extends Fluid> supplier) {
         super(supplier, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET));
     }
@@ -26,6 +27,7 @@ public class TekoraBucketItem extends BucketItem {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
+    @Override
     public int getColor() {
         if (getFluid().getFluidType() instanceof TekoraChemicalFluidType tekoraFluid) {
             try {

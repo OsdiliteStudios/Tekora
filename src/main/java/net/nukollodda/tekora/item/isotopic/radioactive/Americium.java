@@ -2,11 +2,12 @@ package net.nukollodda.tekora.item.isotopic.radioactive;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.nukollodda.tekora.item.typical.RawItem;
 
 public class Americium extends AbstractRadioactiveItem {
 
     public Americium() {
-        super(new Item.Properties());
+        super(false, RawItem.AMERICIUM);
     }
 
     @Override

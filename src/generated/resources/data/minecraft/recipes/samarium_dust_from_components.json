@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "samarium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/samarium"
+    },
+    {
+      "tag": "forge:tiny_dusts/samarium"
+    },
+    {
+      "tag": "forge:tiny_dusts/samarium"
+    },
+    {
+      "tag": "forge:tiny_dusts/samarium"
+    },
+    {
+      "tag": "forge:tiny_dusts/samarium"
+    },
+    {
+      "tag": "forge:tiny_dusts/samarium"
+    },
+    {
+      "tag": "forge:tiny_dusts/samarium"
+    },
+    {
+      "tag": "forge:tiny_dusts/samarium"
+    },
+    {
+      "tag": "forge:tiny_dusts/samarium"
+    }
+  ],
+  "result": {
+    "item": "tekora:samarium_dust"
+  }
+}

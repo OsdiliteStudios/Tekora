@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/thorium_hoe"
+    "layer0": "tekora:item/tools/attackstick",
+    "layer1": "tekora:item/tools/hoe"
   }
 }

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "europium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/europium"
+    },
+    {
+      "tag": "forge:tiny_dusts/europium"
+    },
+    {
+      "tag": "forge:tiny_dusts/europium"
+    },
+    {
+      "tag": "forge:tiny_dusts/europium"
+    },
+    {
+      "tag": "forge:tiny_dusts/europium"
+    },
+    {
+      "tag": "forge:tiny_dusts/europium"
+    },
+    {
+      "tag": "forge:tiny_dusts/europium"
+    },
+    {
+      "tag": "forge:tiny_dusts/europium"
+    },
+    {
+      "tag": "forge:tiny_dusts/europium"
+    }
+  ],
+  "result": {
+    "item": "tekora:europium_dust"
+  }
+}

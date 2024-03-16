@@ -82,6 +82,8 @@ public class TekoraItemTagGenerator extends ItemTagsProvider {
         this.tag(TekoraTags.Items.BRONZE_INGOT).add(TekoraItems.BRONZE_INGOT.get());
         this.tag(TekoraTags.Items.CARBON_STEEL_INGOT).add(TekoraItems.CARBON_STEEL_INGOT.get());
         this.tag(TekoraTags.Items.CHROMOLY_STEEL_INGOT).add(TekoraItems.CHROMOLY_STEEL_INGOT.get());
+        this.tag(TekoraTags.Items.CUPRONICKEL_INGOT).add(TekoraItems.CUPRONICKEL_INGOT.get());
+        this.tag(TekoraTags.Items.ELECTRUM_INGOT).add(TekoraItems.ELECTRUM_INGOT.get());
         this.tag(TekoraTags.Items.FERROBORON_INGOT).add(TekoraItems.FERROBORON_INGOT.get());
         this.tag(TekoraTags.Items.GALVANIZED_STEEL_INGOT).add(TekoraItems.GALVANIZED_STEEL_INGOT.get());
         this.tag(TekoraTags.Items.HSLA_STEEL_INGOT).add(TekoraItems.HSLA_STEEL_INGOT.get());
@@ -155,6 +157,25 @@ public class TekoraItemTagGenerator extends ItemTagsProvider {
         this.tag(TekoraTags.Items.YTTRIUM_NUGGET).add(TekoraItems.YTTRIUM_NUGGET.get());
         this.tag(TekoraTags.Items.ZINC_NUGGET).add(TekoraItems.ZINC_NUGGET.get());
         this.tag(TekoraTags.Items.ZIRCONIUM_NUGGET).add(TekoraItems.ZIRCONIUM_NUGGET.get());
+        this.tag(TekoraTags.Items.BRASS_NUGGET).add(TekoraItems.BRASS_NUGGET.get());
+        this.tag(TekoraTags.Items.BRONZE_NUGGET).add(TekoraItems.BRONZE_NUGGET.get());
+        this.tag(TekoraTags.Items.CARBON_STEEL_NUGGET).add(TekoraItems.CARBON_STEEL_NUGGET.get());
+        this.tag(TekoraTags.Items.CHROMOLY_STEEL_NUGGET).add(TekoraItems.CHROMOLY_STEEL_NUGGET.get());
+        this.tag(TekoraTags.Items.CUPRONICKEL_NUGGET).add(TekoraItems.CUPRONICKEL_NUGGET.get());
+        this.tag(TekoraTags.Items.ELECTRUM_NUGGET).add(TekoraItems.ELECTRUM_NUGGET.get());
+        this.tag(TekoraTags.Items.FERROBORON_NUGGET).add(TekoraItems.FERROBORON_NUGGET.get());
+        this.tag(TekoraTags.Items.HSLA_STEEL_NUGGET).add(TekoraItems.HSLA_STEEL_NUGGET.get());
+        this.tag(TekoraTags.Items.INCONEL_NUGGET).add(TekoraItems.INCONEL_NUGGET.get());
+        this.tag(TekoraTags.Items.INVAR_NUGGET).add(TekoraItems.INVAR_NUGGET.get());
+        this.tag(TekoraTags.Items.MAGNETIC_NEODYMIUM_NUGGET).add(TekoraItems.MAGNETIC_NEODYMIUM_NUGGET.get());
+        this.tag(TekoraTags.Items.MU_METAL_NUGGET).add(TekoraItems.MU_METAL_NUGGET.get());
+        this.tag(TekoraTags.Items.REACTOR_STEEL_NUGGET).add(TekoraItems.REACTOR_STEEL_NUGGET.get());
+        this.tag(TekoraTags.Items.STAINLESS_STEEL_NUGGET).add(TekoraItems.STAINLESS_STEEL_NUGGET.get());
+        this.tag(TekoraTags.Items.STEEL_NUGGET).add(TekoraItems.STEEL_NUGGET.get());
+        this.tag(TekoraTags.Items.TUNGSTEN_CARBIDE_NUGGET).add(TekoraItems.TUNGSTEN_CARBIDE_NUGGET.get());
+        this.tag(TekoraTags.Items.TUNGSTEN_STEEL_NUGGET).add(TekoraItems.TUNGSTEN_STEEL_NUGGET.get());
+        this.tag(TekoraTags.Items.VANASTEEL_NUGGET).add(TekoraItems.VANASTEEL_NUGGET.get());
+        this.tag(TekoraTags.Items.ZIRCALOY_NUGGET).add(TekoraItems.ZIRCALOY_NUGGET.get());
 
         this.tag(TekoraTags.Items.ALUMINUM_PLATE).add(TekoraItems.ALUMINUM_PLATE.get());
         this.tag(TekoraTags.Items.BISMUTH_PLATE).add(TekoraItems.BISMUTH_PLATE.get());
@@ -162,6 +183,8 @@ public class TekoraItemTagGenerator extends ItemTagsProvider {
         this.tag(TekoraTags.Items.CHROMIUM_PLATE).add(TekoraItems.CHROMIUM_PLATE.get());
         this.tag(TekoraTags.Items.COBALT_PLATE).add(TekoraItems.COBALT_PLATE.get());
         this.tag(TekoraTags.Items.COPPER_PLATE).add(TekoraItems.COPPER_PLATE.get());
+        this.tag(TekoraTags.Items.CUPRONICKEL_PLATE).add(TekoraItems.CUPRONICKEL_PLATE.get());
+        this.tag(TekoraTags.Items.ELECTRUM_PLATE).add(TekoraItems.ELECTRUM_PLATE.get());
         this.tag(TekoraTags.Items.GOLD_PLATE).add(TekoraItems.GOLD_PLATE.get());
         this.tag(TekoraTags.Items.INDIUM_PLATE).add(TekoraItems.INDIUM_PLATE.get());
         this.tag(TekoraTags.Items.IRIDIUM_PLATE).add(TekoraItems.IRIDIUM_PLATE.get());
@@ -215,7 +238,9 @@ public class TekoraItemTagGenerator extends ItemTagsProvider {
         this.tag(TekoraTags.Items.CESIUM_DUST).add(TekoraItems.CESIUM_DUST.get());
         this.tag(TekoraTags.Items.CHROMIUM_DUST).add(TekoraItems.CHROMIUM_DUST.get());
         this.tag(TekoraTags.Items.COBALT_DUST).add(TekoraItems.COBALT_DUST.get());
-        this.tag(TekoraTags.Items.COPPER_DUST).add(TekoraItems.COPPER_PLATE.get());
+        this.tag(TekoraTags.Items.COPPER_DUST).add(TekoraItems.COPPER_DUST.get());
+        this.tag(TekoraTags.Items.CUPRONICKEL_DUST).add(TekoraItems.CUPRONICKEL_DUST.get());
+        this.tag(TekoraTags.Items.ELECTRUM_DUST).add(TekoraItems.ELECTRUM_DUST.get());
         this.tag(TekoraTags.Items.GOLD_DUST).add(TekoraItems.GOLD_DUST.get());
         this.tag(TekoraTags.Items.DYSPROSIUM_DUST).add(TekoraItems.DYSPROSIUM_DUST.get());
         this.tag(TekoraTags.Items.ERBIUM_DUST).add(TekoraItems.ERBIUM_DUST.get());
@@ -290,8 +315,103 @@ public class TekoraItemTagGenerator extends ItemTagsProvider {
         this.tag(TekoraTags.Items.SILICON_DUST).add(TekoraItems.SILICON_DUST.get());
         this.tag(TekoraTags.Items.TELLURIUM_DUST).add(TekoraItems.TELLURIUM_DUST.get());
 
+        this.tag(TekoraTags.Items.ALUMINUM_TINY_DUST).add(TekoraItems.ALUMINUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.BARIUM_TINY_DUST).add(TekoraItems.BARIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.BERYLLIUM_TINY_DUST).add(TekoraItems.BERYLLIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.BISMUTH_TINY_DUST).add(TekoraItems.BISMUTH_TINY_DUST.get());
+        this.tag(TekoraTags.Items.CADMIUM_TINY_DUST).add(TekoraItems.CADMIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.CALCIUM_TINY_DUST).add(TekoraItems.CALCIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.CERIUM_TINY_DUST).add(TekoraItems.CERIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.CESIUM_TINY_DUST).add(TekoraItems.CESIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.CHROMIUM_TINY_DUST).add(TekoraItems.CHROMIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.COBALT_TINY_DUST).add(TekoraItems.COBALT_TINY_DUST.get());
+        this.tag(TekoraTags.Items.COPPER_TINY_DUST).add(TekoraItems.COPPER_TINY_DUST.get());
+        this.tag(TekoraTags.Items.CUPRONICKEL_TINY_DUST).add(TekoraItems.CUPRONICKEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.ELECTRUM_TINY_DUST).add(TekoraItems.ELECTRUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.GOLD_TINY_DUST).add(TekoraItems.GOLD_TINY_DUST.get());
+        this.tag(TekoraTags.Items.DYSPROSIUM_TINY_DUST).add(TekoraItems.DYSPROSIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.ERBIUM_TINY_DUST).add(TekoraItems.ERBIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.EUROPIUM_TINY_DUST).add(TekoraItems.EUROPIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.GADOLINIUM_TINY_DUST).add(TekoraItems.GADOLINIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.GALLIUM_TINY_DUST).add(TekoraItems.GALLIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.HAFNIUM_TINY_DUST).add(TekoraItems.HAFNIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.HOLMIUM_TINY_DUST).add(TekoraItems.HOLMIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.INDIUM_TINY_DUST).add(TekoraItems.INDIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.IRIDIUM_TINY_DUST).add(TekoraItems.IRIDIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.IRON_TINY_DUST).add(TekoraItems.IRON_TINY_DUST.get());
+        this.tag(TekoraTags.Items.LANTHANUM_TINY_DUST).add(TekoraItems.LANTHANUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.LEAD_TINY_DUST).add(TekoraItems.LEAD_TINY_DUST.get());
+        this.tag(TekoraTags.Items.LITHIUM_TINY_DUST).add(TekoraItems.LITHIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.LUTETIUM_TINY_DUST).add(TekoraItems.LUTETIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.MAGNESIUM_TINY_DUST).add(TekoraItems.MAGNESIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.MANGANESE_TINY_DUST).add(TekoraItems.MANGANESE_TINY_DUST.get());
+        this.tag(TekoraTags.Items.MOLYBDENUM_TINY_DUST).add(TekoraItems.MOLYBDENUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.NEODYMIUM_TINY_DUST).add(TekoraItems.NEODYMIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.NICKEL_TINY_DUST).add(TekoraItems.NICKEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.NIOBIUM_TINY_DUST).add(TekoraItems.NIOBIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.OSMIUM_TINY_DUST).add(TekoraItems.OSMIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.PALLADIUM_TINY_DUST).add(TekoraItems.PALLADIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.PLATINUM_TINY_DUST).add(TekoraItems.PLATINUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.POTASSIUM_TINY_DUST).add(TekoraItems.POTASSIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.PRASEODYMIUM_TINY_DUST).add(TekoraItems.PRASEODYMIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.RHENIUM_TINY_DUST).add(TekoraItems.RHENIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.RHODIUM_TINY_DUST).add(TekoraItems.RHODIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.RUBIDIUM_TINY_DUST).add(TekoraItems.RUBIDIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.RUTHENIUM_TINY_DUST).add(TekoraItems.RUTHENIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.SCANDIUM_TINY_DUST).add(TekoraItems.SCANDIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.SAMARIUM_TINY_DUST).add(TekoraItems.SAMARIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.SODIUM_TINY_DUST).add(TekoraItems.SODIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.STRONTIUM_TINY_DUST).add(TekoraItems.STRONTIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.SILVER_TINY_DUST).add(TekoraItems.SILVER_TINY_DUST.get());
+        this.tag(TekoraTags.Items.TANTALUM_TINY_DUST).add(TekoraItems.TANTALUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.TERBIUM_TINY_DUST).add(TekoraItems.TERBIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.THALLIUM_TINY_DUST).add(TekoraItems.THALLIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.THORIUM_TINY_DUST).add(TekoraItems.THORIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.THULIUM_TINY_DUST).add(TekoraItems.THULIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.TIN_TINY_DUST).add(TekoraItems.TIN_TINY_DUST.get());
+        this.tag(TekoraTags.Items.TITANIUM_TINY_DUST).add(TekoraItems.TITANIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.TUNGSTEN_TINY_DUST).add(TekoraItems.TUNGSTEN_TINY_DUST.get());
+        this.tag(TekoraTags.Items.URANIUM_TINY_DUST).add(TekoraItems.URANIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.VANADIUM_TINY_DUST).add(TekoraItems.VANADIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.YTTERBIUM_TINY_DUST).add(TekoraItems.YTTERBIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.YTTRIUM_TINY_DUST).add(TekoraItems.YTTRIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.ZINC_TINY_DUST).add(TekoraItems.ZINC_TINY_DUST.get());
+        this.tag(TekoraTags.Items.ZIRCONIUM_TINY_DUST).add(TekoraItems.ZIRCONIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.BRASS_TINY_DUST).add(TekoraItems.BRASS_TINY_DUST.get());
+        this.tag(TekoraTags.Items.BRONZE_TINY_DUST).add(TekoraItems.BRONZE_TINY_DUST.get());
+        this.tag(TekoraTags.Items.CARBON_STEEL_TINY_DUST).add(TekoraItems.CARBON_STEEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.CHROMOLY_STEEL_TINY_DUST).add(TekoraItems.CHROMOLY_STEEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.FERROBORON_TINY_DUST).add(TekoraItems.FERROBORON_TINY_DUST.get());
+        this.tag(TekoraTags.Items.HSLA_STEEL_TINY_DUST).add(TekoraItems.HSLA_STEEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.INCONEL_TINY_DUST).add(TekoraItems.INCONEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.INVAR_TINY_DUST).add(TekoraItems.INVAR_TINY_DUST.get());
+        this.tag(TekoraTags.Items.MAGNETIC_NEODYMIUM_TINY_DUST).add(TekoraItems.MAGNETIC_NEODYMIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.MU_METAL_TINY_DUST).add(TekoraItems.MU_METAL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.REACTOR_STEEL_TINY_DUST).add(TekoraItems.REACTOR_STEEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.STAINLESS_STEEL_TINY_DUST).add(TekoraItems.STAINLESS_STEEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.STEEL_TINY_DUST).add(TekoraItems.STEEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.TUNGSTEN_CARBIDE_TINY_DUST).add(TekoraItems.TUNGSTEN_CARBIDE_TINY_DUST.get());
+        this.tag(TekoraTags.Items.TUNGSTEN_STEEL_TINY_DUST).add(TekoraItems.TUNGSTEN_STEEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.VANASTEEL_TINY_DUST).add(TekoraItems.VANASTEEL_TINY_DUST.get());
+        this.tag(TekoraTags.Items.ZIRCALOY_TINY_DUST).add(TekoraItems.ZIRCALOY_TINY_DUST.get());
+
+        this.tag(TekoraTags.Items.ANTIMONY_TINY_DUST).add(TekoraItems.ANTIMONY_TINY_DUST.get());
+        this.tag(TekoraTags.Items.ARSENIC_TINY_DUST).add(TekoraItems.ARSENIC_TINY_DUST.get());
+        this.tag(TekoraTags.Items.BORON_TINY_DUST).add(TekoraItems.BORON_TINY_DUST.get());
+        this.tag(TekoraTags.Items.GERMANIUM_TINY_DUST).add(TekoraItems.GERMANIUM_TINY_DUST.get());
+        this.tag(TekoraTags.Items.SILICON_TINY_DUST).add(TekoraItems.SILICON_TINY_DUST.get());
+        this.tag(TekoraTags.Items.TELLURIUM_TINY_DUST).add(TekoraItems.TELLURIUM_TINY_DUST.get());
+
         this.tag(TekoraTags.Items.GRAPHITE_DUST).add(TekoraItems.GRAPHITE_DUST.get());
         this.tag(TekoraTags.Items.IODINE_DUST).add(TekoraItems.IODINE_DUST.get());
+
+        this.tag(TekoraTags.Items.ALUMINUM_WIRE).add(TekoraItems.ALUMINUM_WIRE.get());
+        this.tag(TekoraTags.Items.COPPER_WIRE).add(TekoraItems.COPPER_WIRE.get());
+        this.tag(TekoraTags.Items.CUPRONICKEL_WIRE).add(TekoraItems.CUPRONICKEL_WIRE.get());
+        this.tag(TekoraTags.Items.ELECTRUM_WIRE).add(TekoraItems.ELECTRUM_WIRE.get());
+        this.tag(TekoraTags.Items.GOLD_WIRE).add(TekoraItems.GOLD_WIRE.get());
+        this.tag(TekoraTags.Items.SILVER_WIRE).add(TekoraItems.SILVER_WIRE.get());
+        this.tag(TekoraTags.Items.TIN_WIRE).add(TekoraItems.TIN_WIRE.get());
 
         this.tag(TekoraTags.Items.AQUAMARINE_GEM).add(TekoraItems.AQUAMARINE.get());
         this.tag(TekoraTags.Items.BAUXITE_GEM).add(TekoraItems.BAUXITE.get());
@@ -539,6 +659,14 @@ public class TekoraItemTagGenerator extends ItemTagsProvider {
         this.tag(TekoraTags.Items.CHROMOLY_STEEL).addTags(TekoraTags.Items.CHROMOLY_STEEL_DUST,
                 TekoraTags.Items.CHROMOLY_STEEL_INGOT,
                 TekoraTags.Items.CHROMOLY_STEEL_PLATE);
+
+        this.tag(TekoraTags.Items.CUPRONICKEL).addTags(TekoraTags.Items.CUPRONICKEL_DUST,
+                TekoraTags.Items.CUPRONICKEL_INGOT,
+                TekoraTags.Items.CUPRONICKEL_PLATE);
+
+        this.tag(TekoraTags.Items.ELECTRUM).addTags(TekoraTags.Items.ELECTRUM_DUST,
+                TekoraTags.Items.ELECTRUM_INGOT,
+                TekoraTags.Items.ELECTRUM_PLATE);
 
         this.tag(TekoraTags.Items.FERROBORON).addTags(TekoraTags.Items.FERROBORON_DUST,
                 TekoraTags.Items.FERROBORON_INGOT,

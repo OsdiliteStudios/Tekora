@@ -8,9 +8,19 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class HammerItem extends PickaxeItem {
-    public HammerItem(Tier pTier, Properties pProperties) {
-        super(pTier, 1 , -3.2f, pProperties);
+public class HammerItem extends PickaxeItem implements ITekoraColored {
+    private final int color;
+    public HammerItem(Tier pTier, boolean pFireRes, int color) {
+        super(pTier, 1 , -3.2f, pFireRes ? new Properties().fireResistant() : new Properties());
+        this.color = color;
+    }
+    public HammerItem(Tier pTier, int color) {
+        this(pTier, false, color);
+    }
+
+    @Override
+    public int getColor() {
+        return color;
     }
 
     @Override

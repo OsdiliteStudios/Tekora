@@ -4,7 +4,7 @@
   "group": "ferroboron_plate",
   "ingredients": [
     {
-      "tag": "forge:ferroboron"
+      "tag": "forge:ingots/ferroboron"
     },
     {
       "tag": "forge:tools/hammer"

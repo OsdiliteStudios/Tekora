@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "lutetium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/lutetium"
+    },
+    {
+      "tag": "forge:tiny_dusts/lutetium"
+    },
+    {
+      "tag": "forge:tiny_dusts/lutetium"
+    },
+    {
+      "tag": "forge:tiny_dusts/lutetium"
+    },
+    {
+      "tag": "forge:tiny_dusts/lutetium"
+    },
+    {
+      "tag": "forge:tiny_dusts/lutetium"
+    },
+    {
+      "tag": "forge:tiny_dusts/lutetium"
+    },
+    {
+      "tag": "forge:tiny_dusts/lutetium"
+    },
+    {
+      "tag": "forge:tiny_dusts/lutetium"
+    }
+  ],
+  "result": {
+    "item": "tekora:lutetium_dust"
+  }
+}

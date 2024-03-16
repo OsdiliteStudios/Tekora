@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:dolomite_block}",
+  "ingredients": [
+    {
+      "item": "tekora:dolomite"
+    },
+    {
+      "item": "tekora:dolomite"
+    },
+    {
+      "item": "tekora:dolomite"
+    },
+    {
+      "item": "tekora:dolomite"
+    },
+    {
+      "item": "tekora:dolomite"
+    },
+    {
+      "item": "tekora:dolomite"
+    },
+    {
+      "item": "tekora:dolomite"
+    },
+    {
+      "item": "tekora:dolomite"
+    },
+    {
+      "item": "tekora:dolomite"
+    }
+  ],
+  "result": {
+    "item": "tekora:dolomite_block"
+  }
+}

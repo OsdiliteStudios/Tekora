@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "beryllium_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/beryllium"
+    },
+    {
+      "tag": "forge:tiny_dusts/beryllium"
+    },
+    {
+      "tag": "forge:tiny_dusts/beryllium"
+    },
+    {
+      "tag": "forge:tiny_dusts/beryllium"
+    },
+    {
+      "tag": "forge:tiny_dusts/beryllium"
+    },
+    {
+      "tag": "forge:tiny_dusts/beryllium"
+    },
+    {
+      "tag": "forge:tiny_dusts/beryllium"
+    },
+    {
+      "tag": "forge:tiny_dusts/beryllium"
+    },
+    {
+      "tag": "forge:tiny_dusts/beryllium"
+    }
+  ],
+  "result": {
+    "item": "tekora:beryllium_dust"
+  }
+}

@@ -155,19 +155,13 @@ public class CompressorEntity extends AbstractTekoraMachineEntity<SimpleContaine
     public static void tick(Level level, BlockPos pos, BlockState state, CompressorEntity entity) {
         if (level.isClientSide()) {
             return;
-        } // if a recipe exists, the tick does something
-        if (entity.hasElectricity()) {
-            state = state.setValue(AbstractMachineBlock.LIT, true);
-            level.setBlock(pos, state, 3);
-        } else {
-            state = state.setValue(AbstractMachineBlock.LIT, false);
-            level.setBlock(pos, state, 3);
         }
-
         SimpleContainer inv = entity.getContainer();
         Optional<CompressionRecipe> recipe = level.getRecipeManager()
                 .getRecipeFor(CompressionRecipe.Type.INSTANCE, inv, level);
         if (recipe.isPresent()) {
+            state = state.setValue(AbstractMachineBlock.LIT, true);
+            level.setBlock(pos, state, 3);
             CompressionRecipe obtRecipe = recipe.get();
             if ((entity.hasRecipe(obtRecipe, inv) || entity.hasHardCodedRecipe()) && entity.hasEnoughElectricity()) {
                 entity.progress++;
@@ -195,11 +189,12 @@ public class CompressorEntity extends AbstractTekoraMachineEntity<SimpleContaine
             this.itemHandler.extractItem(0,1, false); // checks the slots to make sure
             this.resetProgress();
         }
+        /*
         if (hasHardCodedRecipe()) {
             this.itemHandler.setStackInSlot(1, getHardCodedRecipeResult());
             this.itemHandler.extractItem(0,1, false);
             this.resetProgress();
-        }
+        }*/
     }
 
     @Override

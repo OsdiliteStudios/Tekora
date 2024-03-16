@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "iridium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/iridium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:iridium_tiny_dust"
+  }
+}

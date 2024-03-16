@@ -4,7 +4,7 @@
   "group": "scandium_plate",
   "ingredients": [
     {
-      "tag": "forge:scandium"
+      "tag": "forge:ingots/scandium"
     },
     {
       "tag": "forge:tools/hammer"

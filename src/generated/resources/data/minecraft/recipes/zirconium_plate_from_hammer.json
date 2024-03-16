@@ -4,7 +4,7 @@
   "group": "zirconium_plate",
   "ingredients": [
     {
-      "tag": "forge:zirconium"
+      "tag": "forge:ingots/zirconium"
     },
     {
       "tag": "forge:tools/hammer"

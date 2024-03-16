@@ -4,7 +4,7 @@
   "group": "mu_metal_plate",
   "ingredients": [
     {
-      "tag": "forge:mu_metal"
+      "tag": "forge:ingots/mu_metal"
     },
     {
       "tag": "forge:tools/hammer"

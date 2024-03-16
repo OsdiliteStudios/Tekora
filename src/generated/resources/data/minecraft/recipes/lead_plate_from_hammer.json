@@ -4,7 +4,7 @@
   "group": "lead_plate",
   "ingredients": [
     {
-      "tag": "forge:lead"
+      "tag": "forge:ingots/lead"
     },
     {
       "tag": "forge:tools/hammer"

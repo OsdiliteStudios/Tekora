@@ -4,7 +4,7 @@
   "group": "rhodium_plate",
   "ingredients": [
     {
-      "tag": "forge:rhodium"
+      "tag": "forge:ingots/rhodium"
     },
     {
       "tag": "forge:tools/hammer"

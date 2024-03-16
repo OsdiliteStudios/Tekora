@@ -4,7 +4,7 @@
   "group": "titanium_plate",
   "ingredients": [
     {
-      "tag": "forge:titanium"
+      "tag": "forge:ingots/titanium"
     },
     {
       "tag": "forge:tools/hammer"

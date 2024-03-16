@@ -4,7 +4,7 @@
   "group": "iridium_plate",
   "ingredients": [
     {
-      "tag": "forge:iridium"
+      "tag": "forge:ingots/iridium"
     },
     {
       "tag": "forge:tools/hammer"

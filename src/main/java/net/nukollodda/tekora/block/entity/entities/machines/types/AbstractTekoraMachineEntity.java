@@ -2,7 +2,6 @@ package net.nukollodda.tekora.block.entity.entities.machines.types;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -11,7 +10,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,8 +19,6 @@ import net.nukollodda.tekora.block.entity.blocks.machines.AbstractMachineBlock;
 import net.nukollodda.tekora.block.entity.entities.IElectricEntity;
 import net.nukollodda.tekora.util.TekoraEnergyStorage;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 public abstract class AbstractTekoraMachineEntity<C extends SimpleContainer, T extends Recipe<C>> extends BlockEntity
         implements MenuProvider, IElectricEntity {
@@ -95,6 +91,12 @@ public abstract class AbstractTekoraMachineEntity<C extends SimpleContainer, T e
     }
 
     protected void resetProgress() {
+        if (this.level != null) {
+            BlockPos pos = this.getBlockPos();
+            BlockState state = this.getBlockState();
+            state = state.setValue(AbstractMachineBlock.LIT, false);
+            this.level.setBlock(pos, state, 3);
+        }
         this.progress = 0;
     }
 

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:monazite_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/monazite"
+    },
+    {
+      "tag": "forge:gems/monazite"
+    },
+    {
+      "tag": "forge:gems/monazite"
+    },
+    {
+      "tag": "forge:gems/monazite"
+    },
+    {
+      "tag": "forge:gems/monazite"
+    },
+    {
+      "tag": "forge:gems/monazite"
+    },
+    {
+      "tag": "forge:gems/monazite"
+    },
+    {
+      "tag": "forge:gems/monazite"
+    },
+    {
+      "tag": "forge:gems/monazite"
+    }
+  ],
+  "result": {
+    "item": "tekora:monazite_block"
+  }
+}

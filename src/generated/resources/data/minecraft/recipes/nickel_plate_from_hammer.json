@@ -4,7 +4,7 @@
   "group": "nickel_plate",
   "ingredients": [
     {
-      "tag": "forge:nickel"
+      "tag": "forge:ingots/nickel"
     },
     {
       "tag": "forge:tools/hammer"

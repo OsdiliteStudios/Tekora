@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:rutile_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/rutile"
+    },
+    {
+      "tag": "forge:gems/rutile"
+    },
+    {
+      "tag": "forge:gems/rutile"
+    },
+    {
+      "tag": "forge:gems/rutile"
+    },
+    {
+      "tag": "forge:gems/rutile"
+    },
+    {
+      "tag": "forge:gems/rutile"
+    },
+    {
+      "tag": "forge:gems/rutile"
+    },
+    {
+      "tag": "forge:gems/rutile"
+    },
+    {
+      "tag": "forge:gems/rutile"
+    }
+  ],
+  "result": {
+    "item": "tekora:rutile_block"
+  }
+}

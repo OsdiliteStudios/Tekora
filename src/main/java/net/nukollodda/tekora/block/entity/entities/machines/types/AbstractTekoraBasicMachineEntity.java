@@ -1,13 +1,10 @@
 package net.nukollodda.tekora.block.entity.entities.machines.types;
 
-import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,7 +17,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nukollodda.tekora.block.WrappedHandler;
 import net.nukollodda.tekora.block.entity.blocks.machines.AbstractMachineBlock;
-import net.nukollodda.tekora.recipes.types.CuttingRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -112,33 +108,22 @@ public abstract class AbstractTekoraBasicMachineEntity<T extends Recipe<SimpleCo
         lazyEnergyHandler.invalidate();
     }
 
-    protected void craftItem(T pRecipe, SimpleContainer pContainer) { // extracts one of the ingredients
+    protected void craftItem(T pRecipe, SimpleContainer pContainer) {
         Level level = this.level;
         if (pRecipe != null && hasRecipe(pRecipe, pContainer)) {
             this.itemHandler.setStackInSlot(1, getJsonRecipeResidue(pContainer, level));
             this.itemHandler.setStackInSlot(2, getJsonRecipeOutput(pContainer, level));
-            this.itemHandler.extractItem(0,1, false); // checks the slots to make sure
-            this.resetProgress();
-        }
-        if (hasHardCodedRecipe()) {
-            this.itemHandler.setStackInSlot(2, getHardCodedRecipeResult());
             this.itemHandler.extractItem(0,1, false);
             this.resetProgress();
         }
     }
 
-    protected boolean hasHardCodedRecipe() {
-        ItemStack result = getHardCodedRecipeResult();
-        if (result == null) {
-            return false;
-        }
-        return !result.isEmpty() ||
-                !result.getItem().equals(Items.BARRIER);
-    }
-
     protected abstract Optional<T> getRecipe(SimpleContainer pContainer);
 
-    protected abstract ItemStack getHardCodedRecipeResult(); // temporary
+    @Deprecated
+    protected ItemStack getHardCodedRecipeResult() {
+        return null;
+    }
     protected abstract ItemStack getJsonRecipeOutput(SimpleContainer inv, Level level);
     protected abstract ItemStack getJsonRecipeResidue(SimpleContainer inv, Level level);
 }

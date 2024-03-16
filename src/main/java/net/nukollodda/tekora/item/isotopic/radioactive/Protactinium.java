@@ -1,15 +1,13 @@
 package net.nukollodda.tekora.item.isotopic.radioactive;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.nukollodda.tekora.item.mixtures.Residue;
 import net.nukollodda.tekora.item.typical.IonicParts;
 import net.nukollodda.tekora.item.typical.ICompounds;
+import net.nukollodda.tekora.item.typical.RawItem;
 import net.nukollodda.tekora.util.DustUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,7 +15,7 @@ import java.util.List;
 
 public class Protactinium extends AbstractRadioactiveItem {
     public Protactinium() {
-        super(new Item.Properties());
+        super(false, RawItem.PROTACTINIUM);
     }
 
     @Override

@@ -3,6 +3,7 @@ package net.leng.tekora.block;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -179,12 +180,12 @@ public class TekoraBlocks {
     public static final RegistryObject<Block> DEEPSLATE_ZIRCON_ORE = registerBlock("deepslate_zircon_ore",
             () -> new TekoraExperienceBlock(8.25f,4.5f, SoundType.DEEPSLATE));
 
-    public static final RegistryObject<Block> RUBBER_SAPLING = registerBlock("rubber_sapling",
-            () -> new SaplingBlock(new RubberTreeGrower(), BlockBehaviour.Properties.copy(Blocks.JUNGLE_SAPLING)));
+    //public static final RegistryObject<Block> RUBBER_SAPLING = registerBlock("rubber_sapling",
+    //        () -> new SaplingBlock(new TreeGrower(), BlockBehaviour.Properties.ofFullCopy(Blocks.JUNGLE_SAPLING)));
 
     public static final RegistryObject<Block> RUBBER_TREE_LOG = registerBlock("rubber_log", RubberTreeLog::new);
     public static final RegistryObject<Block> RUBBER_TREE_LEAVES = registerBlock("rubber_leaves", () ->
-            new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_LEAVES)));
+            new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.JUNGLE_LEAVES)));
 
     public static final RegistryObject<Block> ALUMINUM_CABLE = registerBlock("aluminum_cable", () ->
             new EnergyCable(3f, RawItem.ALUMINUM, 512));

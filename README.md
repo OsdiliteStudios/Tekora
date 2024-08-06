@@ -1,10 +1,9 @@
 # Tekora
 ![](https://github.com/NukolLodda/Tekora/blob/master/logo.png)Technologic Ores And More!
 
-Tekora is a tech based mod for Minecraft and a base mod for future mods planned for the Tekora Development Team.
+Tekora is a technology based Minecraft mod aimed at adding mineral extraction, nuclear reactors, chemical reactions, and chemical elements into Minecraft.
 <br>
-Tekora plans to implement a whole host of machines into Minecraft using most naturally occurring elements of the<br>
-periodic table
+The current plan is to add a variety of machines into Minecraft that aids in the goals of this mod.
 
 -----
 **Requests**

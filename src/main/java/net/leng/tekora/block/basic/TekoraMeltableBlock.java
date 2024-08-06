@@ -124,7 +124,7 @@ public class TekoraMeltableBlock extends TekoraBaseBlock {
     }
 
     protected LiquidBlock getMelted() {
-        ResourceLocation meltedKey = new ResourceLocation(this.fluid);
+        ResourceLocation meltedKey = ResourceLocation.withDefaultNamespace(this.fluid);
         if (ForgeRegistries.BLOCKS.containsKey(meltedKey) &&
                 ForgeRegistries.BLOCKS.getValue(meltedKey) instanceof LiquidBlock liquid) {
             return liquid;

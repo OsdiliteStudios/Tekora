@@ -6,6 +6,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
@@ -29,11 +30,11 @@ public class RubberTreeLog extends RotatedPillarBlock {
     public static IntegerProperty SAPPED = IntegerProperty.create("sapped", 0, MAX);
     public static BooleanProperty SAPPEABLE = BooleanProperty.create("sappeable");
     public RubberTreeLog() {
-        super(Properties.copy(Blocks.JUNGLE_LOG)); // when registering to loot table, this block drops a jungle log.
+        super(Properties.ofFullCopy(Blocks.JUNGLE_LOG)); // when registering to loot table, this block drops a jungle log.
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         Item item = stack.getItem();
         int count = stack.getCount();
@@ -56,9 +57,9 @@ public class RubberTreeLog extends RotatedPillarBlock {
             pLevel.setBlock(pPos, Blocks.STRIPPED_JUNGLE_LOG.defaultBlockState().setValue(AXIS, pState.getValue(AXIS)), 3);
             // player gets rubber
             pPlayer.playSound(SoundEvents.AXE_STRIP);
-            axe.setDamage(stack, stack.getDamageValue() + 1);
+            //axe.setDamage(stack, stack.getDamageValue() + 1);
         }
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 
     @Override

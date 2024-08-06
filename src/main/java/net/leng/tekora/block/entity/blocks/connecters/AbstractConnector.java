@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -57,9 +58,9 @@ public abstract class AbstractConnector extends BaseEntityBlock implements Fluid
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltip, TooltipFlag pTooltipFlag) {
         pTooltip.add(Component.translatable("tooltip.tekora.tier").append(" " + this.getTier()).withStyle(ChatFormatting.GRAY));
-        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+        super.appendHoverText(pStack, pContext, pTooltip, pTooltipFlag);
     }
 
     @Override

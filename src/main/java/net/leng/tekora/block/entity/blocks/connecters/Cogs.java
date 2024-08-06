@@ -1,7 +1,9 @@
 package net.leng.tekora.block.entity.blocks.connecters;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -42,6 +44,11 @@ public class Cogs extends AbstractConnector {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return null;
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return null;
     }
 }

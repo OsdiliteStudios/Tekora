@@ -1,0 +1,13 @@
+{
+  "type": "tekora:pulverization",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:nuggets/calcium"
+  },
+  "output": {
+    "chance": 0.5,
+    "count": 1,
+    "item": "tekora:calcium_tiny_dust"
+  },
+  "time": 200
+}

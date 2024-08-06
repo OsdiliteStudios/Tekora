@@ -5,10 +5,16 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.nukollodda.tekora.Tekora;
@@ -32,6 +38,7 @@ public class TekoraConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> ZINC_ORE_KEY = registerKey("ore_zinc");
     public static final ResourceKey<ConfiguredFeature<?, ?>> EVAPORITE_PLACED_KEY = registerKey("placed_evaporite");
     public static final ResourceKey<ConfiguredFeature<?, ?>> LIMESTONE_PLACED_KEY = registerKey("placed_limestone");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RUBBER_TREE_KEY = registerKey("lovely_peach");
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest stoneReplaceable = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
@@ -110,6 +117,14 @@ public class TekoraConfiguredFeatures {
         registerOre(context, ZINC_ORE_KEY, zincOres, 8);
         registerOre(context, EVAPORITE_PLACED_KEY, evaporite, 20);
         registerOre(context, LIMESTONE_PLACED_KEY, limestone, 27);
+
+        register(context, RUBBER_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(TekoraBlocks.RUBBER_TREE_LOG.get()),
+                new StraightTrunkPlacer(4, 2, 6),
+                BlockStateProvider.simple(TekoraBlocks.RUBBER_TREE_LEAVES.get()),
+                new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
+                new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build()
+        );
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

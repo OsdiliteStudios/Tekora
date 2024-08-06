@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "axis=x,sappeable=false": {
+      "model": "minecraft:block/jungle_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,sappeable=false": {
+      "model": "minecraft:block/jungle_log"
+    },
+    "axis=z,sappeable=false": {
+      "model": "minecraft:block/jungle_log_horizontal",
+      "x": 90
+    },
+    "axis=x,sappeable=true": {
+      "model": "tekora:block/rubber_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,sappeable=true": {
+      "model": "tekora:block/rubber_log"
+    },
+    "axis=z,sappeable=true": {
+      "model": "tekora:block/rubber_log_horizontal",
+      "x": 90
+    }
+  }
+}

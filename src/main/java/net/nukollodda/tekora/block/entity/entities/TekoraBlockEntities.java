@@ -9,7 +9,7 @@ import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.TekoraBlocks;
 import net.nukollodda.tekora.block.entity.entities.connectors.EnergyCableEntity;
 import net.nukollodda.tekora.block.entity.entities.connectors.EnergyCableFacadeEntity;
-import net.nukollodda.tekora.block.entity.entities.enstorage.InfiniteBatteryEntity;
+import net.nukollodda.tekora.block.entity.entities.storage.InfiniteBatteryEntity;
 import net.nukollodda.tekora.block.entity.entities.generators.HydroelectricGeneratorEntity;
 import net.nukollodda.tekora.block.entity.entities.machines.*;
 

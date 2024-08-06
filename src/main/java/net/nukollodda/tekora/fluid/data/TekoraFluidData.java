@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffects;
 import java.util.ArrayList;
 import java.util.List;
 
+// will be removed in a future version, with the data replaced by json files.
 public class TekoraFluidData {
     private final String liquidName;
     private final String gasName;
@@ -142,7 +143,6 @@ public class TekoraFluidData {
         private MobEffect[] effects = null;
         private float healthHazard = 0;
 
-        // pH is temporary,
         // possible replacements, rate of hydrogenation/dehydrogenation, along with oxidation/reduction properties
         private float hydrogenationRate = 0;
 
@@ -274,12 +274,16 @@ public class TekoraFluidData {
             return this;
         }
 
-        /** pH will determine the speed of a reaction effected by the reactants
-         * alongside damage mobs within a fluid takes
+        /** use setReactivness instead
          */
+        @Deprecated
         public Properties setHydrogenationRate(float hydrogenationRate) {
             this.hydrogenationRate = hydrogenationRate;
             this.fluidDmg += (int)Math.round(Math.pow(hydrogenationRate / 7, 2));
+            return this;
+        }
+
+        public Properties setReactiviness(float reactiviness) {
             return this;
         }
 

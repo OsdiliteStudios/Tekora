@@ -16,7 +16,9 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.nukollodda.tekora.block.fluids.AbstractTekoraFluidBlock;
 import net.nukollodda.tekora.fluid.TekoraChemicalFluidType;
@@ -31,6 +33,11 @@ public class Canister extends Item implements DispensibleContainerItem {
         super(new Item.Properties().stacksTo(1));
         this.maxTemperature = pMaxTemperature;
         this.corrosionResistance = pCorrosionRes;
+    }
+
+    @Override
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
+        return new FluidBucketWrapper(stack);
     }
 
     @Override

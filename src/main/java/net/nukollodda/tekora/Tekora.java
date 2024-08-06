@@ -209,7 +209,7 @@ public class Tekora {
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROGEN_FLUORIDE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_HYDROGEN_CHLORIDE.get(), RenderType.translucent());
 
-            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_BROMINE_FLUID.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_BROMINE_FLUID.get(), RenderType.solid());
 
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_AMMONIA_FLUID.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TekoraFluids.SOURCE_AMMONIUM_HYDROXIDE.get(), RenderType.translucent());

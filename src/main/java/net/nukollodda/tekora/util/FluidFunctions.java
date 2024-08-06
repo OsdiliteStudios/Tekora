@@ -9,23 +9,27 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.nukollodda.tekora.fluid.TekoraChemicalFluidType;
 import net.nukollodda.tekora.fluid.data.TekoraFluidData;
+import net.nukollodda.tekora.item.containers.Canister;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FluidFunctions {
     public static final float END_PRESSURE = 0.895f;
@@ -114,6 +118,17 @@ public class FluidFunctions {
             }
             ent.hurt(ent.level().damageSources().generic(), pData.getFluidDmg() * 3);
         }
+    }
+
+    public static boolean containerMatchFluid(ItemStack pContainer, FluidStack pFluid, int tankNum) {
+        AtomicBoolean bool = new AtomicBoolean(false);
+        pContainer.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler -> {
+            FluidStack fluid = handler.getFluidInTank(tankNum);
+            if (pFluid.isEmpty() || fluid.getFluid().equals(pFluid.getFluid())) {
+                bool.set(true);
+            }
+        });
+        return bool.get();
     }
 
     /** Credit to Kaupenjoe for the functions below

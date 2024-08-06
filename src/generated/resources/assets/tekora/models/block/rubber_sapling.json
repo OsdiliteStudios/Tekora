@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/crop",
+  "render_type": "minecraft:cross",
+  "textures": {
+    "crop": "tekora:block/rubber_sapling"
+  }
+}

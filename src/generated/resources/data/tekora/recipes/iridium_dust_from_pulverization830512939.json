@@ -1,0 +1,13 @@
+{
+  "type": "tekora:pulverization",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:plates/iridium"
+  },
+  "output": {
+    "chance": 0.5,
+    "count": 1,
+    "item": "tekora:iridium_dust"
+  },
+  "time": 200
+}

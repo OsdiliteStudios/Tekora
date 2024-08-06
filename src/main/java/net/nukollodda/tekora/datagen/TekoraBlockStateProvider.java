@@ -8,6 +8,7 @@ import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.CustomLoaderBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
 import net.nukollodda.tekora.block.TekoraBlocks;
@@ -133,6 +134,7 @@ public class TekoraBlockStateProvider extends BlockStateProvider {
         blockWithItem(TekoraBlocks.DEEPSLATE_ZINC_ORE);
         blockWithItem(TekoraBlocks.ZIRCON_ORE);
         blockWithItem(TekoraBlocks.DEEPSLATE_ZIRCON_ORE);
+        blockWithItem(TekoraBlocks.RUBBER_TREE_LEAVES);
 
         registerCable(TekoraBlocks.ALUMINUM_CABLE);
         registerCable(TekoraBlocks.COPPER_CABLE);
@@ -149,6 +151,8 @@ public class TekoraBlockStateProvider extends BlockStateProvider {
         registerFacade(TekoraBlocks.GOLD_CABLE_FACADE);
         registerFacade(TekoraBlocks.SILVER_CABLE_FACADE);
         registerFacade(TekoraBlocks.TIN_CABLE_FACADE);
+
+        saplingBlock(TekoraBlocks.RUBBER_SAPLING);
     }
 
     private void blockWithItem(RegistryObject<Block> registryObject) {
@@ -174,6 +178,11 @@ public class TekoraBlockStateProvider extends BlockStateProvider {
                 .customLoader((builder, helper) -> new CableLoaderBuilder(CableModel.LOADER, builder, helper, true))
                 .end();
         simpleBlock(facade.get(), model);
+    }
+
+    private void saplingBlock(RegistryObject<Block> registryBlock) {
+        simpleBlock(registryBlock.get(),
+                models().crop(ForgeRegistries.BLOCKS.getKey(registryBlock.get()).getPath(), blockTexture(registryBlock.get())).renderType("cross"));
     }
 
     public static class CableLoaderBuilder extends CustomLoaderBuilder<BlockModelBuilder> {

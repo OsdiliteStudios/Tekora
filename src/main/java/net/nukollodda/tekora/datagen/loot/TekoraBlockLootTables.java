@@ -5,6 +5,7 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
@@ -125,6 +126,7 @@ public class TekoraBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(TekoraBlocks.GOLD_CABLE.get());
         this.dropSelf(TekoraBlocks.SILVER_CABLE.get());
         this.dropSelf(TekoraBlocks.TIN_CABLE.get());
+        this.dropSelf(TekoraBlocks.RUBBER_SAPLING.get());
 
         this.dropOther(TekoraBlocks.ALUMINUM_CABLE_FACADE.get(), TekoraBlocks.ALUMINUM_CABLE.get());
         this.dropOther(TekoraBlocks.COPPER_CABLE_FACADE.get(), TekoraBlocks.COPPER_CABLE.get());
@@ -133,6 +135,7 @@ public class TekoraBlockLootTables extends BlockLootSubProvider {
         this.dropOther(TekoraBlocks.GOLD_CABLE_FACADE.get(), TekoraBlocks.GOLD_CABLE.get());
         this.dropOther(TekoraBlocks.SILVER_CABLE_FACADE.get(), TekoraBlocks.SILVER_CABLE.get());
         this.dropOther(TekoraBlocks.TIN_CABLE_FACADE.get(), TekoraBlocks.TIN_CABLE.get());
+        this.dropOther(TekoraBlocks.RUBBER_TREE_LOG.get(), Blocks.JUNGLE_LOG);
 
         this.dropSelf(TekoraBlocks.HYDROELECTRIC_GENERATOR.get());
 
@@ -166,6 +169,10 @@ public class TekoraBlockLootTables extends BlockLootSubProvider {
 
         this.add(TekoraBlocks.BORAX_BLOCK.get(), block -> createTekoraOreDrops(TekoraBlocks.BORAX_BLOCK.get(), TekoraItems.BORAX.get(), 2, 4));
         this.add(TekoraBlocks.SALT_BLOCK.get(), block -> createTekoraOreDrops(TekoraBlocks.SALT_BLOCK.get(), TekoraItems.SALT.get(), 2, 4));
+
+        this.add(TekoraBlocks.RUBBER_TREE_LEAVES.get(), block -> createSilkTouchDispatchTable(block,
+                this.applyExplosionDecay(block, LootItem.lootTableItem(TekoraBlocks.RUBBER_SAPLING.get())
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 1))))));
     }
 
     protected LootTable.Builder createTekoraOreDrops(Block pBlock, Item pItem) {

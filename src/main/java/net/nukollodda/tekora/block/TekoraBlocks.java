@@ -3,17 +3,19 @@ package net.nukollodda.tekora.block;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.Tekora;
+import net.nukollodda.tekora.block.basic.RubberTreeLog;
 import net.nukollodda.tekora.block.basic.TekoraBaseBlock;
 import net.nukollodda.tekora.block.basic.TekoraExperienceBlock;
 import net.nukollodda.tekora.block.basic.TekoraMeltableBlock;
 import net.nukollodda.tekora.block.entity.blocks.connecters.EnergyCable;
 import net.nukollodda.tekora.block.entity.blocks.connecters.EnergyCableFacade;
-import net.nukollodda.tekora.block.entity.blocks.enstorage.InfiniteBattery;
+import net.nukollodda.tekora.block.entity.blocks.storage.InfiniteBattery;
 import net.nukollodda.tekora.block.entity.blocks.generators.HydroelectricGeneratorBlock;
 import net.nukollodda.tekora.block.entity.blocks.machines.*;
 import net.nukollodda.tekora.fluid.TekoraFluids;
@@ -23,6 +25,7 @@ import net.nukollodda.tekora.block.fluids.TekoraLiquidMixtureBlock;
 import net.nukollodda.tekora.fluid.data.TekoraFluidPresets;
 import net.nukollodda.tekora.item.TekoraItems;
 import net.nukollodda.tekora.item.typical.RawItem;
+import net.nukollodda.tekora.worldgen.tree.RubberTreeGrower;
 
 import java.util.function.Supplier;
 
@@ -175,6 +178,13 @@ public class TekoraBlocks {
             () -> new TekoraExperienceBlock(6.75f,3.5f));
     public static final RegistryObject<Block> DEEPSLATE_ZIRCON_ORE = registerBlock("deepslate_zircon_ore",
             () -> new TekoraExperienceBlock(8.25f,4.5f, SoundType.DEEPSLATE));
+
+    public static final RegistryObject<Block> RUBBER_SAPLING = registerBlock("rubber_sapling",
+            () -> new SaplingBlock(new RubberTreeGrower(), BlockBehaviour.Properties.copy(Blocks.JUNGLE_SAPLING)));
+
+    public static final RegistryObject<Block> RUBBER_TREE_LOG = registerBlock("rubber_log", RubberTreeLog::new);
+    public static final RegistryObject<Block> RUBBER_TREE_LEAVES = registerBlock("rubber_leaves", () ->
+            new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_LEAVES)));
 
     public static final RegistryObject<Block> ALUMINUM_CABLE = registerBlock("aluminum_cable", () ->
             new EnergyCable(3f, RawItem.ALUMINUM, 512));

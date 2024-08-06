@@ -19,6 +19,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.nukollodda.tekora.item.armors.HeatResArmor;
 import net.nukollodda.tekora.tiers.TekoraArmors;
 import net.nukollodda.tekora.tiers.TekoraTiers;
+import org.apache.http.impl.conn.Wire;
 
 public class TekoraItems {
   public static final DeferredRegister<Item> ITEMS =
@@ -416,13 +417,13 @@ public class TekoraItems {
   public static final RegistryObject<Item> ZIRCALOY_PLATE = ITEMS.register("zircaloy_plate", () -> new RawItem(true, RawItem.ZIRCALOY));
   public static final RegistryObject<Item> ZIRCONIUM_PLATE = ITEMS.register("zirconium_plate", () -> new RawItem(true, RawItem.ZIRCONIUM));
 
-  public static final RegistryObject<Item> ALUMINUM_WIRE = ITEMS.register("aluminum_wire", () -> new RawItem(RawItem.ALUMINUM));
-  public static final RegistryObject<Item> COPPER_WIRE = ITEMS.register("copper_wire", TekoraItem::new);
-  public static final RegistryObject<Item> CUPRONICKEL_WIRE = ITEMS.register("cupronickel_wire", () -> new RawItem(RawItem.CUPRONICKEL));
-  public static final RegistryObject<Item> ELECTRUM_WIRE = ITEMS.register("electrum_wire", () -> new RawItem(RawItem.ELECTRUM));
-  public static final RegistryObject<Item> GOLD_WIRE = ITEMS.register("gold_wire", TekoraItem::new);
-  public static final RegistryObject<Item> SILVER_WIRE = ITEMS.register("silver_wire", () -> new RawItem(RawItem.SILVER));
-  public static final RegistryObject<Item> TIN_WIRE = ITEMS.register("tin_wire", () -> new RawItem(RawItem.TIN));
+  public static final RegistryObject<Item> ALUMINUM_WIRE = ITEMS.register("aluminum_wire", () -> new WireItem(RawItem.ALUMINUM));
+  public static final RegistryObject<Item> COPPER_WIRE = ITEMS.register("copper_wire", () -> new WireItem(RawItem.COPPER));
+  public static final RegistryObject<Item> CUPRONICKEL_WIRE = ITEMS.register("cupronickel_wire", () -> new WireItem(RawItem.CUPRONICKEL));
+  public static final RegistryObject<Item> ELECTRUM_WIRE = ITEMS.register("electrum_wire", () -> new WireItem(RawItem.ELECTRUM));
+  public static final RegistryObject<Item> GOLD_WIRE = ITEMS.register("gold_wire", () -> new WireItem(RawItem.GOLD));
+  public static final RegistryObject<Item> SILVER_WIRE = ITEMS.register("silver_wire", () -> new WireItem(RawItem.SILVER));
+  public static final RegistryObject<Item> TIN_WIRE = ITEMS.register("tin_wire", () -> new WireItem(RawItem.TIN));
   //public static final RegistryObject<Item> NIOBIUM_TIN_WIRE = ITEMS.register("niobium_tin_wire", TekoraItem::new);
 
 

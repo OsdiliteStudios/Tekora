@@ -29,6 +29,7 @@ public class TekoraChemicalFluidType extends FluidType {
         super(properties);
         this.stillTexture = isGas ? TekoraFluidTextures.GAS_RL : getTemperature() > 798 ? TekoraFluidTextures.LAVA_STILL_RL : TekoraFluidTextures.WATER_STILL_RL;
         this.flowingTexture = isGas ? TekoraFluidTextures.GAS_RL : getTemperature() > 798 ? TekoraFluidTextures.LAVA_FLOWING_RL : TekoraFluidTextures.WATER_FLOWING_RL;
+
         this.tintColor = (isGas ? data.getGasColor() : data.getLiquidColor()) + 0x88000000;
         this.fogColor = colorToVector(isGas ? data.getGasColor() : data.getLiquidColor());
         this.fluidData = data;

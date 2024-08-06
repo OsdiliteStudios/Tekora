@@ -59,6 +59,7 @@ public class TekoraFluidPresets {
             .setAmountOfGasPerLiquid(700)
             .setColor(0xDBB99C)
             .setName("helium"));
+
     public static final TekoraFluidData NITROGEN = new TekoraFluidData(TekoraFluidData.Properties.create()
             .setMeltingPoint(63)
             .setBoilingCoefficient(28)

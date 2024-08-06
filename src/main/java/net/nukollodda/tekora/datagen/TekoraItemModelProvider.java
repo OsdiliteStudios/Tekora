@@ -648,12 +648,19 @@ public class TekoraItemModelProvider extends ItemModelProvider {
         blockItem(TekoraBlocks.GOLD_CABLE);
         cableItem(TekoraBlocks.SILVER_CABLE);
         cableItem(TekoraBlocks.TIN_CABLE);
+
+        blockAsItem(TekoraBlocks.RUBBER_SAPLING);
     }
 
     private ItemModelBuilder blockItem(RegistryObject<? extends Block> block) {
         return withExistingParent(block.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(Tekora.MODID, "item/" + block.getId().getPath()));
+    }
+
+    private ItemModelBuilder itemParentBlock(RegistryObject<? extends Block> block) {
+        return withExistingParent(block.getId().getPath(),
+                new ResourceLocation(Tekora.MODID, "block/" + block.getId().getPath()));
     }
 
     private ItemModelBuilder cableItem(RegistryObject<? extends Block> block) {
@@ -666,6 +673,12 @@ public class TekoraItemModelProvider extends ItemModelProvider {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(Tekora.MODID,"item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder blockAsItem(RegistryObject<Block> item) {
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(Tekora.MODID,"block/" + item.getId().getPath()));
     }
 
     private ItemModelBuilder plainIngotItem(RegistryObject<? extends Item> item) {

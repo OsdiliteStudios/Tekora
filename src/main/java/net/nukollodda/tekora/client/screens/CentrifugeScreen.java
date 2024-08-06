@@ -1,6 +1,7 @@
 package net.nukollodda.tekora.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -8,7 +9,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.nukollodda.tekora.Tekora;
+import net.nukollodda.tekora.fluid.TekoraFluidTextures;
 import net.nukollodda.tekora.menu.CentrifugeMenu;
+
+import java.io.FileNotFoundException;
 
 public class CentrifugeScreen extends AbstractContainerScreen<CentrifugeMenu> {
     private static final ResourceLocation TEXTURE =
@@ -35,6 +39,24 @@ public class CentrifugeScreen extends AbstractContainerScreen<CentrifugeMenu> {
 
         renderProgressArrow(pGraphics, x, y);
         renderElectricityAmount(pGraphics, x, y);
+        renderInputFluidAmount(pGraphics, x, y);
+        /*
+        for (int i = 0; i < 4; i++) {
+            renderOutputFluidAmount(pGraphics, i, x, y);
+        }*/
+    }
+
+    private void renderInputFluidAmount(GuiGraphics pGraphics, int x, int y) {
+        int diff = 29 - menu.getInputFluidAmount();
+        ResourceLocation texture = menu.getInputFluidTexture();
+        if (getMinecraft().getResourceManager().getResource(texture).isEmpty()) {
+            texture = new ResourceLocation("textures/block/water_still.png");
+        }
+        pGraphics.blit(texture, x + 28, y + 22 + diff, 0, 29 - diff, 15, menu.getInputFluidAmount());
+    }
+
+    private void renderOutputFluidAmount(GuiGraphics pGraphics, int ind, int x, int y) {
+
     }
 
     private void renderProgressArrow(GuiGraphics pGraphics, int x, int y) {

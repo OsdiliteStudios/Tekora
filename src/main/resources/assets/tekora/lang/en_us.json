@@ -813,6 +813,10 @@
   "block.tekora.steel_pipe": "Steel Pipe",
   "block.tekora.glass_pipe": "Glass Pipe",
 
+  "block.tekora.rubber_sapling": "Rubber Sapling",
+  "block.tekora.rubber_leaves": "Rubber Leaves",
+  "block.tekora.rubber_log": "Rubber Logs",
+
   "fluid_type.tekora.ammonium_hydroxide": "Ammonium Hydroxide",
   "fluid_type.tekora.aqua_regia": "Aqua Regia",
   "fluid_type.tekora.carbonic_acid": "Carbonic Acid",

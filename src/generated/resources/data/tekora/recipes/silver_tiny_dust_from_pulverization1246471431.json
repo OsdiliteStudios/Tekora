@@ -1,0 +1,13 @@
+{
+  "type": "tekora:pulverization",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:wires/silver"
+  },
+  "output": {
+    "chance": 0.5,
+    "count": 3,
+    "item": "tekora:silver_tiny_dust"
+  },
+  "time": 200
+}

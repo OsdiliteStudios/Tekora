@@ -33,6 +33,7 @@ import net.nukollodda.tekora.block.entity.entities.machines.types.AbstractTekora
 import net.nukollodda.tekora.menu.CentrifugeMenu;
 import net.nukollodda.tekora.recipes.types.CentrifugeRecipe;
 import net.nukollodda.tekora.recipes.types.ItemFluidContainer;
+import net.nukollodda.tekora.util.FluidFunctions;
 import net.nukollodda.tekora.util.UtilFunctions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -61,36 +62,38 @@ public class CentrifugeEntity extends AbstractTekoraMachineEntity<ItemFluidConta
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
     private LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.empty();
-    private final FluidTank inputFluidTank = new FluidTank(64000) {
+    private final FluidTank inputFluidTank = new FluidTank(16000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
         }
     };
 
-    private final FluidTank fluidTank1 = new FluidTank(32000) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
-        }
-    };
-    private final FluidTank fluidTank2 = new FluidTank(32000) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
-        }
-    };
-    private final FluidTank fluidTank3 = new FluidTank(32000) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
-        }
-    };
-    private final FluidTank fluidTank4 = new FluidTank(32000) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
-        }
+    private final FluidTank[] outputTanks = new FluidTank[]{
+            new FluidTank(8000) {
+                @Override
+                protected void onContentsChanged() {
+                    setChanged();
+                }
+            },
+            new FluidTank(8000) {
+                @Override
+                protected void onContentsChanged() {
+                    setChanged();
+                }
+            },
+            new FluidTank(8000) {
+                @Override
+                protected void onContentsChanged() {
+                    setChanged();
+                }
+            },
+            new FluidTank(8000) {
+                @Override
+                protected void onContentsChanged() {
+                    setChanged();
+                }
+            }
     };
     // in these set of lambdas,
     // 'i' stands for either slot id or index
@@ -128,6 +131,10 @@ public class CentrifugeEntity extends AbstractTekoraMachineEntity<ItemFluidConta
 
     public FluidStack getInputFluid() {
         return this.inputFluidTank.getFluid();
+    }
+
+    public int getInputFluidCapacity() {
+        return this.inputFluidTank.getCapacity();
     }
 
     @Nullable
@@ -170,6 +177,7 @@ public class CentrifugeEntity extends AbstractTekoraMachineEntity<ItemFluidConta
         lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
         lazyFluidHandler = LazyOptional.of(() -> inputFluidTank);
     }
+
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
@@ -185,6 +193,14 @@ public class CentrifugeEntity extends AbstractTekoraMachineEntity<ItemFluidConta
         tag.putInt("centrifuge.electricity", energyStorage.getEnergyStored());
         tag = inputFluidTank.writeToNBT(tag);
         super.saveAdditional(tag);
+    }
+
+    public FluidStack getOutputFluid(int ind) {
+        return ind < 4 && ind >= 0 ? this.outputTanks[ind].getFluid() : FluidStack.EMPTY;
+    }
+
+    public int getOutputFluidCapcity(int ind) {
+        return ind < 4 && ind >= 0 ? this.outputTanks[ind].getCapacity() : 0;
     }
 
     @Override
@@ -208,6 +224,9 @@ public class CentrifugeEntity extends AbstractTekoraMachineEntity<ItemFluidConta
     public static void tick(Level level, BlockPos pos, BlockState state, CentrifugeEntity entity) {
         if (level.isClientSide()) {
             return;
+        }
+        if (entity.hasFluidItemInSourceSlot()) {
+            entity.transferItemFluidToFluidTank();
         }
         ItemFluidContainer inv = entity.getContainer();
         Optional<CentrifugeRecipe> recipe = level.getRecipeManager()
@@ -251,9 +270,6 @@ public class CentrifugeEntity extends AbstractTekoraMachineEntity<ItemFluidConta
 
             this.resetProgress();
         }
-        if (this.hasFluidItemInSourceSlot()) {
-            this.transferItemFluidToFluidTank();
-        }
     }
 
     private void transferItemFluidToFluidTank() {
@@ -263,23 +279,30 @@ public class CentrifugeEntity extends AbstractTekoraMachineEntity<ItemFluidConta
             if (this.inputFluidTank.isFluidValid(stack)) {
                 stack = handler.drain(drainAmt, IFluidHandler.FluidAction.EXECUTE);
                 this.fillTankWithFluid(stack, handler.getContainer());
+            } else if (stack.equals(FluidStack.EMPTY) && !inputFluidTank.isEmpty()) {
+                FluidStack fluid = this.inputFluidTank.getFluid();
+                if (fluid.getAmount() >= 1000) {
+                    this.inputFluidTank.drain(1000, IFluidHandler.FluidAction.SIMULATE);
+                    handler.fill(new FluidStack(fluid.getFluid(), 1000), IFluidHandler.FluidAction.SIMULATE);
+                }
             }
         });
     }
 
     private void fillTankWithFluid(FluidStack stack, ItemStack container) {
-        int temp = stack.getFluid().getFluidType().getTemperature();
         if (this.level != null) {
+            int temp = stack.getFluid().getFluidType().getTemperature();
             this.level.playSound(null, this.worldPosition,
                     temp > 798 ? SoundEvents.BUCKET_EMPTY_LAVA : SoundEvents.BUCKET_EMPTY, SoundSource.AMBIENT);
+            this.inputFluidTank.fill(stack, IFluidHandler.FluidAction.EXECUTE);
+            this.itemHandler.extractItem(0, 1, false);
+            this.itemHandler.insertItem(0, container, false);
         }
-        this.inputFluidTank.fill(stack, IFluidHandler.FluidAction.EXECUTE);
-        this.itemHandler.extractItem(0, 1, false);
-        this.itemHandler.insertItem(0, container, false);
     }
 
     private boolean hasFluidItemInSourceSlot() {
-        return this.itemHandler.getStackInSlot(0).getCount() > 0;
+        ItemStack item = this.itemHandler.getStackInSlot(0);
+        return item.getCount() > 0 && FluidFunctions.containerMatchFluid(item, this.inputFluidTank.getFluid(), 0);
     }
 
     @Override
@@ -296,10 +319,10 @@ public class CentrifugeEntity extends AbstractTekoraMachineEntity<ItemFluidConta
             inv.addItem(this.itemHandler.getStackInSlot(i));
         }
         inv.addFluid(this.inputFluidTank.getFluid());
-        inv.addFluid(this.fluidTank1.getFluid());
-        inv.addFluid(this.fluidTank2.getFluid());
-        inv.addFluid(this.fluidTank3.getFluid());
-        inv.addFluid(this.fluidTank4.getFluid());
+        inv.addFluid(this.outputTanks[0].getFluid());
+        inv.addFluid(this.outputTanks[1].getFluid());
+        inv.addFluid(this.outputTanks[2].getFluid());
+        inv.addFluid(this.outputTanks[3].getFluid());
         return inv;
     }
 
@@ -317,10 +340,10 @@ public class CentrifugeEntity extends AbstractTekoraMachineEntity<ItemFluidConta
 
     private boolean canInsertFluidsIntoOutputFluids(final List<FluidStack> fluids) {
         ArrayList<FluidStack> entFluids = new ArrayList<>();
-        entFluids.add(this.fluidTank1.getFluid());
-        entFluids.add(this.fluidTank2.getFluid());
-        entFluids.add(this.fluidTank3.getFluid());
-        entFluids.add(this.fluidTank4.getFluid());
+        entFluids.add(this.outputTanks[0].getFluid());
+        entFluids.add(this.outputTanks[1].getFluid());
+        entFluids.add(this.outputTanks[2].getFluid());
+        entFluids.add(this.outputTanks[3].getFluid());
         boolean[] validStatements = new boolean[fluids.size()];
         for (int i = 2; i < 6; i++) {
             for (int j = i - 2; j < fluids.size(); j++) {

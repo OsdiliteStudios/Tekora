@@ -1,10 +1,13 @@
 package net.nukollodda.tekora.item.containers;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.nukollodda.tekora.fluid.TekoraChemicalFluidType;
 import net.nukollodda.tekora.block.fluids.AbstractTekoraFluidBlock;
 import net.nukollodda.tekora.item.tools.ITekoraColored;
@@ -16,6 +19,11 @@ import java.util.function.Supplier;
 public class TekoraBucketItem extends BucketItem implements ITekoraColored {
     public TekoraBucketItem(Supplier<? extends Fluid> supplier) {
         super(supplier, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET));
+    }
+
+    @Override
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
+        return new FluidBucketWrapper(stack);
     }
 
     @Override

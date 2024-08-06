@@ -10,12 +10,14 @@ import java.util.stream.Collectors;
 
 public class ItemFluidContainer extends SimpleContainer {
     private final int fluidSize;
+    private int ind;
     private final NonNullList<FluidStack> fluids;
 
     public ItemFluidContainer(int pFluidSize, int pSize) {
         super(pSize);
         this.fluidSize = pFluidSize;
         this.fluids = NonNullList.withSize(pFluidSize, FluidStack.EMPTY);
+        this.ind = 0;
     }
 
     public ItemFluidContainer(NonNullList<FluidStack> pFluids, ItemStack... pItems) {
@@ -31,34 +33,38 @@ public class ItemFluidContainer extends SimpleContainer {
     public int getFluidSize() {
         return fluidSize;
     }
+
     public List<FluidStack> removeAllFluids() {
         List<FluidStack> list = this.fluids.stream().filter(fluid -> !fluid.isEmpty()).collect(Collectors.toList());
         this.clearContent();
+        this.ind = 0;
         return list;
     }
 
     public boolean addFluid(FluidStack pFluid) {
-        if (pFluid != null && !pFluid.isEmpty()) {
-            this.fluids.add(pFluid);
-            return true;
+        if (this.fluidSize > this.fluids.size()) {
+            if (pFluid != null && !pFluid.isEmpty()) {
+                this.fluids.set(this.ind, pFluid);
+                return true;
+            }
+            this.ind++;
         }
         return false;
     }
 
-    public boolean addFluid(int pIndex, FluidStack pFluid) {
-        if (pFluid != null && !pFluid.isEmpty()) {
-            this.fluids.add(pIndex, pFluid);
-            return true;
+    @Deprecated
+    public void addFluid(int pIndex, FluidStack pFluid) {
+        if (pIndex <= this.fluids.size()) {
+            if (pFluid != null && !pFluid.isEmpty()) {
+                this.fluids.add(pIndex, pFluid);
+            }
         }
-        return false;
     }
 
-    public boolean setFluid(int pIndex, FluidStack pFluid) {
-        if (pFluid != null && !pFluid.isEmpty()) {
+    public void setFluid(int pIndex, FluidStack pFluid) {
+        if (pIndex <= this.fluids.size() && pFluid != null && !pFluid.isEmpty()) {
             this.fluids.set(pIndex, pFluid);
-            return true;
         }
-        return false;
     }
 
     @Override

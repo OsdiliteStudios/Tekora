@@ -1,4 +1,4 @@
-// 1.20.1	2024-02-28T16:19:25.6349133	Loot Tables
+// 1.20.1	2024-03-19T18:11:53.9608978	Loot Tables
 634e2b2a25fe178575d7614102c6d3ca583c1a52 data/tekora/loot_tables/blocks/alloy_furnace.json
 a78ee92742bc6cfbe9ea60c065311c744c6e5b92 data/tekora/loot_tables/blocks/aluminum_block.json
 c95c055389413e36b103434c0d2a26b598990055 data/tekora/loot_tables/blocks/aluminum_cable.json
@@ -93,6 +93,9 @@ b225dbc8e1e1933e85fb85b7b78e4d40f8d4fc98 data/tekora/loot_tables/blocks/raw_tin_
 71323ab221e1489eac7c0eaf515fafa6ff69d607 data/tekora/loot_tables/blocks/raw_zinc_block.json
 c7475a0080ec903b00e2d05b79ec932df2b25684 data/tekora/loot_tables/blocks/rhenium_block.json
 98159cafbbca6a0c34ab6b6a8cde55e0a3b3cdc8 data/tekora/loot_tables/blocks/rhodium_block.json
+3ec3309de3690d536e9f5904ede014719b831ca0 data/tekora/loot_tables/blocks/rubber_leaves.json
+00f6733138ed1a0100836de725e56fd6fe95a8cc data/tekora/loot_tables/blocks/rubber_log.json
+b7f0f8deb9172c7f4504b223a0e9fa6cd24caf3b data/tekora/loot_tables/blocks/rubber_sapling.json
 1d6def30e10cdac705e943e299948ef74c543267 data/tekora/loot_tables/blocks/ruby_block.json
 d2e32b2a9a28ea43ce1d4ccf1f7bd375f13f343e data/tekora/loot_tables/blocks/ruby_ore.json
 1ab7813392d33ba485c1d5621a6b8928e3b848ac data/tekora/loot_tables/blocks/ruthenium_block.json

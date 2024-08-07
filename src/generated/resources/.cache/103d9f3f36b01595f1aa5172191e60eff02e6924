@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-26T08:10:16.6779098	Registries
+// 1.20.1	2024-03-19T18:11:53.9649405	Registries
 04827dc9b2faa0e1ba47b3b99d84da5a7308b400 data/tekora/forge/biome_modifier/ore_aquamarine.json
 ef259b52d15b20c453b356e45bc3de8a109d367f data/tekora/forge/biome_modifier/ore_bauxite.json
 86c83c57e39f4fc7391892fba6f64d4a2f894635 data/tekora/forge/biome_modifier/ore_cinnabar.json
@@ -14,6 +14,7 @@ c19ebc85afd0f3aaf990ac79c210e59d8a7b46d0 data/tekora/forge/biome_modifier/ore_wo
 152916691c4ccb87630523d4614e9396dd44930e data/tekora/forge/biome_modifier/ore_zircon.json
 2ff6b3bb180f96b42298506b9bd046fdb06a38ca data/tekora/forge/biome_modifier/placed_evaporite.json
 67f918ab861bb8aa75b454a4272692b3f368707d data/tekora/forge/biome_modifier/placed_limestone.json
+5a15a1633e5db01f5e01edba01f5453b047d7b46 data/tekora/worldgen/configured_feature/lovely_peach.json
 c20b108fd4dff184bc9d29f74e1c8811e0db1fd2 data/tekora/worldgen/configured_feature/ore_aquamarine.json
 7ad5d164231e429cf5ed591f31cae2a12cdd00fc data/tekora/worldgen/configured_feature/ore_bauxite.json
 25b9f010cd89e9c11c92361fd2446bf34e8aab0a data/tekora/worldgen/configured_feature/ore_cinnabar.json

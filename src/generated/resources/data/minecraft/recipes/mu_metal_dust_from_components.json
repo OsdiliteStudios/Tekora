@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "mu_metal_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/mu_metal"
+    },
+    {
+      "tag": "forge:tiny_dusts/mu_metal"
+    },
+    {
+      "tag": "forge:tiny_dusts/mu_metal"
+    },
+    {
+      "tag": "forge:tiny_dusts/mu_metal"
+    },
+    {
+      "tag": "forge:tiny_dusts/mu_metal"
+    },
+    {
+      "tag": "forge:tiny_dusts/mu_metal"
+    },
+    {
+      "tag": "forge:tiny_dusts/mu_metal"
+    },
+    {
+      "tag": "forge:tiny_dusts/mu_metal"
+    },
+    {
+      "tag": "forge:tiny_dusts/mu_metal"
+    }
+  ],
+  "result": {
+    "item": "tekora:mu_metal_dust"
+  }
+}

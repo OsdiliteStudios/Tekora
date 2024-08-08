@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "electrum_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/electrum"
+    },
+    {
+      "tag": "forge:tiny_dusts/electrum"
+    },
+    {
+      "tag": "forge:tiny_dusts/electrum"
+    },
+    {
+      "tag": "forge:tiny_dusts/electrum"
+    },
+    {
+      "tag": "forge:tiny_dusts/electrum"
+    },
+    {
+      "tag": "forge:tiny_dusts/electrum"
+    },
+    {
+      "tag": "forge:tiny_dusts/electrum"
+    },
+    {
+      "tag": "forge:tiny_dusts/electrum"
+    },
+    {
+      "tag": "forge:tiny_dusts/electrum"
+    }
+  ],
+  "result": {
+    "item": "tekora:electrum_dust"
+  }
+}

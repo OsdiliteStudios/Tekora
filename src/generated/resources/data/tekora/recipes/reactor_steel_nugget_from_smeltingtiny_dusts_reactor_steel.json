@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "reactor_steel_nugget",
+  "ingredient": {
+    "tag": "forge:tiny_dusts/reactor_steel"
+  },
+  "result": "tekora:reactor_steel_nugget"
+}

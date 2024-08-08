@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "nickel_ingot",
+  "ingredient": {
+    "tag": "forge:ores/nickel"
+  },
+  "result": "tekora:nickel_ingot"
+}

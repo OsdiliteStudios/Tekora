@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "inconel_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/inconel"
+    },
+    {
+      "tag": "forge:tiny_dusts/inconel"
+    },
+    {
+      "tag": "forge:tiny_dusts/inconel"
+    },
+    {
+      "tag": "forge:tiny_dusts/inconel"
+    },
+    {
+      "tag": "forge:tiny_dusts/inconel"
+    },
+    {
+      "tag": "forge:tiny_dusts/inconel"
+    },
+    {
+      "tag": "forge:tiny_dusts/inconel"
+    },
+    {
+      "tag": "forge:tiny_dusts/inconel"
+    },
+    {
+      "tag": "forge:tiny_dusts/inconel"
+    }
+  ],
+  "result": {
+    "item": "tekora:inconel_dust"
+  }
+}

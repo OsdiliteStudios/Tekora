@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "steel_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/steel"
+    },
+    {
+      "tag": "forge:nuggets/steel"
+    },
+    {
+      "tag": "forge:nuggets/steel"
+    },
+    {
+      "tag": "forge:nuggets/steel"
+    },
+    {
+      "tag": "forge:nuggets/steel"
+    },
+    {
+      "tag": "forge:nuggets/steel"
+    },
+    {
+      "tag": "forge:nuggets/steel"
+    },
+    {
+      "tag": "forge:nuggets/steel"
+    },
+    {
+      "tag": "forge:nuggets/steel"
+    }
+  ],
+  "result": {
+    "item": "tekora:steel_ingot"
+  }
+}

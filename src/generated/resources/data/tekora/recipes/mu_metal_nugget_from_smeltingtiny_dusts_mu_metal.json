@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "mu_metal_nugget",
+  "ingredient": {
+    "tag": "forge:tiny_dusts/mu_metal"
+  },
+  "result": "tekora:mu_metal_nugget"
+}

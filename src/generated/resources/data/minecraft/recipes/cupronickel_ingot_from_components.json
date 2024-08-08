@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cupronickel_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/cupronickel"
+    },
+    {
+      "tag": "forge:nuggets/cupronickel"
+    },
+    {
+      "tag": "forge:nuggets/cupronickel"
+    },
+    {
+      "tag": "forge:nuggets/cupronickel"
+    },
+    {
+      "tag": "forge:nuggets/cupronickel"
+    },
+    {
+      "tag": "forge:nuggets/cupronickel"
+    },
+    {
+      "tag": "forge:nuggets/cupronickel"
+    },
+    {
+      "tag": "forge:nuggets/cupronickel"
+    },
+    {
+      "tag": "forge:nuggets/cupronickel"
+    }
+  ],
+  "result": {
+    "item": "tekora:cupronickel_ingot"
+  }
+}

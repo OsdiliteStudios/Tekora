@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:dusts/graphite"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:graphite_bar"
+  },
+  "time": 200
+}

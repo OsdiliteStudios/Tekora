@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "reactor_steel_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/reactor_steel"
+    },
+    {
+      "tag": "forge:nuggets/reactor_steel"
+    },
+    {
+      "tag": "forge:nuggets/reactor_steel"
+    },
+    {
+      "tag": "forge:nuggets/reactor_steel"
+    },
+    {
+      "tag": "forge:nuggets/reactor_steel"
+    },
+    {
+      "tag": "forge:nuggets/reactor_steel"
+    },
+    {
+      "tag": "forge:nuggets/reactor_steel"
+    },
+    {
+      "tag": "forge:nuggets/reactor_steel"
+    },
+    {
+      "tag": "forge:nuggets/reactor_steel"
+    }
+  ],
+  "result": {
+    "item": "tekora:reactor_steel_ingot"
+  }
+}

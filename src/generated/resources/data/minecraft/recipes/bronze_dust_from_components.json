@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "bronze_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/bronze"
+    },
+    {
+      "tag": "forge:tiny_dusts/bronze"
+    },
+    {
+      "tag": "forge:tiny_dusts/bronze"
+    },
+    {
+      "tag": "forge:tiny_dusts/bronze"
+    },
+    {
+      "tag": "forge:tiny_dusts/bronze"
+    },
+    {
+      "tag": "forge:tiny_dusts/bronze"
+    },
+    {
+      "tag": "forge:tiny_dusts/bronze"
+    },
+    {
+      "tag": "forge:tiny_dusts/bronze"
+    },
+    {
+      "tag": "forge:tiny_dusts/bronze"
+    }
+  ],
+  "result": {
+    "item": "tekora:bronze_dust"
+  }
+}

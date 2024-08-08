@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "ferroboron_nugget",
+  "ingredient": {
+    "tag": "forge:tiny_dusts/ferroboron"
+  },
+  "result": "tekora:ferroboron_nugget"
+}

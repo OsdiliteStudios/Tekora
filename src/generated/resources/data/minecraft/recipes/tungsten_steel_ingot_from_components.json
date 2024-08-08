@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tungsten_steel_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/tungsten_steel"
+    },
+    {
+      "tag": "forge:nuggets/tungsten_steel"
+    },
+    {
+      "tag": "forge:nuggets/tungsten_steel"
+    },
+    {
+      "tag": "forge:nuggets/tungsten_steel"
+    },
+    {
+      "tag": "forge:nuggets/tungsten_steel"
+    },
+    {
+      "tag": "forge:nuggets/tungsten_steel"
+    },
+    {
+      "tag": "forge:nuggets/tungsten_steel"
+    },
+    {
+      "tag": "forge:nuggets/tungsten_steel"
+    },
+    {
+      "tag": "forge:nuggets/tungsten_steel"
+    }
+  ],
+  "result": {
+    "item": "tekora:tungsten_steel_ingot"
+  }
+}

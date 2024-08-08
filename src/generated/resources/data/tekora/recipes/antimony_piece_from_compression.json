@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:dusts/antimony"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:antimony_piece"
+  },
+  "time": 200
+}

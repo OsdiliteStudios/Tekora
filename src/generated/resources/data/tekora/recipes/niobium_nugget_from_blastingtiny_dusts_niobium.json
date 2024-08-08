@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "niobium_nugget",
+  "ingredient": {
+    "tag": "forge:tiny_dusts/niobium"
+  },
+  "result": "tekora:niobium_nugget"
+}

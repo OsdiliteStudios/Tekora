@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "ferroboron_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/ferroboron"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:ferroboron_nugget"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "magnetic_neodymium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/magnetic_neodymium"
+    },
+    {
+      "tag": "forge:nuggets/magnetic_neodymium"
+    },
+    {
+      "tag": "forge:nuggets/magnetic_neodymium"
+    },
+    {
+      "tag": "forge:nuggets/magnetic_neodymium"
+    },
+    {
+      "tag": "forge:nuggets/magnetic_neodymium"
+    },
+    {
+      "tag": "forge:nuggets/magnetic_neodymium"
+    },
+    {
+      "tag": "forge:nuggets/magnetic_neodymium"
+    },
+    {
+      "tag": "forge:nuggets/magnetic_neodymium"
+    },
+    {
+      "tag": "forge:nuggets/magnetic_neodymium"
+    }
+  ],
+  "result": {
+    "item": "tekora:magnetic_neodymium_ingot"
+  }
+}

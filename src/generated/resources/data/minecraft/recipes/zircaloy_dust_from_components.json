@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "zircaloy_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/zircaloy"
+    },
+    {
+      "tag": "forge:tiny_dusts/zircaloy"
+    },
+    {
+      "tag": "forge:tiny_dusts/zircaloy"
+    },
+    {
+      "tag": "forge:tiny_dusts/zircaloy"
+    },
+    {
+      "tag": "forge:tiny_dusts/zircaloy"
+    },
+    {
+      "tag": "forge:tiny_dusts/zircaloy"
+    },
+    {
+      "tag": "forge:tiny_dusts/zircaloy"
+    },
+    {
+      "tag": "forge:tiny_dusts/zircaloy"
+    },
+    {
+      "tag": "forge:tiny_dusts/zircaloy"
+    }
+  ],
+  "result": {
+    "item": "tekora:zircaloy_dust"
+  }
+}

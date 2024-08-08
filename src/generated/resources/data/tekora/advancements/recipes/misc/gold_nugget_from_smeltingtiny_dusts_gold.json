@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gold_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:tiny_dusts/gold"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:gold_nugget_from_smeltingtiny_dusts_gold"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_gold_nugget",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:gold_nugget_from_smeltingtiny_dusts_gold"
+    ]
+  },
+  "sends_telemetry_event": false
+}

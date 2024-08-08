@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "reactor_steel_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/reactor_steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/reactor_steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/reactor_steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/reactor_steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/reactor_steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/reactor_steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/reactor_steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/reactor_steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/reactor_steel"
+    }
+  ],
+  "result": {
+    "item": "tekora:reactor_steel_dust"
+  }
+}

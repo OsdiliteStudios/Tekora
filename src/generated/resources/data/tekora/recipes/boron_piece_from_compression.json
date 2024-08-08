@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:dusts/boron"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:boron_piece"
+  },
+  "time": 200
+}

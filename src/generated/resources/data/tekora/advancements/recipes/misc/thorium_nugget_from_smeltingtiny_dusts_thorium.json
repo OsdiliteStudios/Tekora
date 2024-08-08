@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:thorium_nugget_from_smeltingtiny_dusts_thorium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_thorium_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:tiny_dusts/thorium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_thorium_nugget",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:thorium_nugget_from_smeltingtiny_dusts_thorium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

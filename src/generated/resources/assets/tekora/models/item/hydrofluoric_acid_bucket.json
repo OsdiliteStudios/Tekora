@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tekora:item/bucket_liquid",
+    "layer1": "tekora:item/bucket"
+  }
+}

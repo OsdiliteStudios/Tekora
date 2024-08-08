@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "scandium_nugget",
+  "ingredient": {
+    "tag": "forge:tiny_dusts/scandium"
+  },
+  "result": "tekora:scandium_nugget"
+}

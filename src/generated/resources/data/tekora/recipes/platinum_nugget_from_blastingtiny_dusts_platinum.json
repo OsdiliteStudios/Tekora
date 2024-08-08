@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "platinum_nugget",
+  "ingredient": {
+    "tag": "forge:tiny_dusts/platinum"
+  },
+  "result": "tekora:platinum_nugget"
+}

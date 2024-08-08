@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tekora:item/canister_interior",
+    "layer1": "tekora:item/tin_canister_exterior"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "mu_metal_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/mu_metal"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:mu_metal_tiny_dust"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "invar_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/invar"
+    },
+    {
+      "tag": "forge:nuggets/invar"
+    },
+    {
+      "tag": "forge:nuggets/invar"
+    },
+    {
+      "tag": "forge:nuggets/invar"
+    },
+    {
+      "tag": "forge:nuggets/invar"
+    },
+    {
+      "tag": "forge:nuggets/invar"
+    },
+    {
+      "tag": "forge:nuggets/invar"
+    },
+    {
+      "tag": "forge:nuggets/invar"
+    },
+    {
+      "tag": "forge:nuggets/invar"
+    }
+  ],
+  "result": {
+    "item": "tekora:invar_ingot"
+  }
+}

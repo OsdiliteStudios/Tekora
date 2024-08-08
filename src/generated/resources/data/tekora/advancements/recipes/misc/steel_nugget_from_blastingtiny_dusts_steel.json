@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_steel_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:tiny_dusts/steel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:steel_nugget_from_blastingtiny_dusts_steel"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_steel_nugget",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:steel_nugget_from_blastingtiny_dusts_steel"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tungsten_carbide_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/tungsten_carbide"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:tungsten_carbide_tiny_dust"
+  }
+}

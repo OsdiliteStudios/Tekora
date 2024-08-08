@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "bronze_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/bronze"
+    },
+    {
+      "tag": "forge:nuggets/bronze"
+    },
+    {
+      "tag": "forge:nuggets/bronze"
+    },
+    {
+      "tag": "forge:nuggets/bronze"
+    },
+    {
+      "tag": "forge:nuggets/bronze"
+    },
+    {
+      "tag": "forge:nuggets/bronze"
+    },
+    {
+      "tag": "forge:nuggets/bronze"
+    },
+    {
+      "tag": "forge:nuggets/bronze"
+    },
+    {
+      "tag": "forge:nuggets/bronze"
+    }
+  ],
+  "result": {
+    "item": "tekora:bronze_ingot"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "vanasteel_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/vanasteel"
+    },
+    {
+      "tag": "forge:nuggets/vanasteel"
+    },
+    {
+      "tag": "forge:nuggets/vanasteel"
+    },
+    {
+      "tag": "forge:nuggets/vanasteel"
+    },
+    {
+      "tag": "forge:nuggets/vanasteel"
+    },
+    {
+      "tag": "forge:nuggets/vanasteel"
+    },
+    {
+      "tag": "forge:nuggets/vanasteel"
+    },
+    {
+      "tag": "forge:nuggets/vanasteel"
+    },
+    {
+      "tag": "forge:nuggets/vanasteel"
+    }
+  ],
+  "result": {
+    "item": "tekora:vanasteel_ingot"
+  }
+}

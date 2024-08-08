@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cerium_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:tiny_dusts/cerium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:cerium_nugget_from_blastingtiny_dusts_cerium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_cerium_nugget",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:cerium_nugget_from_blastingtiny_dusts_cerium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

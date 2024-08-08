@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "vanasteel_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/vanasteel"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:vanasteel_tiny_dust"
+  }
+}

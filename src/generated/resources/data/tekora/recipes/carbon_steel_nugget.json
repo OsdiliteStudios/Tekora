@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "carbon_steel_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/carbon_steel"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:carbon_steel_nugget"
+  }
+}

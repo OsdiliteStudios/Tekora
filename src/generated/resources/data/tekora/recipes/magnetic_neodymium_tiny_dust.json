@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "magnetic_neodymium_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/magnetic_neodymium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:magnetic_neodymium_tiny_dust"
+  }
+}

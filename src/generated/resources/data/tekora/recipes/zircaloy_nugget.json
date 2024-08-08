@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "zircaloy_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/zircaloy"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:zircaloy_nugget"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "tekora:compression",
+  "ingredient": {
+    "count": 1,
+    "tag": "forge:dusts/germanium"
+  },
+  "output": {
+    "count": 1,
+    "item": "tekora:germanium_piece"
+  },
+  "time": 200
+}

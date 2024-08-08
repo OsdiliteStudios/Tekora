@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "steel_tiny_dust",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/steel"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:steel_tiny_dust"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "brass_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/brass"
+    },
+    {
+      "tag": "forge:tiny_dusts/brass"
+    },
+    {
+      "tag": "forge:tiny_dusts/brass"
+    },
+    {
+      "tag": "forge:tiny_dusts/brass"
+    },
+    {
+      "tag": "forge:tiny_dusts/brass"
+    },
+    {
+      "tag": "forge:tiny_dusts/brass"
+    },
+    {
+      "tag": "forge:tiny_dusts/brass"
+    },
+    {
+      "tag": "forge:tiny_dusts/brass"
+    },
+    {
+      "tag": "forge:tiny_dusts/brass"
+    }
+  ],
+  "result": {
+    "item": "tekora:brass_dust"
+  }
+}

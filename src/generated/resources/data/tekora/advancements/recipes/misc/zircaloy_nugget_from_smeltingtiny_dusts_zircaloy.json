@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:zircaloy_nugget_from_smeltingtiny_dusts_zircaloy"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_zircaloy_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:tiny_dusts/zircaloy"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_zircaloy_nugget",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:zircaloy_nugget_from_smeltingtiny_dusts_zircaloy"
+    ]
+  },
+  "sends_telemetry_event": false
+}

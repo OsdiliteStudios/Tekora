@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:uranium_nugget_from_blastingtiny_dusts_uranium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_uranium_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:tiny_dusts/uranium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_uranium_nugget",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:uranium_nugget_from_blastingtiny_dusts_uranium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

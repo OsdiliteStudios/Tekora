@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "mu_metal_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/mu_metal"
+    },
+    {
+      "tag": "forge:nuggets/mu_metal"
+    },
+    {
+      "tag": "forge:nuggets/mu_metal"
+    },
+    {
+      "tag": "forge:nuggets/mu_metal"
+    },
+    {
+      "tag": "forge:nuggets/mu_metal"
+    },
+    {
+      "tag": "forge:nuggets/mu_metal"
+    },
+    {
+      "tag": "forge:nuggets/mu_metal"
+    },
+    {
+      "tag": "forge:nuggets/mu_metal"
+    },
+    {
+      "tag": "forge:nuggets/mu_metal"
+    }
+  ],
+  "result": {
+    "item": "tekora:mu_metal_ingot"
+  }
+}

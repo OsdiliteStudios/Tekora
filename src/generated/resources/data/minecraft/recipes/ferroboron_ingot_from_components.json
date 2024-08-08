@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "ferroboron_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/ferroboron"
+    },
+    {
+      "tag": "forge:nuggets/ferroboron"
+    },
+    {
+      "tag": "forge:nuggets/ferroboron"
+    },
+    {
+      "tag": "forge:nuggets/ferroboron"
+    },
+    {
+      "tag": "forge:nuggets/ferroboron"
+    },
+    {
+      "tag": "forge:nuggets/ferroboron"
+    },
+    {
+      "tag": "forge:nuggets/ferroboron"
+    },
+    {
+      "tag": "forge:nuggets/ferroboron"
+    },
+    {
+      "tag": "forge:nuggets/ferroboron"
+    }
+  ],
+  "result": {
+    "item": "tekora:ferroboron_ingot"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:vanadium_nugget_from_smeltingtiny_dusts_vanadium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_vanadium_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:tiny_dusts/vanadium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_vanadium_nugget",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:vanadium_nugget_from_smeltingtiny_dusts_vanadium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

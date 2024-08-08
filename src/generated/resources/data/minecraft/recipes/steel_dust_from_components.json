@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "steel_dust",
+  "ingredients": [
+    {
+      "tag": "forge:tiny_dusts/steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/steel"
+    },
+    {
+      "tag": "forge:tiny_dusts/steel"
+    }
+  ],
+  "result": {
+    "item": "tekora:steel_dust"
+  }
+}

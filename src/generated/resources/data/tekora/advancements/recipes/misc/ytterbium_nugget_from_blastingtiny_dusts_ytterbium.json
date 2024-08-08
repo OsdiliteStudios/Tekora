@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:ytterbium_nugget_from_blastingtiny_dusts_ytterbium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_ytterbium_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:tiny_dusts/ytterbium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_ytterbium_nugget",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:ytterbium_nugget_from_blastingtiny_dusts_ytterbium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cupronickel_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/cupronickel"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tekora:cupronickel_nugget"
+  }
+}

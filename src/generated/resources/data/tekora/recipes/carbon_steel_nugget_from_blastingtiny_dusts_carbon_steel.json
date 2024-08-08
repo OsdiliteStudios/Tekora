@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "carbon_steel_nugget",
+  "ingredient": {
+    "tag": "forge:tiny_dusts/carbon_steel"
+  },
+  "result": "tekora:carbon_steel_nugget"
+}

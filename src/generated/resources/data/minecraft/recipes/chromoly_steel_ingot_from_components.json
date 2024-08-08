@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "chromoly_steel_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/chromoly_steel"
+    },
+    {
+      "tag": "forge:nuggets/chromoly_steel"
+    },
+    {
+      "tag": "forge:nuggets/chromoly_steel"
+    },
+    {
+      "tag": "forge:nuggets/chromoly_steel"
+    },
+    {
+      "tag": "forge:nuggets/chromoly_steel"
+    },
+    {
+      "tag": "forge:nuggets/chromoly_steel"
+    },
+    {
+      "tag": "forge:nuggets/chromoly_steel"
+    },
+    {
+      "tag": "forge:nuggets/chromoly_steel"
+    },
+    {
+      "tag": "forge:nuggets/chromoly_steel"
+    }
+  ],
+  "result": {
+    "item": "tekora:chromoly_steel_ingot"
+  }
+}

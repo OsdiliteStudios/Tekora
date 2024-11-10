@@ -5,6 +5,8 @@ Tekora is a tech based mod for Minecraft and a base mod for future projects.
 <br>
 Tekora plans to implement a whole host of machines into Minecraft using most naturally occurring elements of the periodic table
 
+NOTE: I have decided that once I update Tekora to 1.21.x version of Minecraft, the mod will stay in that version until I can create a working and viable alpha or beta release.
+
 -----
 **Requests**
 

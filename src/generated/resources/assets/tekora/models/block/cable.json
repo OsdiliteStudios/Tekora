@@ -1,5 +1,0 @@
-{
-  "parent": "minecraft:block/cube",
-  "facade": false,
-  "loader": "tekora:cableloader"
-}

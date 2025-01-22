@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "firebricks",
+  "ingredients": [
+    {
+      "item": "tekora:fire_brick"
+    },
+    {
+      "item": "tekora:fire_brick"
+    },
+    {
+      "item": "tekora:fire_brick"
+    },
+    {
+      "item": "tekora:fire_brick"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:firebricks"
+  }
+}

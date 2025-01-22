@@ -95,8 +95,8 @@ public class FluidFunctions {
         for (LivingEntity ent : entities) {
             if (pData.getEffects() != null) {
                 for (MobEffect effect : pData.getEffects()) {
-                    ent.addEffect(new MobEffectInstance(effect, 1200, (int) pPressure,
-                            true, false, false));
+//                    ent.addEffect(new MobEffectInstance(effect, 1200, (int) pPressure,
+//                            true, false, false));
                 }
             }
             ent.hurt(ent.level().damageSources().generic(), pData.getFluidDmg() * 3);
@@ -108,8 +108,8 @@ public class FluidFunctions {
         for (LivingEntity ent : entities) {
             if (pData.getEffects() != null) {
                 for (MobEffect effect : pData.getEffects()) {
-                    ent.addEffect(new MobEffectInstance(effect, 1200, (int) pPressure,
-                            true, false, false));
+//                    ent.addEffect(new MobEffectInstance(effect, 1200, (int) pPressure,
+//                            true, false, false));
                 }
             }
             ent.hurt(ent.level().damageSources().generic(), pData.getFluidDmg() * 3);

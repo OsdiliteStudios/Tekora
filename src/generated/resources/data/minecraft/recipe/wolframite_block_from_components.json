@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:wolframite_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/wolframite"
+    },
+    {
+      "tag": "forge:gems/wolframite"
+    },
+    {
+      "tag": "forge:gems/wolframite"
+    },
+    {
+      "tag": "forge:gems/wolframite"
+    },
+    {
+      "tag": "forge:gems/wolframite"
+    },
+    {
+      "tag": "forge:gems/wolframite"
+    },
+    {
+      "tag": "forge:gems/wolframite"
+    },
+    {
+      "tag": "forge:gems/wolframite"
+    },
+    {
+      "tag": "forge:gems/wolframite"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:wolframite_block"
+  }
+}

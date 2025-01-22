@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tekora:ruby",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/ruby"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "tekora:ruby"
+  }
+}

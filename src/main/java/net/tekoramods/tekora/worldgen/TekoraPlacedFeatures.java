@@ -23,10 +23,10 @@ public class TekoraPlacedFeatures {
     public static final ResourceKey<PlacedFeature> RUBY_ORE = registerKey("ore_ruby");
     public static final ResourceKey<PlacedFeature> SAPPHIRE_ORE = registerKey("ore_sapphire");
     public static final ResourceKey<PlacedFeature> TIN_ORE = registerKey("ore_tin");
-    public static final ResourceKey<PlacedFeature> URANINITE_ORE = registerKey("ore_uraninite");
+    //public static final ResourceKey<PlacedFeature> URANINITE_ORE = registerKey("ore_uraninite");
     public static final ResourceKey<PlacedFeature> WOLFRAMITE_ORE = registerKey("ore_wolframite");
     public static final ResourceKey<PlacedFeature> ZINC_ORE = registerKey("ore_zinc");
-    public static final ResourceKey<PlacedFeature> ZIRCON_ORE = registerKey("ore_zircon");
+    //public static final ResourceKey<PlacedFeature> ZIRCON_ORE = registerKey("ore_zircon");
     public static final ResourceKey<PlacedFeature> EVAPORITE = registerKey("placed_evaporite");
     public static final ResourceKey<PlacedFeature> LIMESTONE = registerKey("placed_limestone");
 
@@ -68,9 +68,9 @@ public class TekoraPlacedFeatures {
                 commonOrePlacement(20,
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(125))));
 
-        register(context, URANINITE_ORE, configured.getOrThrow(TekoraConfiguredFeatures.URANINITE_ORE_KEY),
-                commonOrePlacement(8,
-                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-50), VerticalAnchor.absolute(30))));
+//        register(context, URANINITE_ORE, configured.getOrThrow(TekoraConfiguredFeatures.URANINITE_ORE_KEY),
+//                commonOrePlacement(8,
+//                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-50), VerticalAnchor.absolute(30))));
 
         register(context, WOLFRAMITE_ORE, configured.getOrThrow(TekoraConfiguredFeatures.WOLFRAMITE_ORE_KEY),
                 commonOrePlacement(8,
@@ -80,9 +80,9 @@ public class TekoraPlacedFeatures {
                 commonOrePlacement(10,
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-23), VerticalAnchor.absolute(65))));
 
-        register(context, ZIRCON_ORE, configured.getOrThrow(TekoraConfiguredFeatures.ZIRCON_ORE_KEY),
-                commonOrePlacement(10,
-                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-23), VerticalAnchor.absolute(41))));
+//        register(context, ZIRCON_ORE, configured.getOrThrow(TekoraConfiguredFeatures.ZIRCON_ORE_KEY),
+//                commonOrePlacement(10,
+//                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-23), VerticalAnchor.absolute(41))));
 
         register(context, EVAPORITE, configured.getOrThrow(TekoraConfiguredFeatures.EVAPORITE_PLACED_KEY),
                 commonOrePlacement(6,
@@ -106,7 +106,7 @@ public class TekoraPlacedFeatures {
     }
 
     private static ResourceKey<PlacedFeature> registerKey(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(Tekora.MODID, name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, name));
     }
 
     private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key,

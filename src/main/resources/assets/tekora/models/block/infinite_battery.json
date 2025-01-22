@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "front": "tekora:block/battery/front_infinite",
-    "side": "tekora:block/battery/sides",
-    "top": "tekora:block/battery/top"
-  }
-}

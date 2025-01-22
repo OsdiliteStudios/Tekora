@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:bauxite_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/bauxite"
+    },
+    {
+      "tag": "forge:gems/bauxite"
+    },
+    {
+      "tag": "forge:gems/bauxite"
+    },
+    {
+      "tag": "forge:gems/bauxite"
+    },
+    {
+      "tag": "forge:gems/bauxite"
+    },
+    {
+      "tag": "forge:gems/bauxite"
+    },
+    {
+      "tag": "forge:gems/bauxite"
+    },
+    {
+      "tag": "forge:gems/bauxite"
+    },
+    {
+      "tag": "forge:gems/bauxite"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:bauxite_block"
+  }
+}

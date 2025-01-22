@@ -24,8 +24,8 @@ import java.util.function.Supplier;
 public class TekoraLiquidBlock extends AbstractTekoraFluidBlock {
     protected final ResourceLocation solidForm;
     public TekoraLiquidBlock(Supplier<? extends FlowingFluid> pFluid, String pLoc) {
-        super(pFluid, BlockBehaviour.Properties.copy(Blocks.WATER));
-        this.solidForm = new ResourceLocation(pLoc);
+        super(pFluid, BlockBehaviour.Properties.ofFullCopy(Blocks.WATER));
+        this.solidForm = ResourceLocation.withDefaultNamespace(pLoc);
     }
 
     public TekoraLiquidBlock(Supplier<? extends FlowingFluid> pFluid) {
@@ -102,7 +102,7 @@ public class TekoraLiquidBlock extends AbstractTekoraFluidBlock {
 
     public LiquidBlock getGas() {
         if (this.getFluid().getFluidType() instanceof TekoraChemicalFluidType tekoraFluid) {
-            ResourceLocation meltedKey = new ResourceLocation(Tekora.MODID, tekoraFluid.getFluidData().getGasName());
+            ResourceLocation meltedKey = ResourceLocation.fromNamespaceAndPath(Tekora.MODID, tekoraFluid.getFluidData().getGasName());
             if (ForgeRegistries.BLOCKS.containsKey(meltedKey) &&
                     ForgeRegistries.BLOCKS.getValue(meltedKey) instanceof LiquidBlock liquid
                     && !liquid.equals(this)) {

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tekora:bismuth_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/bismuth"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "tekora:bismuth_ingot"
+  }
+}

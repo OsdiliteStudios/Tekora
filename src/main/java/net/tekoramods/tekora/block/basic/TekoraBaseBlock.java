@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class TekoraBaseBlock extends Block {
     public TekoraBaseBlock(float strength, Block material, SoundType sound) {
-        super(BlockBehaviour.Properties.of().requiresCorrectToolForDrops()
+        super(BlockBehaviour.Properties.ofFullCopy(material).requiresCorrectToolForDrops()
              .strength(strength).sound(sound));
     }
 

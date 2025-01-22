@@ -259,16 +259,16 @@ public class TekoraFluidData {
             this.fluidDmg = healthHazard;
             List<MobEffect> mobEffects = new ArrayList<>();
             switch (healthHazard) {
-                case 4: mobEffects.add(MobEffects.WITHER);
+                case 4: mobEffects.add(MobEffects.WITHER.get());
                 case 3:
-                    mobEffects.add(MobEffects.HUNGER);
-                    mobEffects.add(MobEffects.BLINDNESS);
-                    mobEffects.add(MobEffects.POISON);
+                    mobEffects.add(MobEffects.HUNGER.get());
+                    mobEffects.add(MobEffects.BLINDNESS.get());
+                    mobEffects.add(MobEffects.POISON.get());
                 case 2:
-                    mobEffects.add(MobEffects.DIG_SLOWDOWN);
-                    mobEffects.add(MobEffects.WEAKNESS);
-                    mobEffects.add(MobEffects.CONFUSION);
-                case 1: mobEffects.add(MobEffects.MOVEMENT_SLOWDOWN);
+                    mobEffects.add(MobEffects.DIG_SLOWDOWN.get());
+                    mobEffects.add(MobEffects.WEAKNESS.get());
+                    mobEffects.add(MobEffects.CONFUSION.get());
+                case 1: mobEffects.add(MobEffects.MOVEMENT_SLOWDOWN.get());
             }
             this.effects = mobEffects.toArray(new MobEffect[]{});
             return this;
@@ -311,12 +311,6 @@ public class TekoraFluidData {
         }
         public Properties setName(String pName) {
             return setName(pName, (byte)3);
-        }
-
-        // may be replaced with flammability
-        public Properties setFlammable(boolean postBoil) {
-            this.burns = (byte)(postBoil ? 2 : 1);
-            return this;
         }
 
         public Properties setFlammability(int flammability) {

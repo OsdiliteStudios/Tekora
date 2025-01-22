@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tekora:raw_platinum",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/raw_platinum"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "tekora:raw_platinum"
+  }
+}

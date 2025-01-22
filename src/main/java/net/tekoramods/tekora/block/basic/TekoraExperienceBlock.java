@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class TekoraExperienceBlock extends DropExperienceBlock {
     public TekoraExperienceBlock(float strength, float destroyTime, Block material, SoundType sound, int min, int max) {
-        super(BlockBehaviour.Properties.copy(material).requiresCorrectToolForDrops()
-                .strength(destroyTime, strength).sound(sound), UniformInt.of(min, max));
+        super(UniformInt.of(min, max), BlockBehaviour.Properties.ofFullCopy(material).requiresCorrectToolForDrops()
+                .strength(destroyTime, strength).sound(sound));
     }
 
     public TekoraExperienceBlock(float strength, float destroyTime, Block material, SoundType sound) {

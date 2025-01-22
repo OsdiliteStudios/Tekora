@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:magnesium_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/magnesium"
+    },
+    {
+      "tag": "forge:ingots/magnesium"
+    },
+    {
+      "tag": "forge:ingots/magnesium"
+    },
+    {
+      "tag": "forge:ingots/magnesium"
+    },
+    {
+      "tag": "forge:ingots/magnesium"
+    },
+    {
+      "tag": "forge:ingots/magnesium"
+    },
+    {
+      "tag": "forge:ingots/magnesium"
+    },
+    {
+      "tag": "forge:ingots/magnesium"
+    },
+    {
+      "tag": "forge:ingots/magnesium"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:magnesium_block"
+  }
+}

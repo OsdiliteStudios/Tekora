@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tekora:cobalt_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/cobalt"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "tekora:cobalt_ingot"
+  }
+}

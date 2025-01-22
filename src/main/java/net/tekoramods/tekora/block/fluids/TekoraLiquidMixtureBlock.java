@@ -36,7 +36,7 @@ public class TekoraLiquidMixtureBlock extends TekoraLiquidBlock {
     }
 
     public Item getItemLeftover() {
-        ResourceLocation meltedKey = new ResourceLocation(this.postBoilLeftover);
+        ResourceLocation meltedKey = ResourceLocation.withDefaultNamespace(this.postBoilLeftover);
         if (ForgeRegistries.ITEMS.containsKey(meltedKey)) {
             return ForgeRegistries.ITEMS.getValue(meltedKey);
         }
@@ -44,7 +44,7 @@ public class TekoraLiquidMixtureBlock extends TekoraLiquidBlock {
     }
 
     public Block getBlockLeftover() {
-        ResourceLocation meltedKey = new ResourceLocation(this.postBoilLeftover);
+        ResourceLocation meltedKey = ResourceLocation.withDefaultNamespace(this.postBoilLeftover);
         if (ForgeRegistries.BLOCKS.containsKey(meltedKey)) {
             return ForgeRegistries.BLOCKS.getValue(meltedKey);
         }

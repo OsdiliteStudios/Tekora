@@ -163,7 +163,7 @@ public class TekoraFluidPresets {
             .setBoilingCoefficient(9.75f)
             .setBoilingPower(1.9f)
             .setLowestPossibleBoilingPoint(110)
-            .setSpecificHeatOfLiquid(2000) // further research is needed
+            .setSpecificHeatOfLiquid(2000) // todo: further research is needed
             .setSpecificHeatOfGas(0.867f)
             .setHeatOfFusion(18.656f)
             .setHeatOfVaporization(108.499f)

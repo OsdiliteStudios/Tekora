@@ -5,21 +5,18 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.tekoramods.tekora.fluid.TekoraChemicalFluidType;
 import net.tekoramods.tekora.fluid.data.TekoraFluidData;
-import net.tekoramods.tekora.item.isotopic.radioactive.AbstractRadioactiveItem;
 import net.tekoramods.tekora.util.FluidFunctions;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -30,7 +27,7 @@ public abstract class AbstractTekoraFluidBlock extends LiquidBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltip, TooltipFlag pFlag) {
         if (getFluid().getFluidType() instanceof TekoraChemicalFluidType type) {
             pTooltip.add(Component.translatable("tooltip.tekora.hazard_values")
                     .append(":").withStyle(ChatFormatting.GRAY));
@@ -49,14 +46,8 @@ public abstract class AbstractTekoraFluidBlock extends LiquidBlock {
                     .append(": " + type.getVaporizationHeat()).append("J/L").withStyle(ChatFormatting.GRAY));
             pTooltip.add(Component.translatable("tooltip.tekora.specific_heat")
                     .append(": " + type.getSpecificHeat()).append("J/L K").withStyle(ChatFormatting.GRAY));
-
-            float radiation = type.getRadioactivity();
-            if (radiation > 0) {
-                pTooltip.add(Component.translatable("msg.tekora.rad").append(":"));
-                pTooltip.add(AbstractRadioactiveItem.radComponent(radiation));
-            }
         }
-        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+        super.appendHoverText(pStack, pContext, pTooltip, pFlag);
     }
 
     @Override
@@ -72,19 +63,19 @@ public abstract class AbstractTekoraFluidBlock extends LiquidBlock {
 
                 if (data.getEffects() != null) {
                     for (MobEffect effect : data.getEffects()) {
-                        living.addEffect(new MobEffectInstance(effect, 200, (int) Math.pow(pressure - 1, 2) - 1,
-                                true, false, false));
+                        //living.addEffect(new MobEffectInstance(effect, 200, (int) Math.pow(pressure - 1, 2) - 1,
+                        //        true, false, false));
                     }
                 }
                 if (data.getFluidDmg() > 0) {
                     living.hurt(living.level().damageSources().generic(), data.getFluidDmg());
                 }
                 if (data.getMeltingPoint() > 700) {
-                    living.setSecondsOnFire((int) data.getMeltingPoint() / 200);
+                    living.setRemainingFireTicks((int) data.getMeltingPoint() / 200);
                 }
             } else {
                 if (this.getFluid().getFluidType().getTemperature() > 700) {
-                    living.setSecondsOnFire(this.getFluid().getFluidType().getTemperature() / 200);
+                    living.setRemainingFireTicks(this.getFluid().getFluidType().getTemperature() / 200);
                 }
             }
         }

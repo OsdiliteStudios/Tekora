@@ -26,9 +26,9 @@ public class TekoraConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> RUBY_ORE_KEY = registerKey("ore_ruby");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SAPPHIRE_ORE_KEY = registerKey("ore_sapphire");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TIN_ORE_KEY = registerKey("ore_tin");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> URANINITE_ORE_KEY = registerKey("ore_uraninite");
+    //public static final ResourceKey<ConfiguredFeature<?, ?>> URANINITE_ORE_KEY = registerKey("ore_uraninite");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WOLFRAMITE_ORE_KEY = registerKey("ore_wolframite");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ZIRCON_ORE_KEY = registerKey("ore_zircon");
+    //public static final ResourceKey<ConfiguredFeature<?, ?>> ZIRCON_ORE_KEY = registerKey("ore_zircon");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ZINC_ORE_KEY = registerKey("ore_zinc");
     public static final ResourceKey<ConfiguredFeature<?, ?>> EVAPORITE_PLACED_KEY = registerKey("placed_evaporite");
     public static final ResourceKey<ConfiguredFeature<?, ?>> LIMESTONE_PLACED_KEY = registerKey("placed_limestone");
@@ -73,17 +73,17 @@ public class TekoraConfiguredFeatures {
                 OreConfiguration.target(stoneReplaceable, TekoraBlocks.TIN_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateReplaceable, TekoraBlocks.DEEPSLATE_TIN_ORE.get().defaultBlockState()));
 
-        List<OreConfiguration.TargetBlockState> uraniniteOres = List.of(
-                OreConfiguration.target(stoneReplaceable, TekoraBlocks.URANINITE_ORE.get().defaultBlockState()),
-                OreConfiguration.target(deepslateReplaceable, TekoraBlocks.DEEPSLATE_URANINITE_ORE.get().defaultBlockState()));
+//        List<OreConfiguration.TargetBlockState> uraniniteOres = List.of(
+//                OreConfiguration.target(stoneReplaceable, TekoraBlocks.URANINITE_ORE.get().defaultBlockState()),
+//                OreConfiguration.target(deepslateReplaceable, TekoraBlocks.DEEPSLATE_URANINITE_ORE.get().defaultBlockState()));
 
         List<OreConfiguration.TargetBlockState> wolframiteOres = List.of(
                 OreConfiguration.target(stoneReplaceable, TekoraBlocks.WOLFRAMITE_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateReplaceable, TekoraBlocks.DEEPSLATE_WOLFRAMITE_ORE.get().defaultBlockState()));
 
-        List<OreConfiguration.TargetBlockState> zirconOres = List.of(
-                OreConfiguration.target(stoneReplaceable, TekoraBlocks.ZIRCON_ORE.get().defaultBlockState()),
-                OreConfiguration.target(deepslateReplaceable, TekoraBlocks.DEEPSLATE_ZIRCON_ORE.get().defaultBlockState()));
+//        List<OreConfiguration.TargetBlockState> zirconOres = List.of(
+//                OreConfiguration.target(stoneReplaceable, TekoraBlocks.ZIRCON_ORE.get().defaultBlockState()),
+//                OreConfiguration.target(deepslateReplaceable, TekoraBlocks.DEEPSLATE_ZIRCON_ORE.get().defaultBlockState()));
 
         List<OreConfiguration.TargetBlockState> zincOres = List.of(
                 OreConfiguration.target(stoneReplaceable, TekoraBlocks.ZINC_ORE.get().defaultBlockState()),
@@ -104,16 +104,16 @@ public class TekoraConfiguredFeatures {
         registerOre(context, RUBY_ORE_KEY, rubyOres, 6);
         registerOre(context, SAPPHIRE_ORE_KEY, sapphireOres, 6);
         registerOre(context, TIN_ORE_KEY, tinOres, 12);
-        registerOre(context, URANINITE_ORE_KEY, uraniniteOres, 6);
+        //registerOre(context, URANINITE_ORE_KEY, uraniniteOres, 6);
         registerOre(context, WOLFRAMITE_ORE_KEY, wolframiteOres, 8);
-        registerOre(context, ZIRCON_ORE_KEY, zirconOres, 10);
+        //registerOre(context, ZIRCON_ORE_KEY, zirconOres, 10);
         registerOre(context, ZINC_ORE_KEY, zincOres, 8);
         registerOre(context, EVAPORITE_PLACED_KEY, evaporite, 20);
         registerOre(context, LIMESTONE_PLACED_KEY, limestone, 27);
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Tekora.MODID, name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, name));
     }
 
     // this register method must be kept for potential future uses.

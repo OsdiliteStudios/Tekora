@@ -1,9 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "front": "tekora:block/electrolyser_front_on",
-    "side": "tekora:block/advanced_machine_side",
-    "top": "tekora:block/advanced_machine_top",
-    "bottom": "tekora:block/advanced_machine_bottom"
-  }
-}

@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:tungsten_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/tungsten"
+    },
+    {
+      "tag": "forge:ingots/tungsten"
+    },
+    {
+      "tag": "forge:ingots/tungsten"
+    },
+    {
+      "tag": "forge:ingots/tungsten"
+    },
+    {
+      "tag": "forge:ingots/tungsten"
+    },
+    {
+      "tag": "forge:ingots/tungsten"
+    },
+    {
+      "tag": "forge:ingots/tungsten"
+    },
+    {
+      "tag": "forge:ingots/tungsten"
+    },
+    {
+      "tag": "forge:ingots/tungsten"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:tungsten_block"
+  }
+}

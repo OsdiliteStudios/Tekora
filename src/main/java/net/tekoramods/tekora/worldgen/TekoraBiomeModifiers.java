@@ -22,10 +22,10 @@ public class TekoraBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_RUBY_ORE = registerKey("ore_ruby");
     public static final ResourceKey<BiomeModifier> ADD_SAPPHIRE_ORE = registerKey("ore_sapphire");
     public static final ResourceKey<BiomeModifier> ADD_TIN_ORE = registerKey("ore_tin");
-    public static final ResourceKey<BiomeModifier> ADD_URANINITE_ORE = registerKey("ore_uraninite");
+    //public static final ResourceKey<BiomeModifier> ADD_URANINITE_ORE = registerKey("ore_uraninite");
     public static final ResourceKey<BiomeModifier> ADD_WOLFRAMITE_ORE = registerKey("ore_wolframite");
     public static final ResourceKey<BiomeModifier> ADD_ZINC_ORE = registerKey("ore_zinc");
-    public static final ResourceKey<BiomeModifier> ADD_ZIRCON_ORE = registerKey("ore_zircon");
+    //public static final ResourceKey<BiomeModifier> ADD_ZIRCON_ORE = registerKey("ore_zircon");
     public static final ResourceKey<BiomeModifier> ADD_EVAPORITE = registerKey("placed_evaporite");
     public static final ResourceKey<BiomeModifier> ADD_LIMESTONE = registerKey("placed_limestone");
 
@@ -78,10 +78,10 @@ public class TekoraBiomeModifiers {
                 HolderSet.direct(placedFeatures.getOrThrow(TekoraPlacedFeatures.TIN_ORE)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
 
-        context.register(ADD_URANINITE_ORE, new ForgeBiomeModifiers
-                .AddFeaturesBiomeModifier(biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(placedFeatures.getOrThrow(TekoraPlacedFeatures.URANINITE_ORE)),
-                GenerationStep.Decoration.UNDERGROUND_ORES));
+//        context.register(ADD_URANINITE_ORE, new ForgeBiomeModifiers
+//                .AddFeaturesBiomeModifier(biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+//                HolderSet.direct(placedFeatures.getOrThrow(TekoraPlacedFeatures.URANINITE_ORE)),
+//                GenerationStep.Decoration.UNDERGROUND_ORES));
 
         context.register(ADD_WOLFRAMITE_ORE, new ForgeBiomeModifiers
                 .AddFeaturesBiomeModifier(biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
@@ -93,10 +93,10 @@ public class TekoraBiomeModifiers {
                 HolderSet.direct(placedFeatures.getOrThrow(TekoraPlacedFeatures.ZINC_ORE)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
 
-        context.register(ADD_ZIRCON_ORE, new ForgeBiomeModifiers
-                .AddFeaturesBiomeModifier(biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(placedFeatures.getOrThrow(TekoraPlacedFeatures.ZIRCON_ORE)),
-                GenerationStep.Decoration.UNDERGROUND_ORES));
+//        context.register(ADD_ZIRCON_ORE, new ForgeBiomeModifiers
+//                .AddFeaturesBiomeModifier(biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+//                HolderSet.direct(placedFeatures.getOrThrow(TekoraPlacedFeatures.ZIRCON_ORE)),
+//                GenerationStep.Decoration.UNDERGROUND_ORES));
 
         context.register(ADD_EVAPORITE, new ForgeBiomeModifiers
                 .AddFeaturesBiomeModifier(biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
@@ -109,6 +109,6 @@ public class TekoraBiomeModifiers {
                 GenerationStep.Decoration.UNDERGROUND_ORES));
     }
     private static ResourceKey<BiomeModifier> registerKey(String name) {
-        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(Tekora.MODID, name));
+        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, name));
     }
 }

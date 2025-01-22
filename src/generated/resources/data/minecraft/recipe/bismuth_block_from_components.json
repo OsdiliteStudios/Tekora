@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:bismuth_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/bismuth"
+    },
+    {
+      "tag": "forge:ingots/bismuth"
+    },
+    {
+      "tag": "forge:ingots/bismuth"
+    },
+    {
+      "tag": "forge:ingots/bismuth"
+    },
+    {
+      "tag": "forge:ingots/bismuth"
+    },
+    {
+      "tag": "forge:ingots/bismuth"
+    },
+    {
+      "tag": "forge:ingots/bismuth"
+    },
+    {
+      "tag": "forge:ingots/bismuth"
+    },
+    {
+      "tag": "forge:ingots/bismuth"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:bismuth_block"
+  }
+}

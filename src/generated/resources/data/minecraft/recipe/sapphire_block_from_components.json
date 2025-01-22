@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:sapphire_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/sapphire"
+    },
+    {
+      "tag": "forge:gems/sapphire"
+    },
+    {
+      "tag": "forge:gems/sapphire"
+    },
+    {
+      "tag": "forge:gems/sapphire"
+    },
+    {
+      "tag": "forge:gems/sapphire"
+    },
+    {
+      "tag": "forge:gems/sapphire"
+    },
+    {
+      "tag": "forge:gems/sapphire"
+    },
+    {
+      "tag": "forge:gems/sapphire"
+    },
+    {
+      "tag": "forge:gems/sapphire"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:sapphire_block"
+  }
+}

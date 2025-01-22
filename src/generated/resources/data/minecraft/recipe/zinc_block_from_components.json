@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:zinc_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/zinc"
+    },
+    {
+      "tag": "forge:ingots/zinc"
+    },
+    {
+      "tag": "forge:ingots/zinc"
+    },
+    {
+      "tag": "forge:ingots/zinc"
+    },
+    {
+      "tag": "forge:ingots/zinc"
+    },
+    {
+      "tag": "forge:ingots/zinc"
+    },
+    {
+      "tag": "forge:ingots/zinc"
+    },
+    {
+      "tag": "forge:ingots/zinc"
+    },
+    {
+      "tag": "forge:ingots/zinc"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:zinc_block"
+  }
+}

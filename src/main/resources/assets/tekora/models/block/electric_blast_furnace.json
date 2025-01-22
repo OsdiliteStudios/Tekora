@@ -1,9 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "front": "tekora:block/electric_blast_furnace_front",
-    "side": "tekora:block/basic_machine_side",
-    "top": "tekora:block/basic_machine_top",
-    "bottom": "tekora:block/basic_machine_bottom"
-  }
-}

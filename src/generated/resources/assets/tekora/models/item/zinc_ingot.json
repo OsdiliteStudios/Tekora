@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/items/plain_ingot"
+    "layer0": "tekora:item/zinc_ingot"
   }
 }

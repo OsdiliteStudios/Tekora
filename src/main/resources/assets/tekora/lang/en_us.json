@@ -1,5 +1,5 @@
 {
-  "itemGroup.tekora_minerals": "Raw Materials",
+  "itemGroup.tekora_ingredients": "Raw Materials",
   "itemGroup.tekora_parts": "Machine Components",
   "itemGroup.tekora_blocks": "Blocks",
   "itemGroup.tekora_machines": "Machines",
@@ -125,6 +125,7 @@
   "item.tekora.bronze_ingot": "Bronze Ingot",
   "item.tekora.carbon_steel_ingot": "Carbon Steel Ingot",
   "item.tekora.chromoly_steel_ingot": "Chromoly Steel Ingot",
+  "item.tekora.constantan_ingot": "Constantan Ingot",
   "item.tekora.cupronickel_ingot": "Cupronickel Ingot",
   "item.tekora.electrum_ingot": "Electrum Ingot",
   "item.tekora.ferroboron_ingot": "Ferroboron Ingot",
@@ -134,6 +135,7 @@
   "item.tekora.invar_ingot": "Invar Ingot",
   "item.tekora.magnetic_neodymium_ingot": "Magnetic Neodymium Ingot",
   "item.tekora.mu_metal_ingot": "Mu-Metal Ingot",
+  "item.tekora.pewter_ingot": "Pewter Ingot",
   "item.tekora.reactor_steel_ingot": "Reactor Steel Ingot",
   "item.tekora.stainless_steel_ingot": "Stainless Steel Ingot",
   "item.tekora.steel_ingot": "Steel Ingot",
@@ -147,6 +149,7 @@
   "item.tekora.bronze_nugget": "Bronze Nugget",
   "item.tekora.carbon_steel_nugget": "Carbon Steel Nugget",
   "item.tekora.chromoly_steel_nugget": "Chromoly steel Nugget",
+  "item.tekora.constantan_nugget": "Constantan Nugget",
   "item.tekora.ferroboron_nugget": "Ferroboron Nugget",
   "item.tekora.galvanized_steel_nugget": "Galvanized Steel Nugget",
   "item.tekora.hsla_steel_nugget": "HSLA Steel Nugget",
@@ -154,6 +157,7 @@
   "item.tekora.invar_nugget": "Invar Nugget",
   "item.tekora.magnetic_neodymium_nugget": "Magnetic Neodymium Nugget",
   "item.tekora.mu_metal_nugget": "Mu-Metal Nugget",
+  "item.tekora.pewter_nugget": "Pewter Nugget",
   "item.tekora.reactor_steel_nugget": "Reactor Steel Nugget",
   "item.tekora.stainless_steel_nugget": "Stainless Steel Nugget",
   "item.tekora.steel_nugget": "Steel Nugget",
@@ -166,6 +170,7 @@
   "item.tekora.bronze_dust": "Bronze Dust",
   "item.tekora.carbon_steel_dust": "Carbon Steel Dust",
   "item.tekora.chromoly_steel_dust": "Chromoly Steel Dust",
+  "item.tekora.constantan_dust": "Constantan Dust",
   "item.tekora.cupronickel_dust": "Cupronickel Dust",
   "item.tekora.electrum_dust": "Electrum Dust",
   "item.tekora.ferroboron_dust": "Ferroboron Dust",
@@ -174,6 +179,7 @@
   "item.tekora.invar_dust": "Invar Dust",
   "item.tekora.magnetic_neodymium_dust": "Magnetic Neodymium Dust",
   "item.tekora.mu_metal_dust": "Mu-Metal Dust",
+  "item.tekora.pewter_dust": "Pewter Dust",
   "item.tekora.reactor_steel_dust": "Reactor Steel Dust",
   "item.tekora.stainless_steel_dust": "Stainless Steel Dust",
   "item.tekora.steel_dust": "Steel Dust",
@@ -633,6 +639,9 @@
   "item.tekora.carbon_steel_rod": "Carbon Steel Rod",
   "item.tekora.steel_rod": "Steel Rod",
 
+  "item.tekora.infused_clay": "Infused Clay",
+  "item.tekora.fire_brick": "Fire Brick",
+
   "item.tekora.coil": "Coil",
 
   "item.tekora.stainless_steel_turbine": "Stainless Steel Turbine",
@@ -662,6 +671,10 @@
   "item.tekora.silver_wire": "Silver Wire",
   "item.tekora.tin_wire": "Tin Wire",
   "item.tekora.niobium_tin_wire": "Niobium Tin Wire",
+
+  "block.tekora.wooden_cogwheel": "Wooden Cogwheel",
+  "block.tekora.wooden_waterwheel": "Wooden Waterwheel",
+  "block.tekora.shaft": "Shaft",
 
   "block.tekora.aquamarine_ore": "Aquamarine Ore",
   "block.tekora.bauxite_ore": "Bauxite Ore",
@@ -816,6 +829,10 @@
   "block.tekora.rubber_sapling": "Rubber Sapling",
   "block.tekora.rubber_leaves": "Rubber Leaves",
   "block.tekora.rubber_log": "Rubber Logs",
+
+  "block.tekora.firebricks": "Fire Bricks",
+  "block.tekora.casting_bricks": "Casting Bricks",
+  "block.tekora.kiln_furnace": "Kiln Furnace",
 
   "fluid_type.tekora.ammonium_hydroxide": "Ammonium Hydroxide",
   "fluid_type.tekora.aqua_regia": "Aqua Regia",

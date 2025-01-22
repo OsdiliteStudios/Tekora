@@ -152,6 +152,7 @@ public class TekoraTags {
         public static final TagKey<Item> BRONZE_INGOT = createForge("ingots/bronze");
         public static final TagKey<Item> CARBON_STEEL_INGOT = createForge("ingots/carbon_steel");
         public static final TagKey<Item> CHROMOLY_STEEL_INGOT = createForge("ingots/chromoly_steel");
+        public static final TagKey<Item> CONSTANTAN_INGOT = createForge("ingots/constantan");
         public static final TagKey<Item> CUPRONICKEL_INGOT = createForge("ingots/cupronickel");
         public static final TagKey<Item> ELECTRUM_INGOT = createForge("ingots/electrum");
         public static final TagKey<Item> FERROBORON_INGOT = createForge("ingots/ferroboron");
@@ -161,6 +162,7 @@ public class TekoraTags {
         public static final TagKey<Item> INVAR_INGOT = createForge("ingots/invar");
         public static final TagKey<Item> MAGNETIC_NEODYMIUM_INGOT = createForge("ingots/magnetic_neodymium");
         public static final TagKey<Item> MU_METAL_INGOT = createForge("ingots/mu_metal");
+        public static final TagKey<Item> PEWTER_INGOT = createForge("ingots/pewter");
         public static final TagKey<Item> REACTOR_STEEL_INGOT = createForge("ingots/reactor_steel");
         public static final TagKey<Item> STAINLESS_STEEL_INGOT = createForge("ingots/stainless_steel");
         public static final TagKey<Item> STEEL_INGOT = createForge("ingots/steel");
@@ -633,34 +635,20 @@ public class TekoraTags {
         public static final TagKey<Item> CRUSHED_WOLFRAMITE_ORE = createForge("crushed_ores/wolframite");
         public static final TagKey<Item> CRUSHED_ZIRCON_ORE = createForge("crushed_ores/zircon");
 
-        public static final TagKey<Item> PULVERIZED_ANCIENT_DEBRIS_ORE = createForge("pulverized_ores/ancient_debris");
-        public static final TagKey<Item> PULVERIZED_AQUAMARINE_ORE = createForge("pulverized_ores/aquamarine");
-        public static final TagKey<Item> PULVERIZED_BAUXITE_ORE = createForge("pulverized_ores/bauxite");
-        public static final TagKey<Item> PULVERIZED_CINNABAR_ORE = createForge("pulverized_ores/cinnabar");
-        public static final TagKey<Item> PULVERIZED_COAL_ORE = createForge("pulverized_ores/coal");
-        public static final TagKey<Item> PULVERIZED_DIAMOND_ORE = createForge("pulverized_ores/diamond");
-        public static final TagKey<Item> PULVERIZED_EMERALD_ORE = createForge("pulverized_ores/emerald");
-        public static final TagKey<Item> PULVERIZED_HALITE_ORE = createForge("pulverized_ores/halite");
-        public static final TagKey<Item> PULVERIZED_LAPIS_ORE = createForge("pulverized_ores/lapis");
-        public static final TagKey<Item> PULVERIZED_QUARTZ_ORE = createForge("pulverized_ores/quartz");
-        public static final TagKey<Item> PULVERIZED_REDSTONE_ORE = createForge("pulverized_ores/redstone");
-        public static final TagKey<Item> PULVERIZED_RUBY_ORE = createForge("pulverized_ores/ruby");
-        public static final TagKey<Item> PULVERIZED_SAPPHIRE_ORE = createForge("pulverized_ores/sapphire");
-        public static final TagKey<Item> PULVERIZED_URANINITE_ORE = createForge("pulverized_ores/uraninite");
-        public static final TagKey<Item> PULVERIZED_WOLFRAMITE_ORE = createForge("pulverized_ores/wolframite");
-        public static final TagKey<Item> PULVERIZED_ZIRCON_ORE = createForge("pulverized_ores/zircon");
+        public static final TagKey<Item> PLANKS = create("planks");
+        public static final TagKey<Item> SLABS_WOODEN = create("wooden_slabs");
 
         private Items() {
         }
         private static TagKey<Item> createForge(String location) {
-            return net.minecraft.tags.ItemTags.create(new ResourceLocation("forge", location));
+            return net.minecraft.tags.ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", location));
         }
 
         private static TagKey<Item> createTekora(String location) {
-            return net.minecraft.tags.ItemTags.create(new ResourceLocation(Tekora.MODID, location));
+            return net.minecraft.tags.ItemTags.create(ResourceLocation.fromNamespaceAndPath(Tekora.MODID, location));
         }
         private static TagKey<Item> create(String location) {
-            return net.minecraft.tags.ItemTags.create(new ResourceLocation("minecraft", location));
+            return net.minecraft.tags.ItemTags.create(ResourceLocation.withDefaultNamespace(location));
         }
     }
 
@@ -759,13 +747,13 @@ public class TekoraTags {
         public static final TagKey<Block> RAW_SILVER_BLOCK = createForge("storage_blocks/raw_silver");
         public static final TagKey<Block> RAW_TIN_BLOCK = createForge("storage_blocks/raw_tin");
         public static final TagKey<Block> RAW_ZINC_BLOCK = createForge("storage_blocks/raw_zinc");
-        public static final TagKey<Block> MINEABLE_WITH_DRILL = net.minecraft.tags.BlockTags.create(new ResourceLocation("mineable/drill"));
+        public static final TagKey<Block> MINEABLE_WITH_DRILL = net.minecraft.tags.BlockTags.create(ResourceLocation.withDefaultNamespace("mineable/drill"));
 
         private Blocks() {
         }
 
         private static TagKey<Block> createForge(String location) {
-            return net.minecraft.tags.BlockTags.create(new ResourceLocation("forge", location));
+            return net.minecraft.tags.BlockTags.create(ResourceLocation.fromNamespaceAndPath("forge", location));
         }
     }
 }

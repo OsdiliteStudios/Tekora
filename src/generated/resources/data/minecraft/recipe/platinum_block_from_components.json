@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:platinum_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/platinum"
+    },
+    {
+      "tag": "forge:ingots/platinum"
+    },
+    {
+      "tag": "forge:ingots/platinum"
+    },
+    {
+      "tag": "forge:ingots/platinum"
+    },
+    {
+      "tag": "forge:ingots/platinum"
+    },
+    {
+      "tag": "forge:ingots/platinum"
+    },
+    {
+      "tag": "forge:ingots/platinum"
+    },
+    {
+      "tag": "forge:ingots/platinum"
+    },
+    {
+      "tag": "forge:ingots/platinum"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:platinum_block"
+  }
+}

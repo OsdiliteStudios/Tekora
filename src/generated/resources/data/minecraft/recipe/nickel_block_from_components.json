@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:nickel_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/nickel"
+    },
+    {
+      "tag": "forge:ingots/nickel"
+    },
+    {
+      "tag": "forge:ingots/nickel"
+    },
+    {
+      "tag": "forge:ingots/nickel"
+    },
+    {
+      "tag": "forge:ingots/nickel"
+    },
+    {
+      "tag": "forge:ingots/nickel"
+    },
+    {
+      "tag": "forge:ingots/nickel"
+    },
+    {
+      "tag": "forge:ingots/nickel"
+    },
+    {
+      "tag": "forge:ingots/nickel"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:nickel_block"
+  }
+}

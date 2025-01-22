@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tekora:nickel_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/nickel"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "tekora:nickel_ingot"
+  }
+}

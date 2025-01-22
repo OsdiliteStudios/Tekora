@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:molybdenum_block}",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/molybdenum"
+    },
+    {
+      "tag": "forge:ingots/molybdenum"
+    },
+    {
+      "tag": "forge:ingots/molybdenum"
+    },
+    {
+      "tag": "forge:ingots/molybdenum"
+    },
+    {
+      "tag": "forge:ingots/molybdenum"
+    },
+    {
+      "tag": "forge:ingots/molybdenum"
+    },
+    {
+      "tag": "forge:ingots/molybdenum"
+    },
+    {
+      "tag": "forge:ingots/molybdenum"
+    },
+    {
+      "tag": "forge:ingots/molybdenum"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:molybdenum_block"
+  }
+}

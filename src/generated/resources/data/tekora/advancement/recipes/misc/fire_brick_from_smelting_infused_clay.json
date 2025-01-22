@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_infused_clay": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tekora:infused_clay"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:fire_brick_from_smelting_infused_clay"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_infused_clay"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:fire_brick_from_smelting_infused_clay"
+    ]
+  }
+}

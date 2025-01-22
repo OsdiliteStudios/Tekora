@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "Block{tekora:ruby_block}",
+  "ingredients": [
+    {
+      "tag": "forge:gems/ruby"
+    },
+    {
+      "tag": "forge:gems/ruby"
+    },
+    {
+      "tag": "forge:gems/ruby"
+    },
+    {
+      "tag": "forge:gems/ruby"
+    },
+    {
+      "tag": "forge:gems/ruby"
+    },
+    {
+      "tag": "forge:gems/ruby"
+    },
+    {
+      "tag": "forge:gems/ruby"
+    },
+    {
+      "tag": "forge:gems/ruby"
+    },
+    {
+      "tag": "forge:gems/ruby"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "tekora:ruby_block"
+  }
+}

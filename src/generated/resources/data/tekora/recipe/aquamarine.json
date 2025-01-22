@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tekora:aquamarine",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/aquamarine"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "tekora:aquamarine"
+  }
+}

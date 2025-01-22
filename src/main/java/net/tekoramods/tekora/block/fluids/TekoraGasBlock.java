@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 public class TekoraGasBlock extends AbstractTekoraFluidBlock {
 
     public TekoraGasBlock(Supplier<? extends FlowingFluid> pFluid) {
-        super(pFluid, BlockBehaviour.Properties.copy(Blocks.WATER));
+        super(pFluid, BlockBehaviour.Properties.ofFullCopy(Blocks.WATER));
     }
 
     @Override

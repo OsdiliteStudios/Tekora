@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "infused_clay",
+  "ingredients": [
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "tekora:bauxite"
+    },
+    {
+      "item": "tekora:bauxite"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "tekora:infused_clay"
+  }
+}

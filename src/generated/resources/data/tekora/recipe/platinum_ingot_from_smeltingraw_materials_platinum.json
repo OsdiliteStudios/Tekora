@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "platinum_ingot",
+  "ingredient": {
+    "tag": "forge:raw_materials/platinum"
+  },
+  "result": {
+    "id": "tekora:platinum_ingot"
+  }
+}

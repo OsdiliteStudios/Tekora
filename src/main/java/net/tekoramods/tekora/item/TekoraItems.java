@@ -2,7 +2,6 @@ package net.tekoramods.tekora.item;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -10,8 +9,8 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tekoramods.tekora.block.entities.mechanical.rotational.AbstractTekoraAxialBlock;
-import net.tekoramods.tekora.block.entities.mechanical.rotational.RotationalAbstractEntity;
+import net.tekoramods.tekora.block.entities.transporter.rotational.AbstractTekoraAxialBlock;
+import net.tekoramods.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
 import net.tekoramods.tekora.block.entities.thermal.AbstractThermalMachine;
 import net.tekoramods.tekora.item.typical.*;
 import net.minecraft.world.item.*;

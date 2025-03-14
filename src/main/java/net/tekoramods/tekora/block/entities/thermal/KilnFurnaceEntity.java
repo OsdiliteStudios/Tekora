@@ -1,21 +1,51 @@
 package net.tekoramods.tekora.block.entities.thermal;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.ItemStackHandler;
+import net.tekoramods.tekora.block.entities.TekoraBlockEntities;
+import net.tekoramods.tekora.menu.KilnFurnaceMenu;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class KilnFurnaceEntity extends AbstractThermalEntity {
-    public KilnFurnaceEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
-        super(pType, pPos, pBlockState);
+    private final ItemStackHandler inventory = new ItemStackHandler(1) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return super.isItemValid(slot, stack);
+        }
+    };
+
+    public KilnFurnaceEntity(BlockPos pPos, BlockState pBlockState) {
+        super(TekoraBlockEntities.KILN_FURNACE.get(), pPos, pBlockState);
+    }
+
+    public void clearContents() {
+        inventory.setStackInSlot(0, ItemStack.EMPTY);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("block.tekora.kiln_furnace");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return null;
+        return new KilnFurnaceMenu(pContainerId, pPlayerInventory, this);
+    }
+
+    public ItemStackHandler getInventory() {
+        return inventory;
     }
 }

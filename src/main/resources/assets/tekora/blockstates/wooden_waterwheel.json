@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "tekora:block/wooden_waterwheel",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "tekora:block/wooden_waterwheel"
+    },
+    "axis=z": {
+      "model": "tekora:block/wooden_waterwheel",
+      "x": 90
+    }
+  }
+}

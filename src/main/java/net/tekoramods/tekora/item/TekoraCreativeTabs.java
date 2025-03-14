@@ -126,8 +126,9 @@ public class TekoraCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(TekoraBlocks.WOODEN_COGWHEEL.get()))
                     .title(Component.translatable("itemGroup.tekora_parts"))
                     .displayItems((parm, out) -> {
-                        out.accept(TekoraBlocks.WOODEN_COGWHEEL.get());
                         out.accept(TekoraBlocks.SHAFT.get());
+                        out.accept(TekoraBlocks.WOODEN_COGWHEEL.get());
+                        out.accept(TekoraBlocks.WOODEN_WATERWHEEL.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

@@ -1,13 +1,11 @@
 package net.tekoramods.tekora.block.entities.mechanical;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.tekoramods.tekora.block.entities.TekoraBlockEntity;
 
-public abstract class AbstractMechanicalEntity extends BlockEntity {
+public abstract class AbstractMechanicalEntity extends TekoraBlockEntity {
     private double componentMass;
 
     public AbstractMechanicalEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, double pComponentMass) {

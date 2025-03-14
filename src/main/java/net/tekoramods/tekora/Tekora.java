@@ -1,6 +1,7 @@
 package net.tekoramods.tekora;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
@@ -19,6 +20,7 @@ import net.tekoramods.tekora.fluid.TekoraFluidTypes;
 import net.tekoramods.tekora.item.TekoraItems;
 import net.tekoramods.tekora.item.TekoraCreativeTabs;
 import net.tekoramods.tekora.menu.TekoraMenus;
+import net.tekoramods.tekora.menu.screens.KilnFurnaceScreen;
 import org.slf4j.Logger;
 
 @Mod(Tekora.MODID)
@@ -60,6 +62,7 @@ public class Tekora {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            MenuScreens.register(TekoraMenus.KILN_FURNACE_MENU.get(), KilnFurnaceScreen::new);
         }
 
         @SubscribeEvent

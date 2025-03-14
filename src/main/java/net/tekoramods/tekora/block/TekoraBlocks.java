@@ -3,6 +3,7 @@ package net.tekoramods.tekora.block;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -10,8 +11,10 @@ import net.minecraftforge.registries.RegistryObject;
 import net.tekoramods.tekora.Tekora;
 import net.tekoramods.tekora.block.basic.TekoraBaseBlock;
 import net.tekoramods.tekora.block.basic.TekoraExperienceBlock;
-import net.tekoramods.tekora.block.entities.mechanical.rotational.Cogwheel;
-import net.tekoramods.tekora.block.entities.mechanical.rotational.Shaft;
+import net.tekoramods.tekora.block.entities.transporter.rotational.Cogwheel;
+import net.tekoramods.tekora.block.entities.transporter.rotational.Shaft;
+import net.tekoramods.tekora.block.entities.transporter.rotational.Waterwheel;
+import net.tekoramods.tekora.block.entities.thermal.KilnFurnace;
 import net.tekoramods.tekora.item.TekoraItems;
 
 import java.util.function.Supplier;
@@ -129,6 +132,8 @@ public class TekoraBlocks {
 
     public static final RegistryObject<Block> WOODEN_COGWHEEL = registerBlock("wooden_cogwheel", Cogwheel.Wood::new);
     public static final RegistryObject<Block> SHAFT = registerBlock("shaft", Shaft.Steel::new);
+    public static final RegistryObject<Block> WOODEN_WATERWHEEL = registerBlock("wooden_waterwheel", Waterwheel.Wood::new);
+    public static final RegistryObject<Block> KILN_FURNACE = registerBlock("kiln_furnace", () -> new KilnFurnace(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
     // tekora fluids
 //    public static final RegistryObject<LiquidBlock> MERCURY_FLUID_BLOCK = BLOCKS.register("mercury_fluid",
 //            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_MERCURY_FLUID));

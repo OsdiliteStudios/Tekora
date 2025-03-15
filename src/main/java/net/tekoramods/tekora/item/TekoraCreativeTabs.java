@@ -129,6 +129,9 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraBlocks.SHAFT.get());
                         out.accept(TekoraBlocks.WOODEN_COGWHEEL.get());
                         out.accept(TekoraBlocks.WOODEN_WATERWHEEL.get());
+                        out.accept(TekoraBlocks.KILN_FURNACE.get());
+                        out.accept(TekoraBlocks.ITEM_INPUT_BLOCK.get());
+                        out.accept(TekoraBlocks.ITEM_OUTPUT_BLOCK.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

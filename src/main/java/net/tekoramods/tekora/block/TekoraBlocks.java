@@ -11,6 +11,8 @@ import net.minecraftforge.registries.RegistryObject;
 import net.tekoramods.tekora.Tekora;
 import net.tekoramods.tekora.block.basic.TekoraBaseBlock;
 import net.tekoramods.tekora.block.basic.TekoraExperienceBlock;
+import net.tekoramods.tekora.block.entities.attachment.ItemInputBlock;
+import net.tekoramods.tekora.block.entities.attachment.ItemOutputBlock;
 import net.tekoramods.tekora.block.entities.transporter.rotational.Cogwheel;
 import net.tekoramods.tekora.block.entities.transporter.rotational.Shaft;
 import net.tekoramods.tekora.block.entities.transporter.rotational.Waterwheel;
@@ -133,7 +135,10 @@ public class TekoraBlocks {
     public static final RegistryObject<Block> WOODEN_COGWHEEL = registerBlock("wooden_cogwheel", Cogwheel.Wood::new);
     public static final RegistryObject<Block> SHAFT = registerBlock("shaft", Shaft.Steel::new);
     public static final RegistryObject<Block> WOODEN_WATERWHEEL = registerBlock("wooden_waterwheel", Waterwheel.Wood::new);
+
     public static final RegistryObject<Block> KILN_FURNACE = registerBlock("kiln_furnace", () -> new KilnFurnace(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
+    public static final RegistryObject<Block> ITEM_INPUT_BLOCK = registerBlock("item_input_block", () -> new ItemInputBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.HOPPER)));
+    public static final RegistryObject<Block> ITEM_OUTPUT_BLOCK = registerBlock("item_output_block", () -> new ItemOutputBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.HOPPER)));
     // tekora fluids
 //    public static final RegistryObject<LiquidBlock> MERCURY_FLUID_BLOCK = BLOCKS.register("mercury_fluid",
 //            () -> new TekoraLiquidBlock(TekoraFluids.SOURCE_MERCURY_FLUID));

@@ -50,11 +50,8 @@ public class KilnFurnace extends AbstractThermalMachine {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         if (pLevel.getBlockEntity(pPos) instanceof KilnFurnaceEntity entity) {
-            if (pPlayer.isCrouching()) {
-                if (!pLevel.isClientSide) {
-                    ((ServerPlayer) pPlayer).openMenu(new SimpleMenuProvider(entity, Component.translatable("block.tekora.kiln_furnace")), pPos);
-                }
-                return ItemInteractionResult.SUCCESS;
+            if (!pPlayer.isCrouching() && !pLevel.isClientSide) {
+                ((ServerPlayer) pPlayer).openMenu(new SimpleMenuProvider(entity, Component.translatable("block.tekora.kiln_furnace")), pPos);
             }
         }
         return ItemInteractionResult.SUCCESS;

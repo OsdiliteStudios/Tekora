@@ -67,6 +67,9 @@ public class TekoraBlockLootTables extends BlockLootSubProvider {
         dropSelf(TekoraBlocks.WOODEN_COGWHEEL.get());
         dropSelf(TekoraBlocks.SHAFT.get());
         dropSelf(TekoraBlocks.WOODEN_WATERWHEEL.get());
+        dropSelf(TekoraBlocks.KILN_FURNACE.get());
+        dropSelf(TekoraBlocks.ITEM_INPUT_BLOCK.get());
+        dropSelf(TekoraBlocks.ITEM_OUTPUT_BLOCK.get());
 
         createTekoraOreDrops(TekoraBlocks.AQUAMARINE_ORE.get(), TekoraItems.AQUAMARINE.get());
         createTekoraOreDrops(TekoraBlocks.BAUXITE_ORE.get(), TekoraItems.BAUXITE.get());

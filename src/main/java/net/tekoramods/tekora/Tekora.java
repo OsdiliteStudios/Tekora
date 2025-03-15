@@ -20,6 +20,7 @@ import net.tekoramods.tekora.fluid.TekoraFluidTypes;
 import net.tekoramods.tekora.item.TekoraItems;
 import net.tekoramods.tekora.item.TekoraCreativeTabs;
 import net.tekoramods.tekora.menu.TekoraMenus;
+import net.tekoramods.tekora.menu.screens.ItemTransportScreen;
 import net.tekoramods.tekora.menu.screens.KilnFurnaceScreen;
 import org.slf4j.Logger;
 
@@ -50,12 +51,10 @@ public class Tekora {
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
-            // todo
-        }
-        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            // todo
-        }
+//        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
+//        }
+//        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+//        }
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -63,6 +62,7 @@ public class Tekora {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             MenuScreens.register(TekoraMenus.KILN_FURNACE_MENU.get(), KilnFurnaceScreen::new);
+            MenuScreens.register(TekoraMenus.ITEM_TRANSPORT_MENU.get(), ItemTransportScreen::new);
         }
 
         @SubscribeEvent

@@ -30,22 +30,22 @@ public class KilnFurnaceEntity extends AbstractThermalEntity {
         super(TekoraBlockEntities.KILN_FURNACE.get(), pPos, pBlockState);
     }
 
-    public void clearContents() {
-        inventory.setStackInSlot(0, ItemStack.EMPTY);
-    }
-
     @Override
     public Component getDisplayName() {
         return Component.translatable("block.tekora.kiln_furnace");
+    }
+
+    public ItemStackHandler getInventory() {
+        return inventory;
+    }
+
+    public void clearContents() {
+        inventory.setStackInSlot(0, ItemStack.EMPTY);
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return new KilnFurnaceMenu(pContainerId, pPlayerInventory, this);
-    }
-
-    public ItemStackHandler getInventory() {
-        return inventory;
     }
 }

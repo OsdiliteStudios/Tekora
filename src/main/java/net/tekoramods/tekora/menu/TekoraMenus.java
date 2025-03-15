@@ -24,10 +24,8 @@ public class TekoraMenus {
     //            () -> IForgeMenuType.create(FluidInputMenu::new));
     //    public static final RegistryObject<MenuType<FluidOutputMenu>> FLUID_OUTPUT_MENU = MENUS.register("fluid_output",
     //            () -> IForgeMenuType.create(FluidOutputMenu::new));
-    //    public static final RegistryObject<MenuType<ItemInputMenu>> ITEM_INPUT_MENU = MENUS.register("item_input",
-    //            () -> IForgeMenuType.create(ItemInputMenu::new));
-    //    public static final RegistryObject<MenuType<ItemOutputMenu>> ITEM_OUTPUT_MENU = MENUS.register("item_output",
-    //            () -> IForgeMenuType.create(ItemOutputMenu::new));
+        public static final RegistryObject<MenuType<ItemTransportMenu>> ITEM_TRANSPORT_MENU = MENUS.register("item_transport_menu",
+                () -> IForgeMenuType.create(ItemTransportMenu::new));
 
     public static void register(IEventBus eventBus) {
         MENUS.register(eventBus);

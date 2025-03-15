@@ -919,5 +919,7 @@
   "tooltip.tekora.health_hazard": "Health Hazard",
   "tooltip.tekora.flammability": "Flammability",
   "tooltip.tekora.reactivity": "Reactivity",
-  "tooltip.tekora.tier": "Tier"
+  "tooltip.tekora.tier": "Tier",
+  "block.tekora.item_output_block": "Item Output Block",
+  "block.tekora.item_input_block": "Item Input Block"
 }

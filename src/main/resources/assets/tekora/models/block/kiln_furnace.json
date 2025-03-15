@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "tekora:block/kiln_furnace_front",
+    "side": "tekora:block/firebricks",
+    "top": "tekora:block/firebricks"
+  }
+}

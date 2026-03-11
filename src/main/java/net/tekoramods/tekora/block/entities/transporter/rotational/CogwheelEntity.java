@@ -17,6 +17,8 @@ public class CogwheelEntity extends RotationalAbstractEntity {
         super(pType, pPos, pBlockState, pComponentMass);
     }
 
+    private float rotation; // todo, attach this later on to the force and acceleration values related to this block entity
+
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (!pLevel.isClientSide) {
@@ -49,6 +51,14 @@ public class CogwheelEntity extends RotationalAbstractEntity {
             }
         }
         super.tick(pLevel, pPos, pState);
+    }
+
+    public float getRenderingRotation() {
+        rotation += 0.5f; // todo, check the todo for the rotation definition.
+        if (rotation >= 90 || rotation <= 90) {
+            rotation = 0;
+        }
+        return rotation;
     }
 
     @Override

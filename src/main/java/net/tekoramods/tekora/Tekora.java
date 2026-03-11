@@ -3,6 +3,7 @@ package net.tekoramods.tekora;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.tekoramods.tekora.block.TekoraBlocks;
 import net.tekoramods.tekora.block.entities.TekoraBlockEntities;
+import net.tekoramods.tekora.block.models.cog.CogwheelRenderer;
 import net.tekoramods.tekora.fluid.TekoraFluidTypes;
 import net.tekoramods.tekora.item.TekoraItems;
 import net.tekoramods.tekora.item.TekoraCreativeTabs;
@@ -73,6 +75,11 @@ public class Tekora {
 
         @SubscribeEvent
         public static void registerBlockColor(RegisterColorHandlersEvent.Block event) {
+        }
+
+        @SubscribeEvent
+        public static void registerBlockRenderer(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(TekoraBlockEntities.WOODEN_COGWHEEL.get(), CogwheelRenderer::new);
         }
     }
 }

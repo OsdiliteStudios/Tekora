@@ -1,8 +1,10 @@
 package net.osdilites.tekora.datagen;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -113,29 +115,29 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
         oreBlasting(TekoraTags.Items.RAW_ZINC, TekoraItems.ZINC_INGOT.get());
 
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TekoraItems.INFUSED_CLAY.get(), 4)
+        shapeless(RecipeCategory.MISC, TekoraItems.INFUSED_CLAY.get(), 4)
                 .requires(Items.CLAY_BALL, 2).requires(TekoraItems.BAUXITE.get(), 2).group("infused_clay")
                 .unlockedBy(getHasName(Items.CLAY), has(Items.CLAY))
-                .save(Tekora.MODID + ":infused_clay_recipe_1");
+                .save(output,Tekora.MODID + ":infused_clay_recipe_1");
 
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TekoraBlocks.FIREBRICKS.get(), 1)
+        shapeless(RecipeCategory.MISC, TekoraBlocks.FIREBRICKS.get(), 1)
                 .requires(TekoraItems.FIRE_BRICK.get(), 4).group("firebricks")
                 .unlockedBy(getHasName(TekoraItems.FIRE_BRICK.get()), has(TekoraItems.FIRE_BRICK.get()))
-                .save(pWriter);
+                .save(output);
 
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(TekoraItems.INFUSED_CLAY.get()), RecipeCategory.MISC,
                         TekoraItems.FIRE_BRICK.get(), 1, 200)
                 .group("fire_brick").unlockedBy(getHasName(TekoraItems.INFUSED_CLAY.get()), has(TekoraItems.INFUSED_CLAY.get()))
-                .save(pWriter,
+                .save(output,
                         Tekora.MODID + ":fire_brick_from_smelting_infused_clay");
 
         cogwheelRecipe(TekoraBlocks.SHAFT.get(), TekoraTags.Items.PLANKS, TekoraTags.Items.SLABS_WOODEN, TekoraBlocks.WOODEN_COGWHEEL.get());
         shaftRecipe(TekoraTags.Items.STEEL_INGOT, TekoraBlocks.SHAFT.get());
     }
     
-    protected static void cogwheelRecipe(ItemLike pShaft, TagKey<Item> pMaterial, TagKey<Item> pHalfMaterial, ItemLike pResult) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pResult)
+    protected void cogwheelRecipe(ItemLike pShaft, TagKey<Item> pMaterial, TagKey<Item> pHalfMaterial, ItemLike pResult) {
+        shaped(RecipeCategory.MISC, pResult)
                 .pattern("010")
                 .pattern("121")
                 .pattern("010")
@@ -143,219 +145,207 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
                 .define('1', pMaterial)
                 .define('2', pShaft)
                 .unlockedBy(getHasName(pShaft), has(pShaft))
-                .save(Tekora.MODID + ":" + getItemName(pResult) + "_from_crafting");
+                .save(output);
     }
 
-    protected static void shaftRecipe(TagKey<Item> pMaterial, ItemLike pResult) {
-        ItemLike item = Ingredient.of(pMaterial).getItems()[0].getItem();
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pResult, 5)
-                .pattern("0")
-                .pattern("0")
-                .pattern("0")
-                .define('0', pMaterial)
-                .unlockedBy(getHasName(item), has(item))
-                .save(Tekora.MODID + ":" + getItemName(pResult) + "_from_crafting");
+    protected void shaftRecipe(TagKey<Item> pMaterial, ItemLike pResult) {
+//        ItemLike item = Ingredient.of(pMaterial).getItems()[0].getItem();
+//        shaped(RecipeCategory.MISC, pResult, 5)
+//                .pattern("0")
+//                .pattern("0")
+//                .pattern("0")
+//                .define('0', pMaterial)
+//                .unlockedBy(getHasName(item), has(item))
+//                .save(output);
     }
 
-    protected static void oreBlasting(ItemLike pIngredients, ItemLike pResult) {
+    protected void oreBlasting(ItemLike pIngredients, ItemLike pResult) {
         oreBlasting(List.of(pIngredients), pResult, getItemName(pResult.asItem()));
     }
 
-    protected static void oreBlasting(RecipeOutput pWriter,
-                                     List<ItemLike> pIngredients, ItemLike pResult, String pGroup) {
+    protected void oreBlasting(List<ItemLike> pIngredients, ItemLike pResult, String pGroup) {
         for(ItemLike itemlike : pIngredients) {
             SimpleCookingRecipeBuilder.blasting(Ingredient.of(itemlike), RecipeCategory.MISC, pResult, 1, 100)
                     .group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
-                    .save(pWriter,
+                    .save(output,
                             Tekora.MODID + ":" + getItemName(pResult) + "_from_blasting_" + getItemName(itemlike));
 
             SimpleCookingRecipeBuilder.smelting(Ingredient.of(itemlike), RecipeCategory.MISC, pResult, 1, 200)
                     .group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
-                    .save(pWriter,
+                    .save(output,
                             Tekora.MODID + ":" + getItemName(pResult) + "_from_smelting_" + getItemName(itemlike));
         }
     }
 
-    protected static void oreBlasting(RecipeOutput pWriter,
-                                     TagKey<Item> pIngredients, ItemLike pResult) {
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(pIngredients), RecipeCategory.MISC, pResult, 1, 100)
-             .group(getItemName(pResult)).unlockedBy(getHasName(pResult), has(pIngredients))
-             .save(pWriter,
-                     Tekora.MODID + ":" + getItemName(pResult) + "_from_blasting" +
-                             pIngredients.location().getPath().replace('/', '_'));
-
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(pIngredients), RecipeCategory.MISC, pResult, 1, 200)
-                .group(getItemName(pResult)).unlockedBy(getHasName(pResult), has(pIngredients))
-                .save(pWriter,
-                        Tekora.MODID + ":" + getItemName(pResult) + "_from_smelting" +
-                                pIngredients.location().getPath().replace('/', '_'));
+    protected void oreBlasting(TagKey<Item> pIngredients, ItemLike pResult) {
+        String loc = pIngredients.location().getPath().replace('/', '_');
+//        oreBlasting(pIngredients, RecipeCategory.MISC, pResult, 1, 100)
+//             .group(getItemName(pResult)).unlockedBy(getHasName(pResult), has(pIngredients))
+//             .save(output,
+//                     Tekora.MODID + ":" + getItemName(pResult) + "_from_blasting" + loc);
+//
+//        oreSmelting(Ingredient.of(pIngredients), RecipeCategory.MISC, pResult, 1, 200)
+//                .group(getItemName(pResult)).unlockedBy(getHasName(pResult), has(pIngredients))
+//                .save(output,
+//                        Tekora.MODID + ":" + getItemName(pResult) + "_from_smelting" + loc);
     }
-    protected static void nineBlockStorageRecipes(RecipeOutput pWriter,
-                                                  ItemLike pResult, TagKey<Item> pInput) {
-        nineBlockStorageRecipes(pResult, Ingredient.of(pInput), Ingredient.of(pInput).getItems()[0].getItem(), pResult.toString());
+    protected void nineBlockStorageRecipes(ItemLike pResult, TagKey<Item> pInput) {
+        //nineBlockStorageRecipes(pResult, Ingredient.of(pInput), Ingredient.of(pInput).getItems()[0].getItem(), pResult.toString());
     }
 
-    protected static void nineBlockStorageRecipes(ItemLike pResult, ItemLike pInput) {
+    protected void nineBlockStorageRecipes(ItemLike pResult, ItemLike pInput) {
         nineBlockStorageRecipes(pResult, Ingredient.of(pInput), pInput, pResult.toString());
     }
 
-    protected static void nineBlockStorageRecipes(ItemLike pResult, Ingredient pInput,
+    protected void nineBlockStorageRecipes(ItemLike pResult, Ingredient pInput,
                                                   ItemLike pUnlocker, @Nullable String pGroup) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, pResult, 9)
+        shapeless(RecipeCategory.MISC, pResult, 9)
                 .requires(pInput).group(pGroup)
                 .unlockedBy(getHasName(pUnlocker), has(pUnlocker))
-                .save(pWriter);
+                .save(output);
     }
 
-    protected static void storageBlockRecipe(ItemLike pResult, TagKey<Item> pInput) {
-        storageBlockRecipe(pResult, Ingredient.of(pInput), Ingredient.of(pInput).getItems()[0].getItem(), pResult.toString());
+    protected void storageBlockRecipe(ItemLike pResult, TagKey<Item> pInput) {
+        //storageBlockRecipe(pResult, Ingredient.of(pInput), Ingredient.of(pInput).getItems()[0].getItem(), pResult.toString());
     }
 
-    protected static void storageBlockRecipe(ItemLike pResult, ItemLike pInput) {
+    protected void storageBlockRecipe(ItemLike pResult, ItemLike pInput) {
         storageBlockRecipe(pResult, Ingredient.of(pInput), pInput, pResult.toString());
     }
 
-    protected static void storageBlockRecipe(RecipeOutput pWriter,
-                                             ItemLike pResult, Ingredient pInput, ItemLike pUnlocker, @Nullable String pGroup) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, pResult)
+    protected void storageBlockRecipe(ItemLike pResult, Ingredient pInput, ItemLike pUnlocker, @Nullable String pGroup) {
+        shapeless(RecipeCategory.MISC, pResult)
                 .requires(pInput, 9).group(pGroup)
                 .unlockedBy(getHasName(pUnlocker), has(pUnlocker))
-                .save(getItemName(pResult) + "_from_components");
+                .save(output);
     }
 
-//    protected static void compressionRecipe(ItemLike pInput, ItemLike pResult) {
+//    protected void compressionRecipe(ItemLike pInput, ItemLike pResult) {
 //        compressionRecipe(Ingredient.of(pInput), pResult);
 //    }
 //
-//    protected static void compressionRecipe(TagKey<Item> pInput, ItemLike pResult) {
+//    protected void compressionRecipe(TagKey<Item> pInput, ItemLike pResult) {
 //        compressionRecipe(Ingredient.of(pInput), pResult);
 //    }
 
-//    protected static void compressionRecipe(Ingredient pInput, ItemLike pResult) {
+//    protected void compressionRecipe(Ingredient pInput, ItemLike pResult) {
 //        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, pResult)
 //                .requires(pInput).requires(TekoraTags.Items.HAMMER).group(pResult.asItem().toString())
 //                .unlockedBy(getHasName(TekoraItems.IRON_HAMMER.get()), has(TekoraItems.IRON_HAMMER.get()))
 //                .save(getItemName(pResult) + "_from_hammer");
 //    }
 
-    protected static void upgradeSmithingRecipe(ItemLike[] pBase, Ingredient pMaterial, ItemLike pUpgrader,
-                                                     ItemLike[] pResults) {
-        for (int i = 0; i < pBase.length; i++) {
-            SmithingTransformRecipeBuilder.smithing(Ingredient.of(pUpgrader), Ingredient.of(pBase[i]),
-                            pMaterial, RecipeCategory.MISC, pResults[i].asItem())
-                    .unlocks(getHasName(pBase[i]), has(pBase[i]))
-                    .save(ResourceLocation.fromNamespaceAndPath(Tekora.MODID,
-                            getItemName(pResults[i]) + "_from_" + getItemName(pBase[i]) + "_smithing"));
-        }
+    protected void upgradeSmithingRecipe(Item pUpgrader) {
+        trimSmithing(pUpgrader, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, "osdilites")));
     }
 
-    protected static void armorRecipe(Ingredient pMaterial, ItemLike[] pArmorItems) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pArmorItems[0])
+    protected void armorRecipe(Ingredient pMaterial, ItemLike[] pArmorItems) {
+        shaped(RecipeCategory.MISC, pArmorItems[0])
                 .pattern("000")
                 .pattern("0 0")
                 .define('0', pMaterial)
                 .unlockedBy(getHasName(pArmorItems[0]), has(pArmorItems[0]))
-                .save(Tekora.MODID + ":" + pArmorItems[0] + "_from_crafting");
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pArmorItems[1])
+        shaped(RecipeCategory.MISC, pArmorItems[1])
                 .pattern("0 0")
                 .pattern("000")
                 .pattern("000")
                 .define('0', pMaterial)
                 .unlockedBy(getHasName(pArmorItems[1]), has(pArmorItems[1]))
-                .save(Tekora.MODID + ":" + pArmorItems[1] + "_from_crafting");
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pArmorItems[2])
+        shaped(RecipeCategory.MISC, pArmorItems[2])
                 .pattern("000")
                 .pattern("0 0")
                 .pattern("0 0")
                 .define('0', pMaterial)
                 .unlockedBy(getHasName(pArmorItems[2]), has(pArmorItems[2]))
-                .save(Tekora.MODID + ":" + pArmorItems[2] + "_from_crafting");
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pArmorItems[3])
+        shaped(RecipeCategory.MISC, pArmorItems[3])
                 .pattern("0 0")
                 .pattern("0 0")
                 .define('0', pMaterial)
                 .unlockedBy(getHasName(pArmorItems[3]), has(pArmorItems[3]))
-                .save(Tekora.MODID + ":" + pArmorItems[3] + "_from_crafting");
+                .save(output);
     }
 
-    protected static void toolRecipe(Ingredient pMaterial, ItemLike[] pToolItems) {
+    protected void toolRecipe(Ingredient pMaterial, ItemLike[] pToolItems) {
         toolRecipe(pMaterial, Ingredient.of(Items.STICK), pToolItems);
     }
 
-    protected static void toolRecipe(Ingredient pMaterial, Ingredient pStick, ItemLike[] pToolItems) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[0])
+    protected void toolRecipe(Ingredient pMaterial, Ingredient pStick, ItemLike[] pToolItems) {
+        shaped(RecipeCategory.MISC, pToolItems[0])
                 .pattern("0")
                 .pattern("0")
                 .pattern("1")
                 .define('0', pMaterial).define('1', pStick)
                 .unlockedBy(getHasName(pToolItems[0]), has(pToolItems[0]))
-                .save(Tekora.MODID + ":" + pToolItems[0] + "_from_crafting");
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[1])
+        shaped(RecipeCategory.MISC, pToolItems[1])
                 .pattern("000")
                 .pattern(" 1 ")
                 .pattern(" 1 ")
                 .define('0', pMaterial).define('1', pStick)
                 .unlockedBy(getHasName(pToolItems[1]), has(pToolItems[1]))
-                .save(Tekora.MODID + ":" + pToolItems[1] + "_from_crafting");
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[2])
+        shaped(RecipeCategory.MISC, pToolItems[2])
                 .pattern("00")
                 .pattern("01")
                 .pattern(" 1")
                 .define('0', pMaterial).define('1', pStick)
                 .unlockedBy(getHasName(pToolItems[2]), has(pToolItems[2]))
-                .save(Tekora.MODID + ":" + pToolItems[2] + "_from_crafting");
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[2])
+        shaped(RecipeCategory.MISC, pToolItems[2])
                 .pattern("00")
                 .pattern("10")
                 .pattern("1 ")
                 .define('0', pMaterial).define('1', pStick)
                 .unlockedBy(getHasName(pToolItems[2]), has(pToolItems[2]))
-                .save(Tekora.MODID + ":" + pToolItems[2] + "_from_crafting_inverted");
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[3])
+        shaped(RecipeCategory.MISC, pToolItems[3])
                 .pattern("0")
                 .pattern("1")
                 .pattern("1")
                 .define('0', pMaterial).define('1', pStick)
                 .unlockedBy(getHasName(pToolItems[3]), has(pToolItems[3]))
-                .save(Tekora.MODID + ":" + pToolItems[3] + "_from_crafting");
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[4])
+        shaped(RecipeCategory.MISC, pToolItems[4])
                 .pattern("00")
                 .pattern(" 1")
                 .pattern(" 1")
                 .define('0', pMaterial).define('1', pStick)
                 .unlockedBy(getHasName(pToolItems[4]), has(pToolItems[4]))
-                .save(Tekora.MODID + ":" + pToolItems[4] + "_from_crafting");
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pToolItems[4])
+        shaped(RecipeCategory.MISC, pToolItems[4])
                 .pattern("00")
                 .pattern("1 ")
                 .pattern("1 ")
                 .define('0', pMaterial).define('1', pStick)
                 .unlockedBy(getHasName(pToolItems[4]), has(pToolItems[4]))
-                .save(Tekora.MODID + ":" + pToolItems[4] + "_from_crafting_inverted");
+                .save(output);
 
         createHammerRecipe(pMaterial, pStick, pToolItems[5]);
     }
 
-    protected static void createHammerRecipe(Ingredient pMaterial, ItemLike pHammer) {
+    protected void createHammerRecipe(Ingredient pMaterial, ItemLike pHammer) {
         createHammerRecipe(pMaterial, Ingredient.of(Items.STICK), pHammer);
     }
 
-    protected static void createHammerRecipe(Ingredient pMaterial, Ingredient pStick, ItemLike pHammer) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pHammer)
+    protected void createHammerRecipe(Ingredient pMaterial, Ingredient pStick, ItemLike pHammer) {
+        shaped(RecipeCategory.MISC, pHammer)
                 .pattern("000")
                 .pattern("000")
                 .pattern(" 1 ")
                 .define('0', pMaterial).define('1', pStick)
                 .unlockedBy(getHasName(pHammer), has(pHammer))
-                .save(Tekora.MODID + ":" + pHammer + "_from_crafting");
+                .save(output);
     }
 }

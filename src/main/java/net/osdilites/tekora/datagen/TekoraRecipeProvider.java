@@ -107,12 +107,12 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
         storageBlockRecipe(TekoraBlocks.RAW_TIN_BLOCK.get(), TekoraTags.Items.RAW_TIN);
         storageBlockRecipe(TekoraBlocks.RAW_ZINC_BLOCK.get(), TekoraTags.Items.RAW_ZINC);
 
-        oreBlasting(TekoraTags.Items.RAW_LEAD, TekoraItems.LEAD_INGOT.get());
-        oreBlasting(TekoraTags.Items.RAW_NICKEL, TekoraItems.NICKEL_INGOT.get());
-        oreBlasting(TekoraTags.Items.RAW_PLATINUM, TekoraItems.PLATINUM_INGOT.get());
-        oreBlasting(TekoraTags.Items.RAW_SILVER, TekoraItems.SILVER_INGOT.get());
-        oreBlasting(TekoraTags.Items.RAW_TIN, TekoraItems.TIN_INGOT.get());
-        oreBlasting(TekoraTags.Items.RAW_ZINC, TekoraItems.ZINC_INGOT.get());
+        oreBlasting(TekoraItems.RAW_LEAD.get(), TekoraItems.LEAD_INGOT.get());
+        oreBlasting(TekoraItems.RAW_NICKEL.get(), TekoraItems.NICKEL_INGOT.get());
+        oreBlasting(TekoraItems.RAW_PLATINUM.get(), TekoraItems.PLATINUM_INGOT.get());
+        oreBlasting(TekoraItems.RAW_SILVER.get(), TekoraItems.SILVER_INGOT.get());
+        oreBlasting(TekoraItems.RAW_TIN.get(), TekoraItems.TIN_INGOT.get());
+        oreBlasting(TekoraItems.RAW_ZINC.get(), TekoraItems.ZINC_INGOT.get());
 
 
         shapeless(RecipeCategory.MISC, TekoraItems.INFUSED_CLAY.get(), 4)
@@ -133,7 +133,7 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
                         Tekora.MODID + ":fire_brick_from_smelting_infused_clay");
 
         cogwheelRecipe(TekoraBlocks.SHAFT.get(), TekoraTags.Items.PLANKS, TekoraTags.Items.SLABS_WOODEN, TekoraBlocks.WOODEN_COGWHEEL.get());
-        shaftRecipe(TekoraTags.Items.STEEL_INGOT, TekoraBlocks.SHAFT.get());
+        shaftRecipe(Ingredient.of(TekoraItems.STEEL_INGOT.get()), TekoraBlocks.SHAFT.get());
     }
     
     protected void cogwheelRecipe(ItemLike pShaft, TagKey<Item> pMaterial, TagKey<Item> pHalfMaterial, ItemLike pResult) {
@@ -148,19 +148,19 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
                 .save(output);
     }
 
-    protected void shaftRecipe(TagKey<Item> pMaterial, ItemLike pResult) {
-//        ItemLike item = Ingredient.of(pMaterial).getItems()[0].getItem();
-//        shaped(RecipeCategory.MISC, pResult, 5)
-//                .pattern("0")
-//                .pattern("0")
-//                .pattern("0")
-//                .define('0', pMaterial)
-//                .unlockedBy(getHasName(item), has(item))
-//                .save(output);
+    protected void shaftRecipe(Ingredient pMaterial, ItemLike pResult) {
+        ItemLike item = pMaterial.items().getFirst().get();
+        shaped(RecipeCategory.MISC, pResult, 5)
+                .pattern("0")
+                .pattern("0")
+                .pattern("0")
+                .define('0', pMaterial)
+                .unlockedBy(getHasName(item), has(item))
+                .save(output);
     }
 
     protected void oreBlasting(ItemLike pIngredients, ItemLike pResult) {
-        oreBlasting(List.of(pIngredients), pResult, getItemName(pResult.asItem()));
+        oreBlasting(List.of(pIngredients), pResult, getItemName(pResult.asItem()) + "_blasting");
     }
 
     protected void oreBlasting(List<ItemLike> pIngredients, ItemLike pResult, String pGroup) {
@@ -177,18 +177,6 @@ public class TekoraRecipeProvider extends RecipeProvider implements IConditionBu
         }
     }
 
-    protected void oreBlasting(TagKey<Item> pIngredients, ItemLike pResult) {
-        String loc = pIngredients.location().getPath().replace('/', '_');
-//        oreBlasting(pIngredients, RecipeCategory.MISC, pResult, 1, 100)
-//             .group(getItemName(pResult)).unlockedBy(getHasName(pResult), has(pIngredients))
-//             .save(output,
-//                     Tekora.MODID + ":" + getItemName(pResult) + "_from_blasting" + loc);
-//
-//        oreSmelting(Ingredient.of(pIngredients), RecipeCategory.MISC, pResult, 1, 200)
-//                .group(getItemName(pResult)).unlockedBy(getHasName(pResult), has(pIngredients))
-//                .save(output,
-//                        Tekora.MODID + ":" + getItemName(pResult) + "_from_smelting" + loc);
-    }
     protected void nineBlockStorageRecipes(ItemLike pResult, TagKey<Item> pInput) {
         //nineBlockStorageRecipes(pResult, Ingredient.of(pInput), Ingredient.of(pInput).getItems()[0].getItem(), pResult.toString());
     }

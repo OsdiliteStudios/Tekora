@@ -1,4 +1,4 @@
-package net.osdilites.tekora.block.models.cog;
+package net.osdilites.tekora.block.entities.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

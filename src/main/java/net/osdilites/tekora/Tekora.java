@@ -16,7 +16,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
-import net.osdilites.tekora.block.models.cog.CogwheelRenderer;
+import net.osdilites.tekora.block.entities.renderer.CogwheelRenderer;
 import net.osdilites.tekora.fluid.TekoraFluidTypes;
 import net.osdilites.tekora.item.TekoraItems;
 import net.osdilites.tekora.item.TekoraCreativeTabs;

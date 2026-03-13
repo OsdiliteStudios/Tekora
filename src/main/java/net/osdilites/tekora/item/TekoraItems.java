@@ -2,7 +2,10 @@ package net.osdilites.tekora.item;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
@@ -21,6 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class TekoraItems {
   public static final DeferredRegister<Item> ITEMS =
@@ -108,6 +112,11 @@ public class TekoraItems {
         return InteractionResult.PASS;
       }
       return super.useOn(pContext);
+    }
+
+    public static RegistryObject<Item> registerItem(String name, Function<Properties, Item> function) {
+      return ITEMS.register(name, () -> function.apply(new Item.Properties()
+              .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, name)))));
     }
 
     @Override

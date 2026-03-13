@@ -31,7 +31,7 @@ public class DataGenerators {
         generator.addProvider(includeServer,
                 new TekoraItemTagGenerator(output, lookup, blockTagGenerator.contentsGetter(), fileHelper));
 
-        generator.addProvider(includeServer, new TekoraRecipeProvider(output, lookup));
+        generator.addProvider(includeServer, new TekoraRecipeProvider.Runner(output, lookup));
         generator.addProvider(includeServer, new LootTableProvider(output, Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(TekoraBlockLootTables::new, LootContextParamSets.BLOCK)), lookup));
 

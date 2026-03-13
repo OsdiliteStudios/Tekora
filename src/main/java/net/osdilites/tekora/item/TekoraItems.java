@@ -101,7 +101,7 @@ public class TekoraItems {
             msg += "Object is currently " + (state.getValue(AbstractThermalMachine.LIT) ? "" : "not ") + "lit\n";
           }
           if (!msg.isEmpty()) {
-            player.sendSystemMessage(Component.literal(msg));
+            player.displayClientMessage(Component.literal(msg), false);
             return InteractionResult.CONSUME;
           }
         }

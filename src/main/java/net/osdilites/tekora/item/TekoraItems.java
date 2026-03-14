@@ -30,60 +30,60 @@ public class TekoraItems {
   public static final DeferredRegister<Item> ITEMS =
       DeferredRegister.create(ForgeRegistries.ITEMS, Tekora.MODID);
 
-  public static final RegistryObject<Item> AQUAMARINE = ITEMS.register("aquamarine", TekoraItem::new);
-  public static final RegistryObject<Item> BAUXITE = ITEMS.register("bauxite", TekoraItem::new);
-  //public static final RegistryObject<Item> CHROMITE = ITEMS.register("chromite", TekoraItem::new);
-  public static final RegistryObject<Item> CINNABAR = ITEMS.register("cinnabar", TekoraItem::new);
-  //public static final RegistryObject<Item> COLTAN = ITEMS.register("coltan", TekoraItem::new);
-  public static final RegistryObject<Item> DOLOMITE = ITEMS.register("dolomite", TekoraItem::new);
-  public static final RegistryObject<Item> FLUORITE = ITEMS.register("fluorite", TekoraItem::new);
-  public static final RegistryObject<Item> HALITE = ITEMS.register("halite", TekoraItem::new);
-  //public static final RegistryObject<Item> MONAZITE = ITEMS.register("monazite", TekoraItem::new);
-  //public static final RegistryObject<Item> PYROLUSITE = ITEMS.register("pyrolusite", TekoraItem::new);
-  public static final RegistryObject<Item> RUBY = ITEMS.register("ruby", TekoraItem::new);
-  //public static final RegistryObject<Item> RUTILE = ITEMS.register("rutile", TekoraItem::new);
-  public static final RegistryObject<Item> SAPPHIRE = ITEMS.register("sapphire", TekoraItem::new);
-  //public static final RegistryObject<Item> URANINITE = ITEMS.register("uraninite", TekoraItem::new);
-  public static final RegistryObject<Item> WOLFRAMITE = ITEMS.register("wolframite", TekoraItem::new);
-  //public static final RegistryObject<Item> ZIRCON = ITEMS.register("zircon", TekoraItem::new);
+  public static final RegistryObject<Item> AQUAMARINE = registerItem("aquamarine");
+  public static final RegistryObject<Item> BAUXITE = registerItem("bauxite");
+  //public static final RegistryObject<Item> CHROMITE = registerItem("chromite");
+  public static final RegistryObject<Item> CINNABAR = registerItem("cinnabar");
+  //public static final RegistryObject<Item> COLTAN = registerItem("coltan");
+  public static final RegistryObject<Item> DOLOMITE = registerItem("dolomite");
+  public static final RegistryObject<Item> FLUORITE = registerItem("fluorite");
+  public static final RegistryObject<Item> HALITE = registerItem("halite");
+  //public static final RegistryObject<Item> MONAZITE = registerItem("monazite");
+  //public static final RegistryObject<Item> PYROLUSITE = registerItem("pyrolusite");
+  public static final RegistryObject<Item> RUBY = registerItem("ruby");
+  //public static final RegistryObject<Item> RUTILE = registerItem("rutile");
+  public static final RegistryObject<Item> SAPPHIRE = registerItem("sapphire");
+  //public static final RegistryObject<Item> URANINITE = registerItem("uraninite");
+  public static final RegistryObject<Item> WOLFRAMITE = registerItem("wolframite");
+  //public static final RegistryObject<Item> ZIRCON = registerItem("zircon");
 
-  public static final RegistryObject<Item> RAW_LEAD = ITEMS.register("raw_lead", TekoraItem::new);
-  public static final RegistryObject<Item> RAW_NICKEL = ITEMS.register("raw_nickel", TekoraItem::new);
-  public static final RegistryObject<Item> RAW_SILVER = ITEMS.register("raw_silver", TekoraItem::new);
-  public static final RegistryObject<Item> RAW_PLATINUM = ITEMS.register("raw_platinum", TekoraItem::new);
-  public static final RegistryObject<Item> RAW_TIN = ITEMS.register("raw_tin", TekoraItem::new);
-  public static final RegistryObject<Item> RAW_ZINC = ITEMS.register("raw_zinc", TekoraItem::new);
+  public static final RegistryObject<Item> RAW_LEAD = registerItem("raw_lead");
+  public static final RegistryObject<Item> RAW_NICKEL = registerItem("raw_nickel");
+  public static final RegistryObject<Item> RAW_SILVER = registerItem("raw_silver");
+  public static final RegistryObject<Item> RAW_PLATINUM = registerItem("raw_platinum");
+  public static final RegistryObject<Item> RAW_TIN = registerItem("raw_tin");
+  public static final RegistryObject<Item> RAW_ZINC = registerItem("raw_zinc");
 
   // "ingots" left to add: antimony, arsenic, silicon
-  public static final RegistryObject<Item> ALUMINUM_INGOT = ITEMS.register("aluminum_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> BISMUTH_INGOT = ITEMS.register("bismuth_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> COBALT_INGOT = ITEMS.register("cobalt_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> LEAD_INGOT = ITEMS.register("lead_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> MAGNESIUM_INGOT = ITEMS.register("magnesium_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> MANGANESE_INGOT = ITEMS.register("manganese_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> MOLYBDENUM_INGOT = ITEMS.register("molybdenum_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> NICKEL_INGOT = ITEMS.register("nickel_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> PLATINUM_INGOT = ITEMS.register("platinum_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> POTASSIUM_INGOT = ITEMS.register("potassium_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> SILVER_INGOT = ITEMS.register("silver_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> SODIUM_INGOT = ITEMS.register("sodium_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> TIN_INGOT = ITEMS.register("tin_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> TUNGSTEN_INGOT = ITEMS.register("tungsten_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> ZINC_INGOT = ITEMS.register("zinc_ingot", TekoraItem::new);
+  public static final RegistryObject<Item> ALUMINUM_INGOT = registerItem("aluminum_ingot");
+  public static final RegistryObject<Item> BISMUTH_INGOT = registerItem("bismuth_ingot");
+  public static final RegistryObject<Item> COBALT_INGOT = registerItem("cobalt_ingot");
+  public static final RegistryObject<Item> LEAD_INGOT = registerItem("lead_ingot");
+  public static final RegistryObject<Item> MAGNESIUM_INGOT = registerItem("magnesium_ingot");
+  public static final RegistryObject<Item> MANGANESE_INGOT = registerItem("manganese_ingot");
+  public static final RegistryObject<Item> MOLYBDENUM_INGOT = registerItem("molybdenum_ingot");
+  public static final RegistryObject<Item> NICKEL_INGOT = registerItem("nickel_ingot");
+  public static final RegistryObject<Item> PLATINUM_INGOT = registerItem("platinum_ingot");
+  public static final RegistryObject<Item> POTASSIUM_INGOT = registerItem("potassium_ingot");
+  public static final RegistryObject<Item> SILVER_INGOT = registerItem("silver_ingot");
+  public static final RegistryObject<Item> SODIUM_INGOT = registerItem("sodium_ingot");
+  public static final RegistryObject<Item> TIN_INGOT = registerItem("tin_ingot");
+  public static final RegistryObject<Item> TUNGSTEN_INGOT = registerItem("tungsten_ingot");
+  public static final RegistryObject<Item> ZINC_INGOT = registerItem("zinc_ingot");
 
-  public static final RegistryObject<Item> BRASS_INGOT = ITEMS.register("brass_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> BRONZE_INGOT = ITEMS.register("bronze_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> CONSTANTAN_INGOT = ITEMS.register("constantan_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> ELECTRUM_INGOT = ITEMS.register("electrum_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> INVAR_INGOT = ITEMS.register("invar_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> STEEL_INGOT = ITEMS.register("steel_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> PEWTER_INGOT = ITEMS.register("pewter_ingot", TekoraItem::new);
-  public static final RegistryObject<Item> TUNGSTEN_STEEL_INGOT = ITEMS.register("tungsten_steel_ingot", TekoraItem::new);
+  public static final RegistryObject<Item> BRASS_INGOT = registerItem("brass_ingot");
+  public static final RegistryObject<Item> BRONZE_INGOT = registerItem("bronze_ingot");
+  public static final RegistryObject<Item> CONSTANTAN_INGOT = registerItem("constantan_ingot");
+  public static final RegistryObject<Item> ELECTRUM_INGOT = registerItem("electrum_ingot");
+  public static final RegistryObject<Item> INVAR_INGOT = registerItem("invar_ingot");
+  public static final RegistryObject<Item> STEEL_INGOT = registerItem("steel_ingot");
+  public static final RegistryObject<Item> PEWTER_INGOT = registerItem("pewter_ingot");
+  public static final RegistryObject<Item> TUNGSTEN_STEEL_INGOT = registerItem("tungsten_steel_ingot");
 
-  public static final RegistryObject<Item> FIRE_BRICK = ITEMS.register("fire_brick", TekoraItem::new); // infused clay in a furnace
-  public static final RegistryObject<Item> INFUSED_CLAY = ITEMS.register("infused_clay", TekoraItem::new); // two parts clay, two parts bauxite
+  public static final RegistryObject<Item> FIRE_BRICK = registerItem("fire_brick"); // infused clay in a furnace
+  public static final RegistryObject<Item> INFUSED_CLAY = registerItem("infused_clay"); // two parts clay, two parts bauxite
 
-  public static final RegistryObject<Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new TekoraItem() {
+  public static final RegistryObject<Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
       Level lvl = pContext.getLevel();
@@ -114,17 +114,20 @@ public class TekoraItems {
       return super.useOn(pContext);
     }
 
-    public static RegistryObject<Item> registerItem(String name, Function<Properties, Item> function) {
-      return ITEMS.register(name, () -> function.apply(new Item.Properties()
-              .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, name)))));
-    }
-
     @Override
     public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
       pTooltipComponents.add(Component.literal("§kEnse chane no es relan din yebale, id salia es por les cerclader de Tekora et les tuime pruba."));
       super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
   }); // must be commented out if Tekora is released.
+
+  private static RegistryObject<Item> registerItem(String name) {
+    return ITEMS.register(name, () -> new TekoraItem(name));
+  }
+
+  private static RegistryObject<Item> registerFireresItem(String name) {
+    return ITEMS.register(name, () -> new TekoraItem(true, name));
+  }
 
   public static void register(IEventBus eventBus) {
     ITEMS.register(eventBus);

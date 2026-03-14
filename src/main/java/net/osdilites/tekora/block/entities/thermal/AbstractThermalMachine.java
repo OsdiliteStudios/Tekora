@@ -2,6 +2,9 @@ package net.osdilites.tekora.block.entities.thermal;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -11,6 +14,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.osdilites.tekora.Tekora;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractThermalMachine extends BaseEntityBlock {
@@ -18,8 +22,8 @@ public abstract class AbstractThermalMachine extends BaseEntityBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
-    protected AbstractThermalMachine(Properties pProperties) {
-        super(pProperties);
+    protected AbstractThermalMachine(Properties pProperties, String pName) {
+        super(pProperties.setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, pName))));
         registerDefaultState(defaultBlockState().setValue(LIT, false).setValue(FACING, Direction.EAST));
     }
 

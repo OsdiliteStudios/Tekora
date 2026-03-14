@@ -22,7 +22,7 @@ public class KilnFurnace extends AbstractThermalMachine {
     public static final MapCodec<KilnFurnace> CODEC = simpleCodec(KilnFurnace::new);
 
     public KilnFurnace(Properties pProperties) {
-        super(pProperties);
+        super(pProperties, "kiln_furnace");
     }
 
     @Override

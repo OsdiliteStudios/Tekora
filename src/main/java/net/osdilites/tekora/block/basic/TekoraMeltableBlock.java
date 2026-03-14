@@ -19,38 +19,38 @@ import net.osdilites.tekora.util.FluidFunctions;
 public class TekoraMeltableBlock extends TekoraBaseBlock {
     private final TekoraFluidData data;
     private final String fluid;
-    public TekoraMeltableBlock(float strength, Block material, SoundType sound, TekoraFluidData pData, String pModid) {
-        super(strength, material, sound);
+    public TekoraMeltableBlock(String name, float strength, Block material, SoundType sound, TekoraFluidData pData, String pModid) {
+        super(name, strength, material, sound);
         this.data = pData;
         this.fluid = pModid + ":" + pData.getLiquidName();
     }
 
-    public TekoraMeltableBlock(float strength, Block material, SoundType sound, TekoraFluidData pData) {
-        this(strength, material, sound, pData, Tekora.MODID);
+    public TekoraMeltableBlock(String name, float strength, Block material, SoundType sound, TekoraFluidData pData) {
+        this(name, strength, material, sound, pData, Tekora.MODID);
     }
 
-    public TekoraMeltableBlock(float strength, Block material, TekoraFluidData pData, String pModid) {
-        this(strength, material, SoundType.METAL, pData, pModid);
+    public TekoraMeltableBlock(String name, float strength, Block material, TekoraFluidData pData, String pModid) {
+        this(name, strength, material, SoundType.METAL, pData, pModid);
     }
 
-    public TekoraMeltableBlock(float strength, Block material, TekoraFluidData pData) {
-        this(strength, material, SoundType.METAL, pData, Tekora.MODID);
+    public TekoraMeltableBlock(String name, float strength, Block material, TekoraFluidData pData) {
+        this(name, strength, material, SoundType.METAL, pData, Tekora.MODID);
     }
 
-    public TekoraMeltableBlock(float strength, TekoraFluidData pData, String pModid) {
-        this(strength, Blocks.IRON_BLOCK, SoundType.METAL, pData, pModid);
+    public TekoraMeltableBlock(String name, float strength, TekoraFluidData pData, String pModid) {
+        this(name, strength, Blocks.IRON_BLOCK, SoundType.METAL, pData, pModid);
     }
 
-    public TekoraMeltableBlock(float strength, TekoraFluidData pData) {
-        this(strength, Blocks.IRON_BLOCK, SoundType.METAL, pData, Tekora.MODID);
+    public TekoraMeltableBlock(String name, float strength, TekoraFluidData pData) {
+        this(name, strength, Blocks.IRON_BLOCK, SoundType.METAL, pData, Tekora.MODID);
     }
 
-    public TekoraMeltableBlock(TekoraFluidData pData, String pModid) {
-        this(5f, Blocks.IRON_BLOCK, SoundType.METAL, pData, pModid);
+    public TekoraMeltableBlock(String name, TekoraFluidData pData, String pModid) {
+        this(name, 5f, Blocks.IRON_BLOCK, SoundType.METAL, pData, pModid);
     }
 
-    public TekoraMeltableBlock(TekoraFluidData pData) {
-        this(5f, Blocks.IRON_BLOCK, SoundType.METAL, pData, Tekora.MODID);
+    public TekoraMeltableBlock(String name, TekoraFluidData pData) {
+        this(name, 5f, Blocks.IRON_BLOCK, SoundType.METAL, pData, Tekora.MODID);
     }
 
     public float getMeltingPoint() {

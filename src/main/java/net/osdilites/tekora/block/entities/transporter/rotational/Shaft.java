@@ -3,6 +3,9 @@ package net.osdilites.tekora.block.entities.transporter.rotational;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -14,6 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,8 +26,8 @@ public abstract class Shaft extends AbstractTekoraAxialBlock {
     private static final VoxelShape SHAPE_Y = box(6, 0, 6, 10, 16, 10);
     private static final VoxelShape SHAPE_Z = box(6, 6, 0, 10, 10, 16);
 
-    public Shaft() {
-        super(Properties.ofFullCopy(Blocks.IRON_BARS).noOcclusion());
+    public Shaft(String pName) {
+        super(Properties.ofFullCopy(Blocks.IRON_BARS).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, pName))));
     }
 
     @Override
@@ -46,6 +50,10 @@ public abstract class Shaft extends AbstractTekoraAxialBlock {
 
     public static class Steel extends Shaft {
         public static final MapCodec<Steel> CODEC = simpleCodec(p -> new Steel());
+
+        public Steel() {
+            super("steel_shaft");
+        }
 
         @Override
         protected MapCodec<? extends BaseEntityBlock> codec() {

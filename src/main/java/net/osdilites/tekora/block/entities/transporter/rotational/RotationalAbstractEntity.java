@@ -12,7 +12,8 @@ import net.osdilites.tekora.util.UtilFunctions;
 public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity {
     protected double force;
     protected Double totalMass;
-    
+    private float rotation; // todo, attach this later on to the force and acceleration values related to this block entity
+
     public RotationalAbstractEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, double pComponentMass) {
         super(pType, pPos, pBlockState, pComponentMass);
     }
@@ -119,5 +120,16 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                 }
             }
         }
+    }
+
+    public float getRenderingRotation() {
+        // the value applied is omega, which is the integral of alpha
+        rotation += 0.01f; // todo, change it to physical sense
+        if (rotation >= 2 * Math.PI) {
+            rotation -= (float) (2 * Math.PI);
+        } else if (rotation < 0) {
+            rotation += (float) (2 * Math.PI);
+        }
+        return rotation;
     }
 }

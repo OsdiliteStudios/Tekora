@@ -13,6 +13,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -34,6 +36,8 @@ public abstract class Cogwheel extends AbstractTekoraAxialBlock {
             box(0, 0, 7, 16, 16, 9),
             (b1, b2) -> b1 || b2);
 
+    private static final EnumProperty<GearType> COMPOSITION = EnumProperty.create("composition", GearType.class);
+
     protected Cogwheel(Properties pProperties) {
         super(pProperties);
     }
@@ -53,9 +57,10 @@ public abstract class Cogwheel extends AbstractTekoraAxialBlock {
 
     @Override
     protected RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.MODEL; // TODO change to animated whenever possible
+        return RenderShape.INVISIBLE;
     }
 
+    @Deprecated
     public static class Wood extends Cogwheel {
         public static final MapCodec<Cogwheel> CODEC = simpleCodec(p -> new Wood());
 

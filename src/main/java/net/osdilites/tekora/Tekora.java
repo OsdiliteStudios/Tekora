@@ -16,7 +16,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
-import net.osdilites.tekora.block.entities.renderer.CogwheelRenderer;
+import net.osdilites.tekora.block.renderer.RotationalEntityRenderer;
 import net.osdilites.tekora.fluid.TekoraFluidTypes;
 import net.osdilites.tekora.item.TekoraItems;
 import net.osdilites.tekora.item.TekoraCreativeTabs;
@@ -79,7 +79,7 @@ public class Tekora {
 
         @SubscribeEvent
         public static void registerBlockRenderer(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerBlockEntityRenderer(TekoraBlockEntities.WOODEN_COGWHEEL.get(), CogwheelRenderer::new);
+            event.registerBlockEntityRenderer(TekoraBlockEntities.WOODEN_COGWHEEL.get(), RotationalEntityRenderer::new);
         }
     }
 }

@@ -1,35 +1,33 @@
-package net.osdilites.tekora.block.entities.renderer;
+package net.osdilites.tekora.block.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractTekoraAxialBlock;
-import net.osdilites.tekora.block.entities.transporter.rotational.CogwheelEntity;
+import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
+import net.osdilites.tekora.util.UtilFunctions;
 
-public class CogwheelRenderer implements BlockEntityRenderer<CogwheelEntity> {
-    public static final Material COGWHEEL_RESOURCE_LOCATION = new Material(TextureAtlas.LOCATION_BLOCKS, ResourceLocation.withDefaultNamespace("block/cogwheel"));
-
+public class RotationalEntityRenderer implements BlockEntityRenderer<RotationalAbstractEntity> {
     private final BlockRenderDispatcher blockRenderer;
 
-    public CogwheelRenderer(BlockEntityRendererProvider.Context pContext) {
+    public RotationalEntityRenderer(BlockEntityRendererProvider.Context pContext) {
         this.blockRenderer = pContext.getBlockRenderDispatcher();
     }
     @Override
-    public void render(CogwheelEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
+    public void render(RotationalAbstractEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
         Level level = pBlockEntity.getLevel();
         if (level != null) {
             ModelBlockRenderer.enableCaching();
@@ -44,13 +42,11 @@ public class CogwheelRenderer implements BlockEntityRenderer<CogwheelEntity> {
                     case 1 -> Axis.YP;
                     default -> Axis.ZP;
                 };
-                pPoseStack.mulPose(rotAxis.rotationDegrees(pBlockEntity.getRenderingRotation()));
-
-                BakedModel model = blockRenderer.getBlockModel(state);
-                ModelData data = ModelData.builder().build();
-                RenderType type = RenderType.cutout();
-                VertexConsumer consumer = COGWHEEL_RESOURCE_LOCATION.buffer(pBufferSource, RenderType::entitySolid);
-                blockRenderer.getModelRenderer().renderModel(pPoseStack.last(), consumer, state, model, 1.0f, 1.0f, 1.0f, pPackedLight, pPackedOverlay, data, type);
+                float rendPos = pBlockEntity.getRenderingRotation();
+                pPoseStack.translate(0.5f, 0.5f, 0.5f);
+                pPoseStack.mulPose(rotAxis.rotation(rendPos));
+                pPoseStack.translate(-0.5f, -0.5f, -0.5f);
+                UtilFunctions.renderInvisibleModels(blockRenderer, state, pPoseStack, pBufferSource, pPackedLight, pPackedOverlay);
                 pPoseStack.popPose();
             }
         }

@@ -22,7 +22,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class Cogwheel extends AbstractTekoraAxialBlock {
+public class Cogwheel extends AbstractTekoraAxialBlock {
     private static final VoxelShape SHAPE_X = Shapes.join(
             box(0, 6, 6, 16, 10, 10),
             box(7, 0, 0, 9, 16, 16),
@@ -38,8 +38,13 @@ public abstract class Cogwheel extends AbstractTekoraAxialBlock {
 
     private static final EnumProperty<GearType> COMPOSITION = EnumProperty.create("composition", GearType.class);
 
-    protected Cogwheel(Properties pProperties) {
+    public Cogwheel(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return null;
     }
 
     @Override
@@ -58,6 +63,11 @@ public abstract class Cogwheel extends AbstractTekoraAxialBlock {
     @Override
     protected RenderShape getRenderShape(BlockState pState) {
         return RenderShape.INVISIBLE;
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return null;
     }
 
     @Deprecated

@@ -1,5 +1,7 @@
 <h2>About Tekora</h2>
-<p>Tekora is a Minecraft mod developed by <a href="https://bowenleng.github.io/team">The Osdilites</a> as a personal project meant to be all the tech mods in one mod.</p>
+<i>"Technology and ores in Minecraft done scientifically"</i>
+
+<p>Tekora is a Minecraft mod developed by <a href="https://bowenleng.github.io/team">The Osdilites</a> meant to be all the tech mods in one mod.</p>
 <p>The main inspirations behind Tekora are <a href="https://www.curseforge.com/minecraft/mc-mods/create">Create</a>,
 <a href="https://www.curseforge.com/minecraft/mc-mods/gregtechceu-modern">GregTech</a>, and
 <a href="https://www.curseforge.com/minecraft/mc-mods/mekanism">Mekanism</a>. With the main focus of the mod being an extensive system

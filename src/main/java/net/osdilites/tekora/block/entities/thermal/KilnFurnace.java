@@ -10,6 +10,7 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -37,20 +38,18 @@ public class KilnFurnace extends AbstractThermalMachine {
     }
 
     @Override
-    protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        if (pState.getBlock() != pNewState.getBlock()) {
-            if (pLevel.getBlockEntity(pPos) instanceof KilnFurnaceEntity entity) {
-                entity.drops();
-                pLevel.updateNeighbourForOutputSignal(pPos, this);
-            }
+    public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {
+        if (level.getBlockEntity(pos) instanceof KilnFurnaceEntity entity) {
+            entity.drops();
+            level.updateNeighborsAt(pos, this);
         }
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+        super.destroy(level, pos, state);
     }
 
     @Override
     protected InteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         if (pLevel.getBlockEntity(pPos) instanceof KilnFurnaceEntity entity) {
-            if (!pPlayer.isCrouching() && !pLevel.isClientSide) {
+            if (!pPlayer.isCrouching() && !pLevel.isClientSide()) {
                 ((ServerPlayer) pPlayer).openMenu(new SimpleMenuProvider(entity, Component.translatable("block.tekora.kiln_furnace")), pPos);
             }
         }

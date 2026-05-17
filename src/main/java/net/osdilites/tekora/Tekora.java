@@ -2,18 +2,17 @@ package net.osdilites.tekora;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.block.renderer.RotationalEntityRenderer;
@@ -32,25 +31,20 @@ public class Tekora {
      */
     public static final String MODID = "tekora";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public Tekora() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-        TekoraItems.register(modEventBus);
+    public Tekora(IEventBus modEventBus, ModContainer modContainer) {
+        //modEventBus.addListener(this::commonSetup);
         TekoraBlocks.register(modEventBus);
+        TekoraItems.register(modEventBus);
         TekoraBlockEntities.register(modEventBus);
         TekoraMenus.register(modEventBus);
+
         TekoraCreativeTabs.register(modEventBus);
-        TekoraFluidTypes.register(modEventBus);
-        //TekoraRecipes.register(modEventBus);
-
-        modEventBus.addListener(this::commonSetup);
-        //modEventBus.addListener(this::addCreative);
-
-        MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
+
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
 //        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
 //        }
@@ -58,28 +52,14 @@ public class Tekora {
 //        }
     }
 
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            MenuScreens.register(TekoraMenus.KILN_FURNACE_MENU.get(), KilnFurnaceScreen::new);
-            MenuScreens.register(TekoraMenus.ITEM_TRANSPORT_MENU.get(), ItemTransportScreen::new);
-        }
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+//        MenuScreens.register(TekoraMenus.KILN_FURNACE_MENU, KilnFurnaceScreen::new);
+//        MenuScreens.register(TekoraMenus.ITEM_TRANSPORT_MENU, ItemTransportScreen::new);
+    }
 
-        @SubscribeEvent
-        public static void registerItemColors(RegisterColorHandlersEvent.Item event) {}
-
-        @SubscribeEvent
-        public static void modelInit(ModelEvent.RegisterGeometryLoaders event) {
-        }
-
-        @SubscribeEvent
-        public static void registerBlockColor(RegisterColorHandlersEvent.Block event) {
-        }
-
-        @SubscribeEvent
-        public static void registerBlockRenderer(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerBlockEntityRenderer(TekoraBlockEntities.WOODEN_COGWHEEL.get(), RotationalEntityRenderer::new);
-        }
+    @SubscribeEvent
+    public static void registerBlockRenderer(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(TekoraBlockEntities.COGWHEEL.get(), RotationalEntityRenderer::new);
     }
 }

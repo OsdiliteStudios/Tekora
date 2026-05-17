@@ -1,18 +1,25 @@
-<h2>About Tekora</h2>
-<i>"Technology and ores in Minecraft done scientifically"</i>
 
-<p>Tekora is a Minecraft mod developed by <a href="https://bowenleng.github.io/team">The Osdilites</a> meant to be all the tech mods in one mod.</p>
-<p>The main inspirations behind Tekora are <a href="https://www.curseforge.com/minecraft/mc-mods/create">Create</a>,
-<a href="https://www.curseforge.com/minecraft/mc-mods/gregtechceu-modern">GregTech</a>, and
-<a href="https://www.curseforge.com/minecraft/mc-mods/mekanism">Mekanism</a>. With the main focus of the mod being an extensive system
-of contraptions based on realistic physics and engineering principals and a focus on the extensive system of chemistry.</p>
-<p>This mod is currently in what is called the pre-alpha stage, it is neither feature-complete nor are any of the to-do list for features to implement into Tekora fully implemented at the moment</p>
-<h4>Features Currently Planned For Tekora</h4>
-<ul>
-<li>A system of gears and shafts implementing realistic rotational physics and torque.</li>
-<li>An extensive system of chemistry implementing reaction rate laws and equilibrium constants.</li>
-<li>Every element of the periodic table up to bismuth (element 83) and then some.</li>
-<li>Machines that can manipulate or shape metals, alloys, and mixing things to cause chemical reactions.</li>
-<li>Boats, trains, ships, built like how you would in Create!</li>
-<li>And more!</li>
-</ul>
+Installation information
+=======
+
+This template repository can be directly cloned to get you started with a new
+mod. Simply create a new repository cloned from this one, by following the
+instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+
+Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+
+If at any point you are missing libraries in your IDE, or you've run into problems you can
+run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
+{this does not affect your code} and then start the process again.
+
+Mapping Names:
+============
+By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
+in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
+license. For the latest license text, refer to the mapping file itself, or the reference copy here:
+https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+
+Additional Resources: 
+==========
+Community Documentation: https://docs.neoforged.net/  
+NeoForged Discord: https://discord.neoforged.net/

@@ -13,13 +13,14 @@ public class CogwheelEntity extends RotationalAbstractEntity {
     // public static final double BRASS_MASS = ;
     // public static final double STAINLESS_MASS = ;
 
-    public CogwheelEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, double pComponentMass) {
-        super(pType, pPos, pBlockState, pComponentMass);
+    public CogwheelEntity(BlockPos pPos, BlockState pBlockState) {
+        super(TekoraBlockEntities.COGWHEEL.get(), pPos, pBlockState, WOOD_MASS); // basically component entity varies for different block
+        // todo make the super class use a non final variable for mass.
     }
 
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (!pLevel.isClientSide) {
+        if (!pLevel.isClientSide()) {
             if (pState.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
                 Direction.Axis axis = pState.getValue(AbstractTekoraAxialBlock.AXIS);
                 BlockEntity up = pLevel.getBlockEntity(pPos.above());
@@ -52,14 +53,12 @@ public class CogwheelEntity extends RotationalAbstractEntity {
     }
 
     @Override
-    public double componentRadius() {
-        return 0.5;
+    public double componentResistance() {
+        return 0;
     }
 
-    @Deprecated
-    public static class Wood extends CogwheelEntity {
-        public Wood(BlockPos pPos, BlockState pBlockState) {
-            super(TekoraBlockEntities.WOODEN_COGWHEEL.get(), pPos, pBlockState, WOOD_MASS);
-        }
+    @Override
+    public double componentRadius() {
+        return 0.5;
     }
 }

@@ -11,6 +11,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.data.ModelData;
 
 public class UtilFunctions {
@@ -46,5 +48,20 @@ public class UtilFunctions {
                     pPoseStack.last(), pBufferSource.getBuffer(RenderType.solid()), pState, bakedmodel,
                     f, f1, f2, pPackedLight, pPackedOverlay, ModelData.EMPTY, rt);
 
+    }
+
+    public static VoxelShape[] generateShapeForAllRotations(double pX1, double pY1, double pZ1, double pX2, double pY2, double pZ2) {
+        VoxelShape[] shapes = new VoxelShape[3];
+        shapes[0] = Shapes.box(pX1, pY1, pZ1, pX2, pY2, pZ2);
+        shapes[1] = Shapes.box(pZ1, pX1, pY1, pZ2, pX2, pY2);
+        shapes[2] = Shapes.box(pY1, pZ1, pX1, pY2, pZ2, pX2);
+        return shapes;
+    }
+
+    public static double distance(BlockPos a, BlockPos b) {
+        double dx = a.getX() - b.getX();
+        double dy = a.getY() - b.getY();
+        double dz = a.getZ() - b.getZ();
+        return Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
 }

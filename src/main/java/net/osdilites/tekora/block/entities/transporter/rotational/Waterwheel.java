@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -56,7 +56,7 @@ public abstract class Waterwheel extends AbstractTekoraAxialBlock {
         public static final MapCodec<Wood> CODEC = simpleCodec(p -> new Wood());
 
         public Wood() {
-            super(Properties.ofFullCopy(Blocks.OAK_WOOD).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, "wooden_waterwheel"))));
+            super(Properties.ofFullCopy(Blocks.OAK_WOOD).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, "wooden_waterwheel"))));
         }
 
         @Override

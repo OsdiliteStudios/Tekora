@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -27,7 +27,7 @@ public abstract class Shaft extends AbstractTekoraAxialBlock {
     private static final VoxelShape SHAPE_Z = box(6, 6, 0, 10, 10, 16);
 
     public Shaft(String pName) {
-        super(Properties.ofFullCopy(Blocks.IRON_BARS).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, pName))));
+        super(Properties.ofFullCopy(Blocks.IRON_BARS).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, pName))));
     }
 
     @Override

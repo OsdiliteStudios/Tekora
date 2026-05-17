@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -23,6 +22,8 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
 public class Cogwheel extends AbstractTekoraAxialBlock {
+    public static final MapCodec<Cogwheel> CODEC = simpleCodec(Cogwheel::new);
+
     private static final VoxelShape SHAPE_X = Shapes.join(
             box(0, 6, 6, 16, 10, 10),
             box(7, 0, 0, 9, 16, 16),
@@ -38,13 +39,20 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
 
     private static final EnumProperty<GearType> COMPOSITION = EnumProperty.create("composition", GearType.class);
 
-    public Cogwheel(Properties pProperties) {
-        super(pProperties);
+    private Cogwheel(Properties properties) {
+        super(properties);
+    }
+    public Cogwheel(String name, int cat) {
+        super(Properties.ofFullCopy(switch (cat) {
+            case 1 -> Blocks.OAK_WOOD; // wood
+            case 2 -> Blocks.TINTED_GLASS; // plastic
+            default -> Blocks.IRON_BLOCK; // metals
+        }).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, name))));
     }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return null;
+        return CODEC;
     }
 
     @Override
@@ -75,7 +83,7 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
         public static final MapCodec<Cogwheel> CODEC = simpleCodec(p -> new Wood());
 
         public Wood() {
-            super(Properties.ofFullCopy(Blocks.OAK_WOOD).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, "wooden_cogwheel"))));
+            super("wooden_cogwheel", 1);
         }
 
         @Override
@@ -87,13 +95,13 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
         @Nullable
         @Override
         public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-            return new CogwheelEntity.Wood(blockPos, blockState);
+            return new CogwheelEntity(blockPos, blockState);
         }
 
         @Nullable
         @Override
         public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pType) {
-            return createTickerHelper(pType, TekoraBlockEntities.WOODEN_COGWHEEL.get(), (level, pos, state, block) -> block.tick(level, pos, state));
+            return createTickerHelper(pType, TekoraBlockEntities.COGWHEEL.get(), (level, pos, state, block) -> block.tick(level, pos, state));
         }
     }
 }

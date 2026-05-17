@@ -8,13 +8,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.WaterFluid;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.osdilites.tekora.Tekora;
 
-@Mod.EventBusSubscriber(modid = Tekora.MODID)
 public class WorldEvent {
     @SubscribeEvent
     public static void onAttackEntity(AttackEntityEvent event) {
@@ -35,7 +33,7 @@ public class WorldEvent {
     public static void inWater(BlockEvent event) {
         BlockState state = event.getState();
         if (state.getBlock() instanceof LiquidBlock liquid) {
-            if (liquid.getFluid() instanceof WaterFluid) {
+            if (liquid.fluid instanceof WaterFluid) {
                 // todo make any alkali metals like sodium explode if is in water.
                 // turn into a config option if this proves to be too laggy.
             }

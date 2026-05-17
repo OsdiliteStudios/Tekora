@@ -13,7 +13,9 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class TekoraBlockEntity extends BlockEntity implements MenuProvider {
@@ -28,25 +30,25 @@ public abstract class TekoraBlockEntity extends BlockEntity implements MenuProvi
     }
 
     public void drops() {
-        SimpleContainer inv = new SimpleContainer(getInventory().getSlots());
-        for (int i = 0; i < getInventory().getSlots(); i++) {
-            inv.setItem(i, getInventory().getStackInSlot(i));
-        }
-
-        if (level != null)
-            Containers.dropContents(level, worldPosition, inv);
+//        SimpleContainer inv = new SimpleContainer(getInventory());
+//        for (int i = 0; i < getInventory().getSlots(); i++) {
+//            inv.setItem(i, getInventory().getStackInSlot(i));
+//        }
+//
+//        if (level != null)
+//            Containers.dropContents(level, worldPosition, inv);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
-        pTag.put("inventory", getInventory().serializeNBT(pRegistries));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        //.put("inventory", getInventory().serializeNBT(pRegistries));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
-        getInventory().deserializeNBT(pRegistries, pTag.getCompound("inventory"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        //getInventory().deserializeNBT(pRegistries, pTag.getCompound("inventory"));
     }
 
     @Nullable

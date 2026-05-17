@@ -3,8 +3,8 @@ package net.osdilites.tekora.block.entities.thermal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -23,7 +23,7 @@ public abstract class AbstractThermalMachine extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     protected AbstractThermalMachine(Properties pProperties, String pName) {
-        super(pProperties.setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, pName))));
+        super(pProperties.setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, pName))));
         registerDefaultState(defaultBlockState().setValue(LIT, false).setValue(FACING, Direction.EAST));
     }
 

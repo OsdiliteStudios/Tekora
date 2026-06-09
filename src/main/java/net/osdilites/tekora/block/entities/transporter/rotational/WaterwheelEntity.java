@@ -87,15 +87,4 @@ public abstract class WaterwheelEntity extends RotationalAbstractEntity {
     public double componentRadius() {
         return 1.5;
     }
-
-    public static class Wood extends WaterwheelEntity {
-        public Wood(BlockPos pPos, BlockState pBlockState) {
-            super(TekoraBlockEntities.WOODEN_WATERWHEEL.get(), pPos, pBlockState, WOOD_MASS);
-        }
-
-        @Override
-        public double componentResistance() {
-            return 0;
-        }
-    }
 }

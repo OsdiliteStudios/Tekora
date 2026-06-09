@@ -21,13 +21,6 @@ public class TekoraMenus {
     public static final Supplier<MenuType<KilnFurnaceMenu>> KILN_FURNACE_MENU = MENUS.register("kiln_furnace",
             () -> IMenuTypeExtension.create(KilnFurnaceMenu::new));
 
-    //    public static final RegistryObject<MenuType<FluidInputMenu>> FLUID_INPUT_MENU = MENUS.register("fluid_input",
-    //            () -> IForgeMenuType.create(FluidInputMenu::new));
-    //    public static final RegistryObject<MenuType<FluidOutputMenu>> FLUID_OUTPUT_MENU = MENUS.register("fluid_output",
-    //            () -> IForgeMenuType.create(FluidOutputMenu::new));
-        public static final Supplier<MenuType<ItemTransportMenu>> ITEM_TRANSPORT_MENU = MENUS.register("item_transport_menu",
-                () -> IMenuTypeExtension.create(ItemTransportMenu::new));
-
     public static void register(IEventBus eventBus) {
         MENUS.register(eventBus);
     }

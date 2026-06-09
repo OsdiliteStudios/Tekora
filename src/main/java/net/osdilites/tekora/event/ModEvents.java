@@ -1,8 +1,8 @@
 package net.osdilites.tekora.event;
 
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.fml.common.Mod;
 import net.osdilites.tekora.Tekora;
 
-@Mod.EventBusSubscriber(modid = Tekora.MODID)
+@Mod(Tekora.MODID)
 public class ModEvents {
 }

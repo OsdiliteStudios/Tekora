@@ -1,19 +1,9 @@
 package net.osdilites.tekora.util;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.model.data.ModelData;
 
 public class UtilFunctions {
     public static BlockPos posFromDir(BlockPos pPos, Direction pDir) {
@@ -35,20 +25,20 @@ public class UtilFunctions {
         };
     }
 
-    // renders block models of RenderType.INVISIBLE, essentially overriding a method
-    public static void renderInvisibleModels(BlockRenderDispatcher pRenderer, BlockState pState, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-        BlockColors colors = Minecraft.getInstance().getBlockColors();
-        BakedModel bakedmodel = pRenderer.getBlockModel(pState);
-        int i = colors.getColor(pState, null, null, 0);
-        float f = (float)(i >> 16 & 0xFF) / 255.0F;
-        float f1 = (float)(i >> 8 & 0xFF) / 255.0F;
-        float f2 = (float)(i & 0xFF) / 255.0F;
-        for (var rt : bakedmodel.getRenderTypes(pState, RandomSource.create(42), ModelData.EMPTY))
-            pRenderer.getModelRenderer().renderModel(
-                    pPoseStack.last(), pBufferSource.getBuffer(RenderType.solid()), pState, bakedmodel,
-                    f, f1, f2, pPackedLight, pPackedOverlay, ModelData.EMPTY, rt);
-
-    }
+//    // renders block models of RenderType.INVISIBLE, essentially overriding a method
+//    public static void renderInvisibleModels(BlockEntityRenderDispatcher pRenderer, BlockState pState, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
+//        BlockColors colors = Minecraft.getInstance().getBlockColors();
+//        BakedMo bakedmodel = pRenderer.getBlockModel(pState);
+//        int i = colors.getColor(pState, null, null, 0);
+//        float f = (float)(i >> 16 & 0xFF) / 255.0F;
+//        float f1 = (float)(i >> 8 & 0xFF) / 255.0F;
+//        float f2 = (float)(i & 0xFF) / 255.0F;
+//        for (var rt : bakedmodel.getRenderTypes(pState, RandomSource.create(42), ModelData.EMPTY))
+//            pRenderer.getModelRenderer().renderModel(
+//                    pPoseStack.last(), pBufferSource.getBuffer(RenderType.solid()), pState, bakedmodel,
+//                    f, f1, f2, pPackedLight, pPackedOverlay, ModelData.EMPTY, rt);
+//
+//    }
 
     public static VoxelShape[] generateShapeForAllRotations(double pX1, double pY1, double pZ1, double pX2, double pY2, double pZ2) {
         VoxelShape[] shapes = new VoxelShape[3];

@@ -15,7 +15,7 @@ import net.osdilites.tekora.Tekora;
 
 public class WorldEvent {
     @SubscribeEvent
-    public static void onAttackEntity(AttackEntityEvent event) {
+    public void onAttackEntity(AttackEntityEvent event) {
         Entity target = event.getTarget();
         if (target instanceof LivingEntity living) {
             Player player = event.getEntity();
@@ -30,7 +30,7 @@ public class WorldEvent {
         }
     }
 
-    public static void inWater(BlockEvent event) {
+    public void inWater(BlockEvent event) {
         BlockState state = event.getState();
         if (state.getBlock() instanceof LiquidBlock liquid) {
             if (liquid.fluid instanceof WaterFluid) {
@@ -39,5 +39,4 @@ public class WorldEvent {
             }
         }
     }
-    // code pollution on to furnaces in the future.
 }

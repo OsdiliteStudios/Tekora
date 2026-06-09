@@ -4,8 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.TooltipDisplay;
@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractTekoraAxialBlock;
 import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
@@ -21,19 +22,13 @@ import net.osdilites.tekora.block.entities.thermal.AbstractThermalMachine;
 import net.osdilites.tekora.item.typical.*;
 import net.minecraft.world.item.*;
 import net.osdilites.tekora.Tekora;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
-import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class TekoraItems {
-  public static final DeferredRegister.Items ITEMS = DeferredRegister.createBlocks(Tekora.MODID);
+  public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Tekora.MODID);
 
-  public static final RegistryObject<Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
+  public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
       Level lvl = pContext.getLevel();
@@ -66,7 +61,7 @@ public class TekoraItems {
 
     @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
-      builder.add(Component.literal("§kEnse chane no es relan din yebale, id salia es por cerclader de Tekora et tuime pruba."));
+      builder.accept(Component.literal("§kEnse chane no es relan din yebale, id salia es por cerclader de Tekora et tuime pruba."));
       super.appendHoverText(itemStack, context, display, builder, tooltipFlag);
     }
   }); // must be commented out if Tekora is released.

@@ -1,25 +1,16 @@
+## About Tekora
+"A modpack in one mod"
 
-Installation information
-=======
+Tekora is a Minecraft mod developed by The Osdilites meant to be all the tech mods in one mod.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+The main inspirations behind Tekora are Create, GregTech, and Mekanism. With the main focus of the mod being an extensive system of contraptions based on realistic physics and engineering principals and a focus on the extensive system of chemistry.
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+This mod is currently in what is called the pre-alpha stage, it is neither feature-complete nor are any of the to-do list for features to implement into Tekora fully implemented at the moment
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
-
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
-
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+Features Currently Planned For Tekora
+- A system of gears and shafts implementing realistic rotational physics and torque.
+- An extensive system of chemistry implementing reaction rate laws and equilibrium constants.
+- Every element of the periodic table up to bismuth (element 83) and then some.
+- Machines that can manipulate or shape metals, alloys, and mixing things to cause chemical reactions.
+- Boats, trains, ships, built like how you would in Create!
+- And more!

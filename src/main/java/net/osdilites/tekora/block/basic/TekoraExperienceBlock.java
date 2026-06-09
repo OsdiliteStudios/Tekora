@@ -1,8 +1,8 @@
 package net.osdilites.tekora.block.basic;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -13,7 +13,7 @@ import net.osdilites.tekora.Tekora;
 
 public class TekoraExperienceBlock extends DropExperienceBlock {
     public TekoraExperienceBlock(String pName, float strength, float destroyTime, Block material, SoundType sound, int min, int max) {
-        super(UniformInt.of(min, max), BlockBehaviour.Properties.ofFullCopy(material).requiresCorrectToolForDrops().setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, pName)))
+        super(UniformInt.of(min, max), BlockBehaviour.Properties.ofFullCopy(material).requiresCorrectToolForDrops().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, pName)))
                 .strength(destroyTime, strength).sound(sound));
     }
 

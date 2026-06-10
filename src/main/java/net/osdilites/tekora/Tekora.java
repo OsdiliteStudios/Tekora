@@ -30,7 +30,6 @@ public class Tekora {
         TekoraItems.register(modEventBus);
         TekoraBlockEntities.register(modEventBus);
         TekoraMenus.register(modEventBus);
-
         TekoraCreativeTabs.register(modEventBus);
         // uncomment the code below if a subscribe event annotated method was here.
         //NeoForge.EVENT_BUS.register(this);

@@ -70,7 +70,8 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
 
     @Override
     protected RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.INVISIBLE;
+        return RenderShape.MODEL;
+        //return RenderShape.INVISIBLE; // invisible so that the animated model could renderer
     }
 
     @Override

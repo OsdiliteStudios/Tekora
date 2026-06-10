@@ -20,7 +20,7 @@ public abstract class WaterwheelEntity extends RotationalAbstractEntity {
 
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (!pLevel.isClientSide) {
+        if (!pLevel.isClientSide()) {
             if (pState.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
                 Direction.Axis axis = pState.getValue(AbstractTekoraAxialBlock.AXIS);
                 boolean horizontal = axis.isHorizontal();
@@ -76,20 +76,15 @@ public abstract class WaterwheelEntity extends RotationalAbstractEntity {
     }
 
     private double massPerBlock(LiquidBlock liquid, FluidState state) {
-        FlowingFluid fluid = liquid.getFluid();
-        double densityOver8 = fluid.getFluidType().getDensity() / 8d;
-        // amount may need to be optimized for the future, but for now it's good enough.
-        return fluid.getAmount(state) * densityOver8;
+//        FlowingFluid fluid = liquid.getFluid();
+//        double densityOver8 = fluid.getFluidType().getDensity() / 8d;
+//        // amount may need to be optimized for the future, but for now it's good enough.
+//        return fluid.getAmount(state) * densityOver8;
+        return 0; // todo, figure out the code here
     }
 
     @Override
     public double componentRadius() {
         return 1.5;
-    }
-
-    public static class Wood extends WaterwheelEntity {
-        public Wood(BlockPos pPos, BlockState pBlockState) {
-            super(TekoraBlockEntities.WOODEN_WATERWHEEL.get(), pPos, pBlockState, WOOD_MASS);
-        }
     }
 }

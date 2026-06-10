@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -21,7 +21,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class Waterwheel extends AbstractTekoraAxialBlock {
+public class Waterwheel extends AbstractTekoraAxialBlock {
     private static final VoxelShape SHAPE_X = Shapes.join(
             box(0, 6, 6, 16, 10, 10),
             box(4, 0, 0, 12, 16, 16),
@@ -35,8 +35,14 @@ public abstract class Waterwheel extends AbstractTekoraAxialBlock {
             box(0, 0, 4, 16, 16, 12),
             (b1, b2) -> b1 || b2);
 
-    protected Waterwheel(Properties pProperties) {
+    @Deprecated
+    public Waterwheel(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return null;
     }
 
     @Override
@@ -52,28 +58,8 @@ public abstract class Waterwheel extends AbstractTekoraAxialBlock {
         return SHAPE_Y;
     }
 
-    public static class Wood extends Waterwheel {
-        public static final MapCodec<Wood> CODEC = simpleCodec(p -> new Wood());
-
-        public Wood() {
-            super(Properties.ofFullCopy(Blocks.OAK_WOOD).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, "wooden_waterwheel"))));
-        }
-
-        @Override
-        protected MapCodec<? extends BaseEntityBlock> codec() {
-            return CODEC;
-        }
-
-        @Nullable
-        @Override
-        public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-            return new WaterwheelEntity.Wood(pPos, pState);
-        }
-
-        @Nullable
-        @Override
-        public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pType) {
-            return createTickerHelper(pType, TekoraBlockEntities.WOODEN_WATERWHEEL.get(), (level, pos, state, block) -> block.tick(level, pos, state));
-        }
+    @Override
+    public @org.jspecify.annotations.Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return null;
     }
 }

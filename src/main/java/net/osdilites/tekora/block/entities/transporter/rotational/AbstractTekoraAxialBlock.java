@@ -3,6 +3,7 @@ package net.osdilites.tekora.block.entities.transporter.rotational;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -10,7 +11,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.osdilites.tekora.util.TekoraBody1D;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
@@ -31,6 +36,10 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
             BlockEntity entity = pLevel.getBlockEntity(pPos);
             if (pState.hasProperty(AXIS) && entity instanceof RotationalAbstractEntity) {
                 Direction.Axis axis = pState.getValue(AXIS);
+                // todo, implement a system in which the block entity centers get recalculated on destruction.
+                // possible idea for implementation, whenever the block is destroyed, its neighbors becomes defined as the new end points
+                //      the old end points are kept (unless modified by other methods in this object),
+                //      then the center is recalculated.
                 if (axis == Direction.Axis.X) {
                     BlockPos e = pPos.east();
                     BlockEntity east = pLevel.getBlockEntity(e);
@@ -63,6 +72,55 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
         }
         super.destroy(pLevel, pPos, pState);
     }
+
+    @Override
+    protected void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
+        // todo, implement a system in which the center of any block entity a part of this gets recalculated on placement
+        // implementation idea
+        //      Upon placement, the endpoint touching it gets removed and
+        //      If it only has one neighbor, this point itself becomes the end point
+        //      If it has two neighbors, the endpoints get swapped.
+        //      If it has zero neighbors, its two endpoints are defined as itself.
+
+        if (!pLevel.isClientSide() && pState.hasProperty(AXIS)) {
+            BlockEntity thisEnt = pLevel.getBlockEntity(pPos);
+            if (thisEnt instanceof RotationalAbstractEntity ent) {
+                Direction.Axis axis = pState.getValue(AXIS);
+                BlockPos a;
+                BlockPos b;
+                if (axis == Direction.Axis.X) {
+                    a = pPos.east();
+                    b = pPos.west();
+                } else if (axis == Direction.Axis.Y) {
+                    a = pPos.above();
+                    b = pPos.below();
+                } else {
+                    a = pPos.north();
+                    b = pPos.south();
+                }
+                BlockEntity aEnt = pLevel.getBlockEntity(a);
+                BlockEntity bEnt = pLevel.getBlockEntity(b);
+
+                boolean aValid = aEnt instanceof RotationalAbstractEntity;
+                boolean bValid = bEnt instanceof RotationalAbstractEntity;
+                TekoraBody1D body;
+                if (aValid && bValid) {
+                    body = ((RotationalAbstractEntity) aEnt).combine((RotationalAbstractEntity) bEnt, pPos, ent.componentMass());
+                } else if (aValid) {
+                    body = ((RotationalAbstractEntity) aEnt).combine(pPos, ent.componentMass());
+                } else if (bValid) {
+                    body = ((RotationalAbstractEntity) bEnt).combine(pPos, ent.componentMass());
+                } else {
+                    List<Double> masses = new ArrayList<>(List.of(ent.componentMass()));
+                    body = new TekoraBody1D(axis, pPos, pPos, masses);
+                }
+                ent.setBody(body);
+            }
+        }
+        super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
+    }
+
+    // todo, create an onRemove method unified across multiple children of this class.
 
     @Nullable
     @Override

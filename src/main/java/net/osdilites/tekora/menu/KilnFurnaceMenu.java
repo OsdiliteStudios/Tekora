@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.thermal.KilnFurnaceEntity;
 
@@ -20,7 +20,7 @@ public class KilnFurnaceMenu extends TekoraItemMenu {
     public KilnFurnaceMenu(int pContainerId, Inventory inv, BlockEntity blockEntity) {
         super(TekoraMenus.KILN_FURNACE_MENU.get(), pContainerId, inv);
         this.blockEntity = (KilnFurnaceEntity)blockEntity;
-        addSlot(new SlotItemHandler(this.blockEntity.getInventory(), 0, 80, 52));
+        //addSlot(new ResourceHandlerSlot(this.blockEntity.getInventory(), this.blockEntity.getInventory(), 0, 80, 52));
     }
 
     @Override

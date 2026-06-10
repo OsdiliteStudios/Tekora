@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -21,13 +21,13 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class Shaft extends AbstractTekoraAxialBlock {
+public class Shaft extends AbstractTekoraAxialBlock {
     private static final VoxelShape SHAPE_X = box(0, 6, 6, 16, 10, 10);
     private static final VoxelShape SHAPE_Y = box(6, 0, 6, 10, 16, 10);
     private static final VoxelShape SHAPE_Z = box(6, 6, 0, 10, 10, 16);
 
     public Shaft(String pName) {
-        super(Properties.ofFullCopy(Blocks.IRON_BARS).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Tekora.MODID, pName))));
+        super(Properties.ofFullCopy(Blocks.IRON_BARS).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, pName))));
     }
 
     @Override
@@ -46,6 +46,16 @@ public abstract class Shaft extends AbstractTekoraAxialBlock {
     @Override
     protected RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return null;
+    }
+
+    @Override
+    public @org.jspecify.annotations.Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return null;
     }
 
     public static class Steel extends Shaft {

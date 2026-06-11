@@ -38,7 +38,7 @@ public class UtilFunctions {
 
     // renders block models of RenderType.INVISIBLE, essentially overriding a method
     public static void renderInvisibleModels(BlockEntityRenderDispatcher pRenderer, BlockState pState, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-//        BlockColors colors = Minecraft.getInstance().getBlockColors();
+        BlockColors colors = Minecraft.getInstance().getBlockColors();
 //        StandaloneModelLoader.BakedModels bakedmodel = pRenderer.getRenderer(pState);
 //        int i = colors.color(pState, null, null, 0);
 //        float f = (float)(i >> 16 & 0xFF) / 255.0F;

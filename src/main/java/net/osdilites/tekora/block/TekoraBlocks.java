@@ -32,7 +32,7 @@ public class TekoraBlocks {
 
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);
-        TekoraItems.ITEMS.registerItem(name, p -> new BlockItem(ret.get(), p.useBlockDescriptionPrefix()));
+        TekoraItems.ITEMS.registerSimpleBlockItem(ret, Item.Properties::useBlockDescriptionPrefix);
         return ret;
     }
 

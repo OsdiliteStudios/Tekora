@@ -12,6 +12,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
+import net.osdilites.tekora.client.ClientEvent;
+import net.osdilites.tekora.client.WorldEvent;
 import net.osdilites.tekora.item.TekoraItems;
 import net.osdilites.tekora.item.TekoraCreativeTabs;
 import net.osdilites.tekora.menu.TekoraMenus;
@@ -32,7 +34,8 @@ public class Tekora {
         TekoraMenus.register(modEventBus);
         TekoraCreativeTabs.register(modEventBus);
         // uncomment the code below if a subscribe event annotated method was here.
-        //NeoForge.EVENT_BUS.register(this);
+        //NeoForge.EVENT_BUS.register(ClientEvent.class);
+        //NeoForge.EVENT_BUS.register(WorldEvent.class);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

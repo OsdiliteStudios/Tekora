@@ -9,13 +9,16 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.WaterFluid;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.block.entities.TekoraBlockEntities;
+import net.osdilites.tekora.block.renderer.RotationalEntityRenderer;
 
 public class WorldEvent {
     @SubscribeEvent
-    public void onAttackEntity(AttackEntityEvent event) {
+    public static void onAttackEntity(AttackEntityEvent event) {
         Entity target = event.getTarget();
         if (target instanceof LivingEntity living) {
             Player player = event.getEntity();
@@ -30,7 +33,8 @@ public class WorldEvent {
         }
     }
 
-    public void inWater(BlockEvent event) {
+    @SubscribeEvent
+    public static void inWater(BlockEvent event) {
         BlockState state = event.getState();
         if (state.getBlock() instanceof LiquidBlock liquid) {
             if (liquid.fluid instanceof WaterFluid) {

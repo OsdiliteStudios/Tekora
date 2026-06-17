@@ -13,7 +13,7 @@ public class HandCrankEntity extends RotationalAbstractEntity {
     }
 
     public void addToForce(double force) {
-        super.force += force; // todo, make this better idk
+        body.addForce(getBlockPos(), force);
     }
 
     @Override

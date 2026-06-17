@@ -9,7 +9,6 @@ import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.transporter.rotational.CogwheelEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.HandCrankEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
-import net.osdilites.tekora.block.entities.transporter.rotational.WaterwheelEntity;
 import net.osdilites.tekora.block.entities.thermal.KilnFurnaceEntity;
 
 import java.util.Set;
@@ -20,15 +19,15 @@ public class TekoraBlockEntities {
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Tekora.MODID);
 
     public static final Supplier<BlockEntityType<CogwheelEntity>> COGWHEEL =
-            BLOCK_ENTITIES.register("cogwheel", () -> new BlockEntityType<>(CogwheelEntity::new,
+            BLOCK_ENTITIES.register("wooden_cogwheel", () -> new BlockEntityType<>(CogwheelEntity::new,
                     Set.of(TekoraBlocks.WOODEN_COGWHEEL.get())));
 
     public static final Supplier<BlockEntityType<HandCrankEntity>> HAND_CRANK =
             BLOCK_ENTITIES.register("hand_crank", () -> new BlockEntityType<>(HandCrankEntity::new,
-                    Set.of(TekoraBlocks.WOODEN_HAND_CRANK.get())));
+                    Set.of(TekoraBlocks.HAND_CRANK.get())));
 
-    public static final Supplier<BlockEntityType<ShaftEntity.Steel>> STEEL_SHAFT =
-            BLOCK_ENTITIES.register("shaft", () -> new BlockEntityType<>(ShaftEntity.Steel::new,
+    public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT =
+            BLOCK_ENTITIES.register("shaft", () -> new BlockEntityType<>(ShaftEntity::new,
                     Set.of(TekoraBlocks.SHAFT.get())));
 
 //    public static final Supplier<BlockEntityType<WaterwheelEntity.Wood>> WOODEN_WATERWHEEL =

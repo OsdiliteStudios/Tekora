@@ -1,0 +1,16 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "tekora:block/wooden_cogwheel"
+    },
+    {
+      "type": "single",
+      "resource": "tekora:block/hand_crank"
+    },
+    {
+      "type": "single",
+      "resource": "tekora:block/shaft"
+    }
+  ]
+}

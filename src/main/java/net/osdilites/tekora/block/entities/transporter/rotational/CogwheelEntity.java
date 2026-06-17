@@ -21,7 +21,7 @@ public class CogwheelEntity extends RotationalAbstractEntity {
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (!pLevel.isClientSide()) {
-            if (pState.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
+            if (body != null && pState.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
                 Direction.Axis axis = pState.getValue(AbstractTekoraAxialBlock.AXIS);
                 BlockEntity up = pLevel.getBlockEntity(pPos.above());
                 BlockEntity down = pLevel.getBlockEntity(pPos.below());
@@ -29,24 +29,24 @@ public class CogwheelEntity extends RotationalAbstractEntity {
                 BlockEntity south = pLevel.getBlockEntity(pPos.south());
                 BlockEntity east = pLevel.getBlockEntity(pPos.east());
                 BlockEntity west = pLevel.getBlockEntity(pPos.west());
-                double forceSum = 0;
+                double torqueSum = 0;
                 if (axis == Direction.Axis.X) {
-                    if (up instanceof CogwheelEntity cog) forceSum += cog.force;
-                    if (down instanceof CogwheelEntity cog) forceSum += cog.force;
-                    if (north instanceof CogwheelEntity cog) forceSum += cog.force;
-                    if (south instanceof CogwheelEntity cog) forceSum += cog.force;
+                    if (up instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
+                    if (down instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
+                    if (north instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
+                    if (south instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
                 } else if (axis == Direction.Axis.Y) {
-                    if (east instanceof CogwheelEntity cog) forceSum += cog.force;
-                    if (west instanceof CogwheelEntity cog) forceSum += cog.force;
-                    if (north instanceof CogwheelEntity cog) forceSum += cog.force;
-                    if (south instanceof CogwheelEntity cog) forceSum += cog.force;
+                    if (east instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
+                    if (west instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
+                    if (north instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
+                    if (south instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
                 } else if (axis == Direction.Axis.Z) {
-                    if (east instanceof CogwheelEntity cog) forceSum += cog.force;
-                    if (west instanceof CogwheelEntity cog) forceSum += cog.force;
-                    if (up instanceof CogwheelEntity cog) forceSum += cog.force;
-                    if (down instanceof CogwheelEntity cog) forceSum += cog.force;
+                    if (east instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
+                    if (west instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
+                    if (up instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
+                    if (down instanceof CogwheelEntity cog) torqueSum += cog.body.torque;
                 }
-                force = forceSum / componentRadius();
+                body.torque += torqueSum;
             }
         }
         super.tick(pLevel, pPos, pState);

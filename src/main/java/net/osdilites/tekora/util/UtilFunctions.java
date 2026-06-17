@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -52,12 +53,17 @@ public class UtilFunctions {
 
     }
 
+    // The values below assume that the block has a blockstate of Direction.UP (or Direction.Axis.Y)
     public static VoxelShape[] generateShapeForAllRotations(double pX1, double pY1, double pZ1, double pX2, double pY2, double pZ2) {
-        VoxelShape[] shapes = new VoxelShape[3];
-        shapes[0] = Shapes.box(pX1, pY1, pZ1, pX2, pY2, pZ2);
-        shapes[1] = Shapes.box(pZ1, pX1, pY1, pZ2, pX2, pY2);
-        shapes[2] = Shapes.box(pY1, pZ1, pX1, pY2, pZ2, pX2);
+        VoxelShape[] shapes = new VoxelShape[6];
+        shapes[0] = Block.box(pY1, pX1, pZ1, pY2, pX2, pZ2);
+        shapes[1] = Block.box(pX1, pY1, pZ1, pX2, pY2, pZ2);
+        shapes[2] = Block.box(pX1, pZ1, pY1, pX2, pZ2, pY2);
+        shapes[3] = Block.box(16 - pY2, 16 - pX2, 16 - pZ2, 16 - pY1, 16 - pX1, 16 - pZ1);
+        shapes[4] = Block.box(16 - pX2, 16 - pY2, 16 - pZ2, 16 - pX1, 16 - pY1, 16 - pZ1);
+        shapes[5] = Block.box(16 - pX2, 16 - pZ2, 16 - pY2, 16 - pX1, 16 - pZ1, 16 - pY1);
         return shapes;
+        // the array is outputted in the order [east, up, south, west, down, north]
     }
 
     public static double distance(BlockPos a, BlockPos b) {

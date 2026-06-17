@@ -1,66 +1,72 @@
 package net.osdilites.tekora.block.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.block.ModelBlockRenderer;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
-import net.osdilites.tekora.block.entities.transporter.rotational.AbstractTekoraAxialBlock;
 import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
-import net.osdilites.tekora.util.UtilFunctions;
-import org.joml.Matrix4fc;
 import org.jspecify.annotations.Nullable;
 
-public class RotationalEntityRenderer implements BlockEntityRenderer<RotationalAbstractEntity, BlockEntityRenderState> {
-    private final BlockEntityRenderDispatcher blockRenderer;
+import java.util.ArrayList;
+
+public class RotationalEntityRenderer implements BlockEntityRenderer<RotationalAbstractEntity, TekoraRotatingRenderState> {
+    private final BlockEntityRenderDispatcher renderer;
 
     public RotationalEntityRenderer(BlockEntityRendererProvider.Context pContext) {
-        this.blockRenderer = pContext.blockEntityRenderDispatcher();
+        renderer = pContext.blockEntityRenderDispatcher();
     }
 
     @Override
-    public void extractRenderState(RotationalAbstractEntity blockEntity, BlockEntityRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    public void extractRenderState(RotationalAbstractEntity blockEntity, TekoraRotatingRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
-        Level level = null; // todo, set it to not null
-        if (level != null) {
-            //ModelBlockRenderer.enableCaching();
-            BlockState blockState = blockEntity.getBlockState();
-            if (blockState.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
-                PoseStack.Pose poseStack = breakProgress.cameraPose();
 
-                Direction.Axis axis = blockState.getValue(AbstractTekoraAxialBlock.AXIS);
-                int ord = axis.ordinal();
-                Axis rotAxis = switch (ord) {
-                    case 0 -> Axis.XP;
-                    case 1 -> Axis.YP;
-                    default -> Axis.ZP;
-                };
-                float rendPos = blockEntity.getRenderingRotation();
-                poseStack.translate(0.5f, 0.5f, 0.5f);
-                //poseStack.mulPose(rotAxis.rotation(rendPos).get(null));
-                poseStack.translate(-0.5f, -0.5f, -0.5f);
-                //UtilFunctions.renderInvisibleModels(blockRenderer, state, pPoseStack, pBufferSource, pPackedLight, pPackedOverlay);
-                //poseStack.popPose();
-            }
+        if (state.blockState == null) {
+            state.blockState = blockEntity.getBlockState();
+        }
+        state.setAngle(Mth.lerp(partialTicks, blockEntity.getOldRotation(), blockEntity.getRenderingRotation()));
+        BlockStateModel model = Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(blockEntity.getBlockState());
+        state.parts = new ArrayList<>();
+        if (blockEntity.getLevel() instanceof BlockAndTintGetter getter) {
+            model.collectParts(getter, blockEntity.getBlockPos(), blockEntity.getBlockState(), RandomSource.create(42L), state.parts);
         }
     }
 
     @Override
-    public BlockEntityRenderState createRenderState() {
-        return new BlockEntityRenderState();
+    public TekoraRotatingRenderState createRenderState() {
+        return new TekoraRotatingRenderState();
     }
 
     @Override
-    public void submit(BlockEntityRenderState blockEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+    public void submit(TekoraRotatingRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState renderState) {
+        if (state.parts != null && !state.parts.isEmpty()) {
+            poseStack.pushPose();
 
+            Axis axis = switch (state.getAxis()) {
+                case X -> Axis.XP;
+                case Z -> Axis.ZP;
+                default -> Axis.YP;
+            };
+
+            poseStack.translate(0.5D, 0.5D, 0.5D);
+            poseStack.mulPose(axis.rotationDegrees((float) (state.getAngle() * 180 / Math.PI)));
+            poseStack.translate(-0.5D, -0.5D, -0.5D);
+
+            collector.submitMultiLayerBlockModel(poseStack, state.parts, true, new int[]{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, state.packedLight, OverlayTexture.NO_OVERLAY, 0);
+
+
+            poseStack.popPose();
+        }
     }
 }

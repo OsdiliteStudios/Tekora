@@ -39,8 +39,8 @@ public class TekoraItems {
         Player player = pContext.getPlayer();
         String msg = "";
         if (player != null) {
-          if (ent instanceof RotationalAbstractEntity rotational){
-            msg += "Object has a force of " + rotational.getForce() + " kg m/s^2\n";
+          if (ent instanceof RotationalAbstractEntity rotational) {
+            msg += "Object has a id of " + rotational.getBodyHashcode() + "\n";
           }
           if (state.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
             Direction.Axis axis = state.getValue(AbstractTekoraAxialBlock.AXIS);

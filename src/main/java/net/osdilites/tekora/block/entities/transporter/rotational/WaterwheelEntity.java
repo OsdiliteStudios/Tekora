@@ -63,7 +63,7 @@ public abstract class WaterwheelEntity extends RotationalAbstractEntity {
                     if (rightDown.getBlock() instanceof LiquidBlock liquid) {
                         force += massPerBlock(liquid, rightUp.getFluidState()) * gravity * Math.cos(3 * Math.PI / 4);
                     }
-                    super.force = force;
+                    body.addForce(pPos, force);
                 } // the else statement will be dealt with in the future
             }
         }

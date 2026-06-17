@@ -1,8 +1,8 @@
 {
   "itemGroup.tekora_machines": "Machines",
 
+  "block.tekora.hand_crank": "Hand Crank",
   "block.tekora.kiln_furnace": "Kiln Furnace",
   "block.tekora.shaft": "Shaft",
-  "block.tekora.wooden_cogwheel": "Wooden Cogwheel",
-  "block.tekora.wooden_hand_crank": "Wooden Hand Crank"
+  "block.tekora.wooden_cogwheel": "Wooden Cogwheel"
 }

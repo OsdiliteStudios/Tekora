@@ -1,6 +1,5 @@
 package net.osdilites.tekora.block;
 
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -12,7 +11,6 @@ import net.osdilites.tekora.block.entities.thermal.KilnFurnace;
 import net.osdilites.tekora.block.entities.transporter.rotational.Cogwheel;
 import net.osdilites.tekora.block.entities.transporter.rotational.HandCrank;
 import net.osdilites.tekora.block.entities.transporter.rotational.Shaft;
-import net.osdilites.tekora.block.entities.transporter.rotational.Waterwheel;
 import net.osdilites.tekora.item.TekoraItems;
 
 import java.util.function.Supplier;
@@ -24,8 +22,8 @@ public class TekoraBlocks {
             createBlock("wooden_cogwheel", () -> new Cogwheel("wooden_cogwheel", 1));
     public static final DeferredHolder<Block, Shaft> SHAFT =
             createBlock("shaft", () -> new Shaft("shaft"));
-    public static final DeferredHolder<Block, HandCrank> WOODEN_HAND_CRANK =
-            createBlock("wooden_hand_crank", () -> new HandCrank("wooden_hand_crank", 1));
+    public static final DeferredHolder<Block, HandCrank> HAND_CRANK =
+            createBlock("hand_crank", () -> new HandCrank("hand_crank", 1));
     public static final DeferredHolder<Block, KilnFurnace> KILN_FURNACE =
             createBlock("kiln_furnace", () -> new KilnFurnace(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
 

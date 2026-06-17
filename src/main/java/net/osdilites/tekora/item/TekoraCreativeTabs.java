@@ -21,7 +21,7 @@ public class TekoraCreativeTabs {
                     .displayItems((param, out) -> {
                         out.accept(TekoraBlocks.WOODEN_COGWHEEL.get().asItem());
                         out.accept(TekoraBlocks.SHAFT.get().asItem());
-                        out.accept(TekoraBlocks.WOODEN_HAND_CRANK.get().asItem());
+                        out.accept(TekoraBlocks.HAND_CRANK.get().asItem());
                     }).build());
 
     public static void register(IEventBus eventBus) {

@@ -47,7 +47,7 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
             case 1 -> Blocks.OAK_WOOD; // wood
             case 2 -> Blocks.TINTED_GLASS; // plastic
             default -> Blocks.IRON_BLOCK; // metals
-        }).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, name))));
+        }).setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, name))));
     }
 
     @Override
@@ -69,40 +69,20 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.MODEL;
-        //return RenderShape.INVISIBLE; // invisible so that the animated model could renderer
+    public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return new CogwheelEntity(pPos, pState);
     }
 
+    @Nullable
     @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return null;
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pType) {
+        return createTickerHelper(pType, TekoraBlockEntities.COGWHEEL.get(), (level, pos, state, block) -> block.tick(level, pos, state));
     }
 
     @Deprecated
     public static class Wood extends Cogwheel {
-        public static final MapCodec<Cogwheel> CODEC = simpleCodec(p -> new Wood());
-
         public Wood() {
             super("wooden_cogwheel", 1);
-        }
-
-        @Override
-        protected MapCodec<? extends BaseEntityBlock> codec() {
-            return CODEC;
-        }
-
-
-        @Nullable
-        @Override
-        public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-            return new CogwheelEntity(blockPos, blockState);
-        }
-
-        @Nullable
-        @Override
-        public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pType) {
-            return createTickerHelper(pType, TekoraBlockEntities.COGWHEEL.get(), (level, pos, state, block) -> block.tick(level, pos, state));
         }
     }
 }

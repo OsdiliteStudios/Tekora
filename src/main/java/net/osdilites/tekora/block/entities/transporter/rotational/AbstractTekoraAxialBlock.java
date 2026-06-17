@@ -21,7 +21,7 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
 
     protected AbstractTekoraAxialBlock(Properties pProperties) {
-        super(pProperties);
+        super(pProperties.noOcclusion());
         registerDefaultState(defaultBlockState().setValue(AXIS, Direction.Axis.Y));
     }
 
@@ -34,40 +34,8 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
     public void destroy(LevelAccessor pLevel, BlockPos pPos, BlockState pState) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if (pState.hasProperty(AXIS) && entity instanceof RotationalAbstractEntity) {
-                Direction.Axis axis = pState.getValue(AXIS);
-                // todo, implement a system in which the block entity centers get recalculated on destruction.
-                // possible idea for implementation, whenever the block is destroyed, its neighbors becomes defined as the new end points
-                //      the old end points are kept (unless modified by other methods in this object),
-                //      then the center is recalculated.
-                if (axis == Direction.Axis.X) {
-                    BlockPos e = pPos.east();
-                    BlockEntity east = pLevel.getBlockEntity(e);
-                    BlockState eSt = pLevel.getBlockState(e);
-                    if (eSt.hasProperty(AXIS) && east instanceof RotationalAbstractEntity rot) rot.reset();
-                    BlockPos w = pPos.west();
-                    BlockEntity west = pLevel.getBlockEntity(w);
-                    BlockState wSt = pLevel.getBlockState(w);
-                    if (wSt.hasProperty(AXIS) && west instanceof RotationalAbstractEntity rot) rot.reset();
-                } else if (axis == Direction.Axis.Y) {
-                    BlockPos u = pPos.above();
-                    BlockEntity up = pLevel.getBlockEntity(u);
-                    BlockState uSt = pLevel.getBlockState(u);
-                    if (uSt.hasProperty(AXIS) && up instanceof RotationalAbstractEntity rot) rot.reset();
-                    BlockPos d = pPos.below();
-                    BlockEntity down = pLevel.getBlockEntity(d);
-                    BlockState dSt = pLevel.getBlockState(d);
-                    if (dSt.hasProperty(AXIS) && down instanceof RotationalAbstractEntity rot) rot.reset();
-                } else if (axis == Direction.Axis.Z) {
-                    BlockPos n = pPos.north();
-                    BlockEntity north = pLevel.getBlockEntity(n);
-                    BlockState nSt = pLevel.getBlockState(n);
-                    if (nSt.hasProperty(AXIS) && north instanceof RotationalAbstractEntity rot) rot.reset();
-                    BlockPos s = pPos.south();
-                    BlockEntity south = pLevel.getBlockEntity(s);
-                    BlockState sSt = pLevel.getBlockState(s);
-                    if (sSt.hasProperty(AXIS) && south instanceof RotationalAbstractEntity rot) rot.reset();
-                }
+            if (entity instanceof RotationalAbstractEntity ent) {
+                ent.remove();
             }
         }
         super.destroy(pLevel, pPos, pState);
@@ -120,11 +88,10 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
         super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
     }
 
-    // todo, create an onRemove method unified across multiple children of this class.
-
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        // todo replace the current system with one such that the axis is obtained from the face of the block it is placed on rather than looking direction
         return this.defaultBlockState().setValue(AXIS, pContext.getNearestLookingDirection().getAxis());
     }
 
@@ -143,5 +110,10 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
     @Override
     protected BlockState mirror(BlockState pState, Mirror pMirror) {
         return this.defaultBlockState().setValue(AXIS, pState.getValue(AXIS));
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.INVISIBLE;
     }
 }

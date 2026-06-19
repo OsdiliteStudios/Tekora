@@ -13,24 +13,24 @@ import java.util.List;
 public class TekoraBody1D {
     public double torque;
 
-    @Deprecated
-    public double mass;
-    private double velocity;
-                      // If axis == x | y | z
+    public double moment;
+    private double velocity = 0;
+                   // If axis == x | y | z
     private int f; // a =        y | x | x
     private int g; // b =        z | z | y
     private int pA;
     private int pB;
     private final Direction.Axis axis;
     private BlockPos start;
-    private BlockPos end;
+    private BlockPos end; // the end and pB are not properly defined
+    private float oldAngle;
+    private float angle;
+    private final Level level;
 
-    @Deprecated
-    private List<Double> masses;
-    public TekoraBody1D(Direction.Axis axis, BlockPos start, BlockPos end, List<Double> masses) {
+    private List<Double> moments;
+    public TekoraBody1D(Level level, Direction.Axis axis, BlockPos start, BlockPos end, List<Double> moments) {
+        this.level = level;
         this.axis = axis;
-        this.start = start;
-        this.end = end;
         int a;
         int b;
         if (axis == Direction.Axis.X) {
@@ -67,71 +67,94 @@ public class TekoraBody1D {
                 Tekora.LOGGER.debug("Invalid positions for the end points {} with respect to {}, thus this object will ignore the end position.",end.toShortString(), start.toShortString());
             }
         }
-
-        this.pA = Math.min(a, b);
-        this.pB = Math.max(a, b);
-        this.masses = masses;
+        if (a < b) {
+            this.pA = a;
+            this.pB = b;
+            this.start = start;
+            this.end = end;
+        } else {
+            this.pA = b;
+            this.pB = a;
+            this.start = end;
+            this.end = start;
+        }
+        this.moments = moments;
     }
 
     /** A method that splits the mass and force of the object using the endpoints
      * */
-    // In the future when Tekora starts supporting multidimensional bodies,
-    // the split function would only get called if you have two parts connected
-    // by one block and that it is broken.
-    public void split(Level pLevel, BlockPos pPos) {
+    public void split(BlockPos pPos, RotationalAbstractEntity pEntity) {
         boolean isValid;
         int val;
         BlockPos newEnd;
         BlockPos newStart;
         int newA;
+
+        int x = pPos.getX();
+        int y = pPos.getY();
+        int z = pPos.getZ();
+        // basic variable diagram
+        // start (original) -> newEnd :split: newStart -> end (original)
         switch (axis) {
             case X -> {
-                val = pPos.getX();
-                isValid = pPos.getY() == f && pPos.getZ() == g;
+                val = x;
+                isValid = y == f && z == g;
                 newEnd = pPos.west();
                 newStart = pPos.east();
-                newA = newEnd.getX();
+                newA = newStart.getX();
             }
             case Y -> {
-                val = pPos.getY();
-                isValid = pPos.getX() == f && pPos.getZ() == g;
+                val = y;
+                isValid = x == f && z == g;
                 newEnd = pPos.below();
                 newStart = pPos.above();
-                newA = newEnd.getY();
+                newA = newStart.getY();
             }
             default -> {
-                val = pPos.getZ();
-                isValid = pPos.getX() == f && pPos.getY() == g;
+                val = z;
+                isValid = x == f && y == g;
                 newEnd = pPos.north();
                 newStart = pPos.south();
-                newA = newEnd.getZ();
+                newA = newStart.getZ();
             }
         }
 
-        if (isValid && suffDiff(pA, pB, val)) {
+        if (isValid) {
             if (pPos.equals(start)) {
+                if (pEntity.isBodyTicker()) {
+                    BlockEntity newEnt = level.getBlockEntity(newStart);
+                    if (newEnt instanceof RotationalAbstractEntity newRot) {
+                        newRot.updateTickerStatus();
+                    }
+                }
                 this.start = newStart;
-                masses.removeFirst();
+                // moments.removeFirst();
             } else if (pPos.equals(end)) {
+                if (pEntity.isBodyTicker()) {
+                    BlockEntity newEnt = level.getBlockEntity(start);
+                    if (newEnt instanceof RotationalAbstractEntity newRot) {
+                        newRot.updateTickerStatus();
+                    }
+                }
                 this.end = newEnd;
-                masses.removeLast();
+                //moments.removeLast();
             } else {
                 int split = (val - pA);
                 int end = (pB - pA);
-                TekoraBody1D newBody = new TekoraBody1D(axis, newStart, this.end, masses.subList(split + 1, end));
+                TekoraBody1D newBody = new TekoraBody1D(level, axis, newStart, this.end, List.of() /*moments.subList(split+1, end)*/);
                 newBody.torque = 0;
-                masses = masses.subList(0, split);
+                // moments.removeIf(i -> i >= split);
                 torque = 0;
                 this.end = newEnd;
                 for (int i = newA; i <= pB; i++) {
                     BlockPos checkedPos = switch (axis) {
-                        case X -> new BlockPos(i, pPos.getY(), pPos.getZ());
-                        case Y -> new BlockPos(pPos.getX(), i, pPos.getZ());
-                        default -> new BlockPos(pPos.getX(), pPos.getY(), i);
+                        case X -> new BlockPos(i, f, g);
+                        case Y -> new BlockPos(f, i, g);
+                        default -> new BlockPos(f, g, i);
                     };
-                    BlockEntity checkedEnt = pLevel.getBlockEntity(checkedPos);
-                    if (checkedEnt instanceof RotationalAbstractEntity rotEnt) {
-                        rotEnt.setBody(newBody);
+                    BlockEntity checkedEnt = level.getBlockEntity(checkedPos);
+                    if (checkedEnt instanceof RotationalAbstractEntity newRot) {
+                        newRot.setBody(newBody);
                     }
                 }
             }
@@ -139,7 +162,7 @@ public class TekoraBody1D {
     }
 
     /** A method that joins the mass and force of the object using the endpoints*/
-    public void join(TekoraBody1D pObj, BlockPos pPos, double mass) {
+    public void join(TekoraBody1D pObj, BlockPos pPos, double momentInertia) {
         boolean isValid = pObj.axis == axis;
 
         double val;
@@ -164,19 +187,29 @@ public class TekoraBody1D {
             double dca = Math.abs(pA - val);
             double dcb = Math.abs(pB - val);
             if (dca < dcb) {
-                pA = doa < dob ? pObj.pA : pObj.pB;
-            } else {
-                pB = doa < dob ? pObj.pA : pObj.pB;
+                if (doa < dob) {
+                    pA = pObj.pA;
+                    start = pObj.start;
+                } else {
+                    pB = pObj.pB;
+                    end = pObj.end;
+                }
+            } else if (dca > dcb) {
+                if (doa > dob) {
+                    pA = pObj.pA;
+                    start = pObj.start;
+                } else {
+                    pB = pObj.pB;
+                    end = pObj.end;
+                }
             }
-
-            this.mass += pObj.mass + mass;
-            torque += pObj.torque;
         } else {
-            Tekora.LOGGER.debug("Object joining mismatch at: {}", pPos.toShortString());
+            Tekora.LOGGER.debug("Object joining mismatch at: {}, suffdiff coords: pA: {}, pB: {}, newVal: {}", pPos.toShortString(), pA, pB, val);
         }
     }
 
-    public void join(BlockPos pPos, double mass) {
+    /** A method that joins the mass and force of the object by extending out from the end point*/
+    public void join(BlockPos pPos, double momentInertia) {
         boolean isValid;
         double val;
         switch (axis) {
@@ -195,9 +228,15 @@ public class TekoraBody1D {
         }
         isValid = isValid && suffDiff(pA, pB, val);
         if (isValid) {
-            this.mass += mass;
+            if (val < pA) {
+                pA--;
+                start = pPos;
+            } else if (val > pB) {
+                pB++;
+                end = pPos;
+            }
         } else {
-            Tekora.LOGGER.debug("Object joining mismatch at: {}", pPos.toShortString());
+            Tekora.LOGGER.debug("Object joining mismatch at: {}, suffdiff coords: pA: {}, pB: {}, newVal: {}", pPos.toShortString(), pA, pB, val);
         }
     }
 
@@ -227,7 +266,7 @@ public class TekoraBody1D {
             }
         }
         if (isValid && (withinRange(pA, pB, val))) {
-            double center = (pA + pB) / 2; // todo, we'll switch this to a more accurate formula in the future
+            double center = (pA + pB) / 2.0; // todo, we'll switch this to a more accurate formula in the future
             torque = (val - center) * force;
         }
     }
@@ -236,11 +275,29 @@ public class TekoraBody1D {
         torque = 0;
     }
 
+    // useful when a new body suddenly gets defined and an arbitrary ticker has to be set.
     public boolean isStart(BlockPos pPos) {
         return pPos.equals(start);
     }
 
     public void tick() {
-        // todo, make it tick.
+        oldAngle = angle;
+        // todo, make a ticking operation for angle.
+
+        //velocity += torque / moment;
+
+        angle += 1f; // this is an example operation, todo, expand on this to make it more realistic.
+    }
+
+    public float getAngle() {
+        return angle;
+    }
+
+    public float getOldAngle() {
+        return oldAngle;
+    }
+
+    public double getVelocity() {
+        return velocity;
     }
 }

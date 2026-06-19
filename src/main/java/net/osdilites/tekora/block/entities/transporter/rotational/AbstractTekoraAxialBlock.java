@@ -31,17 +31,6 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
     }
 
     @Override
-    public void destroy(LevelAccessor pLevel, BlockPos pPos, BlockState pState) {
-        if (!pLevel.isClientSide()) {
-            BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if (entity instanceof RotationalAbstractEntity ent) {
-                ent.remove();
-            }
-        }
-        super.destroy(pLevel, pPos, pState);
-    }
-
-    @Override
     protected void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
         // todo, implement a system in which the center of any block entity a part of this gets recalculated on placement
         // implementation idea
@@ -80,7 +69,7 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
                     body = ((RotationalAbstractEntity) bEnt).combine(pPos, ent.componentMass());
                 } else {
                     List<Double> masses = new ArrayList<>(List.of(ent.componentMass()));
-                    body = new TekoraBody1D(axis, pPos, pPos, masses);
+                    body = new TekoraBody1D(pLevel, axis, pPos, pPos, masses);
                 }
                 ent.setBody(body);
             }

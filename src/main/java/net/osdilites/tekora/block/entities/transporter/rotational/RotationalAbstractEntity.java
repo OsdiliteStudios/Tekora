@@ -1,7 +1,5 @@
 package net.osdilites.tekora.block.entities.transporter.rotational;
 
-import com.google.common.util.concurrent.AtomicDouble;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -11,25 +9,20 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.TagValueOutput;
+import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.mechanical.AbstractMechanicalEntity;
 import net.osdilites.tekora.util.TekoraBody1D;
-import net.osdilites.tekora.util.UtilFunctions;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
 public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity {
     protected TekoraBody1D body;
-
-    private float rotation; // todo, attach this later on to the force and acceleration values related to this block entity
-    private BlockPos pA; // todo, make the pA and pB defined in the 1D physics object
-    private BlockPos pB;
-    private boolean bodyStart = false;
+    private boolean bodyTicker = false;
 
     public RotationalAbstractEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, double pComponentMass) {
         super(pType, pPos, pBlockState, pComponentMass);
@@ -47,7 +40,7 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
 
     public void setBody(TekoraBody1D body) {
         this.body = body;
-        this.bodyStart = body.isStart(getBlockPos());
+        updateTickerStatus();
     }
 
     public boolean sameAxis(Direction.Axis pAxis) {
@@ -59,8 +52,13 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
         return false;
     }
 
-    public void remove() {
-        body.split(getLevel(), getBlockPos());
+    @Override
+    public void setRemoved() {
+        if (!(level == null || level.isClientSide() || body == null)) {
+            body.split(getBlockPos(), this);
+        }
+
+        super.setRemoved();
     }
 
     void reset() {
@@ -70,27 +68,44 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (!pLevel.isClientSide()) {
             if (pState.hasProperty(BlockStateProperties.FACING)) {
-                this.setChanged(); // ensures that the block gets calculated.
-            }
-            if (pState.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
-                double rc = componentRadius();
-                double mc = componentMass();
-                this.setChanged(); // ensures that the block gets calculated.
-                if (bodyStart) {
-                    body.tick();
-                }
+                validTicking(pState.getValue(BlockStateProperties.FACING).getAxis(), 0);
+            } else if (pState.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
+                validTicking(pState.getValue(AbstractTekoraAxialBlock.AXIS), 0);
             }
         } else {
             pLevel.sendBlockUpdated(pPos, pState, pState, 3); // used on client side.
         }
     }
 
+    private void validTicking(Direction.Axis axis, double num) {
+        if (bodyTicker) {
+            body.tick();
+        }
+        // air res formula:
+        // force = -cAir * P * body.radius() * body.getSpeed();
+        // -cAir is a constant, defined by the programmer
+        // P is the pressure
+        this.setChanged(); // ensures that the block gets calculated.
+    }
+
     public float getOldRotation() {
-        return rotation;
+        if (body == null) {
+            if (level != null && !level.isClientSide())
+                createBody();
+            else
+                return 0;
+        }
+        return body.getOldAngle();
     }
 
     public float getRenderingRotation() {
-        return rotation += 0.05f;
+        if (body == null) {
+            if (level != null && !level.isClientSide())
+                createBody();
+            else
+                return 0;
+        }
+        return body.getAngle();
     }
 
     public abstract double componentResistance();
@@ -111,6 +126,7 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
         return body != null;
     }
 
+    @Deprecated
     public void createBody() {
         BlockState state = getBlockState();
         Direction.Axis axis = Direction.Axis.Y;
@@ -119,11 +135,20 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
         } else if (state.hasProperty(BlockStateProperties.AXIS)) {
             axis = state.getValue(BlockStateProperties.AXIS);
         }
-        body = new TekoraBody1D(axis, getBlockPos(), getBlockPos(), List.of(componentMass()));
+        body = new TekoraBody1D(getLevel(), axis, getBlockPos(), getBlockPos(), List.of(componentMass()));
+    }
+
+    public void updateTickerStatus() {
+        this.bodyTicker = body.isStart(getBlockPos());
     }
 
     // for debugging purposes
     public int getBodyHashcode() {
         return hasBody() ? body.hashCode() : 0;
     }
+
+    public boolean isBodyTicker() {
+        return bodyTicker;
+    }
+
 }

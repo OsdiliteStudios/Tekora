@@ -19,7 +19,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractTekoraAxialBlock;
 import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
 import net.osdilites.tekora.block.entities.thermal.AbstractThermalMachine;
-import net.osdilites.tekora.item.typical.*;
 import net.minecraft.world.item.*;
 import net.osdilites.tekora.Tekora;
 
@@ -40,7 +39,8 @@ public class TekoraItems {
         String msg = "";
         if (player != null) {
           if (ent instanceof RotationalAbstractEntity rotational) {
-            msg += "Object has a id of " + rotational.getBodyHashcode() + "\n";
+            msg += "Object has a id of " + rotational.getBodyHashcode();
+            msg += (rotational.isBodyTicker() ? " and ticks the body\n" : "\n");
           }
           if (state.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
             Direction.Axis axis = state.getValue(AbstractTekoraAxialBlock.AXIS);

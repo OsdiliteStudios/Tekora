@@ -77,11 +77,9 @@ public class HandCrank extends AbstractTekoraAxialBlock { // todo, change the ax
 
     @Override
     protected InteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide()) {
-            BlockEntity te = pLevel.getBlockEntity(pPos);
-            if (te instanceof HandCrankEntity crankEnt) {
-                crankEnt.addToForce(10); // todo, use math to determine this number
-            }
+        BlockEntity te = pLevel.getBlockEntity(pPos);
+        if (te instanceof HandCrankEntity crankEnt) {
+            crankEnt.addToForce(10); // todo, use math to determine this number
         }
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }

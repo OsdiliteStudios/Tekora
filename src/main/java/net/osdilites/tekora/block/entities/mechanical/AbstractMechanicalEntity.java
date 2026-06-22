@@ -6,16 +6,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class AbstractMechanicalEntity extends BlockEntity {
-    private double componentMass;
 
-    public AbstractMechanicalEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, double pComponentMass) {
+    public AbstractMechanicalEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
-        componentMass = pComponentMass;
     }
 
-    public double componentMass() {
-        return componentMass;
-    }
+    public abstract double getMoment();
 
     public abstract double componentRadius();
 

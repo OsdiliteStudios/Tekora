@@ -11,11 +11,11 @@ import net.minecraft.world.level.material.FluidState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public abstract class WaterwheelEntity extends RotationalAbstractEntity {
-    public static final double WOOD_MASS = 10543.30739107599;
-    // public static final double STEEL_MASS = ;
+    public static final double I_MASS = 10543.30739107599;
+    // public static final double I_STEEL = ;
 
-    protected WaterwheelEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, double pComponentMass) {
-        super(pType, pPos, pBlockState, pComponentMass);
+    protected WaterwheelEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+        super(pType, pPos, pBlockState);
     }
 
     @Override

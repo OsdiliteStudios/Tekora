@@ -6,9 +6,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class HandCrankEntity extends RotationalAbstractEntity {
-
     public HandCrankEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState, 1000);
+        super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState);
         // todo, calculate the actual mass of the entity
     }
 
@@ -22,7 +21,7 @@ public class HandCrankEntity extends RotationalAbstractEntity {
     }
 
     @Override
-    public double componentResistance() {
-        return 0;
+    public double getMoment() {
+        return 1000;
     }
 }

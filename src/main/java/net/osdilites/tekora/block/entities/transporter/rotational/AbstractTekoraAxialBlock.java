@@ -62,13 +62,13 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
                 boolean bValid = bEnt instanceof RotationalAbstractEntity;
                 TekoraBody1D body;
                 if (aValid && bValid) {
-                    body = ((RotationalAbstractEntity) aEnt).combine((RotationalAbstractEntity) bEnt, pPos, ent.componentMass());
+                    body = ((RotationalAbstractEntity) aEnt).combine((RotationalAbstractEntity) bEnt, pPos, ((RotationalAbstractEntity) bEnt).getMoment());
                 } else if (aValid) {
-                    body = ((RotationalAbstractEntity) aEnt).combine(pPos, ent.componentMass());
+                    body = ((RotationalAbstractEntity) aEnt).combine(pPos, ((RotationalAbstractEntity) aEnt).getMoment());
                 } else if (bValid) {
-                    body = ((RotationalAbstractEntity) bEnt).combine(pPos, ent.componentMass());
+                    body = ((RotationalAbstractEntity) bEnt).combine(pPos, ((RotationalAbstractEntity) bEnt).getMoment());
                 } else {
-                    List<Double> masses = new ArrayList<>(List.of(ent.componentMass()));
+                    ArrayList<Double> masses = new ArrayList<>(List.of(ent.getMoment()));
                     body = new TekoraBody1D(pLevel, axis, pPos, pPos, masses);
                 }
                 ent.setBody(body);

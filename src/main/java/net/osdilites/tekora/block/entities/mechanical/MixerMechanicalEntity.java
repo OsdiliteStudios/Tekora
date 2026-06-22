@@ -6,6 +6,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MixerMechanicalEntity extends MixerAbstractEntity {
     public MixerMechanicalEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pState) {
-        super(pType, pPos, pState, 4943.728065546406);
+        super(pType, pPos, pState);
+    }
+
+    @Override
+    public double getMoment() {
+        return 4943.728065546406;
     }
 }

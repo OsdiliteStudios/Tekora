@@ -22,6 +22,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
 public class Cogwheel extends AbstractTekoraAxialBlock {
+
     public static final MapCodec<Cogwheel> CODEC = simpleCodec(Cogwheel::new);
 
     private static final VoxelShape SHAPE_X = Shapes.join(
@@ -42,8 +43,9 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
     private Cogwheel(Properties properties) {
         super(properties);
     }
+
     public Cogwheel(String name, int cat) {
-        super(Properties.ofFullCopy(switch (cat) {
+        this(Properties.ofFullCopy(switch (cat) {
             case 1 -> Blocks.OAK_WOOD; // wood
             case 2 -> Blocks.TINTED_GLASS; // plastic
             default -> Blocks.IRON_BLOCK; // metals
@@ -77,12 +79,5 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pType) {
         return createTickerHelper(pType, TekoraBlockEntities.COGWHEEL.get(), (level, pos, state, block) -> block.tick(level, pos, state));
-    }
-
-    @Deprecated
-    public static class Wood extends Cogwheel {
-        public Wood() {
-            super("wooden_cogwheel", 1);
-        }
     }
 }

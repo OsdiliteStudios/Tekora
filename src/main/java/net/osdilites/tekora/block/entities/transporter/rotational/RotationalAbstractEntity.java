@@ -30,40 +30,61 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
         super(pType, pPos, pBlockState);
     }
 
-    public TekoraBody1D combine(RotationalAbstractEntity pOther, BlockPos pPos, double mass) {
-        body.join(pOther.body, pPos, mass);
-        synchronizeEntities();
-        return body;
-    }
-
-    public TekoraBody1D combine(BlockPos pPos, double mass) {
-        body.join(pPos, mass);
-        if (level != null && level.getBlockEntity(pPos) instanceof RotationalAbstractEntity rotEnt) {
-            rotEnt.body = body;
-            rotEnt.bodyTicker = body.isStart(pPos);
-            bodyTicker = body.isStart(getBlockPos());
-        }
-        return body;
-    }
-
     public void setBody(TekoraBody1D body) {
         this.body = body;
         updateTickerStatus();
     }
 
-    public boolean sameAxis(Direction.Axis pAxis) {
-        BlockState state = getBlockState();
-        if (state.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
-            Direction.Axis axis = state.getValue(AbstractTekoraAxialBlock.AXIS);
-            return axis.equals(pAxis);
-        }
-        return false;
-    }
-
     @Override
     public void setRemoved() {
         if (!(level == null || level.isClientSide() || body == null)) {
-            body.split(getBlockPos(), this);
+            BlockState state = getBlockState();
+            BlockPos pos = getBlockPos();
+            if (state.hasProperty(BlockStateProperties.FACING)) {
+                Direction dir = state.getValue(BlockStateProperties.FACING).getOpposite();
+                BlockPos checkPos = switch(dir) {
+                    case EAST -> pos.east();
+                    case WEST -> pos.west();
+                    case NORTH -> pos.north();
+                    case SOUTH -> pos.south();
+                    case UP -> pos.above();
+                    case DOWN -> pos.below();
+                };
+                if (level.getBlockEntity(checkPos) instanceof RotationalAbstractEntity) {
+                    boolean callFirst = dir == Direction.UP || dir == Direction.EAST || dir == Direction.SOUTH;
+                    if (callFirst) {
+                        body.trimFirst();
+                    } else {
+                        body.trimLast();
+                    }
+                }
+            } else if (state.hasProperty(BlockStateProperties.AXIS)) {
+                Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);
+                BlockPos afterPos = switch (axis) {
+                    case X -> pos.west();
+                    case Y -> pos.above();
+                    case Z -> pos.south();
+                };
+                BlockPos beforePos = switch (axis) {
+                    case X -> pos.east();
+                    case Y -> pos.below();
+                    case Z -> pos.north();
+                };
+                if (level.getBlockEntity(beforePos) instanceof RotationalAbstractEntity) {
+                    if (level.getBlockEntity(afterPos) instanceof RotationalAbstractEntity) {
+                        body.split(pos, this);
+                    } else {
+                        body.trimLast();
+                    }
+                } else if (level.getBlockEntity(afterPos) instanceof RotationalAbstractEntity) {
+                    body.trimFirst();
+                }
+            }
+
+            if (bodyTicker && level.getBlockEntity(body.getStart()) instanceof RotationalAbstractEntity newFirst) {
+                bodyTicker = false;
+                newFirst.bodyTicker = true;
+            }
         }
 
         super.setRemoved();
@@ -122,79 +143,100 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
         return body != null;
     }
 
-    protected void createOrJoinBody() { // this is called when the server loads often or not
-        BlockState state = getBlockState();
-        BlockPos pos = getBlockPos();
-        Direction.Axis axis = Direction.Axis.Y;
-        if (state.hasProperty(BlockStateProperties.FACING)) {
-            axis = state.getValue(BlockStateProperties.FACING).getAxis();
-        } else if (state.hasProperty(BlockStateProperties.AXIS)) {
-            axis = state.getValue(BlockStateProperties.AXIS);
-        }
-
-        BlockPos before;
-        BlockPos after;
-        switch (axis) {
-            case X -> {
-                before = pos.west();
-                after = pos.east();
-            }
-            case Z -> {
-                before = pos.north();
-                after = pos.south();
-            }
-            default -> {
-                before = pos.below();
-                after = pos.above();
-            }
-        }
-
+    protected void createOrJoinBody() {
         if (level != null) {
-            if (level.getBlockEntity(before) instanceof RotationalAbstractEntity bRotEnt) {
-                if (level.getBlockEntity(after) instanceof RotationalAbstractEntity aRotEnt) {
-                    if (bRotEnt.body == null) {
+            BlockState state = getBlockState();
+            BlockPos pos = getBlockPos();
+            if (state.hasProperty(BlockStateProperties.FACING)) {
+                Direction dir = state.getValue(BlockStateProperties.FACING).getOpposite();
+
+                BlockPos checkedPos = switch (dir) {
+                    case EAST -> pos.east();
+                    case WEST -> pos.west();
+                    case NORTH -> pos.north();
+                    case SOUTH -> pos.south();
+                    case UP -> pos.above();
+                    case DOWN -> pos.below();
+                };
+
+                if (level.getBlockEntity(checkedPos) instanceof RotationalAbstractEntity checkedEnt) {
+                    if (checkedEnt.body == null) {
+                        createBody(dir.getAxis());
+                        body.join(checkedPos, checkedEnt.getMoment());
+                    } else {
+                        checkedEnt.body.join(pos, checkedEnt.getMoment());
+                        body = checkedEnt.body;
+                    }
+                    checkedEnt.synchronizeEntities();
+                } else {
+                    createBody(dir.getAxis());
+                }
+            } else if (state.hasProperty(BlockStateProperties.AXIS)) {
+                Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);
+
+                BlockPos before;
+                BlockPos after;
+                switch (axis) {
+                    case X -> {
+                        before = pos.west();
+                        after = pos.east();
+                    }
+                    case Z -> {
+                        before = pos.north();
+                        after = pos.south();
+                    }
+                    default -> {
+                        before = pos.below();
+                        after = pos.above();
+                    }
+                }
+                if (level.getBlockEntity(before) instanceof RotationalAbstractEntity bRotEnt) {
+                    if (level.getBlockEntity(after) instanceof RotationalAbstractEntity aRotEnt) {
+                        if (bRotEnt.body == null) {
+                            if (aRotEnt.body == null) {
+                                createBody(axis);
+                                body.join(after, aRotEnt.getMoment());
+                                body.join(before, bRotEnt.getMoment());
+                            } else {
+                                aRotEnt.body.join(pos, getMoment());
+                                aRotEnt.body.join(before, getMoment());
+                                body = aRotEnt.body;
+                            }
+                        } else {
+                            if (aRotEnt.body == null) {
+                                bRotEnt.body.join(pos, getMoment());
+                                bRotEnt.body.join(after, getMoment());
+                            } else {
+                                bRotEnt.body.join(aRotEnt.body, pos, getMoment());
+                            }
+                            body = bRotEnt.body;
+                        }
+                    } else {
+                        if (bRotEnt.body == null) {
+                            createBody(axis);
+                            body.join(after, bRotEnt.getMoment());
+                        } else {
+                            bRotEnt.body.join(pos, getMoment());
+                            bRotEnt.body.join(after, getMoment());
+                            body = bRotEnt.body;
+                        }
+                    }
+                } else {
+                    if (level.getBlockEntity(after) instanceof RotationalAbstractEntity aRotEnt) {
                         if (aRotEnt.body == null) {
                             createBody(axis);
                             body.join(after, aRotEnt.getMoment());
-                            body.join(before, bRotEnt.getMoment());
                         } else {
                             aRotEnt.body.join(pos, getMoment());
                             aRotEnt.body.join(before, getMoment());
+                            body = aRotEnt.body;
                         }
                     } else {
-                        if (aRotEnt.body == null) {
-                            bRotEnt.body.join(pos, getMoment());
-                            bRotEnt.body.join(after, getMoment());
-                        } else {
-                            bRotEnt.body.join(aRotEnt.body, pos, getMoment());
-                        }
-                        body = bRotEnt.body;
-                    }
-                } else {
-                    if (bRotEnt.body == null) {
                         createBody(axis);
-                        body.join(after, bRotEnt.getMoment());
-                    } else {
-                        bRotEnt.body.join(pos, getMoment());
-                        bRotEnt.body.join(after, getMoment());
-                        body = bRotEnt.body;
                     }
                 }
-            } else {
-                if (level.getBlockEntity(after) instanceof RotationalAbstractEntity aRotEnt) {
-                    if (aRotEnt.body == null) {
-                        createBody(axis);
-                        body.join(after, aRotEnt.getMoment());
-                    } else {
-                        aRotEnt.body.join(pos, getMoment());
-                        aRotEnt.body.join(before, getMoment());
-                        body = aRotEnt.body;
-                    }
-                } else {
-                    createBody(axis);
-                }
+                synchronizeEntities();
             }
-            synchronizeEntities();
         }
     }
 
@@ -216,6 +258,10 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
 
     private void createBody(Direction.Axis axis) {
         body = new TekoraBody1D(getLevel(), axis, getBlockPos(), getBlockPos(), new ArrayList<>(List.of(getMoment())));
+    }
+
+    public TekoraBody1D getBody() {
+        return body;
     }
 
     public void updateTickerStatus() {

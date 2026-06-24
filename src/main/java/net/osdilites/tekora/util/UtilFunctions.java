@@ -72,4 +72,12 @@ public class UtilFunctions {
         double dz = a.getZ() - b.getZ();
         return Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
+
+    public static float fitAngleInRange(float angle) {
+        float tau = 2 * (float)Math.PI;
+
+        angle %= tau;
+        if (angle <= 0) angle += 2 * tau;
+        return angle;
+    }
 }

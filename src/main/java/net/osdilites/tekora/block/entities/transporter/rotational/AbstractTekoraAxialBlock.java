@@ -6,16 +6,11 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.osdilites.tekora.util.TekoraBody1D;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
@@ -39,39 +34,9 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
         //      If it has two neighbors, the endpoints get swapped.
         //      If it has zero neighbors, its two endpoints are defined as itself.
 
-        if (!pLevel.isClientSide() && pState.hasProperty(AXIS)) {
-            BlockEntity thisEnt = pLevel.getBlockEntity(pPos);
-            if (thisEnt instanceof RotationalAbstractEntity ent) {
-                Direction.Axis axis = pState.getValue(AXIS);
-                BlockPos a;
-                BlockPos b;
-                if (axis == Direction.Axis.X) {
-                    a = pPos.east();
-                    b = pPos.west();
-                } else if (axis == Direction.Axis.Y) {
-                    a = pPos.above();
-                    b = pPos.below();
-                } else {
-                    a = pPos.north();
-                    b = pPos.south();
-                }
-                BlockEntity aEnt = pLevel.getBlockEntity(a);
-                BlockEntity bEnt = pLevel.getBlockEntity(b);
-
-                boolean aValid = aEnt instanceof RotationalAbstractEntity;
-                boolean bValid = bEnt instanceof RotationalAbstractEntity;
-                TekoraBody1D body;
-                if (aValid && bValid) {
-                    body = ((RotationalAbstractEntity) aEnt).combine((RotationalAbstractEntity) bEnt, pPos, ((RotationalAbstractEntity) bEnt).getMoment());
-                } else if (aValid) {
-                    body = ((RotationalAbstractEntity) aEnt).combine(pPos, ((RotationalAbstractEntity) aEnt).getMoment());
-                } else if (bValid) {
-                    body = ((RotationalAbstractEntity) bEnt).combine(pPos, ((RotationalAbstractEntity) bEnt).getMoment());
-                } else {
-                    ArrayList<Double> masses = new ArrayList<>(List.of(ent.getMoment()));
-                    body = new TekoraBody1D(pLevel, axis, pPos, pPos, masses);
-                }
-                ent.setBody(body);
+        if (!pLevel.isClientSide()) {
+            if (pLevel.getBlockEntity(pPos) instanceof RotationalAbstractEntity ent) {
+                ent.createOrJoinBody();
             }
         }
         super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
@@ -90,7 +55,7 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
             case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> switch (state.getValue(AXIS)) {
                 case X -> state.setValue(AXIS, Direction.Axis.Z);
                 case Z -> state.setValue(AXIS, Direction.Axis.X);
-                default -> state;
+                default -> state.setValue(AXIS, Direction.Axis.Y);
             };
             default -> state;
         };

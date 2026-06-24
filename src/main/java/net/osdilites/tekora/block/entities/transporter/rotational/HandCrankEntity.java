@@ -8,11 +8,11 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 public class HandCrankEntity extends RotationalAbstractEntity {
     public HandCrankEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState);
-        // todo, calculate the actual mass of the entity
     }
 
     public void addToForce(double force) {
-        body.addForce(getBlockPos(), force);
+        if (body != null) body.addForce(getBlockPos(), force);
+        else createOrJoinBody();
     }
 
     @Override

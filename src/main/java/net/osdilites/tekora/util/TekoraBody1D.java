@@ -9,6 +9,7 @@ import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbst
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 // This is a class used for the shafts, gears, and other 1D mech contraptions in Tekora.
@@ -116,8 +117,8 @@ public class TekoraBody1D {
             default -> {
                 val = z;
                 isValid = x == f && y == g;
-                newEnd = pPos.north();
                 newStart = pPos.south();
+                newEnd = pPos.north();
                 newA = newStart.getZ();
             }
         }
@@ -130,6 +131,7 @@ public class TekoraBody1D {
                         newRot.updateTickerStatus();
                     }
                 }
+                pEntity.updateTickerStatus();
                 this.start = newStart;
                 if (!moments.isEmpty()) moment -= moments.removeFirst(); // todo 1
                 else moment = 0;
@@ -146,7 +148,8 @@ public class TekoraBody1D {
             } else {
                 int split = (val - pA);
                 int end = (pB - pA);
-                TekoraBody1D newBody = new TekoraBody1D(level, axis, newStart, this.end, new ArrayList<>(moments.subList(split+1, end)));
+                TekoraBody1D newBody = new TekoraBody1D(level, axis, newStart, this.end, new ArrayList<>(moments.size() == end && end > split + 1 ? moments.subList(split+1, end) : List.of()));
+                newBody.oldAngle = newBody.angle = UtilFunctions.fitAngleInRange(this.angle);
                 for (int i = end; i >= split; i--) { // todo 2
                     if (!moments.isEmpty()) moment -= moments.removeLast();
                     else {
@@ -159,7 +162,7 @@ public class TekoraBody1D {
                     BlockPos checkedPos = switch (axis) {
                         case X -> new BlockPos(i, f, g);
                         case Y -> new BlockPos(f, i, g);
-                        default -> new BlockPos(f, g, i);
+                        case Z -> new BlockPos(f, g, i);
                     };
                     BlockEntity checkedEnt = level.getBlockEntity(checkedPos);
                     if (checkedEnt instanceof RotationalAbstractEntity newRot) {
@@ -168,6 +171,32 @@ public class TekoraBody1D {
                 }
             }
         }
+    }
+
+    public void trimFirst() {
+        if (!moments.isEmpty()) moment -= moments.removeFirst();
+        else moment = 0;
+        pA += 1;
+        start = switch (axis) {
+            case X -> start.east();
+            case Y -> start.above();
+            case Z -> start.south();
+        };
+        BlockEntity newFirst = level.getBlockEntity(start);
+        if (newFirst instanceof RotationalAbstractEntity newRot) {
+            newRot.updateTickerStatus();
+        }
+    }
+
+    public void trimLast() {
+        if (!moments.isEmpty()) moment -= moments.removeLast();
+        else moment = 0;
+        pB -= 1;
+        end = switch (axis) {
+            case X -> end.west();
+            case Y -> end.below();
+            case Z -> end.north();
+        };
     }
 
     /** A method that joins the mass and force of the object using the endpoints*/
@@ -190,11 +219,11 @@ public class TekoraBody1D {
             }
         }
 
-        if (isValid && (suffDiff(pObj.pA, pObj.pB, val) || suffDiff(pA, pB, val))) {
-            double doa = Math.abs(pObj.pA - val);
-            double dob = Math.abs(pObj.pB - val);
-            double dca = Math.abs(pA - val);
-            double dcb = Math.abs(pB - val);
+        if (isValid) {
+            double doa = Math.abs(pObj.pA - val); // difference between obj and after
+            double dob = Math.abs(pObj.pB - val); // difference between obj and before
+            double dca = Math.abs(pA - val); // difference between current and after
+            double dcb = Math.abs(pB - val); // difference between current and before
             if (dca < dcb) {
                 if (doa < dob) {
                     pA = pObj.pA;
@@ -226,47 +255,46 @@ public class TekoraBody1D {
                 moment += mom;
             }
         } else {
-            Tekora.LOGGER.debug("Object joining mismatch at: {}, suffdiff coords: pA: {}, pB: {}, newVal: {}", pPos.toShortString(), pA, pB, val);
+            Tekora.LOGGER.debug("Objects joining mismatch at: {}, suffdiff coords: pA: {}, pB: {}, newVal: {}", pPos.toShortString(), pA, pB, val);
         }
     }
 
     /** A method that joins the mass and force of the object by extending out from the end point*/
     public void join(BlockPos pPos, double momentInertia) {
-        boolean isValid;
-        double val;
-        switch (axis) {
-            case X -> {
-                val = pPos.getX();
-                isValid = pPos.getY() == f && pPos.getZ() == g;
-            }
-            case Y -> {
-                val = pPos.getY();
-                isValid = pPos.getX() == f && pPos.getZ() == g;
-            }
-            default -> {
-                val = pPos.getZ();
-                isValid = pPos.getX() == f && pPos.getY() == g;
-            }
-        }
-        isValid = isValid && suffDiff(pA, pB, val);
-        if (isValid) {
-            if (val < pA) {
-                pA--;
-                start = pPos;
-                moments.addFirst(momentInertia);
-            } else if (val > pB) {
-                pB++;
-                end = pPos;
-                moments.add(momentInertia);
-            }
-            moment += momentInertia;
+        if (level.getBlockEntity(pPos) instanceof RotationalAbstractEntity rotEnt && rotEnt.hasBody()) {
+            join(rotEnt.getBody(), pPos, momentInertia);
         } else {
-            Tekora.LOGGER.debug("Object joining mismatch at: {}, suffdiff coords: pA: {}, pB: {}, newVal: {}", pPos.toShortString(), pA, pB, val);
+            boolean isValid;
+            double val;
+            switch (axis) {
+                case X -> {
+                    val = pPos.getX();
+                    isValid = pPos.getY() == f && pPos.getZ() == g;
+                }
+                case Y -> {
+                    val = pPos.getY();
+                    isValid = pPos.getX() == f && pPos.getZ() == g;
+                }
+                default -> {
+                    val = pPos.getZ();
+                    isValid = pPos.getX() == f && pPos.getY() == g;
+                }
+            }
+            if (isValid) {
+                if (val <= pA) {
+                    pA--;
+                    start = pPos;
+                    moments.addFirst(momentInertia);
+                } else if (val >= pB) {
+                    pB++;
+                    end = pPos;
+                    moments.add(momentInertia);
+                }
+                moment += momentInertia;
+            } else {
+                Tekora.LOGGER.debug("Object attachment mismatch at: {}, suffdiff coords: pA: {}, pB: {}, newVal: {}", pPos.toShortString(), pA, pB, val);
+            }
         }
-    }
-
-    private static boolean suffDiff(double a, double b, double val) {
-        return Math.abs(a - val) == 1 || Math.abs(b - val) == 1;
     }
 
     private static boolean withinRange(double a, double b, double val) {
@@ -298,6 +326,10 @@ public class TekoraBody1D {
     // useful when a new body suddenly gets defined and an arbitrary ticker has to be set.
     public boolean isStart(BlockPos pPos) {
         return pPos.equals(start);
+    }
+
+    public BlockPos getStart() {
+        return start;
     }
 
     public void tick() {
@@ -332,13 +364,7 @@ public class TekoraBody1D {
         return entities;
     }
 
-    // for debugging purposes
-    public String toShortString() {
-        return "axis: " + axis + ", start: " + start + ", end: " + end;
-    }
-
-    @Override
-    public String toString() {
-        return toShortString() + ", velocity: " + velocity;
+    public void adjustAngle(float angle) {
+        this.oldAngle = this.angle = UtilFunctions.fitAngleInRange(angle) + (float)Math.PI / 8;
     }
 }

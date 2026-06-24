@@ -40,15 +40,13 @@ public class HandCrank extends AbstractTekoraAxialBlock { // todo, change the ax
 
     private static final VoxelShape[] COMPS_A = UtilFunctions.generateShapeForAllRotations(7, 0, 7, 9, 6, 9);
     private static final VoxelShape[] COMPS_B = UtilFunctions.generateShapeForAllRotations(7, 6, 6, 9, 8, 10);
-    private static final VoxelShape[] COMPS_C = UtilFunctions.generateShapeForAllRotations(6, 5, 10, 10, 9, 14);
-    private static final VoxelShape[] COMPS_D = UtilFunctions.generateShapeForAllRotations(7, 6, 14, 9, 12, 16);
 
-    private static final VoxelShape SHAPE_EAST = Shapes.or(Shapes.or(COMPS_A[0], COMPS_B[0]), Shapes.or(COMPS_C[0], COMPS_D[0]));
-    private static final VoxelShape SHAPE_UP = Shapes.or(Shapes.or(COMPS_A[1], COMPS_B[1]), Shapes.or(COMPS_C[1], COMPS_D[1]));
-    private static final VoxelShape SHAPE_SOUTH = Shapes.or(Shapes.or(COMPS_A[2], COMPS_B[2]), Shapes.or(COMPS_C[2], COMPS_D[2]));
-    private static final VoxelShape SHAPE_WEST = Shapes.or(Shapes.or(COMPS_A[3], COMPS_B[3]), Shapes.or(COMPS_C[3], COMPS_D[3]));
-    private static final VoxelShape SHAPE_DOWN = Shapes.or(Shapes.or(COMPS_A[4], COMPS_B[4]), Shapes.or(COMPS_C[4], COMPS_D[4]));
-    private static final VoxelShape SHAPE_NORTH = Shapes.or(Shapes.or(COMPS_A[5], COMPS_B[5]), Shapes.or(COMPS_C[5], COMPS_D[5]));
+    private static final VoxelShape SHAPE_EAST = Shapes.or(COMPS_A[0], COMPS_B[0]);
+    private static final VoxelShape SHAPE_UP = Shapes.or(COMPS_A[1], COMPS_B[1]);
+    private static final VoxelShape SHAPE_SOUTH = Shapes.or(COMPS_A[2], COMPS_B[2]);
+    private static final VoxelShape SHAPE_WEST = Shapes.or(COMPS_A[3], COMPS_B[3]);
+    private static final VoxelShape SHAPE_DOWN = Shapes.or(COMPS_A[4], COMPS_B[4]);
+    private static final VoxelShape SHAPE_NORTH = Shapes.or(COMPS_A[5], COMPS_B[5]);
 
     private HandCrank(Properties properties) {
         super(properties);

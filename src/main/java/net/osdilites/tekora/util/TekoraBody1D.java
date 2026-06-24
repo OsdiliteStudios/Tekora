@@ -261,38 +261,40 @@ public class TekoraBody1D {
 
     /** A method that joins the mass and force of the object by extending out from the end point*/
     public void join(BlockPos pPos, double momentInertia) {
-        if (level.getBlockEntity(pPos) instanceof RotationalAbstractEntity rotEnt && rotEnt.hasBody()) {
-            join(rotEnt.getBody(), pPos, momentInertia);
-        } else {
-            boolean isValid;
-            double val;
-            switch (axis) {
-                case X -> {
-                    val = pPos.getX();
-                    isValid = pPos.getY() == f && pPos.getZ() == g;
-                }
-                case Y -> {
-                    val = pPos.getY();
-                    isValid = pPos.getX() == f && pPos.getZ() == g;
-                }
-                default -> {
-                    val = pPos.getZ();
-                    isValid = pPos.getX() == f && pPos.getY() == g;
-                }
-            }
-            if (isValid) {
-                if (val <= pA) {
-                    pA--;
-                    start = pPos;
-                    moments.addFirst(momentInertia);
-                } else if (val >= pB) {
-                    pB++;
-                    end = pPos;
-                    moments.add(momentInertia);
-                }
-                moment += momentInertia;
+        if (level.getBlockEntity(pPos) instanceof RotationalAbstractEntity rotEnt) {
+            if (rotEnt.hasBody()) {
+                join(rotEnt.getBody(), pPos, momentInertia);
             } else {
-                Tekora.LOGGER.debug("Object attachment mismatch at: {}, suffdiff coords: pA: {}, pB: {}, newVal: {}", pPos.toShortString(), pA, pB, val);
+                boolean isValid;
+                double val;
+                switch (axis) {
+                    case X -> {
+                        val = pPos.getX();
+                        isValid = pPos.getY() == f && pPos.getZ() == g;
+                    }
+                    case Y -> {
+                        val = pPos.getY();
+                        isValid = pPos.getX() == f && pPos.getZ() == g;
+                    }
+                    default -> {
+                        val = pPos.getZ();
+                        isValid = pPos.getX() == f && pPos.getY() == g;
+                    }
+                }
+                if (isValid) {
+                    if (val <= pA) {
+                        pA = (int)val;
+                        start = pPos;
+                        moments.addFirst(momentInertia);
+                    } else if (val >= pB) {
+                        pB = (int)val;
+                        end = pPos;
+                        moments.add(momentInertia);
+                    }
+                    moment += momentInertia;
+                } else {
+                    Tekora.LOGGER.debug("Object attachment mismatch at: {}, suffdiff coords: pA: {}, pB: {}, newVal: {}", pPos.toShortString(), pA, pB, val);
+                }
             }
         }
     }
@@ -359,12 +361,14 @@ public class TekoraBody1D {
             };
             if (level.getBlockEntity(pos) instanceof RotationalAbstractEntity newRot) {
                 entities.add(newRot);
-            } // todo, implement a proper else statement
+            } // else {
+            //    split(pos, null);
+            // }
         }
         return entities;
     }
 
     public void adjustAngle(float angle) {
-        this.oldAngle = this.angle = UtilFunctions.fitAngleInRange(angle) + (float)Math.PI / 8;
+        this.oldAngle = this.angle = UtilFunctions.fitAngleInRange(angle) + (float)Math.PI / 6;
     }
 }

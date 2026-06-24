@@ -25,23 +25,6 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
         pBuilder.add(AXIS);
     }
 
-    @Override
-    protected void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
-        // todo, implement a system in which the center of any block entity a part of this gets recalculated on placement
-        // implementation idea
-        //      Upon placement, the endpoint touching it gets removed and
-        //      If it only has one neighbor, this point itself becomes the end point
-        //      If it has two neighbors, the endpoints get swapped.
-        //      If it has zero neighbors, its two endpoints are defined as itself.
-
-        if (!pLevel.isClientSide()) {
-            if (pLevel.getBlockEntity(pPos) instanceof RotationalAbstractEntity ent) {
-                ent.createOrJoinBody();
-            }
-        }
-        super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
-    }
-
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {

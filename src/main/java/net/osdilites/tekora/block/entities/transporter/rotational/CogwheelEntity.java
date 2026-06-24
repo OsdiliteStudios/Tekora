@@ -63,6 +63,7 @@ public class CogwheelEntity extends RotationalAbstractEntity {
                 double slipV = selfV + otherV;
                 double contactForce = -c * slipV;
                 cog.body.addForce(otherPos, contactForce);
+                if (cog.body.getVelocity() == 0) cog.body.adjustAngle(body.getAngle());
                 return contactForce;
             }
 

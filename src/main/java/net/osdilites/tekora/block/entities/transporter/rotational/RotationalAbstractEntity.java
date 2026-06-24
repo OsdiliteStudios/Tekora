@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.TagValueOutput;
+import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.mechanical.AbstractMechanicalEntity;
 import net.osdilites.tekora.util.TekoraBody1D;
 import org.jspecify.annotations.Nullable;
@@ -93,10 +94,8 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         boolean hasFacing = pState.hasProperty(BlockStateProperties.FACING);
         boolean hasAxis = pState.hasProperty(BlockStateProperties.AXIS);
-        if (bodyTicker) {
-            if (hasFacing || hasAxis) {
-                body.tick();
-            }
+        if (bodyTicker && (hasFacing || hasAxis)) {
+            body.tick();
         }
         if (!pLevel.isClientSide()) {
             // air res formula:
@@ -273,7 +272,7 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
     @Override
     public void onLoad() {
         super.onLoad();
-        if (body == null) {
+        if (body == null && level != null) {
             createOrJoinBody();
         }
     }

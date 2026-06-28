@@ -16,16 +16,29 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractTekoraAxialBlock;
+import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
 import net.osdilites.tekora.block.entities.thermal.AbstractThermalMachine;
 import net.minecraft.world.item.*;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.item.typical.GearItem;
+import net.osdilites.tekora.item.typical.MachinePartItem;
 
 import java.util.function.Consumer;
 
 public class TekoraItems {
   public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Tekora.MODID);
+
+  public static final DeferredHolder<Item, Item> WOODEN_GEAR = ITEMS.register("wooden_gear", () -> new GearItem("wooden_gear", GearType.WOOD));
+  public static final DeferredHolder<Item, Item> BRASS_GEAR = ITEMS.register("brass_gear", () -> new GearItem("brass_gear", GearType.BRASS));
+  public static final DeferredHolder<Item, Item> STEEL_GEAR = ITEMS.register("steel_gear", () -> new GearItem("steel_gear", GearType.STEEL));
+
+  public static final DeferredHolder<Item, Item> CRUSHING_WHEEL = ITEMS.register("crushing_wheel", () -> new MachinePartItem("crushing_wheel", null));
+  public static final DeferredHolder<Item, Item> MIXER_SHAFT = ITEMS.register("mixer_shaft", () -> new MachinePartItem("mixer_shaft", TekoraBlocks.MIXER.get()));
+  public static final DeferredHolder<Item, Item> PRESSER_SHAFT = ITEMS.register("presser_shaft", () -> new MachinePartItem("presser_shaft", null));
+  public static final DeferredHolder<Item, Item> PRINTER_SHAFT = ITEMS.register("printer_shaft", () -> new  MachinePartItem("printer_shaft", null));
 
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override

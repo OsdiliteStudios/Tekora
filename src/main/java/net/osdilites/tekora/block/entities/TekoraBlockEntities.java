@@ -6,6 +6,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.mechanical.MixerMechanicalEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.CogwheelEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.HandCrankEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
@@ -29,6 +30,14 @@ public class TekoraBlockEntities {
     public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT =
             BLOCK_ENTITIES.register("shaft", () -> new BlockEntityType<>(ShaftEntity::new,
                     Set.of(TekoraBlocks.SHAFT.get())));
+
+    public static final Supplier<BlockEntityType<MixerMechanicalEntity>> MIXER =
+            BLOCK_ENTITIES.register("mixer", () -> new BlockEntityType<>(MixerMechanicalEntity::new,
+                    Set.of(TekoraBlocks.MIXER.get())));
+
+    public static final Supplier<BlockEntityType<BasinEntity>> BASIN =
+            BLOCK_ENTITIES.register("basin", () -> new BlockEntityType<>(BasinEntity::new,
+                    Set.of(TekoraBlocks.BASIN.get())));
 
 //    public static final Supplier<BlockEntityType<WaterwheelEntity.Wood>> WOODEN_WATERWHEEL =
 //            BLOCK_ENTITIES.register("wooden_waterwheel", () -> new BlockEntityType<>(WaterwheelEntity.Wood::new,

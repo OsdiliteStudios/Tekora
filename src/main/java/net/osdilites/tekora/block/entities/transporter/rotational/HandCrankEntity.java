@@ -1,6 +1,7 @@
 package net.osdilites.tekora.block.entities.transporter.rotational;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.food.FoodData;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
@@ -10,9 +11,21 @@ public class HandCrankEntity extends RotationalAbstractEntity {
         super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState);
     }
 
-    public void addToForce(double force) {
-        if (body != null) body.addForce(getBlockPos(), force);
-        else createOrJoinBody();
+    // Function used to apply force by the player
+    public void applyForce(FoodData data) {
+        int hunger = data.getFoodLevel();
+        float saturation = data.getSaturationLevel();
+        double energy = (hunger + saturation) / 25;
+        double speed = Math.abs(body.getVelocity());
+        double radius = componentRadius();
+
+        double force = 60.0 * (0.25 + 0.75 * energy) * Math.max(0, 1 - 2 * speed / (Math.PI));
+        body.addForce(getBlockPos(), force);
+
+        if (saturation > 0) {
+            float foodDrain = (float)(1.5E-5 * force * speed * radius);
+            data.addExhaustion(foodDrain);
+        }
     }
 
     @Override

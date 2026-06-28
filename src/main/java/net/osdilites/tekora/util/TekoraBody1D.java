@@ -4,6 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
 
@@ -14,8 +16,8 @@ import java.util.Queue;
 
 // This is a class used for the shafts, gears, and other 1D mech contraptions in Tekora.
 public class TekoraBody1D {
-    public double moment;
-    private double velocity = 0;
+    public double moment; // kg m
+    private double velocity = 0; // m/tick
                    // If axis == x | y | z
     private int f; // a =        y | x | x
     private int g; // b =        z | z | y
@@ -265,35 +267,39 @@ public class TekoraBody1D {
             if (rotEnt.hasBody()) {
                 join(rotEnt.getBody(), pPos, momentInertia);
             } else {
-                boolean isValid;
-                double val;
-                switch (axis) {
-                    case X -> {
-                        val = pPos.getX();
-                        isValid = pPos.getY() == f && pPos.getZ() == g;
+                BlockState state = level.getBlockState(pPos);
+                if ((state.hasProperty(BlockStateProperties.FACING) && state.getValue(BlockStateProperties.FACING).getAxis() == axis) ||
+                        (state.hasProperty(BlockStateProperties.AXIS) && state.getValue(BlockStateProperties.AXIS) == axis)) {
+                    boolean isValid;
+                    double val;
+                    switch (axis) {
+                        case X -> {
+                            val = pPos.getX();
+                            isValid = pPos.getY() == f && pPos.getZ() == g;
+                        }
+                        case Y -> {
+                            val = pPos.getY();
+                            isValid = pPos.getX() == f && pPos.getZ() == g;
+                        }
+                        default -> {
+                            val = pPos.getZ();
+                            isValid = pPos.getX() == f && pPos.getY() == g;
+                        }
                     }
-                    case Y -> {
-                        val = pPos.getY();
-                        isValid = pPos.getX() == f && pPos.getZ() == g;
+                    if (isValid) {
+                        if (val <= pA) {
+                            pA = (int)val;
+                            start = pPos;
+                            moments.addFirst(momentInertia);
+                        } else if (val >= pB) {
+                            pB = (int)val;
+                            end = pPos;
+                            moments.add(momentInertia);
+                        }
+                        moment += momentInertia;
+                    } else {
+                        Tekora.LOGGER.debug("Object attachment mismatch at: {}, suffdiff coords: pA: {}, pB: {}, newVal: {}", pPos.toShortString(), pA, pB, val);
                     }
-                    default -> {
-                        val = pPos.getZ();
-                        isValid = pPos.getX() == f && pPos.getY() == g;
-                    }
-                }
-                if (isValid) {
-                    if (val <= pA) {
-                        pA = (int)val;
-                        start = pPos;
-                        moments.addFirst(momentInertia);
-                    } else if (val >= pB) {
-                        pB = (int)val;
-                        end = pPos;
-                        moments.add(momentInertia);
-                    }
-                    moment += momentInertia;
-                } else {
-                    Tekora.LOGGER.debug("Object attachment mismatch at: {}, suffdiff coords: pA: {}, pB: {}, newVal: {}", pPos.toShortString(), pA, pB, val);
                 }
             }
         }
@@ -303,6 +309,7 @@ public class TekoraBody1D {
         return (a <= val && val <= b) || (b <= val && val <= a);
     }
 
+    // Units is in:
     public void addForce(BlockPos pPos, double force) {
         boolean isValid;
         double val;

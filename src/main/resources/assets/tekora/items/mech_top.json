@@ -1,0 +1,15 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:item_model",
+        "model": "tekora:block/mech_top"
+      },
+      {
+        "type": "minecraft:item_model",
+        "model": "tekora:block/shaft"
+      }
+    ]
+  }
+}

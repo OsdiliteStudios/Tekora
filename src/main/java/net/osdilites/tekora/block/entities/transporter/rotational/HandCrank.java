@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -77,7 +78,8 @@ public class HandCrank extends AbstractTekoraAxialBlock { // todo, change the ax
     protected InteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         BlockEntity te = pLevel.getBlockEntity(pPos);
         if (te instanceof HandCrankEntity crankEnt) {
-            crankEnt.addToForce(10); // todo, use math to determine this number
+            FoodData data = pPlayer.getFoodData();
+            crankEnt.applyForce(data);
         }
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
@@ -114,7 +116,7 @@ public class HandCrank extends AbstractTekoraAxialBlock { // todo, change the ax
     }
 
     @Override
-    public @org.jspecify.annotations.Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
         return createTickerHelper(type, TekoraBlockEntities.HAND_CRANK.get(), (lvl, pos, state, block) -> block.tick(lvl, pos, state));
     }
 }

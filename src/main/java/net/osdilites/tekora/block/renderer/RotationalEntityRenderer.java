@@ -1,7 +1,6 @@
 package net.osdilites.tekora.block.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -22,7 +21,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 
 public class RotationalEntityRenderer implements BlockEntityRenderer<RotationalAbstractEntity, TekoraRotatingRenderState> {
-    private final BlockEntityRenderDispatcher renderer;
+    protected final BlockEntityRenderDispatcher renderer;
 
     public RotationalEntityRenderer(BlockEntityRendererProvider.Context pContext) {
         renderer = pContext.blockEntityRenderDispatcher();
@@ -64,7 +63,6 @@ public class RotationalEntityRenderer implements BlockEntityRenderer<RotationalA
             poseStack.translate(-0.5D, -0.5D, -0.5D);
 
             collector.submitMultiLayerBlockModel(poseStack, state.parts, true, new int[]{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, state.packedLight, OverlayTexture.NO_OVERLAY, 0);
-
 
             poseStack.popPose();
         }

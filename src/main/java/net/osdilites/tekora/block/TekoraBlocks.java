@@ -7,6 +7,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.block.entities.Basin;
+import net.osdilites.tekora.block.entities.mechanical.MixerMechanical;
 import net.osdilites.tekora.block.entities.thermal.KilnFurnace;
 import net.osdilites.tekora.block.entities.transporter.rotational.Cogwheel;
 import net.osdilites.tekora.block.entities.transporter.rotational.HandCrank;
@@ -24,8 +26,12 @@ public class TekoraBlocks {
             createBlock("shaft", () -> new Shaft("shaft"));
     public static final DeferredHolder<Block, HandCrank> HAND_CRANK =
             createBlock("hand_crank", () -> new HandCrank("hand_crank", 1));
+    public static final DeferredHolder<Block, MixerMechanical> MIXER =
+            createBlock("mixer", MixerMechanical::new);
     public static final DeferredHolder<Block, KilnFurnace> KILN_FURNACE =
             createBlock("kiln_furnace", () -> new KilnFurnace(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
+    public static final DeferredHolder<Block, Basin> BASIN =
+            createBlock("basin", Basin::new);
 
 
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {

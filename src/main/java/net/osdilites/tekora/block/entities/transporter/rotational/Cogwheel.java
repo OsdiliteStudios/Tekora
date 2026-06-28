@@ -38,7 +38,7 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
             box(0, 0, 7, 16, 16, 9),
             (b1, b2) -> b1 || b2);
 
-    private static final EnumProperty<GearType> COMPOSITION = EnumProperty.create("composition", GearType.class);
+    public static final EnumProperty<GearType> GEAR_TYPE = EnumProperty.create("gear_type", GearType.class);
 
     private Cogwheel(Properties properties) {
         super(properties);

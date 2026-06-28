@@ -21,6 +21,9 @@ public class TekoraMenus {
     public static final Supplier<MenuType<KilnFurnaceMenu>> KILN_FURNACE_MENU = MENUS.register("kiln_furnace",
             () -> IMenuTypeExtension.create(KilnFurnaceMenu::new));
 
+    public static final Supplier<MenuType<BasinMenu>> BASIN_MENU = MENUS.register("basin",
+            () -> IMenuTypeExtension.create(BasinMenu::new));
+
     public static void register(IEventBus eventBus) {
         MENUS.register(eventBus);
     }

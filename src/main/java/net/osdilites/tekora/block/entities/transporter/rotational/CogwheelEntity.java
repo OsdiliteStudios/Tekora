@@ -7,14 +7,18 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
+import java.util.ArrayList;
+
 public class CogwheelEntity extends RotationalAbstractEntity {
     public static final double I_WOOD = 1653.7540078037523;
     // public static final double I_BRASS = ;
     // public static final double I_STAINLESS = ;
 
+    private final ArrayList<BlockPos> attachedPartners;
+
     public CogwheelEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.COGWHEEL.get(), pPos, pBlockState); // basically component entity varies for different block
-        // todo make the super class use a non final variable for mass.
+        super(TekoraBlockEntities.COGWHEEL.get(), pPos, pBlockState);
+        attachedPartners = new ArrayList<>();
     }
 
     @Override
@@ -79,5 +83,13 @@ public class CogwheelEntity extends RotationalAbstractEntity {
     @Override
     public double componentRadius() {
         return 0.5;
+    }
+
+    public ArrayList<BlockPos> getAttachedPartners() {
+        return attachedPartners;
+    }
+
+    public void addAttachedPartner(BlockPos partner) {
+        attachedPartners.add(partner);
     }
 }

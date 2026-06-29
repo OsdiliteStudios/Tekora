@@ -12,16 +12,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
-import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import org.jetbrains.annotations.Nullable;
 
-public class MixerMechanical extends AbstractTekoraMechanicalBlock {
+public class MixerMechanical extends AbstractTekoraMechanicalMachine {
     public static final MapCodec<MixerMechanical> CODEC = simpleCodec(MixerMechanical::new);
-
-    public static final EnumProperty<GearType> GEAR_TYPE = EnumProperty.create("gear_type", GearType.class);
 
     private MixerMechanical(Properties properties) {
         super(properties);

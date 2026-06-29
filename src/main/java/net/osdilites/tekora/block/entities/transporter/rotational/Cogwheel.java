@@ -6,8 +6,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -21,6 +23,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
+@Deprecated
 public class Cogwheel extends AbstractTekoraAxialBlock {
 
     public static final MapCodec<Cogwheel> CODEC = simpleCodec(Cogwheel::new);
@@ -44,12 +47,8 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
         super(properties);
     }
 
-    public Cogwheel(String name, int cat) {
-        this(Properties.ofFullCopy(switch (cat) {
-            case 1 -> Blocks.OAK_WOOD; // wood
-            case 2 -> Blocks.TINTED_GLASS; // plastic
-            default -> Blocks.IRON_BLOCK; // metals
-        }).setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, name))));
+    public Cogwheel(String name) {
+        this(Properties.ofFullCopy(Blocks.IRON_BARS).setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, name))));
     }
 
     @Override
@@ -73,6 +72,19 @@ public class Cogwheel extends AbstractTekoraAxialBlock {
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new CogwheelEntity(pPos, pState);
+    }
+
+    @Override
+    public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, @org.jspecify.annotations.Nullable Entity entity) {
+        if (state.hasProperty(GEAR_TYPE)) {
+            GearType type = state.getValue(GEAR_TYPE);
+            return switch (type) {
+                case WOOD -> SoundType.WOOD;
+                case PLASTIC -> SoundType.GLASS;
+                default -> SoundType.METAL;
+            };
+        }
+        return SoundType.METAL;
     }
 
     @Nullable

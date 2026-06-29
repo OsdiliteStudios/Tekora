@@ -9,6 +9,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class CogwheelEntity extends RotationalAbstractEntity {
     public static final double I_WOOD = 1653.7540078037523;
     // public static final double I_BRASS = ;

@@ -54,7 +54,7 @@ public abstract class TekoraItemMenu extends AbstractContainerMenu {
         return copyOfSourceStack;
     }
 
-    private void addPlayerInventory(Inventory inv) {
+    protected void addPlayerInventory(Inventory inv) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 addSlot(new Slot(inv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
@@ -62,7 +62,7 @@ public abstract class TekoraItemMenu extends AbstractContainerMenu {
         }
     }
 
-    private void addPlayerHotbar(Inventory inv) {
+    protected void addPlayerHotbar(Inventory inv) {
         for (int i = 0; i < 9; i++) {
             addSlot(new Slot(inv, i, 8 + i * 18, 142));
         }

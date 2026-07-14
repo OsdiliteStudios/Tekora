@@ -1,0 +1,38 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "tekora:block/shafts/steel",
+		"1": "tekora:block/press/top",
+		"2": "tekora:block/press/side",
+		"particle": "tekora:block/shafts/steel"
+	},
+	"elements": [
+		{
+			"from": [6, 3, 6],
+			"to": [10, 16, 10],
+			"color": 7,
+			"faces": {
+				"north": {"uv": [0, 0, 4, 13], "texture": "#0"},
+				"east": {"uv": [0, 0, 4, 13], "texture": "#0"},
+				"south": {"uv": [0, 0, 4, 13], "texture": "#0"},
+				"west": {"uv": [0, 0, 4, 13], "texture": "#0"},
+				"up": {"uv": [4, 0, 8, 4], "texture": "#0"},
+				"down": {"uv": [4, 0, 8, 4], "texture": "#0"}
+			}
+		},
+		{
+			"from": [1, 0, 1],
+			"to": [15, 3, 15],
+			"color": 9,
+			"faces": {
+				"north": {"uv": [0, 0, 14, 3], "texture": "#2"},
+				"east": {"uv": [0, 0, 14, 3], "texture": "#2"},
+				"south": {"uv": [0, 0, 14, 3], "texture": "#2"},
+				"west": {"uv": [0, 0, 14, 3], "texture": "#2"},
+				"up": {"uv": [0, 0, 14, 14], "texture": "#1"},
+				"down": {"uv": [0, 0, 14, 14], "texture": "#1"}
+			}
+		}
+	]
+}

@@ -4,12 +4,14 @@ import net.minecraft.util.StringRepresentable;
 
 // in the future we might want this to be encoded using JSON files instead of the current system.
 public enum GearType implements StringRepresentable {
-    ALUMINUM("aluminum", 225, 2025),
+    ALUMINUM("aluminum", 225, 2025), // steel substitute
     BRONZE("bronze", 733.33, 6600),
     BRASS("brass", 708.33, 6375),
-    STEEL("steel", 654.17, 5887.5),
+    STEEL("steel", 654.17, 5887.5), // steam age power generation
     PLASTIC("plastic", 44.53, 400.78),
-    WOOD("wood", 131.25, 1181.25);
+    WOOD("wood", 131.25, 1181.25),
+
+    NONE("none", 0, 0);
 
     private final String name;
     private final double smallMoment;

@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
-public class MixerMechanicalEntity extends AbstractMechanicalEntity {
+public class MixerMechanicalEntity extends AbstractMechMachineEntity {
     public MixerMechanicalEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.MIXER.get(), pPos, pState);
     }

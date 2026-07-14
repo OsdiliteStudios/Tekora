@@ -12,6 +12,10 @@ public abstract class AbstractMechanicalEntity extends BlockEntity {
         super(pType, pPos, pBlockState);
     }
 
+    public abstract float getOldRotation();
+
+    public abstract float getRenderingRotation();
+
     public abstract double getMoment();
 
     public abstract double componentRadius();

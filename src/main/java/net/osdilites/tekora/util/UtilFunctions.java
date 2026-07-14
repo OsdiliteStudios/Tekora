@@ -10,48 +10,18 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelLoader;
 import net.neoforged.neoforge.model.data.ModelData;
+import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
+import net.osdilites.tekora.item.TekoraItems;
 
 public class UtilFunctions {
-    public static BlockPos posFromDir(BlockPos pPos, Direction pDir) {
-        return switch (pDir) {
-            case UP -> pPos.above();
-            case DOWN -> pPos.below();
-            case NORTH -> pPos.north();
-            case SOUTH -> pPos.south();
-            case EAST -> pPos.east();
-            case WEST -> pPos.west();
-        };
-    }
-
-    public static Direction dirFromAxis(Direction.Axis pAxis, boolean pNeg) {
-        return switch (pAxis) {
-            case X -> pNeg ? Direction.WEST : Direction.EAST;
-            case Y -> pNeg ? Direction.DOWN : Direction.UP;
-            case Z -> pNeg ? Direction.NORTH : Direction.SOUTH;
-        };
-    }
-
-    // renders block models of RenderType.INVISIBLE, essentially overriding a method
-    public static void renderInvisibleModels(BlockEntityRenderDispatcher pRenderer, BlockState pState, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-        BlockColors colors = Minecraft.getInstance().getBlockColors();
-//        StandaloneModelLoader.BakedModels bakedmodel = pRenderer.getRenderer(pState);
-//        int i = colors.color(pState, null, null, 0);
-//        float f = (float)(i >> 16 & 0xFF) / 255.0F;
-//        float f1 = (float)(i >> 8 & 0xFF) / 255.0F;
-//        float f2 = (float)(i & 0xFF) / 255.0F;
-//        for (var rt : bakedmodel.getRenderTypes(pState, RandomSource.create(42), ModelData.EMPTY))
-//            pRenderer.getModelRenderer().renderModel(
-//                    // make sure the code works here
-//                    pPoseStack.last(), pBufferSource.getBuffer(RenderTypes.solidMovingBlock()), pState, bakedmodel,
-//                    f, f1, f2, pPackedLight, pPackedOverlay, ModelData.EMPTY, rt);
-
-    }
+    public static double IDEAL_GAS_CONST = 8.134; // todo, figure out the units for this
 
     // The values below assume that the block has a blockstate of Direction.UP (or Direction.Axis.Y)
     public static VoxelShape[] generateShapeForAllRotations(double pX1, double pY1, double pZ1, double pX2, double pY2, double pZ2) {
@@ -79,5 +49,36 @@ public class UtilFunctions {
         angle %= tau;
         if (angle <= 0) angle += 2 * tau;
         return angle;
+    }
+
+    public static <T> boolean matches(T item, T... vals) {
+        for (T val : vals) {
+            if (val == item) return true;
+        }
+        return false;
+    }
+
+    public static Item getItemFromGearType(GearType type) {
+        return switch (type) {
+            case ALUMINUM -> TekoraItems.ALUMINUM_GEAR.get();
+            case BRASS -> TekoraItems.BRASS_GEAR.get();
+            case BRONZE -> TekoraItems.BRONZE_GEAR.get();
+            case STEEL -> TekoraItems.STEEL_GEAR.get();
+            case PLASTIC -> TekoraItems.PLASTIC_GEAR.get();
+            case WOOD -> TekoraItems.WOODEN_GEAR.get();
+            default -> null;
+        };
+    }
+
+    public static Item getItemPartFromGearType(GearType type) {
+        return switch (type) {
+            case ALUMINUM -> TekoraItems.ALUMINUM_GEAR.get();
+            case BRASS -> TekoraItems.BRASS_GEAR.get();
+            case BRONZE -> TekoraItems.BRONZE_GEAR.get();
+            case STEEL -> TekoraItems.STEEL_GEAR.get();
+            case PLASTIC -> TekoraItems.PLASTIC_GEAR.get();
+            case WOOD -> TekoraItems.WOODEN_GEAR.get();
+            default -> null;
+        };
     }
 }

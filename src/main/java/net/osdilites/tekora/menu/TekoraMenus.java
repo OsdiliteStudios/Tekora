@@ -24,6 +24,9 @@ public class TekoraMenus {
     public static final Supplier<MenuType<BasinMenu>> BASIN_MENU = MENUS.register("basin",
             () -> IMenuTypeExtension.create(BasinMenu::new));
 
+    public static final Supplier<MenuType<DepotMenu>> DEPOT_MENU = MENUS.register("depot",
+            () -> IMenuTypeExtension.create(DepotMenu::new));
+
     public static void register(IEventBus eventBus) {
         MENUS.register(eventBus);
     }

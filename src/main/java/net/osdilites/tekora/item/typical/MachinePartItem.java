@@ -1,21 +1,22 @@
 package net.osdilites.tekora.item.typical;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.mechanical.AbstractTekoraMechanicalMachine;
-import net.osdilites.tekora.block.entities.mechanical.MixerMechanical;
 
 public class MachinePartItem extends TekoraItem {
-    private final MixerMechanical block;
+    private final AbstractTekoraMechanicalMachine block;
 
-    public MachinePartItem(String name, MixerMechanical block) {
+    public MachinePartItem(String name, AbstractTekoraMechanicalMachine block) {
         super(name);
         this.block = block;
     }
 
-    public MachinePartItem(String name, MixerMechanical block, boolean fireRes) {
+    public MachinePartItem(String name, AbstractTekoraMechanicalMachine block, boolean fireRes) {
         super(fireRes, name);
         this.block = block;
     }
@@ -24,9 +25,11 @@ public class MachinePartItem extends TekoraItem {
     public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
         if (!world.isClientSide()) {
-            Block block = world.getBlockState(context.getClickedPos()).getBlock();
+            BlockPos pos = context.getClickedPos();
+            Block block = world.getBlockState(pos).getBlock();
             if (block instanceof AbstractTekoraMechanicalMachine) {
-                // todo, replace the block with the field block.
+                BlockState state = block.defaultBlockState();
+                world.setBlock(pos, state, 3);
             }
         }
         return super.useOn(context);

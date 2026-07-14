@@ -7,15 +7,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class TekoraBlockEntity extends BlockEntity implements MenuProvider {
@@ -62,6 +60,6 @@ public abstract class TekoraBlockEntity extends BlockEntity implements MenuProvi
         return saveWithoutMetadata(pRegistries);
     }
 
-    public abstract ItemStackHandler getInventory();
+    public abstract ItemStacksResourceHandler getInventory();
     public abstract void clearContents();
 }

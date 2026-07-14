@@ -6,24 +6,16 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.menu.KilnFurnaceMenu;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class KilnFurnaceEntity extends AbstractThermalEntity {
-    private final ItemStackHandler inventory = new ItemStackHandler(1) {
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-        }
-
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return super.isItemValid(slot, stack);
-        }
+    private final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(1) {
     };
 
     public KilnFurnaceEntity(BlockPos pPos, BlockState pBlockState) {
@@ -35,12 +27,12 @@ public class KilnFurnaceEntity extends AbstractThermalEntity {
         return Component.translatable("block.tekora.kiln_furnace");
     }
 
-    public ItemStackHandler getInventory() {
+    public ItemStacksResourceHandler getInventory() {
         return inventory;
     }
 
     public void clearContents() {
-        inventory.setStackInSlot(0, ItemStack.EMPTY);
+        inventory.set(0, ItemResource.of(Items.AIR), 1);
     }
 
     @Nullable

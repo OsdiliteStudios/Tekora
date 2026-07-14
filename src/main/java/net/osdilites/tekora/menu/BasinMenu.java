@@ -21,7 +21,14 @@ public class BasinMenu extends TekoraItemMenu {
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
 
-        addSlot(new ResourceHandlerSlot(handler, handler::set, 0, 80, 35));
+        addSlot(new ResourceHandlerSlot(handler, handler::set, 0, 51, 10));
+        addSlot(new ResourceHandlerSlot(handler, handler::set, 0, 51, 54));
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                addSlot(new ResourceHandlerSlot(handler, handler::set, 0, 96 + i * 18, 14 + j * 18));
+            }
+        }
     }
 
     public BasinMenu(int containerId, Inventory inventory, FriendlyByteBuf buf) {
@@ -36,19 +43,5 @@ public class BasinMenu extends TekoraItemMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, TekoraBlocks.BASIN.get());
-    }
-
-    private void addPlayerInventory(Inventory playerInventory) {
-        for (int i = 0; i < 3; ++i) {
-            for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
-            }
-        }
-    }
-
-    private void addPlayerHotbar(Inventory playerInventory) {
-        for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-        }
     }
 }

@@ -1,8 +1,31 @@
 {
   "itemGroup.tekora_machines": "Machines",
 
+  "block.tekora.basin": "Basin",
+  "block.tekora.depot": "Depot",
   "block.tekora.hand_crank": "Hand Crank",
   "block.tekora.kiln_furnace": "Kiln Furnace",
-  "block.tekora.shaft": "Shaft",
-  "block.tekora.wooden_cogwheel": "Wooden Cogwheel"
+  "block.tekora.mechanical_top": "Mechanical Top",
+  "block.tekora.steel_shaft": "Steel Shaft",
+
+  "item.tekora.aluminum_gear": "Aluminum Gear",
+  "item.tekora.brass_gear": "Brass Gear",
+  "item.tekora.bronze_gear": "Bronze Gear",
+  "item.tekora.plastic_gear": "Plastic Gear",
+  "item.tekora.steel_gear": "Steel Gear",
+  "item.tekora.wooden_gear": "Wooden Gear",
+
+  "item.tekora.aluminum_gear_part": "Aluminum Gear Part",
+  "item.tekora.brass_gear_part": "Brass Gear Part",
+  "item.tekora.bronze_gear_part": "Bronze Gear Part",
+  "item.tekora.plastic_gear_part": "Plastic Gear Part",
+  "item.tekora.steel_gear_part": "Steel Gear Part",
+  "item.tekora.wooden_gear_part": "Wooden Gear Part",
+  "item.tekora.crushing_wheel": "Crushing Wheel Part",
+
+  "item.tekora.whisk": "Whisk",
+  "item.tekora.press_shaft": "Press Shaft",
+  "item.tekora.ink_press_shaft": "Ink Press Shaft",
+  "item.tekora.cutter": "Cutter",
+  "item.tekora.wrench": "Wrench"
 }

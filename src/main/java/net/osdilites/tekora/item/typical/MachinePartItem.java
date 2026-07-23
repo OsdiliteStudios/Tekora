@@ -6,17 +6,18 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.osdilites.tekora.block.entities.mechanical.AbstractTekoraMechanicalMachine;
+import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachine;
 
 public class MachinePartItem extends TekoraItem {
-    private final AbstractTekoraMechanicalMachine block;
+    private final AbstractModularMachine block;
 
-    public MachinePartItem(String name, AbstractTekoraMechanicalMachine block) {
+    public MachinePartItem(String name, AbstractModularMachine block) {
         super(name);
         this.block = block;
     }
 
-    public MachinePartItem(String name, AbstractTekoraMechanicalMachine block, boolean fireRes) {
+    public MachinePartItem(String name, AbstractModularMachine block, boolean fireRes) {
         super(fireRes, name);
         this.block = block;
     }
@@ -27,8 +28,8 @@ public class MachinePartItem extends TekoraItem {
         if (!world.isClientSide()) {
             BlockPos pos = context.getClickedPos();
             Block block = world.getBlockState(pos).getBlock();
-            if (block instanceof AbstractTekoraMechanicalMachine) {
-                BlockState state = block.defaultBlockState();
+            if (block.equals(TekoraBlocks.MECH_TOP.get())) {
+                BlockState state = this.block.defaultBlockState();
                 world.setBlock(pos, state, 3);
             }
         }

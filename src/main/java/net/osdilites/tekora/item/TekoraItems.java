@@ -18,6 +18,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractTekoraAxialBlock;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
@@ -25,6 +26,7 @@ import net.osdilites.tekora.block.entities.thermal.AbstractThermalMachine;
 import net.minecraft.world.item.*;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.item.typical.*;
+import net.osdilites.tekora.util.TekoraBody1D;
 
 import java.util.function.Consumer;
 
@@ -65,11 +67,16 @@ public class TekoraItems {
         BlockEntity ent = lvl.getBlockEntity(pos);
         BlockState state = lvl.getBlockState(pos);
         Player player = pContext.getPlayer();
-        String msg = "";
         if (player != null) {
+          String msg = state.getBlock() + "\n";
           if (ent instanceof RotationalAbstractEntity rotational) {
+            TekoraBody1D body = rotational.getBody();
             msg += "Object has a id of " + rotational.getBodyHashcode();
             msg += (rotational.isBodyTicker() ? " and ticks the body\n" : "\n");
+            msg += "Object properties " + body + "\n";
+          }
+          if (ent instanceof AbstractModularMachineEntity modular) {
+            msg += "Object has a velocity of " + modular.getVelocity() + "\n";
           }
           if (state.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
             Direction.Axis axis = state.getValue(AbstractTekoraAxialBlock.AXIS);

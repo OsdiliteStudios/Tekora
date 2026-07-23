@@ -3,24 +3,37 @@ package net.osdilites.tekora.recipes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
 
-public record CuttingRecipe(Ingredient input, ItemStack output, double forcePerTick) implements Recipe<RecipeInput> {
+public record CuttingRecipe(Ingredient input, ItemStack output, double cutTorque, double ratedVelocity) implements TekoraMechanicalRecipe<DepotRecipeInput> {
     public static final MapCodec<CuttingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Ingredient.CODEC.fieldOf("ingredient").forGetter(CuttingRecipe::input),
             ItemStack.CODEC.fieldOf("result").forGetter(CuttingRecipe::output),
-            Codec.DOUBLE.fieldOf("force_tick").forGetter(CuttingRecipe::forcePerTick)
+            Codec.DOUBLE.fieldOf("cut_torque").forGetter(CuttingRecipe::cutTorque),
+            Codec.DOUBLE.fieldOf("rated_velocity").forGetter(CuttingRecipe::ratedVelocity)
     ).apply(inst, CuttingRecipe::new));
 
+    public static final StreamCodec<RegistryFriendlyByteBuf, CuttingRecipe> STREAM_CODEC = StreamCodec.composite(
+            Ingredient.CONTENTS_STREAM_CODEC, CuttingRecipe::input,
+            ItemStack.STREAM_CODEC, CuttingRecipe::output,
+            ByteBufCodecs.DOUBLE, CuttingRecipe::cutTorque,
+            ByteBufCodecs.DOUBLE, CuttingRecipe::ratedVelocity,
+            CuttingRecipe::new
+    );
+
     @Override
-    public boolean matches(RecipeInput recipeInput, Level level) {
+    public boolean matches(DepotRecipeInput recipeInput, Level level) {
         return false;
     }
 
     @Override
-    public ItemStack assemble(RecipeInput recipeInput) {
+    public ItemStack assemble(DepotRecipeInput recipeInput) {
         return null;
     }
 
@@ -35,13 +48,13 @@ public record CuttingRecipe(Ingredient input, ItemStack output, double forcePerT
     }
 
     @Override
-    public RecipeSerializer<? extends Recipe<RecipeInput>> getSerializer() {
-        return null;
+    public RecipeSerializer<? extends Recipe<DepotRecipeInput>> getSerializer() {
+        return TekoraRecipes.CUTTING_SERIALIZER.get();
     }
 
     @Override
-    public RecipeType<? extends Recipe<RecipeInput>> getType() {
-        return null;
+    public RecipeType<? extends Recipe<DepotRecipeInput>> getType() {
+        return TekoraRecipes.CUTTING_TYPE.get();
     }
 
     @Override

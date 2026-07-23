@@ -2,7 +2,6 @@ package net.osdilites.tekora.block.entities.transporter.rotational;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.food.FoodData;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
@@ -19,8 +18,8 @@ public class HandCrankEntity extends RotationalAbstractEntity {
         double speed = Math.abs(body.getVelocity());
         double radius = componentRadius();
 
-        double force = 60.0 * (0.25 + 0.75 * energy) * Math.max(0, 1 - 2 * speed / (Math.PI));
-        body.addForce(getBlockPos(), force);
+        double force = 3.0 * (0.25 + 0.75 * energy) * Math.max(0, 1 - 2 * speed / (Math.PI));
+        body.addTorque(getBlockPos(), force);
 
         if (saturation > 0) {
             float foodDrain = (float)(1.5E-5 * force * speed * radius);
@@ -35,6 +34,6 @@ public class HandCrankEntity extends RotationalAbstractEntity {
 
     @Override
     public double getMoment() {
-        return 1000;
+        return 50; // todo, use recipe to determine moment of inertia
     }
 }

@@ -3,6 +3,7 @@ package net.osdilites.tekora.menu;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -15,10 +16,12 @@ public abstract class TekoraItemMenu extends AbstractContainerMenu {
     // extruder, froth floater, air compressor, stove(maybe), distillation chamber, tank, diffusion chamber, fluid chamber
     // electrolysis chamber, magnetic separator, cooler
     protected final Level level;
+    protected final ContainerData data;
 
-    protected TekoraItemMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv) {
+    protected TekoraItemMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv, ContainerData data) {
         super(pMenuType, pContainerId);
-        level = inv.player.level();
+        this.level = inv.player.level();
+        this.data = data;
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
     }
@@ -26,7 +29,7 @@ public abstract class TekoraItemMenu extends AbstractContainerMenu {
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
-        if (sourceSlot == null || !sourceSlot.hasItem()) {
+        if (!sourceSlot.hasItem()) {
             return ItemStack.EMPTY;
         }
         ItemStack sourceStack = sourceSlot.getItem();

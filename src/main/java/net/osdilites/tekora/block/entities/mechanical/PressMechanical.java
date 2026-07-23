@@ -16,7 +16,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jspecify.annotations.Nullable;
 
-public class PressMechanical extends AbstractTekoraMechanicalMachine {
+public class PressMechanical extends AbstractModularMachine {
     public static final MapCodec<PressMechanical> CODEC = simpleCodec(PressMechanical::new);
 
     private PressMechanical(Properties properties) {

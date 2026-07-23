@@ -28,8 +28,7 @@ public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implement
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        // todo replace the current system with one such that the axis is obtained from the face of the block it is placed on rather than looking direction
-        return this.defaultBlockState().setValue(AXIS, pContext.getNearestLookingDirection().getAxis());
+        return this.defaultBlockState().setValue(AXIS, pContext.getClickedFace().getAxis());
     }
 
     @Override

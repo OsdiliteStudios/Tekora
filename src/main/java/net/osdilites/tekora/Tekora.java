@@ -5,6 +5,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
@@ -24,10 +25,10 @@ public class Tekora {
     public Tekora(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
         TekoraBlocks.register(modEventBus);
-        TekoraComponents.register(modEventBus); // todo, change order as needed
+        TekoraComponents.register(modEventBus);
         TekoraItems.register(modEventBus);
-        TekoraBlockEntities.register(modEventBus);
         TekoraMenus.register(modEventBus);
+        TekoraBlockEntities.register(modEventBus);
         TekoraCreativeTabs.register(modEventBus);
 
         // uncomment the code below if a subscribe event annotated method was here.

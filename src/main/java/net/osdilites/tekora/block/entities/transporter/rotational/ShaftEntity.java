@@ -7,20 +7,37 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
+import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
+import net.osdilites.tekora.data.Partners;
+import net.osdilites.tekora.data.TekoraComponents;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ShaftEntity extends RotationalAbstractEntity {
-    public static final double STEEL_I = 1543.307391075986; // mech age crafting
-    public static final double STAINLESS_STEEL_I = 0; // steam age crafting
-    //public static final double NICHROME_I = 0; // used for electric age crafting along with nuclear power plants
-    //public static final double ALUMINUM_I = 0; // substitute for stainless steel
-    //public static final double TITANIUM_I = 0; // for high-pressure stuff
+    public static final double STEEL_I = 13.63; // mech age crafting
+    public static final double BRONZE_I = 15.28;
+    public static final double STAINLESS_STEEL_I = 13.89; // steam age crafting
+    public static final double ALUMINUM_I = 4.69; // substitute for stainless steel
+    public static final double NICHROME_I = 14.58; // used for electric age crafting along with nuclear power plants
+    public static final double ALTIVLOY_I = 7.13; // for high-pressure stuff
+
+    // in Tekora, steel is made by combining 3 coal chunk and an iron ingot in a kiln furnace
+    // a stainless steel ingot requires 4 steel + 1 chromium ingot
+    // nichrome is 4 nickel + 1 chromium ingot.
+    // altivloy is 6 aluminum ingots + 4 vanadium ingots + 1 titanium ingot
 
     private final HashMap<Item, ArrayList<BlockPos>> attachedPartners;
     private final double moment;
+
+    public ShaftEntity(BlockPos pPos, BlockState pState) {
+        // WARNING: unsafe, only use in the registration
+        this(pPos, pState, pState.getBlock() instanceof Shaft shaft ? shaft.getMoment() : 0);
+    }
 
     public ShaftEntity(BlockPos pPos, BlockState pBlockState, double moment) {
         super(TekoraBlockEntities.SHAFT.get(), pPos, pBlockState);
@@ -33,8 +50,7 @@ public class ShaftEntity extends RotationalAbstractEntity {
         if (body != null && pLevel.getBlockEntity(pPos) instanceof RotationalAbstractEntity ent && pState.hasProperty(AbstractTekoraAxialBlock.AXIS)
                 && pState.hasProperty(Shaft.GEAR_TYPE) && pState.getValue(Shaft.GEAR_TYPE) != GearType.NONE) {
             Direction.Axis axis = pState.getValue(AbstractTekoraAxialBlock.AXIS);
-            double orgV = ent.componentRadius() * ent.getBody().getVelocity();
-            double c = 512;
+            double orgV = componentRadius() * body.getVelocity();
             double tot = 0;
 
             if (pState.hasProperty(Shaft.IS_LARGE) && pState.getValue(Shaft.IS_LARGE)) {
@@ -59,7 +75,7 @@ public class ShaftEntity extends RotationalAbstractEntity {
                                             && analyzedState.hasProperty(Shaft.IS_LARGE)
                                             && ((analyzedState.getValue(Shaft.IS_LARGE) && Math.abs(i) == 2 || Math.abs(j) == 2 || Math.abs(k) == 2)
                                             || (!analyzedState.getValue(Shaft.IS_LARGE) && Math.abs(i) < 2 && Math.abs(j) < 2 && Math.abs(k) < 2))) {
-                                        tot += contact(pLevel, pPos, pPos.above(), orgV, c, cog);
+                                        tot += contact(pLevel, pPos, pPos.above(), orgV, cog);
                                     } else {
                                         pLevel.removeBlockEntity(newPos);
                                     }
@@ -68,7 +84,7 @@ public class ShaftEntity extends RotationalAbstractEntity {
                         }
                     }
                 }
-                body.addForce(pPos, tot);
+                body.addTorque(pPos, tot);
             } else {
                 BlockEntity up = pLevel.getBlockEntity(pPos.above());
                 BlockEntity down = pLevel.getBlockEntity(pPos.below());
@@ -77,54 +93,76 @@ public class ShaftEntity extends RotationalAbstractEntity {
                 BlockEntity east = pLevel.getBlockEntity(pPos.east());
                 BlockEntity west = pLevel.getBlockEntity(pPos.west());
                 if (axis == Direction.Axis.X) {
-                    if (up instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.above(), orgV, c, cog);
-                    if (down instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.below(), orgV, c, cog);
-                    if (north instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.north(), orgV, c, cog);
-                    if (south instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.south(), orgV, c, cog);
+                    tot += contact(pLevel, pPos, pPos.above(), orgV, up);
+                    tot += contact(pLevel, pPos, pPos.below(), orgV, down);
+                    tot += contact(pLevel, pPos, pPos.north(), orgV, north);
+                    tot += contact(pLevel, pPos, pPos.south(), orgV, south);
                 } else if (axis == Direction.Axis.Y) {
-                    if (east instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.east(), orgV, c, cog);
-                    if (west instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.west(), orgV, c, cog);
-                    if (north instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.north(), orgV, c, cog);
-                    if (south instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.south(), orgV, c, cog);
+                    tot += contact(pLevel, pPos, pPos.east(), orgV, east);
+                    tot += contact(pLevel, pPos, pPos.west(), orgV, west);
+                    tot += contact(pLevel, pPos, pPos.north(), orgV, north);
+                    tot += contact(pLevel, pPos, pPos.south(), orgV, south);
                 } else if (axis == Direction.Axis.Z) {
-                    if (east instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.east(), orgV, c, cog);
-                    if (west instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.west(), orgV, c, cog);
-                    if (up instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.above(), orgV, c, cog);
-                    if (down instanceof ShaftEntity cog && cog.canBeCog())
-                        tot += contact(pLevel, pPos, pPos.below(), orgV, c, cog);
+                    tot += contact(pLevel, pPos, pPos.east(), orgV, east);
+                    tot += contact(pLevel, pPos, pPos.west(), orgV, west);
+                    tot += contact(pLevel, pPos, pPos.above(), orgV, up);
+                    tot += contact(pLevel, pPos, pPos.below(), orgV, down);
                 }
-                body.addForce(pPos, tot);
+                body.addTorque(pPos, tot);
             }
-            // todo, add a component to deal with the math for the parts regarding the "attached partners"
+
+            if (components().has(TekoraComponents.PARTNERS)) {
+                Partners partners = components().get(TekoraComponents.PARTNERS);
+                if (partners != null) {
+                    for (BlockPos p : partners.partners()) {
+                        BlockState partnerState = pLevel.getBlockState(p);
+                        if (partnerState.hasProperty(TekoraBlockStates.GEAR_TYPE)) {
+                            GearType gearType = partnerState.getValue(TekoraBlockStates.GEAR_TYPE);
+                            if (gearType == GearType.NONE) continue;
+
+                            double moment = partnerState.hasProperty(TekoraBlockStates.IS_LARGE) && partnerState.getValue(TekoraBlockStates.IS_LARGE) ? gearType.getLargeMoment() : gearType.getSmallMoment();
+                            // todo, figure an equation to figure what to do with the moment.
+                        }
+                    }
+                }
+            }
         }
         super.tick(pLevel, pPos, pState);
     }
 
-    private double contact(Level pLevel, BlockPos curPos, BlockPos otherPos, double selfV, double c, ShaftEntity cog) {
+    private double contact(Level pLevel, BlockPos curPos, BlockPos otherPos, double selfV, BlockEntity ent) {
         if (curPos.asLong() >= otherPos.asLong()) return 0;
-        BlockState otherState = pLevel.getBlockState(otherPos);
-        BlockState selfState = pLevel.getBlockState(curPos);
-        if (otherState.hasProperty(BlockStateProperties.AXIS) && selfState.hasProperty(BlockStateProperties.AXIS)) {
-            Direction.Axis otherVal = otherState.getValue(BlockStateProperties.AXIS);
-            Direction.Axis selfVal = selfState.getValue(BlockStateProperties.AXIS);
-            if (otherVal == selfVal) {
-                double otherV = cog.componentRadius() * cog.body.getVelocity();
+
+        if (ent instanceof ShaftEntity cog && canBeCog() && cog.canBeCog()) {
+            BlockState otherState = pLevel.getBlockState(otherPos);
+            BlockState selfState = pLevel.getBlockState(curPos);
+            if (otherState.hasProperty(BlockStateProperties.AXIS) && selfState.hasProperty(BlockStateProperties.AXIS)) {
+                Direction.Axis otherVal = otherState.getValue(BlockStateProperties.AXIS);
+                Direction.Axis selfVal = selfState.getValue(BlockStateProperties.AXIS);
+                if (otherVal == selfVal) {
+                    double r1 = componentRadius();
+                    double r2 = cog.componentRadius();
+
+                    double otherV = r2 * cog.body.getVelocity();
+                    double slipV = selfV + otherV;
+                    double j = slipV / (Math.pow(r1, 2) / body.getMoment() + Math.pow(r2, 2) / cog.body.getMoment());
+                    double factor = -j / 0.05;
+                    cog.body.addTorque(otherPos, r2 * factor);
+                    return r1 * factor;
+                }
+            }
+        } else if (ent instanceof AbstractModularMachineEntity machine) {
+            BlockState selfState = pLevel.getBlockState(curPos);
+            if (selfState.hasProperty(BlockStateProperties.AXIS) && selfState.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) {
+                double r1 = componentRadius();
+                double r2 = machine.componentRadius();
+
+                double otherV = r2 * machine.getVelocity();
                 double slipV = selfV + otherV;
-                double contactForce = -c * slipV;
-                cog.body.addForce(otherPos, contactForce);
-                if (cog.body.getVelocity() == 0) cog.body.adjustAngle(body.getAngle());
-                return contactForce;
+                double j = slipV / (Math.pow(r1, 2) / body.getMoment() + Math.pow(r2, 2) / machine.getMoment());
+                double factor = -j / 0.05;
+                machine.addTorque(r2 * factor);
+                return r1 * factor;
             }
         }
         return 0;
@@ -160,10 +198,32 @@ public class ShaftEntity extends RotationalAbstractEntity {
         return attachedPartners;
     }
 
-    public void addAttachedPartner(Item item, BlockPos partner) {
-        if (level != null && level.getBlockEntity(partner) instanceof ShaftEntity shaft) {
-            attachedPartners.getOrDefault(item, new ArrayList<>()).add(partner);
-            shaft.attachedPartners.getOrDefault(item, new ArrayList<>()).add(getBlockPos());
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        BlockState state = getBlockState();
+        if (body != null && state.hasProperty(TekoraBlockStates.GEAR_TYPE) && state.hasProperty(BlockStateProperties.AXIS)) {
+            GearType gearType = state.getValue(TekoraBlockStates.GEAR_TYPE);
+            double added = state.hasProperty(TekoraBlockStates.IS_LARGE) && state.getValue(TekoraBlockStates.IS_LARGE) ? gearType.getLargeMoment() : gearType.getSmallMoment();
+            double newVal = added + getMoment();
+            BlockPos pos = getBlockPos();
+            Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);
+            int loc = switch (axis) {
+                case X -> pos.getX();
+                case Y -> pos.getY();
+                case Z -> pos.getZ();
+            };
+            if (body.axisMatch(axis)) body.setMoment(loc, newVal);
         }
     }
 }

@@ -5,19 +5,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
-public class PrinterMechanicalEntity extends AbstractMechMachineEntity {
+public class PrinterMechanicalEntity extends AbstractModularMachineEntity {
     public PrinterMechanicalEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.PRINTER.get(), pPos, pBlockState);
     }
 
     @Override
-    public double getMoment() {
-        return 0;
-    }
-
-    @Override
-    public double componentRadius() {
-        return 0;
+    protected double partMoment() {
+        return 0; // todo find value
     }
 
     @Override

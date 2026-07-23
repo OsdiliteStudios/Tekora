@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -16,7 +17,7 @@ import net.osdilites.tekora.util.UtilFunctions;
 import java.util.HashSet;
 import java.util.List;
 
-public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, double deltaEnthalpy, double deltaEntropy, double arrheniusConst, double activationEnergy) implements Recipe<ReactionRecipeInput> {
+public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, double deltaEnthalpy, double deltaEntropy, double arrheniusConst, double activationEnergy, double cutTorque, double ratedVelocity) implements TekoraMechanicalRecipe<ReactionRecipeInput> {
     public static final MapCodec<ReactionRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Chemical.CODEC.listOf().fieldOf("reactants").forGetter(ReactionRecipe::reactants),
             Chemical.CODEC.listOf().fieldOf("products").forGetter(ReactionRecipe::products),
@@ -24,7 +25,9 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
             Codec.DOUBLE.fieldOf("d_enthalpy").forGetter(ReactionRecipe::deltaEnthalpy),
             Codec.DOUBLE.fieldOf("d_entropy").forGetter(ReactionRecipe::deltaEntropy),
             Codec.DOUBLE.fieldOf("arrhenius_const").forGetter(ReactionRecipe::arrheniusConst),
-            Codec.DOUBLE.fieldOf("activation_energy").forGetter(ReactionRecipe::activationEnergy)
+            Codec.DOUBLE.fieldOf("activation_energy").forGetter(ReactionRecipe::activationEnergy),
+            Codec.DOUBLE.fieldOf("cut_torque").forGetter(ReactionRecipe::cutTorque),
+            Codec.DOUBLE.fieldOf("rated_velocity").forGetter(ReactionRecipe::ratedVelocity)
     ).apply(inst, ReactionRecipe::new));
 
     // JSON structure
@@ -39,7 +42,18 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
     // arrhenius_const (float)
     // activation_energy (float)
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, ReactionRecipe> STREAM_CODEC = null; // todo, figure out what the hell to do here
+    public static final StreamCodec<RegistryFriendlyByteBuf, ReactionRecipe> STREAM_CODEC = StreamCodec.composite(
+            Chemical.STREAM_CODEC.apply(ByteBufCodecs.list()), ReactionRecipe::reactants,
+            Chemical.STREAM_CODEC.apply(ByteBufCodecs.list()), ReactionRecipe::products,
+            Catalyst.STREAM_CODEC, ReactionRecipe::catalyst,
+            ByteBufCodecs.DOUBLE, ReactionRecipe::deltaEnthalpy,
+            ByteBufCodecs.DOUBLE, ReactionRecipe::deltaEntropy,
+            ByteBufCodecs.DOUBLE, ReactionRecipe::arrheniusConst,
+            ByteBufCodecs.DOUBLE, ReactionRecipe::activationEnergy,
+            ByteBufCodecs.DOUBLE, ReactionRecipe::cutTorque,
+            ByteBufCodecs.DOUBLE, ReactionRecipe::ratedVelocity,
+            ReactionRecipe::new
+    );
 
     @Override
     public boolean matches(ReactionRecipeInput reactionRecipeInput, Level level) {

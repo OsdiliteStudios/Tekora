@@ -12,11 +12,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.block.entities.transporter.rotational.Shaft;
+import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 import net.osdilites.tekora.item.TekoraItems;
 
 public class WrenchItem extends Item {

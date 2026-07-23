@@ -6,10 +6,10 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 
-public record KilningRecipeInput(List<ItemStack> inputs, List<FluidStack> fluidInputs, ItemStack output, int time) implements RecipeInput {
+public record KilningRecipeInput(List<ItemStack> inputs, List<FluidStack> fluidInputs) implements RecipeInput {
     @Override
     public ItemStack getItem(int i) {
-        return i < size() ? inputs.get(i) : ItemStack.EMPTY;
+        return ItemStack.EMPTY;
     }
 
     @Override

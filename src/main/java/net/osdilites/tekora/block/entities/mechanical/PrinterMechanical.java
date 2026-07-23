@@ -16,7 +16,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jspecify.annotations.Nullable;
 
-public class PrinterMechanical extends AbstractTekoraMechanicalMachine {
+public class PrinterMechanical extends AbstractModularMachine {
     public static final MapCodec<PrinterMechanical> CODEC = simpleCodec(PrinterMechanical::new);
 
     private PrinterMechanical(Properties properties) {

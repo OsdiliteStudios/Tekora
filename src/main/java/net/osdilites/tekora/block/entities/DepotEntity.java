@@ -1,12 +1,118 @@
 package net.osdilites.tekora.block.entities;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.osdilites.tekora.menu.DepotMenu;
+import net.osdilites.tekora.recipes.*;
+import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
+import org.jspecify.annotations.Nullable;
 
-public class DepotEntity extends BlockEntity {
+import java.util.Optional;
+
+public class DepotEntity extends AbstractModularCraftEntity {
     public DepotEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.DEPOT.get(), pPos, pState);
+    }
+
+    protected ItemStacksResourceHandler makeHandler() {
+        return new ItemStacksResourceHandler(2) {
+            @Override
+            protected void onContentsChanged(int index, ItemStack previousContents) {
+                super.onContentsChanged(index, previousContents);
+                DepotEntity.this.setChanged();
+                if(!level.isClientSide()) {
+                    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                }
+            }
+
+            @Override
+            protected int getCapacity(int index, ItemResource resource) {
+                return 2;
+            }
+        };
+    }
+
+    @Override
+    protected double startCutting(double velocity, double torque) {
+        DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack());
+        Optional<RecipeHolder<CuttingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.CUTTING_TYPE.get(), input);
+        return crafting(recipe, input, velocity, torque);
+    }
+
+    @Override
+    protected double startCrushing(double velocity, double torque) {
+        DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack());
+        Optional<RecipeHolder<CrushingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.CRUSHING_TYPE.get(), input);
+        return crafting(recipe, input, velocity, torque);
+    }
+
+    @Override
+    protected double startPressing(double velocity, double torque) {
+        DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack());
+        Optional<RecipeHolder<PressingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.PRESSING_TYPE.get(), input);
+        return crafting(recipe, input, velocity, torque);
+    }
+
+    @Override
+    protected double startPrinting(double velocity, double torque) {
+        DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack());
+        Optional<RecipeHolder<PrintingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.PRINTING_TYPE.get(), input);
+        return crafting(recipe, input, velocity, torque);
+    }
+
+    @Override
+    protected double startMixing(double velocity, double torque) {
+        return 0; // does nothing here
+    }
+
+    private <T extends TekoraMechanicalRecipe<DepotRecipeInput>> double crafting(Optional<RecipeHolder<T>> recipe, DepotRecipeInput input, double velocity, double torque) {
+        if (recipe.isPresent()) {
+            ItemStack output = recipe.get().value().assemble(input);
+            double ratedVelocity = recipe.get().value().ratedVelocity();
+            var resource = handler.getResource(1);
+            boolean hasRecipe = (resource.isEmpty() || resource.is(output.getItem()))
+                    && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= handler.getAmountAsInt(1) + output.getCount();
+            if (hasRecipe && level != null && Math.abs(velocity) >= ratedVelocity) {
+                double cutTorque = recipe.get().value().cutTorque();
+                double cutConst = (torque - cutTorque) / ratedVelocity;
+                progress++;
+                setChanged(level, getBlockPos(), getBlockState());
+                if (progress == maxProgress) {
+                    try (Transaction transaction = Transaction.openRoot()) {
+                        ItemAccess access = ItemAccess.forHandlerIndex(handler, 1);
+                        handler.extract(handler.getResource(0), 1, transaction);
+                        handler.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
+                        transaction.commit();
+                    }
+                    progress = 0;
+                }
+                return (torque < 0 ? -1 : 1) * Math.max(0, Math.min(cutTorque, cutTorque + cutConst * Math.abs(velocity)));
+            }
+        } else {
+            progress = 0;
+        }
+        return 0;
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("block.tekora.depot");
+    }
+
+    @Override
+    public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+        return new DepotMenu(i, inventory, this, data);
     }
 }

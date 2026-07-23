@@ -16,7 +16,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jspecify.annotations.Nullable;
 
-public class CrusherMechanical extends AbstractTekoraMechanicalMachine {
+public class CrusherMechanical extends AbstractModularMachine {
     public static final MapCodec<CrusherMechanical> CODEC = simpleCodec(CrusherMechanical::new);
 
     private CrusherMechanical(Properties properties) {

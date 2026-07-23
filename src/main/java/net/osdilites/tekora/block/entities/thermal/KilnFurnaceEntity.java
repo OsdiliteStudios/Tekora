@@ -5,6 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
@@ -15,7 +16,24 @@ import net.osdilites.tekora.menu.KilnFurnaceMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class KilnFurnaceEntity extends AbstractThermalEntity {
-    private final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(1) {
+    public final ItemStacksResourceHandler handler = new ItemStacksResourceHandler(1) {
+    };
+
+    private final ContainerData data = new ContainerData() {
+        @Override
+        public int get(int i) {
+            return 0;
+        }
+
+        @Override
+        public void set(int i, int i1) {
+
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
     };
 
     public KilnFurnaceEntity(BlockPos pPos, BlockState pBlockState) {
@@ -28,16 +46,16 @@ public class KilnFurnaceEntity extends AbstractThermalEntity {
     }
 
     public ItemStacksResourceHandler getInventory() {
-        return inventory;
+        return handler;
     }
 
     public void clearContents() {
-        inventory.set(0, ItemResource.of(Items.AIR), 1);
+        handler.set(0, ItemResource.of(Items.AIR), 1);
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new KilnFurnaceMenu(pContainerId, pPlayerInventory, this);
+        return new KilnFurnaceMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 }

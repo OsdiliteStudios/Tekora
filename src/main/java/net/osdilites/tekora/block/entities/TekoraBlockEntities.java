@@ -23,7 +23,7 @@ public class TekoraBlockEntities {
                     Set.of(TekoraBlocks.HAND_CRANK.get())));
 
     public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT =
-            BLOCK_ENTITIES.register("shaft", () -> new BlockEntityType<>((pos, state) -> new ShaftEntity(pos, state, ShaftEntity.STEEL_I),
+            BLOCK_ENTITIES.register("shaft", () -> new BlockEntityType<>(ShaftEntity::new,
                     Set.of(TekoraBlocks.STEEL_SHAFT.get())));
 
     public static final Supplier<BlockEntityType<MixerMechanicalEntity>> MIXER =
@@ -45,6 +45,10 @@ public class TekoraBlockEntities {
     public static final Supplier<BlockEntityType<CutterMechanicalEntity>> CUTTER =
             BLOCK_ENTITIES.register("cutter", () -> new BlockEntityType<>(CutterMechanicalEntity::new,
                     Set.of(TekoraBlocks.CUTTER.get())));
+
+    public static final Supplier<BlockEntityType<TopMechanicalEntity>> TOP_MECH =
+            BLOCK_ENTITIES.register("mechanical_top", () -> new BlockEntityType<>(TopMechanicalEntity::new,
+                    Set.of(TekoraBlocks.MECH_TOP.get())));
 
     public static final Supplier<BlockEntityType<BasinEntity>> BASIN =
             BLOCK_ENTITIES.register("basin", () -> new BlockEntityType<>(BasinEntity::new,

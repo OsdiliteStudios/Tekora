@@ -38,5 +38,3 @@ run/
 **/src/generated/**/.cache/
 repo/
 !**/src/**/repo/
-
-src/generated/resources/.cache

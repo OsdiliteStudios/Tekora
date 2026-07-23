@@ -16,7 +16,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
-public class MixerMechanical extends AbstractTekoraMechanicalMachine {
+public class MixerMechanical extends AbstractModularMachine {
     public static final MapCodec<MixerMechanical> CODEC = simpleCodec(MixerMechanical::new);
 
     private MixerMechanical(Properties properties) {

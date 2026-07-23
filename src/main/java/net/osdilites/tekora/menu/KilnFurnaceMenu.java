@@ -3,7 +3,9 @@ package net.osdilites.tekora.menu;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import net.osdilites.tekora.block.TekoraBlocks;
@@ -14,13 +16,13 @@ public class KilnFurnaceMenu extends TekoraItemMenu {
 
     // idea for design (fluid input, fluid output,
     public KilnFurnaceMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(1));
     }
 
-    public KilnFurnaceMenu(int pContainerId, Inventory inv, BlockEntity blockEntity) {
-        super(TekoraMenus.KILN_FURNACE_MENU.get(), pContainerId, inv);
+    public KilnFurnaceMenu(int pContainerId, Inventory inv, BlockEntity blockEntity, ContainerData data) {
+        super(TekoraMenus.KILN_FURNACE_MENU.get(), pContainerId, inv, data);
         this.blockEntity = (KilnFurnaceEntity)blockEntity;
-        //addSlot(new ResourceHandlerSlot(this.blockEntity.getInventory(), this.blockEntity.getInventory(), 0, 80, 52));
+        addSlot(new ResourceHandlerSlot(this.blockEntity.handler, this.blockEntity.handler::set, 0, 80, 52));
     }
 
     @Override

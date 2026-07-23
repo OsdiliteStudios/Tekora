@@ -12,33 +12,25 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.Identifier;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
-import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractMechanicalEntity;
+import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 
-public class MechEntityRenderer implements BlockEntityRenderer<AbstractMechanicalEntity, MechRenderState> {
+public class ModularGearRenderer implements BlockEntityRenderer<AbstractMechanicalEntity, MechRenderState> {
     protected final BlockEntityRenderDispatcher renderer;
 
-    private static final Identifier ALUMINUM_GEAR = getGearIdentifier("aluminum");
-    private static final Identifier BRASS_GEAR = getGearIdentifier("brass");
-    private static final Identifier BRONZE_GEAR = getGearIdentifier("bronze");
-    private static final Identifier STEEL_GEAR = getGearIdentifier("steel");
-    private static final Identifier PLASTIC_GEAR = getGearIdentifier("plastic");
-    private static final Identifier WOOD_GEAR = getGearIdentifier("wood");
-
-    private static final Identifier SHAFT = Identifier.fromNamespaceAndPath(Tekora.MODID, "shafts/steel");
-
-    private static Identifier getGearIdentifier(String name) {
-        return Identifier.fromNamespaceAndPath(Tekora.MODID, "gears/" + name);
-    }
-
-    public MechEntityRenderer(BlockEntityRendererProvider.Context pContext) {
+    public ModularGearRenderer(BlockEntityRendererProvider.Context pContext) {
         renderer = pContext.blockEntityRenderDispatcher();
     }
 
@@ -50,10 +42,16 @@ public class MechEntityRenderer implements BlockEntityRenderer<AbstractMechanica
             state.blockState = blockEntity.getBlockState();
         }
         state.setAngle(Mth.lerp(partialTicks, blockEntity.getOldRotation(), blockEntity.getRenderingRotation()));
-        BlockStateModel model = Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(blockEntity.getBlockState());
+
+        BlockState gearState = blockEntity.getBlockState();
+        BlockState hypothetical = new BlockState(TekoraBlocks.STEEL_SHAFT.get(),
+                new Property[]{BlockStateProperties.AXIS, TekoraBlockStates.GEAR_TYPE, TekoraBlockStates.IS_LARGE},
+                new Comparable[]{Direction.Axis.Y, gearState.hasProperty(TekoraBlockStates.GEAR_TYPE) ? gearState.getValue(TekoraBlockStates.GEAR_TYPE) : GearType.NONE, false});
+
+        BlockStateModel shaftModel = Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(hypothetical);
         state.parts = new ArrayList<>();
         if (blockEntity.getLevel() instanceof BlockAndTintGetter getter) {
-            model.collectParts(getter, blockEntity.getBlockPos(), blockEntity.getBlockState(), RandomSource.create(42L), state.parts);
+            shaftModel.collectParts(getter, blockEntity.getBlockPos(), blockEntity.getBlockState(), RandomSource.create(42L), state.parts);
         }
     }
 

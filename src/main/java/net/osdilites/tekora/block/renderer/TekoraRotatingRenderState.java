@@ -17,10 +17,7 @@ public class TekoraRotatingRenderState extends BlockEntityRenderState {
     private float angle;
 
     public void setAngle(float angle) {
-        this.angle = angle % (float)(2 * Math.PI);
-        if (this.angle < 0) {
-            this.angle += (float) (2 * Math.PI);
-        }
+        this.angle = angle * 180 / (float)Math.PI;
     }
 
     public float getAngle() {

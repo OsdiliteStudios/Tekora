@@ -11,11 +11,11 @@ public class TekoraComponents {
     public static final DeferredRegister<DataComponentType<?>> COMPONENTS =
             DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Tekora.MODID);
 
-//    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Partners>> PARTNERS =
-//            COMPONENTS.register("partners", () -> DataComponentType.<Partners>builder()
-//                    .persistent(Partners.CODEC)
-//                    .networkSynchronized(Partners.STREAM_CODEC)
-//                    .build());
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Partners>> PARTNERS =
+            COMPONENTS.register("partners", () -> DataComponentType.<Partners>builder()
+                    .persistent(Partners.CODEC)
+                    .networkSynchronized(Partners.STREAM_CODEC)
+                    .build());
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ManuscriptComponent>> MANUSCRIPT_ID =
             COMPONENTS.register("manuscript_id", () -> DataComponentType.<ManuscriptComponent>builder()

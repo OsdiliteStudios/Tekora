@@ -1,6 +1,8 @@
 package net.osdilites.tekora.menu.screens;
 
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,11 +16,12 @@ public class KilnFurnaceScreen extends AbstractContainerScreen<KilnFurnaceMenu> 
         super(pMenu, pPlayerInventory, pTitle);
     }
 
-//    @Override
-//    protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-//        int x = (width - imageWidth) / 2;
-//        int y = (height - imageHeight) / 2;
-//
-//        pGuiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
-//    }
+    @Override
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+        super.extractBackground(graphics, mouseX, mouseY, a);
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+
+        graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
+    }
 }

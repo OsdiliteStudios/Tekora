@@ -59,7 +59,7 @@ public class RotationalEntityRenderer implements BlockEntityRenderer<RotationalA
             };
 
             poseStack.translate(0.5D, 0.5D, 0.5D);
-            poseStack.mulPose(axis.rotationDegrees((float) (state.getAngle() * 180 / Math.PI)));
+            poseStack.mulPose(axis.rotationDegrees(state.getAngle()));
             poseStack.translate(-0.5D, -0.5D, -0.5D);
 
             collector.submitMultiLayerBlockModel(poseStack, state.parts, true, new int[]{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, state.packedLight, OverlayTexture.NO_OVERLAY, 0);

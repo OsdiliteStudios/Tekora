@@ -4,15 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.TekoraBlockStates;
-import net.osdilites.tekora.block.entities.mechanical.AbstractTekoraMechanicalMachine;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
-import net.osdilites.tekora.block.entities.transporter.rotational.Shaft;
 
 public class GearItem extends TekoraItem {
     private final GearType gearType;

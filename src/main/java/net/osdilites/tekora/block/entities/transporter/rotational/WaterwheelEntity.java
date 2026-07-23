@@ -6,9 +6,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
-import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public abstract class WaterwheelEntity extends RotationalAbstractEntity {
     public static final double I_MASS = 10543.30739107599;
@@ -63,7 +61,7 @@ public abstract class WaterwheelEntity extends RotationalAbstractEntity {
                     if (rightDown.getBlock() instanceof LiquidBlock liquid) {
                         force += massPerBlock(liquid, rightUp.getFluidState()) * gravity * Math.cos(3 * Math.PI / 4);
                     }
-                    body.addForce(pPos, force);
+                    body.addTorque(pPos, force);
                 } // the else statement will be dealt with in the future
             }
         }

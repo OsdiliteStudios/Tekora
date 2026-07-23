@@ -13,7 +13,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.TagValueOutput;
-import net.osdilites.tekora.Tekora;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.osdilites.tekora.block.entities.mechanical.AbstractMechanicalEntity;
 import net.osdilites.tekora.util.TekoraBody1D;
 import org.jspecify.annotations.Nullable;
@@ -75,10 +76,10 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                     if (level.getBlockEntity(afterPos) instanceof RotationalAbstractEntity) {
                         body.split(pos, this);
                     } else {
-                        body.trimLast();
+                        body.trimFirst();
                     }
                 } else if (level.getBlockEntity(afterPos) instanceof RotationalAbstractEntity) {
-                    body.trimFirst();
+                    body.trimLast();
                 }
             }
 
@@ -94,17 +95,21 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         boolean hasFacing = pState.hasProperty(BlockStateProperties.FACING);
         boolean hasAxis = pState.hasProperty(BlockStateProperties.AXIS);
-        if (bodyTicker && (hasFacing || hasAxis)) {
+        if (pLevel.isClientSide() && bodyTicker && (hasFacing || hasAxis)) {
+            // the client side is to ensure the thing doesn't double count
+            // todo, test whether the erroneous rotation gets resolved by the isClientSide()
             body.tick();
         }
         if (!pLevel.isClientSide()) {
-            // air res formula:
-            // force = -cAir * P * body.radius() * body.getSpeed();
-            // -cAir is a constant, defined by the programmer
-            // P is the pressure (in bars)
             if (body != null) {
                 double pressure = 1; // in bars todo make this number dimension specific
-                body.addForce(pPos, -1 * pressure * componentRadius() * body.getVelocity());
+                // If Tekora space became a thing, this may also need to read from dimension json files.
+                // For any possible Ad Astra, Stellaris, or Northstar compatibility, read off json files.
+                // For other mods that add dimensions, we'll treat 1 as the default value.
+
+                // todo, beyond air resistance, we need to wonder about friction applied by blocks in contact with the block.
+                //  This could be done by hard coding it (as in using class hierarchies etc) or the use of json files for datapack creators or mods.
+                body.addTorque(pPos, -0.5 * pressure * componentRadius() * body.getVelocity()); // this value inputted in air resistance
             }
             this.setChanged(); // ensures that the block gets calculated.
         } else {
@@ -283,5 +288,20 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
     }
     public boolean isBodyTicker() {
         return bodyTicker;
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        double velocity = body == null ? 0 : body.getVelocity();
+        output.putDouble("velocity", velocity);
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        if (body != null) {
+            body.setVelocity(input.getDoubleOr("velocity", 0));
+        }
     }
 }

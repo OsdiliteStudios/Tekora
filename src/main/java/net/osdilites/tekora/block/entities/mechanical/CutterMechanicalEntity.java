@@ -5,7 +5,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
-public class CutterMechanicalEntity extends AbstractMechMachineEntity {
+public class CutterMechanicalEntity extends AbstractModularMachineEntity {
     public CutterMechanicalEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.CUTTER.get(), pPos, pState);
     }
@@ -16,12 +16,7 @@ public class CutterMechanicalEntity extends AbstractMechMachineEntity {
     }
 
     @Override
-    public double getMoment() {
-        return 4943.728065546406; // todo, possibly turn this into an equation
-    }
-
-    @Override
-    public double componentRadius() {
-        return 0.5;
+    protected double partMoment() {
+        return 0; // todo, find value
     }
 }

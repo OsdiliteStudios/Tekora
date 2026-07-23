@@ -21,6 +21,7 @@ public class TekoraBlocks {
 
     public static final DeferredHolder<Block, Shaft> STEEL_SHAFT =
             createBlock("steel_shaft", () -> new Shaft("steel_shaft", ShaftEntity.STEEL_I));
+
     public static final DeferredHolder<Block, HandCrank> HAND_CRANK =
             createBlock("hand_crank", () -> new HandCrank("hand_crank", 1));
     public static final DeferredHolder<Block, MixerMechanical> MIXER =
@@ -41,7 +42,6 @@ public class TekoraBlocks {
             createBlock("basin", Basin::new);
     public static final DeferredHolder<Block, Depot> DEPOT =
             createBlock("depot", Depot::new);
-
 
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);

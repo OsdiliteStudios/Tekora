@@ -1,14 +1,158 @@
 package net.osdilites.tekora.block.entities;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.osdilites.tekora.menu.BasinMenu;
+import net.osdilites.tekora.recipes.CompressingRecipe;
+import net.osdilites.tekora.recipes.MacerationRecipe;
+import net.osdilites.tekora.recipes.MixingRecipe;
+import net.osdilites.tekora.recipes.TekoraRecipes;
+import net.osdilites.tekora.recipes.inputs.BasinRecipeInput;
+import org.jetbrains.annotations.Nullable;
 
-public class BasinEntity extends BlockEntity {
+import java.util.Optional;
+
+public class BasinEntity extends AbstractModularCraftEntity {
+    private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 8000) {
+        @Override
+        protected void onContentsChanged(int index, FluidStack previousContents) {
+            setChanged();
+            Level lvl = getLevel();
+            if (lvl != null && !lvl.isClientSide()) {
+                lvl.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+        }
+
+        @Override
+        public boolean isValid(int index, FluidResource resource) {
+            return true;
+        }
+        // todo, for this value allow fluids to "mix", the "mixing" process may trigger a chemical reaction so keep that in mind on every tick.
+    };
+
     public BasinEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState);
     }
 
-    // the crafting tick will depend on several boolean factors
+    protected ItemStacksResourceHandler makeHandler() {
+        return new ItemStacksResourceHandler(11) {
+            @Override
+            protected void onContentsChanged(int index, ItemStack previousContents) {
+                super.onContentsChanged(index, previousContents);
+                BasinEntity.this.setChanged();
+                if(level != null && !level.isClientSide()) {
+                    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                }
+            }
+
+            @Override
+            protected int getCapacity(int index, ItemResource resource) {
+                return 11;
+            }
+        };
+    }
+
+    @Override
+    protected double startCutting(double velocity, double torque) { // does nothing here
+        return 0;
+    }
+
+    @Override
+    protected double startCrushing(double velocity, double torque) {
+        BasinRecipeInput input = new BasinRecipeInput(this.handler.copyToList(), this.tank.copyToList());
+        Optional<RecipeHolder<MacerationRecipe>> recipe = getCurrentRecipe(TekoraRecipes.MACERATION_TYPE.get(), input);
+        if (recipe.isPresent()) {
+
+            ItemStack output = recipe.get().value().assemble(input);
+            double ratedVelocity = recipe.get().value().ratedVelocity();
+            //todo algorithm to determine available slot
+            int availSlot = 0;
+            boolean canWork = false;
+            for (int i = 2; i < 12; i++) {
+                var resource = handler.getResource(availSlot);
+                if (output == null) break;
+
+                if ((resource.isEmpty() || resource.is(output.getItem()))
+                        && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= handler.getAmountAsInt(availSlot) + output.getCount()) {
+                    canWork = true;
+                    availSlot = i;
+                    break;
+                }
+            }
+            // todo include fluid handling here
+            if (canWork && level != null && Math.abs(velocity) >= ratedVelocity) {
+                double cutTorque = recipe.get().value().cutTorque();
+                double cutConst = (torque - cutTorque) / ratedVelocity;
+                progress++;
+                setChanged(level, getBlockPos(), getBlockState());
+                if (progress == maxProgress) {
+                    try (Transaction transaction = Transaction.openRoot()) {
+                        ItemAccess access = ItemAccess.forHandlerIndex(handler, availSlot);
+                        // todo, make it so that it looks through the relevant components and outputs in the relevant component
+//                        handler.extract(handler.getResource(0), 1, transaction);
+//                        handler.set(availSlot, ItemResource.of(output), access.getAmount() + output.getCount());
+                        transaction.commit();
+                    }
+                    progress = 0;
+                }
+                return (torque < 0 ? -1 : 1) * Math.max(0, Math.min(cutTorque, cutTorque + cutConst * Math.abs(velocity)));
+            }
+        } else {
+            progress = 0;
+        }
+        return 0;
+    }
+
+    @Override
+    protected double startPressing(double velocity, double torque) {
+        BasinRecipeInput input = new BasinRecipeInput(this.handler.copyToList(), this.tank.copyToList());
+        Optional<RecipeHolder<CompressingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.COMPRESSING_TYPE.get(), input);
+        return 0;
+    }
+
+    @Override
+    protected double startPrinting(double velocity, double torque) {
+        return 0; // does nothing here
+    }
+
+    @Override
+    protected double startMixing(double velocity, double torque) {
+        // todo, ensure to check for the special case
+        BasinRecipeInput input = new BasinRecipeInput(this.handler.copyToList(), this.tank.copyToList());
+        Optional<RecipeHolder<MixingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.MIXING_TYPE.get(), input);
+        return 0;
+    }
+
+    private double craftItem() {
+        return 0;
+    }
+
+    protected boolean fluidCanCraft() {
+        return true; // todo, make the recipe consume fluid
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("block.tekora.basin");
+    }
+
+    @Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
+        return new BasinMenu(pContainerId, pPlayerInventory, this, data);
+    }
 }

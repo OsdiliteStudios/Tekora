@@ -12,7 +12,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.Tekora;
 import org.jspecify.annotations.Nullable;
 
-public class TopMechanical extends AbstractTekoraMechanicalMachine {
+public class TopMechanical extends AbstractModularMachine {
+    private static final MapCodec<TopMechanical> CODEC = simpleCodec(TopMechanical::new);
+
     private TopMechanical(Properties properties) {
         super(properties);
     }
@@ -23,11 +25,11 @@ public class TopMechanical extends AbstractTekoraMechanicalMachine {
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return null;
+        return CODEC;
     }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return null;
+        return new TopMechanicalEntity(blockPos, blockState);
     }
 }

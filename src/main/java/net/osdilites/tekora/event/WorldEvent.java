@@ -1,12 +1,7 @@
 package net.osdilites.tekora.event;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -19,11 +14,16 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.WaterFluid;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
+import net.osdilites.tekora.data.Partners;
 import net.osdilites.tekora.data.TekoraComponents;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorldEvent {
     @SubscribeEvent
@@ -59,16 +59,23 @@ public class WorldEvent {
         ItemStack stack = event.getItemStack();
         BlockPos pos = event.getPos();
         Level level = event.getLevel();
-        // todo, figure a way to incorporate item tags into the Ingredient class
-//        if (Ingredient.of(Items.IRON_CHAIN).acceptsItem(stack.typeHolder()) && stack.has(TekoraComponents.PARTNER)
-//                && level.getBlockEntity(pos) instanceof ShaftEntity shaft && shaft.canBeCog()) {
-//            BlockPos orgPos = stack.get(TekoraComponents.PARTNER);
-//            if (orgPos == null) {
-//                stack.set(TekoraComponents.PARTNER, pos);
-//            } else {
-//                shaft.addAttachedPartner(stack.getItem(), orgPos);
-//                stack.shrink(1);
-//            }
-//        }
+        if (Ingredient.of(Items.IRON_CHAIN).acceptsItem(stack.typeHolder()) && stack.has(TekoraComponents.PARTNERS.get())
+                && level.getBlockEntity(pos) instanceof ShaftEntity shaft && shaft.canBeCog()) {
+            Partners partners = stack.get(TekoraComponents.PARTNERS.get());
+            if (partners != null) {
+                List<BlockPos> poses = partners.partners();
+                if (poses != null) {
+                    poses.add(pos);
+                } else {
+                    partners.addPartner(pos);
+                }
+            } else {
+                stack.set(TekoraComponents.PARTNERS.get(), new Partners(new ArrayList<>(List.of(pos))));
+            }
+        }
+    }
+
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+//        event.registerBlockEntity(Capabilities.Item.BLOCK, TekoraBlockEntities.BASIN.get(), TekoraBlockEntities::getItemHandler);
     }
 }

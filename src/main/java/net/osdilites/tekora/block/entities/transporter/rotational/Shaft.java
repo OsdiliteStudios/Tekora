@@ -6,10 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -32,10 +28,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
-import net.osdilites.tekora.item.TekoraItems;
 import net.osdilites.tekora.util.UtilFunctions;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Shaft extends AbstractTekoraAxialBlock {
@@ -90,9 +86,17 @@ public class Shaft extends AbstractTekoraAxialBlock {
         if (!level.isClientSide() && state.hasProperty(GEAR_TYPE)) {
             GearType type = state.getValue(GEAR_TYPE);
             if (type != GearType.NONE && state.hasProperty(IS_LARGE)) {
+                List<ItemStack> drops = new ArrayList<>();
                 Item item = UtilFunctions.getItemFromGearType(type);
-                if (state.getValue(IS_LARGE)) {
-                    Item part = UtilFunctions.getItemFromGearType(type);
+                if (item != null) {
+                    if (state.getValue(IS_LARGE)) {
+                        Item part = UtilFunctions.getItemFromGearType(type);
+                        if (part != null) {
+                            drops.add(new ItemStack(part, 4));
+                        }
+                    }
+                    drops.add(new ItemStack(item, 1));
+                    return drops;
                 }
             }
         }
@@ -127,6 +131,10 @@ public class Shaft extends AbstractTekoraAxialBlock {
     @Override
     public @org.jspecify.annotations.Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new ShaftEntity(blockPos, blockState, moment);
+    }
+
+    public double getMoment() {
+        return moment;
     }
 
     @Nullable

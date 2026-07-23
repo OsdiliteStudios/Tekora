@@ -18,7 +18,6 @@ import net.osdilites.tekora.Tekora;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractThermalMachine extends BaseEntityBlock {
-
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 

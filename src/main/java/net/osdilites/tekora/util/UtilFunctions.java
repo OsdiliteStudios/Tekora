@@ -51,6 +51,7 @@ public class UtilFunctions {
         return angle;
     }
 
+    @SafeVarargs
     public static <T> boolean matches(T item, T... vals) {
         for (T val : vals) {
             if (val == item) return true;

@@ -53,6 +53,7 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> INK_PRESS_SHAFT = ITEMS.register("ink_press_shaft", () -> new  MachinePartItem("ink_press_shaft", TekoraBlocks.PRINTER.get()));
   public static final DeferredHolder<Item, Item> CUTTER_SHAFT = ITEMS.register("cutter_shaft", () -> new MachinePartItem("cutter_shaft", TekoraBlocks.CUTTER.get()));
 
+  public static final DeferredHolder<Item, Item> STEEL_INGOT = ITEMS.register("steel_ingot", () -> new TekoraItem(true, "steel_ingot"));
   public static final DeferredHolder<Item, Item> STEEL_PLATE = ITEMS.register("steel_plate", () -> new TekoraItem(true, "steel_plate"));
   public static final DeferredHolder<Item, Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem("wrench", 560));
 
@@ -76,6 +77,8 @@ public class TekoraItems {
             msg += "Object properties " + body + "\n";
           }
           if (ent instanceof AbstractModularMachineEntity modular) {
+            GearType type = modular.getBlockState().getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE);
+            msg += "Object has a geartype of " + type + "\n";
             msg += "Object has a velocity of " + modular.getVelocity() + "\n";
           }
           if (state.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
@@ -91,10 +94,8 @@ public class TekoraItems {
           if (state.hasProperty(TekoraBlockStates.IS_LARGE)) {
             msg += (state.getValue(TekoraBlockStates.IS_LARGE) ? "The gear is large" : "The gear is normal sized" )+ "\n";
           }
-          if (!msg.isEmpty()) {
-            player.sendSystemMessage(Component.literal(msg));
-            return InteractionResult.CONSUME;
-          }
+          player.sendSystemMessage(Component.literal(msg));
+          return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
       }

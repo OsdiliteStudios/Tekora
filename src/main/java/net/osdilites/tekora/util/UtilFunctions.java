@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -81,5 +82,12 @@ public class UtilFunctions {
             case WOOD -> TekoraItems.WOODEN_GEAR.get();
             default -> null;
         };
+    }
+
+    public static double getPressure(Level level) {
+        if (level != null && !level.isClientSide()) {
+            level.environmentAttributes();
+        }
+        return 0;
     }
 }

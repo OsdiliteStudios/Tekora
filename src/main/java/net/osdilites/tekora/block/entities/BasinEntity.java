@@ -6,10 +6,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
@@ -24,6 +26,8 @@ import net.osdilites.tekora.recipes.TekoraRecipes;
 import net.osdilites.tekora.recipes.inputs.BasinRecipeInput;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class BasinEntity extends AbstractModularCraftEntity {
@@ -75,26 +79,42 @@ public class BasinEntity extends AbstractModularCraftEntity {
     protected double startCrushing(double velocity, double torque) {
         BasinRecipeInput input = new BasinRecipeInput(this.handler.copyToList(), this.tank.copyToList());
         Optional<RecipeHolder<MacerationRecipe>> recipe = getCurrentRecipe(TekoraRecipes.MACERATION_TYPE.get(), input);
-        if (recipe.isPresent()) {
+        if (level != null && recipe.isPresent()) {
+            MacerationRecipe unwrapped = recipe.get().value();
 
-            ItemStack output = recipe.get().value().assemble(input);
-            double ratedVelocity = recipe.get().value().ratedVelocity();
+            ItemStack output = unwrapped.assemble(input);
+            double ratedVelocity = unwrapped.ratedVelocity();
+
+            List<Ingredient> reqItems = unwrapped.items();
+            List<FluidIngredient> reqFluids = unwrapped.fluids();
+            List<Integer> removed = new ArrayList<>();
             //todo algorithm to determine available slot
+
             int availSlot = 0;
             boolean canWork = false;
             for (int i = 2; i < 12; i++) {
                 var resource = handler.getResource(availSlot);
                 if (output == null) break;
 
-                if ((resource.isEmpty() || resource.is(output.getItem()))
+                if (!canWork && (resource.isEmpty() || resource.is(output.getItem()))
                         && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= handler.getAmountAsInt(availSlot) + output.getCount()) {
                     canWork = true;
                     availSlot = i;
-                    break;
+                }
+
+                // todo replace with a more efficient algorithm in the future
+                if (removed.size() < reqItems.size()) {
+                    int removedInd = 0;
+                    for (Ingredient ingredient : reqItems) {
+                        if (!removed.contains(removedInd) && ingredient.test(handler.getResource(availSlot).toStack())) {
+                            removed.add(removedInd);
+                        }
+                        removedInd++;
+                    }
                 }
             }
             // todo include fluid handling here
-            if (canWork && level != null && Math.abs(velocity) >= ratedVelocity) {
+            if (canWork && Math.abs(velocity) >= ratedVelocity) {
                 double cutTorque = recipe.get().value().cutTorque();
                 double cutConst = (torque - cutTorque) / ratedVelocity;
                 progress++;
@@ -103,8 +123,10 @@ public class BasinEntity extends AbstractModularCraftEntity {
                     try (Transaction transaction = Transaction.openRoot()) {
                         ItemAccess access = ItemAccess.forHandlerIndex(handler, availSlot);
                         // todo, make it so that it looks through the relevant components and outputs in the relevant component
-//                        handler.extract(handler.getResource(0), 1, transaction);
-//                        handler.set(availSlot, ItemResource.of(output), access.getAmount() + output.getCount());
+                        for (int val : removed) {
+                            handler.extract(handler.getResource(val), 1, transaction);
+                        }
+                        handler.set(availSlot, ItemResource.of(output), access.getAmount() + output.getCount());
                         transaction.commit();
                     }
                     progress = 0;

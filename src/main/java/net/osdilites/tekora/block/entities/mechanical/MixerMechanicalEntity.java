@@ -11,11 +11,6 @@ public class MixerMechanicalEntity extends AbstractModularMachineEntity {
     }
 
     @Override
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        // todo, add recipe capabilities and link it to the force above
-    }
-
-    @Override
     protected double partMoment() {
         return 0; // todo define value
     }

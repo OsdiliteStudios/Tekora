@@ -48,12 +48,12 @@ public class ShaftEntity extends RotationalAbstractEntity {
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (body != null && pLevel.getBlockEntity(pPos) instanceof RotationalAbstractEntity ent && pState.hasProperty(AbstractTekoraAxialBlock.AXIS)
-                && pState.hasProperty(Shaft.GEAR_TYPE) && pState.getValue(Shaft.GEAR_TYPE) != GearType.NONE) {
+                && pState.getValueOrElse(Shaft.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
             Direction.Axis axis = pState.getValue(AbstractTekoraAxialBlock.AXIS);
             double orgV = componentRadius() * body.getVelocity();
             double tot = 0;
 
-            if (pState.hasProperty(Shaft.IS_LARGE) && pState.getValue(Shaft.IS_LARGE)) {
+            if (pState.getValueOrElse(Shaft.IS_LARGE, false)) {
                 // if i == -2 or 2, j != k
                 // if i == 0, j == k
                 int x = pPos.getX();
@@ -71,10 +71,9 @@ public class ShaftEntity extends RotationalAbstractEntity {
                                 };
                                 if (pLevel.getBlockEntity(newPos) instanceof ShaftEntity cog) {
                                     BlockState analyzedState = cog.getBlockState();
-                                    if (analyzedState.hasProperty(Shaft.GEAR_TYPE) && analyzedState.getValue(Shaft.GEAR_TYPE) != GearType.NONE
-                                            && analyzedState.hasProperty(Shaft.IS_LARGE)
-                                            && ((analyzedState.getValue(Shaft.IS_LARGE) && Math.abs(i) == 2 || Math.abs(j) == 2 || Math.abs(k) == 2)
-                                            || (!analyzedState.getValue(Shaft.IS_LARGE) && Math.abs(i) < 2 && Math.abs(j) < 2 && Math.abs(k) < 2))) {
+                                    if (analyzedState.getValueOrElse(Shaft.GEAR_TYPE, GearType.NONE) != GearType.NONE
+                                            && ((analyzedState.getValueOrElse(Shaft.IS_LARGE, false) && Math.abs(i) == 2 || Math.abs(j) == 2 || Math.abs(k) == 2)
+                                            || (!analyzedState.getValueOrElse(Shaft.IS_LARGE, false) && Math.abs(i) < 2 && Math.abs(j) < 2 && Math.abs(k) < 2))) {
                                         tot += contact(pLevel, pPos, pPos.above(), orgV, cog);
                                     } else {
                                         pLevel.removeBlockEntity(newPos);
@@ -120,7 +119,7 @@ public class ShaftEntity extends RotationalAbstractEntity {
                             GearType gearType = partnerState.getValue(TekoraBlockStates.GEAR_TYPE);
                             if (gearType == GearType.NONE) continue;
 
-                            double moment = partnerState.hasProperty(TekoraBlockStates.IS_LARGE) && partnerState.getValue(TekoraBlockStates.IS_LARGE) ? gearType.getLargeMoment() : gearType.getSmallMoment();
+                            double moment = partnerState.getValueOrElse(TekoraBlockStates.IS_LARGE, false) ? gearType.getLargeMoment() : gearType.getSmallMoment();
                             // todo, figure an equation to figure what to do with the moment.
                         }
                     }
@@ -170,7 +169,7 @@ public class ShaftEntity extends RotationalAbstractEntity {
 
     public boolean canBeCog() {
         BlockState state = getBlockState();
-        return state.hasProperty(Shaft.GEAR_TYPE) && state.getValue(Shaft.GEAR_TYPE) != GearType.NONE;
+        return state.getValueOrElse(Shaft.GEAR_TYPE, GearType.NONE) != GearType.NONE;
     }
 
     @Override
@@ -178,10 +177,7 @@ public class ShaftEntity extends RotationalAbstractEntity {
         BlockState state = getBlockState();
         if (state.hasProperty(Shaft.GEAR_TYPE)) {
             GearType gearType = state.getValue(Shaft.GEAR_TYPE);
-            if (state.hasProperty(Shaft.IS_LARGE)) {
-                return moment + (state.getValue(Shaft.IS_LARGE) ? gearType.getLargeMoment() : gearType.getSmallMoment());
-            }
-            return moment + gearType.getSmallMoment();
+            return moment + (state.getValueOrElse(Shaft.IS_LARGE, false) ? gearType.getLargeMoment() : gearType.getSmallMoment());
         }
         return moment;
     }
@@ -189,8 +185,8 @@ public class ShaftEntity extends RotationalAbstractEntity {
     @Override
     public double componentRadius() {
         BlockState state = getBlockState();
-        boolean canBeCog = state.hasProperty(Shaft.GEAR_TYPE) && state.getValue(Shaft.GEAR_TYPE) != GearType.NONE;
-        boolean isLarge = state.hasProperty(Shaft.IS_LARGE) && state.getValue(Shaft.IS_LARGE);
+        boolean canBeCog = state.getValueOrElse(Shaft.GEAR_TYPE, GearType.NONE) != GearType.NONE;
+        boolean isLarge = state.getValueOrElse(Shaft.IS_LARGE, false);
         return canBeCog ? isLarge ? 1 : 0.5 : 0.125;
     }
 
@@ -214,7 +210,7 @@ public class ShaftEntity extends RotationalAbstractEntity {
         BlockState state = getBlockState();
         if (body != null && state.hasProperty(TekoraBlockStates.GEAR_TYPE) && state.hasProperty(BlockStateProperties.AXIS)) {
             GearType gearType = state.getValue(TekoraBlockStates.GEAR_TYPE);
-            double added = state.hasProperty(TekoraBlockStates.IS_LARGE) && state.getValue(TekoraBlockStates.IS_LARGE) ? gearType.getLargeMoment() : gearType.getSmallMoment();
+            double added = state.getValueOrElse(TekoraBlockStates.IS_LARGE, false) ? gearType.getLargeMoment() : gearType.getSmallMoment();
             double newVal = added + getMoment();
             BlockPos pos = getBlockPos();
             Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);

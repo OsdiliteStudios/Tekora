@@ -14,9 +14,4 @@ public class CrusherMechanicalEntity extends AbstractModularMachineEntity {
     protected double partMoment() {
         return 0; // todo define value
     }
-
-    @Override
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        super.tick(pLevel, pPos, pState);
-    }
 }

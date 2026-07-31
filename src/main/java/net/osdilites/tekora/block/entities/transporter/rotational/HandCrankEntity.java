@@ -18,7 +18,7 @@ public class HandCrankEntity extends RotationalAbstractEntity {
         double speed = Math.abs(body.getVelocity());
         double radius = componentRadius();
 
-        double force = 3.0 * (0.25 + 0.75 * energy) * Math.max(0, 1 - 2 * speed / (Math.PI));
+        double force = 30.0 * (0.25 + 0.75 * energy) * Math.max(0, 1 - 4 * speed / (Math.PI));
         body.addTorque(getBlockPos(), force);
 
         if (saturation > 0) {

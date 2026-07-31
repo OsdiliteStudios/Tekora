@@ -17,12 +17,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractMechanicalEntity;
-import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -38,20 +36,20 @@ public class ModularGearRenderer implements BlockEntityRenderer<AbstractMechanic
     public void extractRenderState(AbstractMechanicalEntity blockEntity, MechRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
 
-        if (state.blockState == null) {
-            state.blockState = blockEntity.getBlockState();
-        }
-        state.setAngle(Mth.lerp(partialTicks, blockEntity.getOldRotation(), blockEntity.getRenderingRotation()));
-
         BlockState gearState = blockEntity.getBlockState();
-        BlockState hypothetical = new BlockState(TekoraBlocks.STEEL_SHAFT.get(),
-                new Property[]{BlockStateProperties.AXIS, TekoraBlockStates.GEAR_TYPE, TekoraBlockStates.IS_LARGE},
-                new Comparable[]{Direction.Axis.Y, gearState.hasProperty(TekoraBlockStates.GEAR_TYPE) ? gearState.getValue(TekoraBlockStates.GEAR_TYPE) : GearType.NONE, false});
+        BlockState hypothetical = TekoraBlocks.STEEL_SHAFT.get().defaultBlockState()
+                .setValue(BlockStateProperties.AXIS, Direction.Axis.Y)
+                .setValue(TekoraBlockStates.GEAR_TYPE, gearState.getValue(TekoraBlockStates.GEAR_TYPE))
+                .setValue(TekoraBlockStates.IS_LARGE, false);
 
+        if (state.blockState == null) {
+            state.blockState = hypothetical;
+        }
+        state.setAngle(Mth.lerp(partialTicks, blockEntity.getOldAngle(), blockEntity.getAngle()));
         BlockStateModel shaftModel = Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(hypothetical);
         state.parts = new ArrayList<>();
         if (blockEntity.getLevel() instanceof BlockAndTintGetter getter) {
-            shaftModel.collectParts(getter, blockEntity.getBlockPos(), blockEntity.getBlockState(), RandomSource.create(42L), state.parts);
+            shaftModel.collectParts(getter, blockEntity.getBlockPos(), hypothetical, RandomSource.create(42L), state.parts);
         }
     }
 
@@ -66,7 +64,7 @@ public class ModularGearRenderer implements BlockEntityRenderer<AbstractMechanic
             poseStack.pushPose();
 
             poseStack.translate(0.5D, 0.5D, 0.5D);
-            poseStack.mulPose(Axis.YP.rotationDegrees((float)(state.getAngle() * 180 / Math.PI)));
+            poseStack.mulPose(Axis.YP.rotationDegrees(state.getAngle()));
             poseStack.translate(-0.5D, -0.5D, -0.5D);
 
             collector.submitMultiLayerBlockModel(poseStack, state.parts, true, new int[]{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, state.packedLight, OverlayTexture.NO_OVERLAY, 0);

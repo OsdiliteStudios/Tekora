@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
 
-public record PressingRecipe(Ingredient input, ItemStack output, double cutTorque, double ratedVelocity) implements TekoraMechanicalRecipe<DepotRecipeInput> {
+public record PressingRecipe(Ingredient input, ItemStack output, double cutTorque, double ratedVelocity) implements TekoraDepotRecipe {
     public static final MapCodec<PressingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Ingredient.CODEC.fieldOf("ingredient").forGetter(PressingRecipe::input),
             ItemStack.CODEC.fieldOf("result").forGetter(PressingRecipe::output),
@@ -28,18 +28,8 @@ public record PressingRecipe(Ingredient input, ItemStack output, double cutTorqu
     );
 
     @Override
-    public boolean matches(DepotRecipeInput RecipeInput, Level level) {
-        return false;
-    }
-
-    @Override
     public ItemStack assemble(DepotRecipeInput RecipeInput) {
         return null;
-    }
-
-    @Override
-    public boolean showNotification() {
-        return false;
     }
 
     @Override

@@ -1,4 +1,9 @@
 package net.osdilites.tekora.block.entities.transporter.cable;
 
-public class AbstractTekoraCableNode {
+import net.minecraft.world.level.block.BaseEntityBlock;
+
+public abstract class AbstractTekoraCableNode extends BaseEntityBlock {
+    public AbstractTekoraCableNode(Properties properties) {
+        super(properties);
+    }
 }

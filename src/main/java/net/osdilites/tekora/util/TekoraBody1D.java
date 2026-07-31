@@ -6,7 +6,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
 
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-// This is a class used for the shafts, gears, and other 1D mech contraptions in Tekora.
+// This is a class used for the shafts and any potential shaft extension blocks like hand cranks or waterwheels in Tekora.
 public class TekoraBody1D {
     private double moment;
     private double velocity = 0; // m/tick
@@ -30,8 +33,9 @@ public class TekoraBody1D {
     private float angle;
     private final Level level;
 
+    private double attachedMoment = 0;
+
     private final ArrayList<Double> moments;
-    private boolean isChanged;
     public TekoraBody1D(Level level, Direction.Axis axis, BlockPos start, BlockPos end, ArrayList<Double> moments) {
         this.level = level;
         this.axis = axis;
@@ -83,7 +87,7 @@ public class TekoraBody1D {
             this.end = start;
         }
         this.moments = moments;
-        isChanged = true;
+        updateMoment();
     }
 
     /** A method that splits the mass and force of the object using the endpoints
@@ -134,6 +138,7 @@ public class TekoraBody1D {
                 }
                 pEntity.updateTickerStatus();
                 this.start = newStart;
+                pA++;
                 if (!moments.isEmpty()) moments.removeFirst();
             } else if (pPos.equals(end)) {
                 if (pEntity.isBodyTicker()) {
@@ -143,6 +148,7 @@ public class TekoraBody1D {
                     }
                 }
                 this.end = newEnd;
+                pB--;
                 if (!moments.isEmpty()) moments.removeLast();
             } else {
                 int split = (val - pA);
@@ -165,14 +171,15 @@ public class TekoraBody1D {
                         }
                     }
                 }
+                pB = val - 1;
             }
-            isChanged = true;
+            updateMoment();
         }
     }
 
     public void trimFirst() {
         if (!moments.isEmpty()) moments.removeFirst();
-        isChanged = true;
+        updateMoment();
         pA++;
         start = switch (axis) {
             case X -> start.east();
@@ -187,7 +194,7 @@ public class TekoraBody1D {
 
     public void trimLast() {
         if (!moments.isEmpty()) moments.removeLast();
-        isChanged = true;
+        updateMoment();
         pB--;
         end = switch (axis) {
             case X -> end.west();
@@ -198,7 +205,7 @@ public class TekoraBody1D {
 
     /** A method that joins the mass and force of the object using the endpoints*/
     public void join(TekoraBody1D pObj, BlockPos pPos, double momentInertia) {
-        boolean isValid = pObj.axis == axis;
+        boolean isValid = pObj.axis == axis && pObj != this;
 
         double val;
         switch (axis) {
@@ -241,9 +248,9 @@ public class TekoraBody1D {
                     oldEnt.updateTickerStatus();
                 }
             }
-            isChanged = true;
+            updateMoment();
         } else {
-            throw new IllegalArgumentException("Objects joining mismatch at: " + pPos.toShortString() + ", suffdiff coords: pA: " + pA + ", pB: " + pB + ", newVal: " + val);
+            Tekora.LOGGER.debug("Objects joining mismatch at: " + pPos.toShortString() + ", suffdiff coords: pA: " + pA + ", pB: " + pB + ", newVal: " + val);
         }
     }
 
@@ -282,9 +289,9 @@ public class TekoraBody1D {
                             end = pPos;
                             moments.add(momentInertia);
                         }
-                        isChanged = true;
+                        updateMoment();
                     } else {
-                        throw new IllegalArgumentException("Objects joining mismatch at: " + pPos.toShortString() + ", suffdiff coords: pA: " + pA + ", pB: " + pB + ", newVal: " + val);
+                        Tekora.LOGGER.debug("Objects attachment mismatch at: " + pPos.toShortString() + ", suffdiff coords: pA: " + pA + ", pB: " + pB + ", newVal: " + val);
                     }
                 }
             }
@@ -316,19 +323,6 @@ public class TekoraBody1D {
             }
         }
 
-        if (isChanged) {
-            if (!moments.isEmpty()) {
-                double newI = 0;
-                for (double m : moments) {
-                    newI += m;
-                }
-                moment = newI;
-            } else {
-                throw new IllegalStateException("Moments array is empty");
-            }
-            isChanged = false;
-        }
-
         if (moment == 0) throw new IllegalStateException("Moment cannot be 0");
         if (isValid && withinRange(pA, pB, val)) {
             velocity += torque * 0.05 / moment;
@@ -346,6 +340,7 @@ public class TekoraBody1D {
 
     public void tick() {
         if (velocity == 0 || Double.isNaN(velocity) || Double.isInfinite(velocity)) {
+            angle = 0;
             oldAngle = angle;
         } else if (Double.isNaN(angle) || Double.isNaN(oldAngle) || Double.isInfinite(angle) || Double.isInfinite(oldAngle)) {
             oldAngle = 0;
@@ -385,15 +380,19 @@ public class TekoraBody1D {
         return entities;
     }
 
-    public void setVelocity(double velocity) {
-        this.velocity = velocity;
+    public void load(ValueInput input) {
+        this.velocity = input.getDoubleOr("velocity", 0);
+    }
+
+    public void save(ValueOutput output) {
+        output.putDouble("velocity", velocity);
     }
 
     public void setMoment(int loc, double moment) {
         int ni = loc - pA;
         if (ni < moments.size() && ni >= 0) {
             this.moments.set(ni, moment);
-            isChanged = true;
+            updateMoment();
         }
     }
 
@@ -402,20 +401,42 @@ public class TekoraBody1D {
     }
 
     public double getMoment() {
-        if (isChanged) {
-            double added = 0;
-            for (double m : moments) {
-                added += m;
-            }
-            moment = added;
-            isChanged = false;
-        }
         return moment;
+    }
+
+    public void checkAttached() {
+        if (axis == Direction.Axis.Y && level.getBlockEntity(start.below()) instanceof AbstractModularMachineEntity ent) {
+            attachedMoment = ent.getSingularMoment();
+        } else {
+            attachedMoment = 0;
+        }
+        updateMoment();
+    }
+
+    public boolean hasAttachment() {
+        return axis == Direction.Axis.Y && level.getBlockEntity(start.below()) instanceof AbstractModularMachineEntity;
+    }
+
+    private void updateMoment() {
+        if (axis == Direction.Axis.Y && level.getBlockEntity(start.below()) instanceof AbstractModularMachineEntity ent) {
+            attachedMoment = ent.getSingularMoment();
+        } else {
+            attachedMoment = 0;
+        }
+        double val = attachedMoment;
+        for (double m : moments) {
+            val += m;
+        }
+        double orgI = moment;
+        velocity = velocity * (val / (val + orgI));
+        moment = val;
     }
 
     @Override
     public String toString() {
         // for Debugging purposes
-        return "\n\tid: " + hashCode() + "\n\tvelocity: " + velocity + ", oldRot: " + oldAngle + ", newRot: " + angle + "\n\tmoment of inertia: " + moment + "\n\tmoments array: " + moments + "}";
+        return "\n  id: " + hashCode() + "\n  velocity: " + velocity + ", oldRot: " + oldAngle + ", newRot: " + angle +
+                "\n  moment of inertia: " + moment + ", attached moment of inertia: " + attachedMoment + "\n  moments array: " + moments +
+                "\n  axis: " + axis + ", starts: " + pA + ", ends: " + pB;
     }
 }

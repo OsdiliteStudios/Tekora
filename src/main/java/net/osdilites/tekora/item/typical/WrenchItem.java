@@ -37,7 +37,7 @@ public class WrenchItem extends Item {
             BlockPos pos = context.getClickedPos();
             BlockState state = lvl.getBlockState(pos);
             BlockState newState = state;
-            if (player != null && player.isShiftKeyDown() && state.getBlock() instanceof Shaft && state.hasProperty(Shaft.GEAR_TYPE) && state.hasProperty(Shaft.IS_LARGE)) {
+            if (player != null && player.isShiftKeyDown() && state.hasProperty(Shaft.GEAR_TYPE)) {
                 GearType type = state.getValue(Shaft.GEAR_TYPE);
                 Item dropped = switch (type) {
                     case ALUMINUM -> TekoraItems.ALUMINUM_GEAR.get();
@@ -48,7 +48,7 @@ public class WrenchItem extends Item {
                     case WOOD -> TekoraItems.WOODEN_GEAR.get();
                     case NONE -> null;
                 };
-                if (state.getValue(Shaft.IS_LARGE)) {
+                if (state.getValueOrElse(Shaft.IS_LARGE, false)) {
                     Item additional = switch (type) {
                         case ALUMINUM -> TekoraItems.ALUMINUM_GEAR_PART.get();
                         case BRONZE -> TekoraItems.BRONZE_GEAR_PART.get();

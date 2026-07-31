@@ -1,7 +1,6 @@
 package net.osdilites.tekora.block.entities.mechanical;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
@@ -13,10 +12,5 @@ public class PressMechanicalEntity extends AbstractModularMachineEntity {
     @Override
     protected double partMoment() {
         return 0; // todo define value
-    }
-
-    @Override
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        super.tick(pLevel, pPos, pState);
     }
 }

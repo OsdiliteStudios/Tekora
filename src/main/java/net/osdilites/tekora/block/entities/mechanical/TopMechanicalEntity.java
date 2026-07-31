@@ -11,6 +11,6 @@ public class TopMechanicalEntity extends AbstractModularMachineEntity {
 
     @Override
     protected double partMoment() {
-        return 0; // todo, determine the moment
+        return 10; // todo, determine the moment
     }
 }

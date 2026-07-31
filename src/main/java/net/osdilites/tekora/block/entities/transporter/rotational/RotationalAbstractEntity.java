@@ -39,7 +39,7 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
 
     @Override
     public void setRemoved() {
-        if (!(level == null || level.isClientSide() || body == null)) {
+        if (!(level == null || body == null)) {
             BlockState state = getBlockState();
             BlockPos pos = getBlockPos();
             if (state.hasProperty(BlockStateProperties.FACING)) {
@@ -76,10 +76,10 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                     if (level.getBlockEntity(afterPos) instanceof RotationalAbstractEntity) {
                         body.split(pos, this);
                     } else {
-                        body.trimFirst();
+                        body.trimLast();
                     }
                 } else if (level.getBlockEntity(afterPos) instanceof RotationalAbstractEntity) {
-                    body.trimLast();
+                    body.trimFirst();
                 }
             }
 
@@ -96,8 +96,6 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
         boolean hasFacing = pState.hasProperty(BlockStateProperties.FACING);
         boolean hasAxis = pState.hasProperty(BlockStateProperties.AXIS);
         if (pLevel.isClientSide() && bodyTicker && (hasFacing || hasAxis)) {
-            // the client side is to ensure the thing doesn't double count
-            // todo, test whether the erroneous rotation gets resolved by the isClientSide()
             body.tick();
         }
         if (!pLevel.isClientSide()) {
@@ -117,14 +115,14 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
         }
     }
 
-    public float getOldRotation() {
+    public float getOldAngle() {
         if (body == null) {
             return 0;
         }
         return body.getOldAngle();
     }
 
-    public float getRenderingRotation() {
+    public float getAngle() {
         if (body == null) {
             return 0;
         }
@@ -141,6 +139,27 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
         TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, registries);
         this.saveAdditional(output);
         return output.buildResult();
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if (body != null) {
+            BlockState state = getBlockState();
+            if (state.hasProperty(BlockStateProperties.FACING)) {
+                Direction.Axis axis = state.getValue(BlockStateProperties.FACING).getAxis();
+                if (!body.axisMatch(axis)) {
+                    body.split(getBlockPos(), this);
+                    createBody(axis);
+                }
+            } else if (state.hasProperty(BlockStateProperties.AXIS)) {
+                Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);
+                if (!body.axisMatch(axis)) {
+                    body.split(getBlockPos(), this);
+                    createBody(axis);
+                }
+            }
+        }
     }
 
     public boolean hasBody() {
@@ -163,20 +182,27 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                     case DOWN -> pos.below();
                 };
 
+                Direction.Axis axis = dir.getAxis();
+                BlockState checkedState = level.getBlockState(checkedPos);
+
                 if (level.getBlockEntity(checkedPos) instanceof RotationalAbstractEntity checkedEnt) {
                     if (checkedEnt.body == null) {
-                        createBody(dir.getAxis());
-                        body.join(checkedPos, checkedEnt.getMoment());
-                    } else {
-                        checkedEnt.body.join(pos, checkedEnt.getMoment());
+                        createBody(axis);
+                        if (connectable(checkedState, dir.getOpposite(), axis)) {
+                            body.join(checkedPos, checkedEnt.getMoment());
+                        }
+                    } else if (connectable(checkedState, dir.getOpposite(), axis)) {
+                        checkedEnt.body.join(pos, getMoment());
                         body = checkedEnt.body;
+                    } else {
+                        createBody(axis);
                     }
                     checkedEnt.synchronizeEntities();
                 } else {
-                    createBody(dir.getAxis());
+                    createBody(axis);
                 }
             } else if (state.hasProperty(BlockStateProperties.AXIS)) {
-                Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);
+                Direction.Axis axis = state.getValue(BlockStateProperties.AXIS); // inherent problem here
 
                 BlockPos before;
                 BlockPos after;
@@ -194,46 +220,69 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                         after = pos.above();
                     }
                 }
+                BlockState beforeState = level.getBlockState(before);
+                BlockState afterState = level.getBlockState(after);
                 if (level.getBlockEntity(before) instanceof RotationalAbstractEntity bRotEnt) {
                     if (level.getBlockEntity(after) instanceof RotationalAbstractEntity aRotEnt) {
                         if (bRotEnt.body == null) {
                             if (aRotEnt.body == null) {
                                 createBody(axis);
-                                body.join(after, aRotEnt.getMoment());
-                                body.join(before, bRotEnt.getMoment());
-                            } else {
+                                if (connectable(afterState, axis, true)) {
+                                    body.join(after, aRotEnt.getMoment());
+                                }
+                                if (connectable(beforeState, axis, false)) {
+                                    body.join(before, bRotEnt.getMoment());
+                                }
+                            } else if (connectable(afterState, axis, true)) {
                                 aRotEnt.body.join(pos, getMoment());
-                                aRotEnt.body.join(before, getMoment());
+                                if (connectable(beforeState, axis, false)) {
+                                    aRotEnt.body.join(before, bRotEnt.getMoment());
+                                }
                                 body = aRotEnt.body;
+                            } else {
+                                createBody(axis);
                             }
-                        } else {
+                        } else if (connectable(beforeState, axis, false)) {
                             if (aRotEnt.body == null) {
                                 bRotEnt.body.join(pos, getMoment());
-                                bRotEnt.body.join(after, getMoment());
+                                if (connectable(afterState, axis, true)) {
+                                    bRotEnt.body.join(after, aRotEnt.getMoment());
+                                }
+                                body = bRotEnt.body;
+                            } else if (connectable(afterState, axis, true)) {
+                                bRotEnt.body.join(aRotEnt.body, pos, aRotEnt.getMoment());
+                                body = bRotEnt.body;
                             } else {
-                                bRotEnt.body.join(aRotEnt.body, pos, getMoment());
+                                createBody(axis);
                             }
-                            body = bRotEnt.body;
+                        } else {
+                            createBody(axis);
                         }
                     } else {
                         if (bRotEnt.body == null) {
                             createBody(axis);
-                            body.join(after, bRotEnt.getMoment());
-                        } else {
+                            if (connectable(beforeState, axis, false)) {
+                                body.join(before, bRotEnt.getMoment());
+                            }
+                        } else if (connectable(beforeState, axis, false)) {
                             bRotEnt.body.join(pos, getMoment());
-                            bRotEnt.body.join(after, getMoment());
                             body = bRotEnt.body;
+                        } else {
+                            createBody(axis);
                         }
                     }
                 } else {
                     if (level.getBlockEntity(after) instanceof RotationalAbstractEntity aRotEnt) {
                         if (aRotEnt.body == null) {
                             createBody(axis);
-                            body.join(after, aRotEnt.getMoment());
-                        } else {
+                            if (connectable(afterState, axis, true)) {
+                                body.join(after, aRotEnt.getMoment());
+                            }
+                        } else if (connectable(afterState, axis, true)) {
                             aRotEnt.body.join(pos, getMoment());
-                            aRotEnt.body.join(before, getMoment());
                             body = aRotEnt.body;
+                        } else {
+                            createBody(axis);
                         }
                     } else {
                         createBody(axis);
@@ -278,8 +327,44 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
     public void onLoad() {
         super.onLoad();
         if (body == null && level != null) {
-            createOrJoinBody();
+            createOrJoinBody(); // there is a random statistic chance that both bodies are null
+            // that is unlikely but if it does happen, a solution needs to be present to remove this issue.
         }
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        if (body != null) {
+            body.save(output);
+        }
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        if (body != null && isBodyTicker()) {
+            body.load(input);
+        }
+    }
+
+    private boolean connectable(BlockState checkedState, Direction.Axis axis, boolean isPos) {
+        if (checkedState.hasProperty(BlockStateProperties.FACING)) {
+            Direction checkedDir = checkedState.getValue(BlockStateProperties.FACING);
+            return (checkedDir.getAxisDirection() == Direction.AxisDirection.POSITIVE) == isPos && checkedDir.getAxis() == axis;
+        }
+        return checkedState.hasProperty(BlockStateProperties.AXIS) && checkedState.getValue(BlockStateProperties.AXIS) == axis;
+    }
+
+    private boolean connectable(BlockState checkedState, Direction dir, Direction.Axis axis) {
+        if (axis != dir.getAxis()) {
+            return false;
+        }
+        if (checkedState.hasProperty(BlockStateProperties.FACING)) {
+            Direction checkedDir = checkedState.getValue(BlockStateProperties.FACING);
+            return checkedDir == dir.getOpposite();
+        }
+        return checkedState.hasProperty(BlockStateProperties.AXIS) && checkedState.getValue(BlockStateProperties.AXIS) == axis;
     }
 
     // for debugging purposes
@@ -288,20 +373,5 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
     }
     public boolean isBodyTicker() {
         return bodyTicker;
-    }
-
-    @Override
-    protected void saveAdditional(ValueOutput output) {
-        super.saveAdditional(output);
-        double velocity = body == null ? 0 : body.getVelocity();
-        output.putDouble("velocity", velocity);
-    }
-
-    @Override
-    protected void loadAdditional(ValueInput input) {
-        super.loadAdditional(input);
-        if (body != null) {
-            body.setVelocity(input.getDoubleOr("velocity", 0));
-        }
     }
 }

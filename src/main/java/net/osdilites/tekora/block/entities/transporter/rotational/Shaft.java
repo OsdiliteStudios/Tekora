@@ -83,10 +83,10 @@ public class Shaft extends AbstractTekoraAxialBlock {
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         Level level = params.getLevel();
+        List<ItemStack> drops = super.getDrops(state, params);
         if (!level.isClientSide() && state.hasProperty(GEAR_TYPE)) {
             GearType type = state.getValue(GEAR_TYPE);
             if (type != GearType.NONE && state.hasProperty(IS_LARGE)) {
-                List<ItemStack> drops = new ArrayList<>();
                 Item item = UtilFunctions.getItemFromGearType(type);
                 if (item != null) {
                     if (state.getValue(IS_LARGE)) {
@@ -96,11 +96,10 @@ public class Shaft extends AbstractTekoraAxialBlock {
                         }
                     }
                     drops.add(new ItemStack(item, 1));
-                    return drops;
                 }
             }
         }
-        return super.getDrops(state, params);
+        return drops;
     }
 
     @Override

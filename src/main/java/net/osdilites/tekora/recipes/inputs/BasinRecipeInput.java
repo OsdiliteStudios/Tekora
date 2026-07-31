@@ -9,11 +9,11 @@ import java.util.List;
 public record BasinRecipeInput(List<ItemStack> itemInputs, List<FluidStack> fluidInputs) implements RecipeInput {
     @Override
     public ItemStack getItem(int i) {
-        return ItemStack.EMPTY;
+        return itemInputs.get(i);
     }
 
     @Override
     public int size() {
-        return 0;
+        return itemInputs.size();
     }
 }

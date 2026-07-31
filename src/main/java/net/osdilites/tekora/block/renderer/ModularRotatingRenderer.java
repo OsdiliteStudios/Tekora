@@ -3,27 +3,36 @@ package net.osdilites.tekora.block.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelLoader;
 import net.osdilites.tekora.block.entities.mechanical.AbstractMechanicalEntity;
+import net.osdilites.tekora.event.ClientEvent;
 import org.jspecify.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModularRotatingRenderer implements BlockEntityRenderer<AbstractMechanicalEntity, MechRenderState> {
     protected final BlockEntityRenderDispatcher renderer;
     private final ModularRotatingModel model;
+    private final Identifier texture;
     public ModularRotatingRenderer(BlockEntityRendererProvider.Context pContext, Identifier texture) {
         this.renderer = pContext.blockEntityRenderDispatcher();
         this.model = new ModularRotatingModel(pContext.bakeLayer(new ModelLayerLocation(texture, "main")));
+        this.texture = texture;
     }
 
     @Override
@@ -35,6 +44,12 @@ public class ModularRotatingRenderer implements BlockEntityRenderer<AbstractMech
         }
 
         state.crumbling = breakProgress;
+        state.texture = this.texture;
+        state.parts = new ArrayList<>();
+        StandaloneModelLoader.BakedModels bakedModels = ClientEvent.getBakedModels();
+        if (bakedModels == null) return;
+        state.bakedModels = bakedModels;
+
     }
 
     @Override
@@ -46,14 +61,16 @@ public class ModularRotatingRenderer implements BlockEntityRenderer<AbstractMech
     public void submit(MechRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState cameraRenderState) {
         if (state.parts != null && !state.parts.isEmpty()) {
             poseStack.pushPose();
+            RenderType layer = Sheets.cutoutBlockSheet();
 
             poseStack.translate(0.5D, 0.5D, 0.5D);
-            poseStack.mulPose(getAxisFromState(state.blockState).rotationDegrees((float)(state.getAngle() * 180 / Math.PI)));
+            poseStack.mulPose(getAxisFromState(state.blockState).rotationDegrees(state.getAngle()));
             poseStack.translate(-0.5D, -0.5D, -0.5D);
 
-            //collector.submitMultiLayerBlockModel(poseStack, state.parts, true, new int[]{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, state.packedLight, OverlayTexture.NO_OVERLAY, 0);
-
-            collector.submitModel(this.model, state, poseStack, RenderTypes.cutoutMovingBlock(), state.packedLight, OverlayTexture.NO_OVERLAY, state.lightCoords, state.crumbling);
+            if (model != null) {
+                List<BlockStateModelPart> parts = state.parts;
+                collector.submitBlockModel(poseStack, layer, parts, new int[]{0xFFFFFFFF}, 0, state.packedLight, OverlayTexture.NO_OVERLAY);
+            }
             poseStack.popPose();
         }
     }

@@ -32,7 +32,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
             protected void onContentsChanged(int index, ItemStack previousContents) {
                 super.onContentsChanged(index, previousContents);
                 DepotEntity.this.setChanged();
-                if(!level.isClientSide()) {
+                if(level != null && !level.isClientSide()) {
                     level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 }
             }
@@ -79,13 +79,14 @@ public class DepotEntity extends AbstractModularCraftEntity {
 
     private <T extends TekoraMechanicalRecipe<DepotRecipeInput>> double crafting(Optional<RecipeHolder<T>> recipe, DepotRecipeInput input, double velocity, double torque) {
         if (recipe.isPresent()) {
-            ItemStack output = recipe.get().value().assemble(input);
-            double ratedVelocity = recipe.get().value().ratedVelocity();
+            T val = recipe.get().value();
+            ItemStack output = val.assemble(input);
+            double ratedVelocity = val.ratedVelocity();
             var resource = handler.getResource(1);
-            boolean hasRecipe = (resource.isEmpty() || resource.is(output.getItem()))
+            boolean hasRecipe = level != null && val.matches(input, level) && (resource.isEmpty() || resource.is(output.getItem()))
                     && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= handler.getAmountAsInt(1) + output.getCount();
-            if (hasRecipe && level != null && Math.abs(velocity) >= ratedVelocity) {
-                double cutTorque = recipe.get().value().cutTorque();
+            if (hasRecipe && Math.abs(velocity) >= ratedVelocity) {
+                double cutTorque = val.cutTorque();
                 double cutConst = (torque - cutTorque) / ratedVelocity;
                 progress++;
                 setChanged(level, getBlockPos(), getBlockState());

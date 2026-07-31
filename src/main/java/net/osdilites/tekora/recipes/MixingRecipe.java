@@ -15,7 +15,7 @@ import net.osdilites.tekora.recipes.inputs.BasinRecipeInput;
 
 import java.util.List;
 
-public record MixingRecipe(List<FluidIngredient> fluids, List<Ingredient> items, FluidStack fluidOutput, ItemStack itemOutput, double cutTorque, double ratedVelocity) implements TekoraMechanicalRecipe<BasinRecipeInput> {
+public record MixingRecipe(List<FluidIngredient> fluids, List<Ingredient> items, FluidStack fluidOutput, ItemStack itemOutput, double cutTorque, double ratedVelocity) implements TekoraBasinRecipe {
     public static final MapCodec<MixingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             FluidIngredient.CODEC.listOf().fieldOf("fluids").forGetter(MixingRecipe::fluids),
             Ingredient.CODEC.listOf().fieldOf("items").forGetter(MixingRecipe::items),
@@ -36,18 +36,8 @@ public record MixingRecipe(List<FluidIngredient> fluids, List<Ingredient> items,
     );
 
     @Override
-    public boolean matches(BasinRecipeInput input, Level level) {
-        return false;
-    }
-
-    @Override
     public ItemStack assemble(BasinRecipeInput input) {
         return null;
-    }
-
-    @Override
-    public boolean showNotification() {
-        return false;
     }
 
     @Override

@@ -34,7 +34,7 @@ public class RotationalEntityRenderer implements BlockEntityRenderer<RotationalA
         if (state.blockState == null) {
             state.blockState = blockEntity.getBlockState();
         }
-        state.setAngle(Mth.lerp(partialTicks, blockEntity.getOldRotation(), blockEntity.getRenderingRotation()));
+        state.setAngle(Mth.lerp(partialTicks, blockEntity.getOldAngle(), blockEntity.getAngle()));
         BlockStateModel model = Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(blockEntity.getBlockState());
         state.parts = new ArrayList<>();
         if (blockEntity.getLevel() instanceof BlockAndTintGetter getter) {

@@ -99,8 +99,7 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (pLevel != null && !pLevel.isClientSide() && pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
             // this calculates for "angular" acceleration specifically
-            double acceleration = ent.deltaVelocity() / 0.05; // 0.05 is delta_time
-            double torque = acceleration * ent.getMoment(); // determines recipe progress
+            double torque = ent.getTorque(); // determines recipe progress
 
             Block block = pState.getBlock();
 

@@ -31,6 +31,7 @@ public class TekoraRecipeProvider extends RecipeProvider {
             return "Tekora Recipes";
         }
     }
+
     @Override
     protected void buildRecipes() {
         // todo, make it so that the Wrench can be used as an upgrader type item.

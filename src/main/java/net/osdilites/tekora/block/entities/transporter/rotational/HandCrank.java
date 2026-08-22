@@ -39,7 +39,7 @@ public class HandCrank extends AbstractTekoraAxialBlock {
     public static EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
     private static final VoxelShape[] COMPS_A = UtilFunctions.generateShapeForAllRotations(7, 0, 7, 9, 6, 9);
-    private static final VoxelShape[] COMPS_B = UtilFunctions.generateShapeForAllRotations(7, 6, 6, 9, 8, 10);
+    private static final VoxelShape[] COMPS_B = UtilFunctions.generateShapeForAllRotations(6, 6, 6, 10, 8, 10);
 
     private static final VoxelShape SHAPE_EAST = Shapes.or(COMPS_A[0], COMPS_B[0]);
     private static final VoxelShape SHAPE_UP = Shapes.or(COMPS_A[1], COMPS_B[1]);

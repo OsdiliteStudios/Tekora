@@ -1,4 +1,4 @@
-package net.osdilites.tekora.block.renderer;
+package net.osdilites.tekora.renderers;
 
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
@@ -9,11 +9,9 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 
-public class ModularRotatingModel extends Model<MechRenderState> {
-    private final ModelPart body;
-    public ModularRotatingModel(ModelPart root) {
-        super(root, loc -> RenderTypes.cutoutMovingBlock()); // todo, define state
-        this.body = root.getChild("body");
+public class ModularPartModel extends Model<MechRenderState> {
+    public ModularPartModel(ModelPart root) {
+        super(root, RenderTypes::entityCutoutCull);
     }
 
     public static LayerDefinition createBodyLayer() {

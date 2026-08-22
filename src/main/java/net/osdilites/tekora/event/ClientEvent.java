@@ -18,10 +18,7 @@ import net.neoforged.neoforge.client.model.standalone.StandaloneModelLoader;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
-import net.osdilites.tekora.block.renderer.ModularGearRenderer;
-import net.osdilites.tekora.block.renderer.ModularRotatingRenderer;
-import net.osdilites.tekora.block.renderer.ModularUpDownPartRenderer;
-import net.osdilites.tekora.block.renderer.RotationalEntityRenderer;
+import net.osdilites.tekora.renderers.*;
 import net.osdilites.tekora.menu.TekoraMenus;
 import net.osdilites.tekora.menu.screens.BasinScreen;
 import net.osdilites.tekora.menu.screens.DepotScreen;
@@ -45,25 +42,22 @@ public class ClientEvent {
     private static final StandaloneModelKey<QuadCollection> PRESS_SHAFT_KEY = new StandaloneModelKey<>(PRESS_SHAFT::toString);
 
     private static StandaloneModelLoader.BakedModels bakedModels;
+
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(TekoraBlockRenderers.MODULAR_PART_LAYER, ModularPartModel::createBodyLayer);
+    }
+
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         registerGeneralRotator(event, TekoraBlockEntities.HAND_CRANK.get());
         registerGeneralRotator(event, TekoraBlockEntities.SHAFT.get());
 
-        registerModularRotating(event, TekoraBlockEntities.CRUSHER.get(), CRUSHING_WHEEL);
-        registerWithGearPart(event, TekoraBlockEntities.CRUSHER.get());
-
-        registerModularRotating(event, TekoraBlockEntities.MIXER.get(), MIXER);
-        registerWithGearPart(event, TekoraBlockEntities.MIXER.get());
-
-        registerModularUpDown(event, TekoraBlockEntities.CUTTER.get(), CUTTER);
-        registerWithGearPart(event, TekoraBlockEntities.CUTTER.get());
-
-        registerModularUpDown(event, TekoraBlockEntities.PRINTER.get(), INK_PRESS_SHAFT);
-        registerWithGearPart(event, TekoraBlockEntities.PRINTER.get());
-
-        registerModularUpDown(event, TekoraBlockEntities.PRESS.get(), PRESS_SHAFT);
-        registerWithGearPart(event, TekoraBlockEntities.PRESS.get());
+        registerModularRotating(event, TekoraBlockEntities.CRUSHER.get(), CRUSHING_WHEEL, CRUSHING_WHEEL_KEY);
+        registerModularRotating(event, TekoraBlockEntities.MIXER.get(), MIXER, MIXER_KEY);
+        registerModularUpDown(event, TekoraBlockEntities.CUTTER.get(), CUTTER, CUTTER_KEY);
+        registerModularUpDown(event, TekoraBlockEntities.PRINTER.get(), INK_PRESS_SHAFT, INK_PRESS_SHAFT_KEY);
+        registerModularUpDown(event, TekoraBlockEntities.PRESS.get(), PRESS_SHAFT, PRESS_SHAFT_KEY);
 
         registerWithGearPart(event, TekoraBlockEntities.TOP_MECH.get());
     }
@@ -72,12 +66,12 @@ public class ClientEvent {
         event.registerBlockEntityRenderer(type, ModularGearRenderer::new);
     }
 
-    private static void registerModularUpDown(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type, Identifier identifier) {
-        event.registerBlockEntityRenderer(type, c -> new ModularUpDownPartRenderer(c, identifier));
+    private static void registerModularUpDown(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type, Identifier identifier, StandaloneModelKey<QuadCollection> key) {
+        event.registerBlockEntityRenderer(type, c -> new ModularUpDownPartRenderer(c, identifier, key));
     }
 
-    private static void registerModularRotating(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type, Identifier identifier) {
-        event.registerBlockEntityRenderer(type, c -> new ModularRotatingRenderer(c, identifier));
+    private static void registerModularRotating(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type, Identifier identifier, StandaloneModelKey<QuadCollection> key) {
+        event.registerBlockEntityRenderer(type, c -> new ModularRotatingRenderer(c, identifier, key));
     }
 
     private static void registerGeneralRotator(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type) {

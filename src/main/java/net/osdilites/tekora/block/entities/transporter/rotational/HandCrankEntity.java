@@ -18,12 +18,14 @@ public class HandCrankEntity extends RotationalAbstractEntity {
         double speed = Math.abs(body.getVelocity());
         double radius = componentRadius();
 
-        double force = 30.0 * (0.25 + 0.75 * energy) * Math.max(0, 1 - 4 * speed / (Math.PI));
-        body.addTorque(getBlockPos(), force);
+        if (energy > 0) {
+            double force = 30.0 * (0.25 + 0.75 * energy) * Math.max(0, 1 - 4 * speed / (Math.PI));
+            body.addTorque(getBlockPos(), force);
 
-        if (saturation > 0) {
-            float foodDrain = (float)(1.5E-5 * force * speed * radius);
-            data.addExhaustion(foodDrain);
+            if (saturation > 0) {
+                float foodDrain = (float) (1.5E-5 * force * speed * radius);
+                data.addExhaustion(foodDrain);
+            }
         }
     }
 

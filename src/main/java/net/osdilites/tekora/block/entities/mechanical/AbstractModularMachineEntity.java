@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
@@ -173,18 +174,13 @@ public abstract class AbstractModularMachineEntity extends AbstractMechanicalEnt
         }
     }
 
-    public float getOldRot() {
-        return oldRot;
-    }
-
-    public float getCurRot() {
-        return curRot;
-    }
-
-    public double getOldPos() {
-        return Math.sin(oldRot);
-    }
-    public double getCurPos() {
-        return Math.sin(curRot);
+    public float getProgress() {
+        if (level != null) {
+            BlockPos below = getBlockPos().below();
+            if (level.getBlockEntity(below) instanceof AbstractModularCraftEntity crafter) {
+                return crafter.getProgress();
+            }
+        }
+        return 0;
     }
 }

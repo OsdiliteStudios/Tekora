@@ -188,16 +188,18 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                 if (level.getBlockEntity(checkedPos) instanceof RotationalAbstractEntity checkedEnt) {
                     if (checkedEnt.body == null) {
                         createBody(axis);
-                        if (connectable(checkedState, dir.getOpposite(), axis)) {
+                        if (connectable(checkedState, dir, axis)) {
                             body.join(checkedPos, checkedEnt.getMoment());
+                            checkedEnt.body = body;
+                            checkedEnt.synchronizeEntities();
                         }
-                    } else if (connectable(checkedState, dir.getOpposite(), axis)) {
+                    } else if (connectable(checkedState, dir, axis)) {
                         checkedEnt.body.join(pos, getMoment());
                         body = checkedEnt.body;
+                        checkedEnt.synchronizeEntities();
                     } else {
                         createBody(axis);
                     }
-                    checkedEnt.synchronizeEntities();
                 } else {
                     createBody(axis);
                 }

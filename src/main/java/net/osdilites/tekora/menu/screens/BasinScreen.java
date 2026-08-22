@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.BasinEntity;
@@ -34,4 +35,12 @@ public class BasinScreen extends AbstractContainerScreen<BasinMenu> {
 
         graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
     }
+
+//    private void renderProcess(GuiGraphicsExtractor guiGraphics, int x, int y) {
+//        if(this.menu.isBurning()) {
+//            int process = Mth.ceil(this.menu.getFuelProgress() * 13.0F) + 1;
+//            guiGraphics.blitSprite(
+//                    RenderPipelines.GUI_TEXTURED, PROCESS_TEXTURE, 14, 14, 0, 14 - process, x + 80, y + 18 + 14 - process, 14, process);
+//        }
+//    }
 }

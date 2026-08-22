@@ -47,6 +47,17 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraItems.WRENCH.get());
                     }).build());
 
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> PARTS = CREATIVE_MODE_TABS.register("parts",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.tekora_parts"))
+                    .icon(() -> TekoraItems.STEEL_PLATE.get().asItem().getDefaultInstance())
+                    .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                    .displayItems((param, out) -> {
+                        out.accept(TekoraItems.STEEL_INGOT.get());
+                        out.accept(TekoraItems.STEEL_PLATE.get());
+                    }).build());
+
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);
     }

@@ -132,4 +132,8 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
         }
         return Optional.empty();
     }
+
+    public int getProgress() {
+        return progress;
+    }
 }

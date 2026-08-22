@@ -1,4 +1,4 @@
-package net.osdilites.tekora.block.renderer;
+package net.osdilites.tekora.renderers;
 
 import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TekoraRotatingRenderState extends BlockEntityRenderState {
     public BlockState blockState;
-    public int packedLight = 15728880;
+    public int packedLight = 15728880; // todo, change based on light level of environment
     public List<BlockStateModelPart> parts;
     public List<BlockPos> partners;
     private float angle;

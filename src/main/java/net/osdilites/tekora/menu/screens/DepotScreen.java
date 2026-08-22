@@ -5,6 +5,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.DepotEntity;
@@ -34,5 +35,13 @@ public class DepotScreen extends AbstractContainerScreen<DepotMenu> {
         int y = (height - imageHeight) / 2;
 
         graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
+
+        renderProcess(graphics, x, y);
+    }
+
+    private void renderProcess(GuiGraphicsExtractor guiGraphics, int x, int y) {
+        int process = Mth.ceil(this.menu.getProgress() * 13.0F);
+        guiGraphics.blitSprite(
+                RenderPipelines.GUI_TEXTURED, PROGRESS_ARROW, 14, 14, 0, 14 - process, x + 80, y + 18 + 14 - process, 14, process);
     }
 }

@@ -9,6 +9,14 @@
   "block.tekora.mechanical_top": "Mechanical Top",
   "block.tekora.steel_shaft": "Steel Shaft",
 
+  "blockfunc.tekora.compressor": "Compressor",
+  "blockfunc.tekora.crusher": "Crusher",
+  "blockfunc.tekora.cutter": "Cutter",
+  "blockfunc.tekora.macerator": "Macerator",
+  "blockfunc.tekora.mixer": "Mixer",
+  "blockfunc.tekora.presser": "Presser",
+  "blockfunc.tekora.printer": "Printer",
+
   "item.tekora.steel_ingot": "Steel Ingot",
   "item.tekora.steel_plate": "Steel Plate",
 

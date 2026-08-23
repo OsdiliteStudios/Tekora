@@ -31,10 +31,9 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.util.UtilFunctions;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Shaft extends AbstractTekoraAxialBlock {
+public class Shaft extends AbstractShaftConnectableBlock {
     public static final MapCodec<Shaft> CODEC = simpleCodec(p -> new Shaft(p, 0));
 
     private static final VoxelShape SHAPE_X = box(0, 6, 6, 16, 10, 10);

@@ -19,14 +19,14 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
-import net.osdilites.tekora.block.entities.transporter.rotational.AbstractTekoraAxialBlock;
+import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableBlock;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
-import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
+import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
 import net.osdilites.tekora.block.entities.thermal.AbstractThermalMachine;
 import net.minecraft.world.item.*;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.item.typical.*;
-import net.osdilites.tekora.util.TekoraBody1D;
+import net.osdilites.tekora.util.TekoraShaftBody;
 
 import java.util.function.Consumer;
 
@@ -70,8 +70,8 @@ public class TekoraItems {
         Player player = pContext.getPlayer();
         if (player != null) {
           String msg = state.getBlock() + "\n";
-          if (ent instanceof RotationalAbstractEntity rotational) {
-            TekoraBody1D body = rotational.getBody();
+          if (ent instanceof AbstractShaftConnectableEntity rotational) {
+            TekoraShaftBody body = rotational.getBody();
             msg += "Object has a id of " + rotational.getBodyHashcode();
             msg += (rotational.isBodyTicker() ? " and ticks the body\n" : "\n");
             msg += "Object properties " + body + "\n";
@@ -81,8 +81,8 @@ public class TekoraItems {
             msg += "Object has a geartype of " + type + "\n";
             msg += "Object has a velocity of " + modular.getVelocity() + "\n";
           }
-          if (state.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
-            Direction.Axis axis = state.getValue(AbstractTekoraAxialBlock.AXIS);
+          if (state.hasProperty(AbstractShaftConnectableBlock.AXIS)) {
+            Direction.Axis axis = state.getValue(AbstractShaftConnectableBlock.AXIS);
             msg += "Object has an axis of rotation at the " + axis + " axis\n";
           }
           if (state.hasProperty(AbstractThermalMachine.LIT)) {

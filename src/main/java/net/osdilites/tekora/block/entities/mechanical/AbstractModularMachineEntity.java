@@ -10,9 +10,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
-import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
+import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
-import net.osdilites.tekora.util.TekoraBody1D;
+import net.osdilites.tekora.util.TekoraShaftBody;
 
 import javax.annotation.Nullable;
 
@@ -23,7 +23,7 @@ public abstract class AbstractModularMachineEntity extends AbstractMechanicalEnt
     private float velocity; // note as with all Tekora object classes, velocity here describes angular velocity (omega)
 
     @Nullable
-    private TekoraBody1D body;
+    private TekoraShaftBody body;
 
     public AbstractModularMachineEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
@@ -56,10 +56,10 @@ public abstract class AbstractModularMachineEntity extends AbstractMechanicalEnt
             tot += contact(pLevel, pPos, pPos.west(), orgV, west);
 
             BlockPos above = pPos.above();
-            if (pLevel.getBlockEntity(above) instanceof RotationalAbstractEntity rot) {
+            if (pLevel.getBlockEntity(above) instanceof AbstractShaftConnectableEntity rot) {
                 BlockState state = rot.getBlockState();
                 if (state.hasProperty(BlockStateProperties.AXIS) && state.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) {
-                    TekoraBody1D rotBody = rot.getBody();
+                    TekoraShaftBody rotBody = rot.getBody();
                     if (body == null && rotBody != null) {
                         rotBody.checkAttached();
                         body = rotBody.hasAttachment() ? rotBody : null;

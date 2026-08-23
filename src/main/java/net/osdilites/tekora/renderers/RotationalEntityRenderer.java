@@ -15,12 +15,12 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
-import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
+import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 
-public class RotationalEntityRenderer implements BlockEntityRenderer<RotationalAbstractEntity, TekoraRotatingRenderState> {
+public class RotationalEntityRenderer implements BlockEntityRenderer<AbstractShaftConnectableEntity, TekoraRotatingRenderState> {
     protected final BlockEntityRenderDispatcher renderer;
 
     public RotationalEntityRenderer(BlockEntityRendererProvider.Context pContext) {
@@ -28,7 +28,7 @@ public class RotationalEntityRenderer implements BlockEntityRenderer<RotationalA
     }
 
     @Override
-    public void extractRenderState(RotationalAbstractEntity blockEntity, TekoraRotatingRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    public void extractRenderState(AbstractShaftConnectableEntity blockEntity, TekoraRotatingRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
 
         if (state.blockState == null) {

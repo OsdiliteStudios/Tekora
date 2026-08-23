@@ -3,6 +3,7 @@ package net.osdilites.tekora.block.entities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -33,32 +34,28 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
     public final ItemStacksResourceHandler handler;
     protected final ContainerData data;
     protected int progress = 0; // we have to take equilibrium constants and rate laws into consideration here for the chemical reaction recipes
-    protected int maxProgress = 160;
+    public static final int MAX_PROGRESS = 128;
 
     public AbstractModularCraftEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
         super(type, worldPosition, blockState);
         this.handler = makeHandler();
-        this.data = new ContainerData() {
+        this.data = new ContainerData() { // for mechanical and fluid mech entities, we just need these two
             @Override
             public int get(int i) {
-                return switch (i) {
-                    case 0 -> AbstractModularCraftEntity.this.progress;
-                    case 1 -> AbstractModularCraftEntity.this.maxProgress;
-                    default -> 0;
-                };
+                return AbstractModularCraftEntity.this.progress;
             }
 
             @Override
             public void set(int i, int i1) {
-                switch (i) {
-                    case 0 -> AbstractModularCraftEntity.this.progress = i1;
-                    case 1 -> AbstractModularCraftEntity.this.maxProgress = i1;
-                };
+                if (i == 0) {
+                    AbstractModularCraftEntity.this.progress = i1;
+                }
+                ;
             }
 
             @Override
             public int getCount() {
-                return 2;
+                return 1;
             }
         };
     }
@@ -77,23 +74,16 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
+        output.putInt("modcraft.progress", progress);
         output.putChild("inventory", handler);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
+        progress = input.getIntOr("modcraft.progress", 0);
+
         input.child("inventory").ifPresent(handler::deserialize);
-    }
-
-    @Override
-    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        return saveWithoutMetadata(registries);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
@@ -101,7 +91,7 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
             // this calculates for "angular" acceleration specifically
             double torque = ent.getTorque(); // determines recipe progress
 
-            Block block = pState.getBlock();
+            Block block = pLevel.getBlockState(pPos.above()).getBlock();
 
             double newTorque = 0;
             if (block.equals(TekoraBlocks.CRUSHER.get())) {
@@ -135,5 +125,22 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
 
     public int getProgress() {
         return progress;
+    }
+
+    // BLOCK ENTITY SYNC
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
+        return saveWithoutMetadata(pRegistries);
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ValueInput valueInput) {
+        super.onDataPacket(net, valueInput);
     }
 }

@@ -18,7 +18,7 @@ import net.osdilites.tekora.data.TekoraComponents;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ShaftEntity extends RotationalAbstractEntity {
+public class ShaftEntity extends AbstractShaftConnectableEntity {
     public static final double STEEL_I = 13.63; // mech age crafting
     public static final double BRONZE_I = 15.28;
     public static final double STAINLESS_STEEL_I = 13.89; // steam age crafting
@@ -47,9 +47,9 @@ public class ShaftEntity extends RotationalAbstractEntity {
 
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (body != null && pLevel.getBlockEntity(pPos) instanceof RotationalAbstractEntity ent && pState.hasProperty(AbstractTekoraAxialBlock.AXIS)
+        if (body != null && pLevel.getBlockEntity(pPos) instanceof AbstractShaftConnectableEntity ent && pState.hasProperty(AbstractShaftConnectableBlock.AXIS)
                 && pState.getValueOrElse(Shaft.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
-            Direction.Axis axis = pState.getValue(AbstractTekoraAxialBlock.AXIS);
+            Direction.Axis axis = pState.getValue(AbstractShaftConnectableBlock.AXIS);
             double orgV = componentRadius() * body.getVelocity();
             double tot = 0;
 

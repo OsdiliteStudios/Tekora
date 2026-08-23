@@ -16,34 +16,32 @@ public class TekoraBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
-                TekoraBlocks.STEEL_SHAFT.get(),
-                TekoraBlocks.MECH_TOP.get(),
-                TekoraBlocks.CUTTER.get(),
-                TekoraBlocks.CRUSHER.get(),
-                TekoraBlocks.MIXER.get(),
-                TekoraBlocks.PRESS.get(),
-                TekoraBlocks.PRINTER.get(),
-                TekoraBlocks.KILN_FURNACE.get(),
-                TekoraBlocks.BASIN.get(),
-                TekoraBlocks.DEPOT.get(),
-                TekoraBlocks.HAND_CRANK.get()
-        );
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(TekoraBlocks.getKey(TekoraBlocks.STEEL_SHAFT.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.MECH_TOP.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.CUTTER.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.CRUSHER.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.MIXER.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.PRESS.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.PRINTER.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.KILN_FURNACE.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.BASIN.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.DEPOT.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()));
 
-        tag(BlockTags.MINEABLE_WITH_AXE).add(TekoraBlocks.HAND_CRANK.get());
+        tag(BlockTags.MINEABLE_WITH_AXE).add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()));
 
-        tag(BlockTags.NEEDS_STONE_TOOL).add(
-                TekoraBlocks.STEEL_SHAFT.get(),
-                TekoraBlocks.MECH_TOP.get(),
-                TekoraBlocks.CUTTER.get(),
-                TekoraBlocks.CRUSHER.get(),
-                TekoraBlocks.MIXER.get(),
-                TekoraBlocks.PRESS.get(),
-                TekoraBlocks.PRINTER.get(),
-                TekoraBlocks.KILN_FURNACE.get(),
-                TekoraBlocks.BASIN.get(),
-                TekoraBlocks.DEPOT.get(),
-                TekoraBlocks.HAND_CRANK.get()
-        );
+        tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(TekoraBlocks.getKey(TekoraBlocks.STEEL_SHAFT.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.MECH_TOP.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.CUTTER.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.CRUSHER.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.MIXER.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.PRESS.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.PRINTER.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.KILN_FURNACE.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.BASIN.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.DEPOT.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()));
     }
 }

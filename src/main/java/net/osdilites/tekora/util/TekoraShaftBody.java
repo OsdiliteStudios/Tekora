@@ -10,7 +10,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
-import net.osdilites.tekora.block.entities.transporter.rotational.RotationalAbstractEntity;
+import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Queue;
 
 // This is a class used for the shafts and any potential shaft extension blocks like hand cranks or waterwheels in Tekora.
-public class TekoraBody1D {
+public class TekoraShaftBody {
     private double moment;
     private double velocity = 0; // m/tick
                    // If axis == x | y | z
@@ -36,7 +36,7 @@ public class TekoraBody1D {
     private double attachedMoment = 0;
 
     private final ArrayList<Double> moments;
-    public TekoraBody1D(Level level, Direction.Axis axis, BlockPos start, BlockPos end, ArrayList<Double> moments) {
+    public TekoraShaftBody(Level level, Direction.Axis axis, BlockPos start, BlockPos end, ArrayList<Double> moments) {
         this.level = level;
         this.axis = axis;
         int a;
@@ -92,7 +92,7 @@ public class TekoraBody1D {
 
     /** A method that splits the mass and force of the object using the endpoints
      * */
-    public void split(BlockPos pPos, RotationalAbstractEntity pEntity) {
+    public void split(BlockPos pPos, AbstractShaftConnectableEntity pEntity) {
         boolean isValid;
         int val;
         BlockPos newEnd;
@@ -132,7 +132,7 @@ public class TekoraBody1D {
             if (pPos.equals(start)) {
                 if (pEntity.isBodyTicker()) {
                     BlockEntity newEnt = level.getBlockEntity(newStart);
-                    if (newEnt instanceof RotationalAbstractEntity newRot) {
+                    if (newEnt instanceof AbstractShaftConnectableEntity newRot) {
                         newRot.updateTickerStatus();
                     }
                 }
@@ -143,7 +143,7 @@ public class TekoraBody1D {
             } else if (pPos.equals(end)) {
                 if (pEntity.isBodyTicker()) {
                     BlockEntity newEnt = level.getBlockEntity(start);
-                    if (newEnt instanceof RotationalAbstractEntity newRot) {
+                    if (newEnt instanceof AbstractShaftConnectableEntity newRot) {
                         newRot.updateTickerStatus();
                     }
                 }
@@ -154,7 +154,7 @@ public class TekoraBody1D {
                 int split = (val - pA);
                 int end = (pB - pA) + 1;
                 if (moments.size() == end) {
-                    TekoraBody1D newBody = new TekoraBody1D(level, axis, newStart, this.end, new ArrayList<>(end > split + 1 ? moments.subList(split+1, end) : List.of()));
+                    TekoraShaftBody newBody = new TekoraShaftBody(level, axis, newStart, this.end, new ArrayList<>(end > split + 1 ? moments.subList(split+1, end) : List.of()));
                     for (int i = end-1; i >= split; i--) {
                         moments.removeLast();
                     }
@@ -166,7 +166,7 @@ public class TekoraBody1D {
                             case Z -> new BlockPos(f, g, i);
                         };
                         BlockEntity checkedEnt = level.getBlockEntity(checkedPos);
-                        if (checkedEnt instanceof RotationalAbstractEntity newRot) {
+                        if (checkedEnt instanceof AbstractShaftConnectableEntity newRot) {
                             newRot.setBody(newBody);
                         }
                     }
@@ -187,7 +187,7 @@ public class TekoraBody1D {
             case Z -> start.south();
         };
         BlockEntity newFirst = level.getBlockEntity(start);
-        if (newFirst instanceof RotationalAbstractEntity newRot) {
+        if (newFirst instanceof AbstractShaftConnectableEntity newRot) {
             newRot.updateTickerStatus();
         }
     }
@@ -204,7 +204,7 @@ public class TekoraBody1D {
     }
 
     /** A method that joins the mass and force of the object using the endpoints*/
-    public void join(TekoraBody1D pObj, BlockPos pPos, double momentInertia) {
+    public void join(TekoraShaftBody pObj, BlockPos pPos, double momentInertia) {
         boolean isValid = pObj.axis == axis && pObj != this;
 
         double val;
@@ -231,9 +231,9 @@ public class TekoraBody1D {
                 BlockPos oldStart = start;
                 pA = pObj.pA;
                 start = pObj.start;
-                if (level.getBlockEntity(start) instanceof RotationalAbstractEntity ent) {
+                if (level.getBlockEntity(start) instanceof AbstractShaftConnectableEntity ent) {
                     ent.updateTickerStatus();
-                    if (level.getBlockEntity(oldStart) instanceof RotationalAbstractEntity oldEnt) {
+                    if (level.getBlockEntity(oldStart) instanceof AbstractShaftConnectableEntity oldEnt) {
                         oldEnt.updateTickerStatus();
                     }
                 }
@@ -244,7 +244,7 @@ public class TekoraBody1D {
                 BlockPos oldStart = pObj.start;
                 pB = pObj.pB;
                 end = pObj.end;
-                if (level.getBlockEntity(oldStart) instanceof RotationalAbstractEntity oldEnt) {
+                if (level.getBlockEntity(oldStart) instanceof AbstractShaftConnectableEntity oldEnt) {
                     oldEnt.updateTickerStatus();
                 }
             }
@@ -256,7 +256,7 @@ public class TekoraBody1D {
 
     /** A method that joins the mass and force of the object by extending out from the end point*/
     public void join(BlockPos pPos, double momentInertia) {
-        if (level.getBlockEntity(pPos) instanceof RotationalAbstractEntity rotEnt) {
+        if (level.getBlockEntity(pPos) instanceof AbstractShaftConnectableEntity rotEnt) {
             if (rotEnt.hasBody()) {
                 join(rotEnt.getBody(), pPos, momentInertia);
             } else {
@@ -363,15 +363,15 @@ public class TekoraBody1D {
         return velocity;
     }
 
-    public Queue<RotationalAbstractEntity> getEntities() {
-        LinkedList<RotationalAbstractEntity> entities = new LinkedList<>();
+    public Queue<AbstractShaftConnectableEntity> getEntities() {
+        LinkedList<AbstractShaftConnectableEntity> entities = new LinkedList<>();
         for (int i = pA; i <= pB; i++) {
             BlockPos pos = switch (axis) {
                 case X -> new BlockPos(i, f, g);
                 case Y -> new BlockPos(f, i, g);
                 case Z -> new BlockPos(f, g, i);
             };
-            if (level.getBlockEntity(pos) instanceof RotationalAbstractEntity newRot) {
+            if (level.getBlockEntity(pos) instanceof AbstractShaftConnectableEntity newRot) {
                 entities.add(newRot);
             } // else {
             //    split(pos, null);

@@ -3,7 +3,6 @@ package net.osdilites.tekora.block.entities.transporter.rotational;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,10 +11,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractTekoraAxialBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+public abstract class AbstractShaftConnectableBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
 
-    protected AbstractTekoraAxialBlock(Properties pProperties) {
+    protected AbstractShaftConnectableBlock(Properties pProperties) {
         super(pProperties.noOcclusion());
         registerDefaultState(defaultBlockState().setValue(AXIS, Direction.Axis.Y));
     }

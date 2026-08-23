@@ -13,6 +13,7 @@ import net.osdilites.tekora.data.TekoraComponents;
 import net.osdilites.tekora.item.TekoraItems;
 import net.osdilites.tekora.item.TekoraCreativeTabs;
 import net.osdilites.tekora.menu.TekoraMenus;
+import net.osdilites.tekora.recipes.TekoraRecipes;
 import org.slf4j.Logger;
 
 @Mod(Tekora.MODID)
@@ -30,6 +31,7 @@ public class Tekora {
         TekoraMenus.register(modEventBus);
         TekoraBlockEntities.register(modEventBus);
         TekoraCreativeTabs.register(modEventBus);
+        TekoraRecipes.register(modEventBus);
 
         // uncomment the code below if a subscribe event annotated method was here.
         //NeoForge.EVENT_BUS.register(ClientEvent.class);

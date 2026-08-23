@@ -12,13 +12,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachine;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.block.entities.transporter.rotational.Shaft;
-import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 import net.osdilites.tekora.item.TekoraItems;
 
 public class WrenchItem extends Item {
@@ -37,42 +38,48 @@ public class WrenchItem extends Item {
             BlockPos pos = context.getClickedPos();
             BlockState state = lvl.getBlockState(pos);
             BlockState newState = state;
-            if (player != null && player.isShiftKeyDown() && state.hasProperty(Shaft.GEAR_TYPE)) {
-                GearType type = state.getValue(Shaft.GEAR_TYPE);
-                Item dropped = switch (type) {
-                    case ALUMINUM -> TekoraItems.ALUMINUM_GEAR.get();
-                    case BRONZE -> TekoraItems.BRONZE_GEAR.get();
-                    case BRASS -> TekoraItems.BRASS_GEAR.get();
-                    case STEEL -> TekoraItems.STEEL_GEAR.get();
-                    case PLASTIC -> TekoraItems.PLASTIC_GEAR.get();
-                    case WOOD -> TekoraItems.WOODEN_GEAR.get();
-                    case NONE -> null;
-                };
-                if (state.getValueOrElse(Shaft.IS_LARGE, false)) {
-                    Item additional = switch (type) {
-                        case ALUMINUM -> TekoraItems.ALUMINUM_GEAR_PART.get();
-                        case BRONZE -> TekoraItems.BRONZE_GEAR_PART.get();
-                        case BRASS -> TekoraItems.BRASS_GEAR_PART.get();
-                        case STEEL -> TekoraItems.STEEL_GEAR_PART.get();
-                        case PLASTIC -> TekoraItems.PLASTIC_GEAR_PART.get();
-                        case WOOD -> TekoraItems.WOODEN_GEAR_PART.get();
+            if (player != null && player.isShiftKeyDown()) {
+                if (state.hasProperty(Shaft.GEAR_TYPE) && state.getValue(Shaft.GEAR_TYPE) != GearType.NONE) {
+                    GearType type = state.getValue(Shaft.GEAR_TYPE);
+                    Item dropped = switch (type) {
+                        case ALUMINUM -> TekoraItems.ALUMINUM_GEAR.get();
+                        case BRONZE -> TekoraItems.BRONZE_GEAR.get();
+                        case BRASS -> TekoraItems.BRASS_GEAR.get();
+                        case STEEL -> TekoraItems.STEEL_GEAR.get();
+                        case PLASTIC -> TekoraItems.PLASTIC_GEAR.get();
+                        case WOOD -> TekoraItems.WOODEN_GEAR.get();
                         case NONE -> null;
                     };
-                    if (additional != null) {
-                        lvl.addFreshEntity(new ItemEntity(lvl, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(additional, 4)));
+                    if (state.getValueOrElse(Shaft.IS_LARGE, false)) {
+                        Item additional = switch (type) {
+                            case ALUMINUM -> TekoraItems.ALUMINUM_GEAR_PART.get();
+                            case BRONZE -> TekoraItems.BRONZE_GEAR_PART.get();
+                            case BRASS -> TekoraItems.BRASS_GEAR_PART.get();
+                            case STEEL -> TekoraItems.STEEL_GEAR_PART.get();
+                            case PLASTIC -> TekoraItems.PLASTIC_GEAR_PART.get();
+                            case WOOD -> TekoraItems.WOODEN_GEAR_PART.get();
+                            case NONE -> null;
+                        };
+                        if (additional != null) {
+                            lvl.addFreshEntity(new ItemEntity(lvl, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(additional, 4)));
+                            context.getItemInHand().hurtAndBreak(1, player, context.getHand());
+                        }
+                        newState = state.setValue(Shaft.IS_LARGE, false);
+                    }
+
+                    newState = newState.setValue(Shaft.GEAR_TYPE, GearType.NONE);
+                    if (dropped != null) {
+                        lvl.addFreshEntity(new ItemEntity(lvl, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(dropped)));
+                        player.playSound(switch(type) {
+                            case WOOD -> SoundEvents.WOOD_BREAK;
+                            case PLASTIC -> SoundEvents.GLASS_BREAK;
+                            default -> SoundEvents.METAL_BREAK;
+                        }, 1, 1);
                         context.getItemInHand().hurtAndBreak(1, player, context.getHand());
                     }
-                    newState = state.setValue(Shaft.IS_LARGE, false);
-                }
-
-                newState = newState.setValue(Shaft.GEAR_TYPE, GearType.NONE);
-                if (dropped != null) {
-                    lvl.addFreshEntity(new ItemEntity(lvl, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(dropped, 1)));
-                    player.playSound(switch(type) {
-                        case WOOD -> SoundEvents.WOOD_BREAK;
-                        case PLASTIC -> SoundEvents.GLASS_BREAK;
-                        default -> SoundEvents.METAL_BREAK;
-                    }, 1, 1);
+                } else if (state.getBlock() instanceof AbstractModularMachine modMech && !modMech.equals(TekoraBlocks.MECH_TOP.get())) {
+                    lvl.addFreshEntity(new ItemEntity(lvl, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(modMech.getAssocItem())));
+                    newState = TekoraBlocks.MECH_TOP.get().defaultBlockState().setValue(TekoraBlockStates.GEAR_TYPE, GearType.NONE);
                     context.getItemInHand().hurtAndBreak(1, player, context.getHand());
                 }
             } else {
@@ -90,7 +97,6 @@ public class WrenchItem extends Item {
             }
 
             lvl.setBlock(pos, newState, 3);
-
         }
         return super.useOn(context);
     }

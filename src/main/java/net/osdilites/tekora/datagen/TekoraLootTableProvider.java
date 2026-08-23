@@ -12,6 +12,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachine;
 import net.osdilites.tekora.item.TekoraItems;
 
 import java.util.Set;
@@ -32,22 +33,23 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
         dropSelf(TekoraBlocks.KILN_FURNACE.get());
         dropSelf(TekoraBlocks.MECH_TOP.get());
 
-        add(TekoraBlocks.CRUSHER.get(), b -> dropMechTopPart(TekoraItems.CRUSHING_WHEEL.get()));
-        add(TekoraBlocks.MIXER.get(), b -> dropMechTopPart(TekoraItems.WHISK.get()));
-        add(TekoraBlocks.PRINTER.get(), b -> dropMechTopPart(TekoraItems.INK_PRESS_SHAFT.get()));
-        add(TekoraBlocks.PRESS.get(), b -> dropMechTopPart(TekoraItems.PRESS_SHAFT.get()));
-        add(TekoraBlocks.CUTTER.get(), b -> dropMechTopPart(TekoraItems.CUTTER_SHAFT.get()));
+        add(TekoraBlocks.CRUSHER.get(), this::dropMechTopPart);
+        add(TekoraBlocks.MIXER.get(), this::dropMechTopPart);
+        add(TekoraBlocks.PRINTER.get(), this::dropMechTopPart);
+        add(TekoraBlocks.PRESS.get(), this::dropMechTopPart);
+        add(TekoraBlocks.CUTTER.get(), this::dropMechTopPart);
     }
 
-    private LootTable.Builder dropMechTopPart(Item part) {
-        return dropParts(TekoraBlocks.MECH_TOP.get(), part);
+    private LootTable.Builder dropMechTopPart(Block block) {
+        return dropParts(TekoraBlocks.MECH_TOP.get(), block instanceof AbstractModularMachine machine ? machine : TekoraBlocks.MECH_TOP.get());
     }
 
-    private LootTable.Builder dropParts(Block block, Item part) {
-        return LootTable.lootTable().withPool(LootPool.lootPool()
+    private LootTable.Builder dropParts(Block block, AbstractModularMachine modMech) {
+        LootPool.Builder builder = LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F))
-                .add(LootItem.lootTableItem(block.asItem()))
-                .add(LootItem.lootTableItem(part)));
+                .add(LootItem.lootTableItem(block.asItem()));
+        return LootTable.lootTable().withPool(
+                modMech.equals(TekoraBlocks.MECH_TOP.get()) ? builder : builder.add(LootItem.lootTableItem(modMech.getAssocItem())));
     }
 
     @Override

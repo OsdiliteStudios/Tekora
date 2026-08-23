@@ -1,7 +1,7 @@
 package net.osdilites.tekora.block.entities.mechanical;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -10,15 +10,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public abstract class AbstractModularMachine extends BaseEntityBlock {
     public static final EnumProperty<GearType> GEAR_TYPE = TekoraBlockStates.GEAR_TYPE;
@@ -40,12 +37,7 @@ public abstract class AbstractModularMachine extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return super.getStateForPlacement(pContext).setValue(GEAR_TYPE, GearType.NONE);
-    }
-
-    @Override
-    protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
-        return super.getDrops(state, params);
+        return defaultBlockState().setValue(GEAR_TYPE, GearType.NONE);
     }
 
     @Override
@@ -57,4 +49,6 @@ public abstract class AbstractModularMachine extends BaseEntityBlock {
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
+
+    public abstract Item getAssocItem();
 }

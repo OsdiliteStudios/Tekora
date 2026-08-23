@@ -16,23 +16,23 @@ import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.osdilites.tekora.block.entities.mechanical.AbstractMechanicalEntity;
-import net.osdilites.tekora.util.TekoraBody1D;
+import net.osdilites.tekora.util.TekoraShaftBody;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity {
-    protected TekoraBody1D body;
+public abstract class AbstractShaftConnectableEntity extends AbstractMechanicalEntity {
+    protected TekoraShaftBody body;
 
     private boolean bodyTicker = false;
 
-    public RotationalAbstractEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+    public AbstractShaftConnectableEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
     }
 
-    public void setBody(TekoraBody1D body) {
+    public void setBody(TekoraShaftBody body) {
         this.body = body;
         updateTickerStatus();
     }
@@ -52,7 +52,7 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                     case UP -> pos.above();
                     case DOWN -> pos.below();
                 };
-                if (level.getBlockEntity(checkPos) instanceof RotationalAbstractEntity) {
+                if (level.getBlockEntity(checkPos) instanceof AbstractShaftConnectableEntity) {
                     boolean callFirst = dir == Direction.UP || dir == Direction.EAST || dir == Direction.SOUTH;
                     if (callFirst) {
                         body.trimFirst();
@@ -72,18 +72,18 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                     case Y -> pos.below();
                     case Z -> pos.north();
                 };
-                if (level.getBlockEntity(beforePos) instanceof RotationalAbstractEntity) {
-                    if (level.getBlockEntity(afterPos) instanceof RotationalAbstractEntity) {
+                if (level.getBlockEntity(beforePos) instanceof AbstractShaftConnectableEntity) {
+                    if (level.getBlockEntity(afterPos) instanceof AbstractShaftConnectableEntity) {
                         body.split(pos, this);
                     } else {
                         body.trimLast();
                     }
-                } else if (level.getBlockEntity(afterPos) instanceof RotationalAbstractEntity) {
+                } else if (level.getBlockEntity(afterPos) instanceof AbstractShaftConnectableEntity) {
                     body.trimFirst();
                 }
             }
 
-            if (bodyTicker && level.getBlockEntity(body.getStart()) instanceof RotationalAbstractEntity newFirst) {
+            if (bodyTicker && level.getBlockEntity(body.getStart()) instanceof AbstractShaftConnectableEntity newFirst) {
                 bodyTicker = false;
                 newFirst.bodyTicker = true;
             }
@@ -185,7 +185,7 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                 Direction.Axis axis = dir.getAxis();
                 BlockState checkedState = level.getBlockState(checkedPos);
 
-                if (level.getBlockEntity(checkedPos) instanceof RotationalAbstractEntity checkedEnt) {
+                if (level.getBlockEntity(checkedPos) instanceof AbstractShaftConnectableEntity checkedEnt) {
                     if (checkedEnt.body == null) {
                         createBody(axis);
                         if (connectable(checkedState, dir, axis)) {
@@ -224,8 +224,8 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                 }
                 BlockState beforeState = level.getBlockState(before);
                 BlockState afterState = level.getBlockState(after);
-                if (level.getBlockEntity(before) instanceof RotationalAbstractEntity bRotEnt) {
-                    if (level.getBlockEntity(after) instanceof RotationalAbstractEntity aRotEnt) {
+                if (level.getBlockEntity(before) instanceof AbstractShaftConnectableEntity bRotEnt) {
+                    if (level.getBlockEntity(after) instanceof AbstractShaftConnectableEntity aRotEnt) {
                         if (bRotEnt.body == null) {
                             if (aRotEnt.body == null) {
                                 createBody(axis);
@@ -274,7 +274,7 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
                         }
                     }
                 } else {
-                    if (level.getBlockEntity(after) instanceof RotationalAbstractEntity aRotEnt) {
+                    if (level.getBlockEntity(after) instanceof AbstractShaftConnectableEntity aRotEnt) {
                         if (aRotEnt.body == null) {
                             createBody(axis);
                             if (connectable(afterState, axis, true)) {
@@ -297,13 +297,13 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
 
     private void synchronizeEntities() {
         if (body != null) {
-            Queue<RotationalAbstractEntity> queue = body.getEntities();
+            Queue<AbstractShaftConnectableEntity> queue = body.getEntities();
             if (!queue.isEmpty()) {
-                RotationalAbstractEntity first = queue.poll();
+                AbstractShaftConnectableEntity first = queue.poll();
                 first.body = body;
                 first.bodyTicker = true;
                 while (!queue.isEmpty()) {
-                    RotationalAbstractEntity current = queue.poll();
+                    AbstractShaftConnectableEntity current = queue.poll();
                     current.body = body;
                     current.bodyTicker = false;
                 }
@@ -312,10 +312,10 @@ public abstract class RotationalAbstractEntity extends AbstractMechanicalEntity 
     }
 
     private void createBody(Direction.Axis axis) {
-        body = new TekoraBody1D(getLevel(), axis, getBlockPos(), getBlockPos(), new ArrayList<>(List.of(getMoment())));
+        body = new TekoraShaftBody(getLevel(), axis, getBlockPos(), getBlockPos(), new ArrayList<>(List.of(getMoment())));
     }
 
-    public TekoraBody1D getBody() {
+    public TekoraShaftBody getBody() {
         return body;
     }
 

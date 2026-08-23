@@ -123,7 +123,7 @@ public abstract class AbstractTekoraPipe extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        return super.getStateForPlacement(context).setValue(CONNECTION, 0);
+        return defaultBlockState().setValue(CONNECTION, 0);
     }
 
     @Override

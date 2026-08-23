@@ -33,7 +33,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.util.UtilFunctions;
 import org.jetbrains.annotations.Nullable;
 
-public class HandCrank extends AbstractTekoraAxialBlock {
+public class HandCrank extends AbstractShaftConnectableBlock {
     public static final MapCodec<HandCrank> CODEC = simpleCodec(HandCrank::new);
 
     public static EnumProperty<Direction> FACING = BlockStateProperties.FACING;

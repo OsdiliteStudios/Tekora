@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
@@ -18,6 +19,7 @@ import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.recipes.CompressingRecipe;
 import net.osdilites.tekora.recipes.MacerationRecipe;
@@ -52,6 +54,10 @@ public class BasinEntity extends AbstractModularCraftEntity {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState);
     }
 
+    // meaning of each index in the inventory
+    // 0 = fluid container input
+    // 1 = fluid container output
+    // 2-10 = items...
     protected ItemStacksResourceHandler makeHandler() {
         return new ItemStacksResourceHandler(11) {
             @Override
@@ -119,7 +125,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 double cutConst = (torque - cutTorque) / ratedVelocity;
                 progress++;
                 setChanged(level, getBlockPos(), getBlockState());
-                if (progress == maxProgress) {
+                if (progress == MAX_PROGRESS) {
                     try (Transaction transaction = Transaction.openRoot()) {
                         ItemAccess access = ItemAccess.forHandlerIndex(handler, availSlot);
                         // todo, make it so that it looks through the relevant components and outputs in the relevant component
@@ -169,6 +175,21 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
     @Override
     public Component getDisplayName() {
+        Level level = getLevel();
+        if (level != null) {
+            Block block = level.getBlockState(getBlockPos().above()).getBlock();
+            if (block.equals(TekoraBlocks.CRUSHER.get())) {
+                return Component.translatable("blockfunc.tekora.macerator");
+            } else if (block.equals(TekoraBlocks.PRESS.get())) {
+                return Component.translatable("blockfunc.tekora.compressor");
+            } else if (block.equals(TekoraBlocks.PRINTER.get())) {
+                return Component.translatable("blockfunc.tekora.printer");
+            } else if (block.equals(TekoraBlocks.MIXER.get())) {
+                return Component.translatable("blockfunc.tekora.mixer");
+            } else {
+                return Component.translatable("block.tekora.basin");
+            }
+        }
         return Component.translatable("block.tekora.basin");
     }
 

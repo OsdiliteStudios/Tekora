@@ -11,6 +11,7 @@ import net.osdilites.tekora.Tekora;
 public class TekoraRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
             DeferredRegister.create(Registries.RECIPE_SERIALIZER, Tekora.MODID);
+
     public static final DeferredRegister<RecipeType<?>> TYPES =
             DeferredRegister.create(Registries.RECIPE_TYPE, Tekora.MODID);
 
@@ -65,12 +66,12 @@ public class TekoraRecipes {
             });
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CompressingRecipe>> COMPRESSING_SERIALIZER =
-            SERIALIZERS.register("mixing", () -> new RecipeSerializer<>(CompressingRecipe.CODEC, CompressingRecipe.STREAM_CODEC));
+            SERIALIZERS.register("compression", () -> new RecipeSerializer<>(CompressingRecipe.CODEC, CompressingRecipe.STREAM_CODEC));
     public static final DeferredHolder<RecipeType<?>, RecipeType<CompressingRecipe>> COMPRESSING_TYPE =
-            TYPES.register("mixing", () -> new RecipeType<>() {
+            TYPES.register("compression", () -> new RecipeType<>() {
                 @Override
                 public String toString() {
-                    return "mixing";
+                    return "compression";
                 }
             });
 

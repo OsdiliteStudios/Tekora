@@ -64,7 +64,7 @@ public class Basin extends BaseEntityBlock {
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, ItemStack toolStack, boolean willHarvest, FluidState fluid) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof BasinEntity basin) {
-            basin.drops();
+            basin.drops(); // todo, if the basin contains a toxic chemical, a new fog should appear around the basin damaging the player
         }
         return super.onDestroyedByPlayer(state, level, pos, player, toolStack, willHarvest, fluid);
     }

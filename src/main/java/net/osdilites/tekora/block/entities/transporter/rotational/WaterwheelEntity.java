@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
-public abstract class WaterwheelEntity extends RotationalAbstractEntity {
+public abstract class WaterwheelEntity extends AbstractShaftConnectableEntity {
     public static final double I_MASS = 10543.30739107599;
     // public static final double I_STEEL = ;
 
@@ -19,8 +19,8 @@ public abstract class WaterwheelEntity extends RotationalAbstractEntity {
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (!pLevel.isClientSide()) {
-            if (pState.hasProperty(AbstractTekoraAxialBlock.AXIS)) {
-                Direction.Axis axis = pState.getValue(AbstractTekoraAxialBlock.AXIS);
+            if (pState.hasProperty(AbstractShaftConnectableBlock.AXIS)) {
+                Direction.Axis axis = pState.getValue(AbstractShaftConnectableBlock.AXIS);
                 boolean horizontal = axis.isHorizontal();
                 if (horizontal) {
                     BlockPos lPos = axis == Direction.Axis.X ? pPos.north() : pPos.east();

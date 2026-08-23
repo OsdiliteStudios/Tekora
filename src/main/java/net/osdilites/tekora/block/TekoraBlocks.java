@@ -1,5 +1,7 @@
 package net.osdilites.tekora.block;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -14,6 +16,7 @@ import net.osdilites.tekora.block.entities.thermal.KilnFurnace;
 import net.osdilites.tekora.block.entities.transporter.rotational.*;
 import net.osdilites.tekora.item.TekoraItems;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class TekoraBlocks {
@@ -47,6 +50,10 @@ public class TekoraBlocks {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);
         TekoraItems.ITEMS.registerSimpleBlockItem(ret, Item.Properties::useBlockDescriptionPrefix);
         return ret;
+    }
+
+    public static ResourceKey<Block> getKey(Block block) {
+        return BuiltInRegistries.BLOCK.getResourceKey(block).orElse(null);
     }
 
     public static void register(IEventBus eventBus) {

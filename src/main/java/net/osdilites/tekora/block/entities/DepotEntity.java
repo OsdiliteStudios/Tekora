@@ -9,11 +9,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.menu.DepotMenu;
 import net.osdilites.tekora.recipes.*;
 import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
@@ -26,6 +29,9 @@ public class DepotEntity extends AbstractModularCraftEntity {
         super(TekoraBlockEntities.DEPOT.get(), pPos, pState);
     }
 
+    // meaning of each index in the inventory
+    // 0 = input
+    // 1 = output
     protected ItemStacksResourceHandler makeHandler() {
         return new ItemStacksResourceHandler(2) {
             @Override
@@ -35,11 +41,6 @@ public class DepotEntity extends AbstractModularCraftEntity {
                 if(level != null && !level.isClientSide()) {
                     level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 }
-            }
-
-            @Override
-            protected int getCapacity(int index, ItemResource resource) {
-                return 2;
             }
         };
     }
@@ -90,7 +91,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
                 double cutConst = (torque - cutTorque) / ratedVelocity;
                 progress++;
                 setChanged(level, getBlockPos(), getBlockState());
-                if (progress == maxProgress) {
+                if (progress == MAX_PROGRESS) {
                     try (Transaction transaction = Transaction.openRoot()) {
                         ItemAccess access = ItemAccess.forHandlerIndex(handler, 1);
                         handler.extract(handler.getResource(0), 1, transaction);
@@ -109,6 +110,21 @@ public class DepotEntity extends AbstractModularCraftEntity {
 
     @Override
     public Component getDisplayName() {
+        Level level = getLevel();
+        if (level != null) {
+            Block block = level.getBlockState(getBlockPos().above()).getBlock();
+            if (block.equals(TekoraBlocks.CRUSHER.get())) {
+                return Component.translatable("blockfunc.tekora.crusher");
+            } else if (block.equals(TekoraBlocks.PRESS.get())) {
+                return Component.translatable("blockfunc.tekora.presser");
+            } else if (block.equals(TekoraBlocks.PRINTER.get())) {
+                return Component.translatable("blockfunc.tekora.printer");
+            } else if (block.equals(TekoraBlocks.CUTTER.get())) {
+                return Component.translatable("blockfunc.tekora.cutter");
+            } else {
+                return Component.translatable("block.tekora.depot");
+            }
+        }
         return Component.translatable("block.tekora.depot");
     }
 

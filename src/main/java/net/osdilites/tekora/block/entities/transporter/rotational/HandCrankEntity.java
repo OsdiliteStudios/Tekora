@@ -5,7 +5,7 @@ import net.minecraft.world.food.FoodData;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
-public class HandCrankEntity extends RotationalAbstractEntity {
+public class HandCrankEntity extends AbstractShaftConnectableEntity {
     public HandCrankEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState);
     }

@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
+import net.osdilites.tekora.item.TekoraItems;
 import org.jspecify.annotations.Nullable;
 
 public class CutterMechanical extends AbstractModularMachine {
@@ -43,6 +45,11 @@ public class CutterMechanical extends AbstractModularMachine {
     @Override
     public @org.jetbrains.annotations.Nullable BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return super.getStateForPlacement(pContext).setValue(HORIZONTAL_AXIS, pContext.getHorizontalDirection().getAxis());
+    }
+
+    @Override
+    public Item getAssocItem() {
+        return TekoraItems.CUTTER_SHAFT.get();
     }
 
     @Override

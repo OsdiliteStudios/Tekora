@@ -1,6 +1,6 @@
 package net.osdilites.tekora.datagen.recipetypes;
 
-import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.data.recipes.RecipeBuilder;
 
 public abstract class AbstractTekoraRecipeBuilder implements RecipeBuilder {

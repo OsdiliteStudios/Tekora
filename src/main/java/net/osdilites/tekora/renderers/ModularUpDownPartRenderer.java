@@ -27,6 +27,7 @@ import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelLoader;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.event.ClientEvent;
 import org.jspecify.annotations.Nullable;
@@ -109,7 +110,7 @@ public class ModularUpDownPartRenderer implements BlockEntityRenderer<AbstractMo
         poseStack.pushPose();
 
         poseStack.translate(0.5D, 0.5D, 0.5D);
-        poseStack.translate(0.0D, -(1 - Math.cos(Math.PI * state.progress / 160)) / 2.0d, 0.0D);
+        poseStack.translate(0.0D, -(1 - Math.cos(Math.PI * state.progress / AbstractModularCraftEntity.MAX_PROGRESS)) / 2.0d, 0.0D);
         poseStack.translate(-0.5D, -0.5D, -0.5D);
 
         for (Map.Entry<RenderType, List<BakedQuad>> entry : quadsByRenderType.entrySet()) {

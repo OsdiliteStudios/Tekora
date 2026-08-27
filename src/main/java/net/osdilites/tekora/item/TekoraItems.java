@@ -2,6 +2,7 @@ package net.osdilites.tekora.item;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -108,6 +109,10 @@ public class TekoraItems {
       super.appendHoverText(itemStack, context, display, builder, tooltipFlag);
     }
   }); // must be commented out if Tekora is released.
+
+  public static ResourceKey<Item> getKey(Item item) {
+    return BuiltInRegistries.ITEM.getResourceKey(item).orElse(null);
+  }
 
   public static void register(IEventBus eventBus) {
     ITEMS.register(eventBus);

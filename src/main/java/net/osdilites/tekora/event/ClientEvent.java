@@ -30,7 +30,7 @@ import java.util.Set;
 @EventBusSubscriber(modid = Tekora.MODID)
 public class ClientEvent {
     private static final Identifier CRUSHING_WHEEL = Identifier.fromNamespaceAndPath(Tekora.MODID, "block/crushing_wheel");
-    private static final Identifier MIXER = Identifier.fromNamespaceAndPath(Tekora.MODID, "block/mixer");
+    private static final Identifier MIXER = Identifier.fromNamespaceAndPath(Tekora.MODID, "block/whisk");
     private static final Identifier CUTTER = Identifier.fromNamespaceAndPath(Tekora.MODID, "block/cutter");
     private static final Identifier INK_PRESS_SHAFT = Identifier.fromNamespaceAndPath(Tekora.MODID, "block/ink_press_shaft");
     private static final Identifier PRESS_SHAFT = Identifier.fromNamespaceAndPath(Tekora.MODID, "block/press_shaft");

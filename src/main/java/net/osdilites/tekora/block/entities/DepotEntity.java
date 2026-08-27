@@ -79,13 +79,15 @@ public class DepotEntity extends AbstractModularCraftEntity {
     }
 
     private <T extends TekoraMechanicalRecipe<DepotRecipeInput>> double crafting(Optional<RecipeHolder<T>> recipe, DepotRecipeInput input, double velocity, double torque) {
-        if (recipe.isPresent()) {
+        if (recipe.isPresent()) { // error, recipe not read
+            System.out.println("1"); // todo remove debug
             T val = recipe.get().value();
             ItemStack output = val.assemble(input);
             double ratedVelocity = val.ratedVelocity();
             var resource = handler.getResource(1);
             boolean hasRecipe = level != null && val.matches(input, level) && (resource.isEmpty() || resource.is(output.getItem()))
                     && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= handler.getAmountAsInt(1) + output.getCount();
+            System.out.println(hasRecipe); // todo remove debug
             if (hasRecipe && Math.abs(velocity) >= ratedVelocity) {
                 double cutTorque = val.cutTorque();
                 double cutConst = (torque - cutTorque) / ratedVelocity;

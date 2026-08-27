@@ -7,20 +7,22 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.osdilites.tekora.recipes.inputs.BasinRecipeInput;
 
 import java.util.List;
 
-public record MacerationRecipe(List<FluidIngredient> fluids, List<Ingredient> items, FluidStack fluidOutput, ItemStack itemOutput, double cutTorque, double ratedVelocity) implements TekoraBasinRecipe {
+public record MacerationRecipe(List<FluidIngredient> fluids, List<Ingredient> items, FluidStackTemplate fluidOutput, ItemStackTemplate itemOutput, double cutTorque, double ratedVelocity) implements TekoraBasinRecipe {
     public static final MapCodec<MacerationRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             FluidIngredient.CODEC.listOf().fieldOf("fluids").forGetter(MacerationRecipe::fluids),
             Ingredient.CODEC.listOf().fieldOf("items").forGetter(MacerationRecipe::items),
-            FluidStack.CODEC.fieldOf("fluid_output").forGetter(MacerationRecipe::fluidOutput),
-            ItemStack.CODEC.fieldOf("item_output").forGetter(MacerationRecipe::itemOutput),
+            FluidStackTemplate.CODEC.fieldOf("fluid_output").forGetter(MacerationRecipe::fluidOutput),
+            ItemStackTemplate.CODEC.fieldOf("item_output").forGetter(MacerationRecipe::itemOutput),
             Codec.DOUBLE.fieldOf("cut_torque").forGetter(MacerationRecipe::cutTorque),
             Codec.DOUBLE.fieldOf("rated_velocity").forGetter(MacerationRecipe::ratedVelocity)
     ).apply(inst, MacerationRecipe::new));
@@ -28,8 +30,8 @@ public record MacerationRecipe(List<FluidIngredient> fluids, List<Ingredient> it
     public static final StreamCodec<RegistryFriendlyByteBuf, MacerationRecipe> STREAM_CODEC = StreamCodec.composite(
             FluidIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()), MacerationRecipe::fluids,
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), MacerationRecipe::items,
-            FluidStack.STREAM_CODEC, MacerationRecipe::fluidOutput,
-            ItemStack.STREAM_CODEC, MacerationRecipe::itemOutput,
+            FluidStackTemplate.STREAM_CODEC, MacerationRecipe::fluidOutput,
+            ItemStackTemplate.STREAM_CODEC, MacerationRecipe::itemOutput,
             ByteBufCodecs.DOUBLE, MacerationRecipe::cutTorque,
             ByteBufCodecs.DOUBLE, MacerationRecipe::ratedVelocity,
             MacerationRecipe::new
@@ -37,7 +39,7 @@ public record MacerationRecipe(List<FluidIngredient> fluids, List<Ingredient> it
 
     @Override
     public ItemStack assemble(BasinRecipeInput input) {
-        return null;
+        return itemOutput.create().copy();
     }
 
     @Override

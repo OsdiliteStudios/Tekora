@@ -7,21 +7,22 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
 
-public record CrushingRecipe(Ingredient input, ItemStack output, double cutTorque, double ratedVelocity) implements TekoraDepotRecipe {
+public record CrushingRecipe(Ingredient input, ItemStackTemplate output, double cutTorque, double ratedVelocity) implements TekoraDepotRecipe {
     public static final MapCodec<CrushingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Ingredient.CODEC.fieldOf("ingredient").forGetter(CrushingRecipe::input),
-            ItemStack.CODEC.fieldOf("result").forGetter(CrushingRecipe::output),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(CrushingRecipe::output),
             Codec.DOUBLE.fieldOf("cut_torque").forGetter(CrushingRecipe::cutTorque),
             Codec.DOUBLE.fieldOf("rated_velocity").forGetter(CrushingRecipe::ratedVelocity)
     ).apply(inst, CrushingRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CrushingRecipe> STREAM_CODEC = StreamCodec.composite(
             Ingredient.CONTENTS_STREAM_CODEC, CrushingRecipe::input,
-            ItemStack.STREAM_CODEC, CrushingRecipe::output,
+            ItemStackTemplate.STREAM_CODEC, CrushingRecipe::output,
             ByteBufCodecs.DOUBLE, CrushingRecipe::cutTorque,
             ByteBufCodecs.DOUBLE, CrushingRecipe::ratedVelocity,
             CrushingRecipe::new
@@ -29,7 +30,7 @@ public record CrushingRecipe(Ingredient input, ItemStack output, double cutTorqu
 
     @Override
     public ItemStack assemble(DepotRecipeInput recipeInput) {
-        return null;
+        return output.create().copy();
     }
 
     @Override

@@ -7,20 +7,22 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.osdilites.tekora.recipes.inputs.BasinRecipeInput;
 
 import java.util.List;
 
-public record CompressingRecipe(List<FluidIngredient> fluids, List<Ingredient> items, FluidStack fluidOutput, ItemStack itemOutput, double cutTorque, double ratedVelocity) implements TekoraBasinRecipe {
+public record CompressingRecipe(List<FluidIngredient> fluids, List<Ingredient> items, FluidStackTemplate fluidOutput, ItemStackTemplate itemOutput, double cutTorque, double ratedVelocity) implements TekoraBasinRecipe {
     public static final MapCodec<CompressingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             FluidIngredient.CODEC.listOf().fieldOf("fluids").forGetter(CompressingRecipe::fluids),
             Ingredient.CODEC.listOf().fieldOf("items").forGetter(CompressingRecipe::items),
-            FluidStack.CODEC.fieldOf("fluid_output").forGetter(CompressingRecipe::fluidOutput),
-            ItemStack.CODEC.fieldOf("item_output").forGetter(CompressingRecipe::itemOutput),
+            FluidStackTemplate.CODEC.fieldOf("fluid_output").forGetter(CompressingRecipe::fluidOutput),
+            ItemStackTemplate.CODEC.fieldOf("item_output").forGetter(CompressingRecipe::itemOutput),
             Codec.DOUBLE.fieldOf("cut_torque").forGetter(CompressingRecipe::cutTorque),
             Codec.DOUBLE.fieldOf("rated_velocity").forGetter(CompressingRecipe::ratedVelocity)
     ).apply(inst, CompressingRecipe::new));
@@ -28,8 +30,8 @@ public record CompressingRecipe(List<FluidIngredient> fluids, List<Ingredient> i
     public static final StreamCodec<RegistryFriendlyByteBuf, CompressingRecipe> STREAM_CODEC = StreamCodec.composite(
             FluidIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()), CompressingRecipe::fluids,
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), CompressingRecipe::items,
-            FluidStack.STREAM_CODEC, CompressingRecipe::fluidOutput,
-            ItemStack.STREAM_CODEC, CompressingRecipe::itemOutput,
+            FluidStackTemplate.STREAM_CODEC, CompressingRecipe::fluidOutput,
+            ItemStackTemplate.STREAM_CODEC, CompressingRecipe::itemOutput,
             ByteBufCodecs.DOUBLE, CompressingRecipe::cutTorque,
             ByteBufCodecs.DOUBLE, CompressingRecipe::ratedVelocity,
             CompressingRecipe::new
@@ -37,7 +39,7 @@ public record CompressingRecipe(List<FluidIngredient> fluids, List<Ingredient> i
 
     @Override
     public ItemStack assemble(BasinRecipeInput input) {
-        return null;
+        return itemOutput.create().copy();
     }
 
     @Override

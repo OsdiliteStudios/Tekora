@@ -12,25 +12,8 @@ import net.minecraft.world.item.crafting.*;
 import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
 
 public record PressingRecipe(Ingredient input, ItemStackTemplate output, double cutTorque, double ratedVelocity) implements TekoraDepotRecipe {
-    public static final MapCodec<PressingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            Ingredient.CODEC.fieldOf("ingredient").forGetter(PressingRecipe::input),
-            ItemStackTemplate.CODEC.fieldOf("result").forGetter(PressingRecipe::output),
-            Codec.DOUBLE.fieldOf("cut_torque").forGetter(PressingRecipe::cutTorque),
-            Codec.DOUBLE.fieldOf("rated_velocity").forGetter(PressingRecipe::ratedVelocity)
-    ).apply(inst, PressingRecipe::new));
-
-    public static final StreamCodec<RegistryFriendlyByteBuf, PressingRecipe> STREAM_CODEC = StreamCodec.composite(
-            Ingredient.CONTENTS_STREAM_CODEC, PressingRecipe::input,
-            ItemStackTemplate.STREAM_CODEC, PressingRecipe::output,
-            ByteBufCodecs.DOUBLE, PressingRecipe::cutTorque,
-            ByteBufCodecs.DOUBLE, PressingRecipe::ratedVelocity,
-            PressingRecipe::new
-    );
-
-    @Override
-    public ItemStack assemble(DepotRecipeInput RecipeInput) {
-        return output.create().copy();
-    }
+    public static final MapCodec<PressingRecipe> CODEC = TekoraDepotRecipe.createMapCodec(PressingRecipe::new);
+    public static final StreamCodec<RegistryFriendlyByteBuf, PressingRecipe> STREAM_CODEC = TekoraDepotRecipe.createStreamCodec(PressingRecipe::new);
 
     @Override
     public String group() {

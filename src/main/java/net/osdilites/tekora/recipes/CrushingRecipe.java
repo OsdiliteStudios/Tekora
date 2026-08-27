@@ -29,11 +29,6 @@ public record CrushingRecipe(Ingredient input, ItemStackTemplate output, double 
     );
 
     @Override
-    public ItemStack assemble(DepotRecipeInput recipeInput) {
-        return output.create().copy();
-    }
-
-    @Override
     public String group() {
         return "Crushing";
     }

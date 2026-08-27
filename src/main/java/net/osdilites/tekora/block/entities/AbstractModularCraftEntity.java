@@ -87,11 +87,10 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (pLevel != null && !pLevel.isClientSide() && pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
+        if (pLevel != null && pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
             // this calculates for "angular" acceleration specifically
             double torque = ent.getTorque(); // determines recipe progress
-
-            Block block = pLevel.getBlockState(pPos.above()).getBlock();
+            Block block = ent.getBlockState().getBlock();
 
             double newTorque = 0;
             if (block.equals(TekoraBlocks.CRUSHER.get())) {

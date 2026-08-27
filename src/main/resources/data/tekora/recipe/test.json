@@ -1,0 +1,11 @@
+{
+  "type": "tekora:pressing",
+  "ingredient": {
+    "tag": "c:plates/steel"
+  },
+  "result": {
+    "item": "tekora:steel_plate"
+  },
+  "cut_torque": 1,
+  "rated_velocity": 1
+}

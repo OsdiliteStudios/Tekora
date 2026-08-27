@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "P": "tekora:steel_plate",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "P P",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "id": "tekora:wrench"
+  }
+}

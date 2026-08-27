@@ -3,7 +3,8 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "tekora:block/press/top_sides",
-		"1": "tekora:block/press/plates",
+		"1": "tekora:block/press/plate",
+		"2": "tekora:block/press/bottom",
 		"particle": "tekora:block/shafts/steel"
 	},
 	"elements": [
@@ -26,12 +27,12 @@
 			"to": [15, 3, 15],
 			"color": 9,
 			"faces": {
-				"north": {"uv": [0, 13, 14, 16], "texture": "#1"},
-				"east": {"uv": [0, 13, 14, 16], "texture": "#1"},
-				"south": {"uv": [0, 13, 14, 16], "texture": "#1"},
-				"west": {"uv": [0, 13, 14, 16], "texture": "#1"},
-				"up": {"uv": [0, 0, 14, 14], "texture": "#0"},
-				"down": {"uv": [0, 0, 14, 14], "texture": "#0"}
+				"north": {"uv": [0, 13, 14, 16], "texture": "#0"},
+				"east": {"uv": [0, 13, 14, 16], "texture": "#0"},
+				"south": {"uv": [0, 13, 14, 16], "texture": "#0"},
+				"west": {"uv": [0, 13, 14, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 14, 14], "texture": "#1"},
+				"down": {"uv": [0, 0, 14, 14], "texture": "#2"}
 			}
 		}
 	]

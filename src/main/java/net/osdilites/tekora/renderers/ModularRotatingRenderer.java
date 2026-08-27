@@ -3,7 +3,10 @@ package net.osdilites.tekora.renderers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.QuadInstance;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -16,6 +19,7 @@ import net.minecraft.client.resources.model.geometry.QuadCollection;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
@@ -23,6 +27,7 @@ import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelLoader;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.event.ClientEvent;
 import org.jspecify.annotations.Nullable;
@@ -59,9 +64,14 @@ public class ModularRotatingRenderer implements BlockEntityRenderer<AbstractModu
         state.crumbling = breakProgress;
         state.texture = this.texture;
         state.progress = blockEntity.getProgress();
-        state.parts = new ArrayList<>();
         state.setAngle(Mth.lerp(partialTicks, blockEntity.getOldAngle(), blockEntity.getAngle()));
+        BlockStateModel shaftModel = Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(hypothetical);
+        state.parts = new ArrayList<>();
+        if (blockEntity.getLevel() instanceof BlockAndTintGetter getter) {
+            shaftModel.collectParts(getter, blockEntity.getBlockPos(), hypothetical, RandomSource.create(42L), state.parts);
+        }
         StandaloneModelLoader.BakedModels bakedModels = ClientEvent.getBakedModels();
+
         if (bakedModels == null) {
             state.quads = null;
             return;
@@ -98,8 +108,8 @@ public class ModularRotatingRenderer implements BlockEntityRenderer<AbstractModu
         }
 
         poseStack.pushPose();
-
         poseStack.translate(0.5D, 0.5D, 0.5D);
+        poseStack.translate(0.0D, -0.5d, 0.0D);
         poseStack.mulPose(getAxisFromState(state.blockState).rotationDegrees(state.getAngle())); // todo, replace state.getAngle() with something derived from the block entity
         poseStack.translate(-0.5D, -0.5D, -0.5D);
 

@@ -6,7 +6,7 @@ import net.minecraft.world.item.crafting.RecipeInput;
 public record DepotRecipeInput(ItemStack input) implements RecipeInput {
     @Override
     public ItemStack getItem(int i) {
-        return i == 0 ? input : ItemStack.EMPTY;
+        return input;
     }
 
     @Override

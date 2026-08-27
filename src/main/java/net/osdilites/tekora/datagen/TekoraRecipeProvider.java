@@ -7,7 +7,14 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.Tags;
+import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.datagen.recipetypes.PressingRecipeBuilder;
+import net.osdilites.tekora.datagen.tags.TekoraTags;
 import net.osdilites.tekora.item.TekoraItems;
+import net.osdilites.tekora.item.typical.TekoraItem;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -41,7 +48,27 @@ public class TekoraRecipeProvider extends RecipeProvider {
                 .pattern(" S ")
                 .define('P', TekoraItems.STEEL_PLATE.get())
                 .define('S', Items.STICK)
-                .unlockedBy("has_steel_plate", has(TekoraItems.STEEL_PLATE.get()));
+                .unlockedBy("has_steel_plate", has(TekoraItems.STEEL_PLATE.get()))
+                .save(output);
+
+        shaped(RecipeCategory.MISC, TekoraBlocks.DEPOT.get())
+                .pattern("ICI")
+                .pattern("ICI")
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('C', Blocks.COBBLESTONE.asItem())
+                .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
+                .save(output);
+
+//        shaped(RecipeCategory.MISC, TekoraBlocks.BASIN.get())
+//                .pattern("C C")
+//                .pattern("ICI")
+//                .define('I', TekoraTags.Items.PLATES_STEEL)
+//                .define('C', Blocks.COBBLESTONE.asItem())
+//                .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
+//                .save(output);
+
+        PressingRecipeBuilder.pressingBuilder(RecipeCategory.TOOLS, Ingredient.of(TekoraItems.STEEL_INGOT.get()), TekoraItems.STEEL_PLATE.get(), 1, 1)
+                .save(output, "tekora:pressing/steel_plate"); // todo, change the cuttorque and ratedvelocity values in the future
     }
 
     private void buildGearRecipe(Item gear, Item gearPart) {

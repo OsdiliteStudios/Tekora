@@ -35,6 +35,7 @@ public class DataGeneration {
                 List.of(new LootTableProvider.SubProviderEntry(TekoraLootTableProvider::new, LootContextParamSets.BLOCK)), provider));
         gen.addProvider(true, new TekoraRecipeProvider.Runner(output, provider));
         gen.addProvider(true, new TekoraBlockTagProvider(output, provider));
+        gen.addProvider(true, new TekoraItemTagProvider(output, provider));
         //gen.addProvider(true, new TekoraDatamapProvider(output, provider));
         gen.addProvider(true, new TekoraModelProvider(output));
         //gen.addProvider(true, new TekoraDatapackProvider(output, provider));

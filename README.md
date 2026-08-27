@@ -1,10 +1,13 @@
 ## About Tekora
-"A modpack in one mod"
+![Tekora!](https://github.com/bowenleng/Tekora/blob/26.1%2B/src/main/resources/logo.png)
 
-Tekora is a Minecraft mod developed by The Osdilites meant to be all the tech mods in one mod.
+_A technology mod with a focus on simulation and recipe interactions_
 
-The main inspirations behind Tekora are Create, GregTech, and Mekanism. With the main focus of the mod being an extensive system of contraptions based on realistic physics and engineering principals and a focus on the extensive system of chemistry.
+Tekora is a Minecraft technology mod with a focus on allowing the player to make interactive machinery and recipes. As you operate the systems, you could create more and more interesting chemicals and advance your tools by making pipes then cables, electrifying everything, and then some.
 
-This mod is currently in what is called the pre-alpha stage, it is neither feature-complete nor are any of the to-do list for features to implement into Tekora fully implemented at the moment
+This is a mod about the interplay between mechanical, thermal, and electric machinery. This interplay intends to provide you with the ability to automate material production, crop harvesting, making vitamins, securing your base, and making tools and armor along the way!
 
+Tekora plans on having an exploration item called manuscripts meant to provide a multitude of things from recipe visualizations to block structures. Right clicking saves the visual to your memory which can be accessed while pressing on the inventory!
+
+This mod is currently heavily work in progress.
 Here's the current roadmap for the mod: [roadmap](<https://docs.google.com/document/d/19nPWbKGZ7zAPLwc-8828sfKvfIqNtlr8WrVWmepaTOA/edit?usp=sharing>)

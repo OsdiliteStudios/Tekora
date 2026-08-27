@@ -83,6 +83,7 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
                         }
                     }
                 }
+                // todo, make the chain implementation here
                 body.addTorque(pPos, tot);
             } else {
                 BlockEntity up = pLevel.getBlockEntity(pPos.above());
@@ -107,6 +108,7 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
                     tot += contact(pLevel, pPos, pPos.above(), orgV, up);
                     tot += contact(pLevel, pPos, pPos.below(), orgV, down);
                 }
+                // todo make the chain/conveyor belt implementation here.
                 body.addTorque(pPos, tot);
             }
 

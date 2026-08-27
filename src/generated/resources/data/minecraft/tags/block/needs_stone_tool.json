@@ -1,0 +1,15 @@
+{
+  "values": [
+    "tekora:steel_shaft",
+    "tekora:mechanical_top",
+    "tekora:cutter",
+    "tekora:crusher",
+    "tekora:mixer",
+    "tekora:press",
+    "tekora:printer",
+    "tekora:kiln_furnace",
+    "tekora:basin",
+    "tekora:depot",
+    "tekora:hand_crank"
+  ]
+}

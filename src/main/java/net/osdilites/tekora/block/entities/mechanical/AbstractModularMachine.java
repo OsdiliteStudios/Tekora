@@ -26,7 +26,7 @@ public abstract class AbstractModularMachine extends BaseEntityBlock {
     );
 
     public AbstractModularMachine(Properties properties) {
-        super(properties);
+        super(properties.requiresCorrectToolForDrops());
     }
 
     @Override

@@ -4,6 +4,6 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 
 public abstract class AbstractTekoraCableNode extends BaseEntityBlock {
     public AbstractTekoraCableNode(Properties properties) {
-        super(properties);
+        super(properties.requiresCorrectToolForDrops());
     }
 }

@@ -29,11 +29,6 @@ public record PrintingRecipe(Ingredient input, ItemStackTemplate output, double 
     );
 
     @Override
-    public ItemStack assemble(DepotRecipeInput RecipeInput) {
-        return output.create().copy();
-    }
-
-    @Override
     public String group() {
         return "Printing";
     }

@@ -62,6 +62,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
     @Override
     protected double startPressing(double velocity, double torque) {
         DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack());
+        System.out.println("1"); // todo remove debug
         Optional<RecipeHolder<PressingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.PRESSING_TYPE.get(), input);
         return crafting(recipe, input, velocity, torque);
     }
@@ -80,7 +81,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
 
     private <T extends TekoraMechanicalRecipe<DepotRecipeInput>> double crafting(Optional<RecipeHolder<T>> recipe, DepotRecipeInput input, double velocity, double torque) {
         if (recipe.isPresent()) { // error, recipe not read
-            System.out.println("1"); // todo remove debug
+            System.out.println("2"); // todo remove debug
             T val = recipe.get().value();
             ItemStack output = val.assemble(input);
             double ratedVelocity = val.ratedVelocity();
@@ -89,6 +90,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
                     && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= handler.getAmountAsInt(1) + output.getCount();
             System.out.println(hasRecipe); // todo remove debug
             if (hasRecipe && Math.abs(velocity) >= ratedVelocity) {
+                System.out.println("3"); // todo remove debug
                 double cutTorque = val.cutTorque();
                 double cutConst = (torque - cutTorque) / ratedVelocity;
                 progress++;

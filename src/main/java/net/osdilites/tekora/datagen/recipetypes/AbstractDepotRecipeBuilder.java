@@ -15,7 +15,6 @@ public abstract class AbstractDepotRecipeBuilder extends AbstractTekoraRecipeBui
     protected final ItemStackTemplate result;
     protected final double cutTorque;
     protected final double ratedVelocity;
-    private @Nullable String group;
 
     protected AbstractDepotRecipeBuilder(RecipeCategory category, Ingredient ingredient, ItemStackTemplate result, double cutTorque, double ratedVelocity) {
         this.category = category;
@@ -23,12 +22,6 @@ public abstract class AbstractDepotRecipeBuilder extends AbstractTekoraRecipeBui
         this.result = result;
         this.cutTorque = cutTorque;
         this.ratedVelocity = ratedVelocity;
-    }
-
-    @Override
-    public RecipeBuilder group(@Nullable String s) {
-        this.group = s;
-        return this;
     }
 
     @Override

@@ -34,8 +34,7 @@ public class Tekora {
         TekoraRecipes.register(modEventBus);
 
         // uncomment the code below if a subscribe event annotated method was here.
-        //NeoForge.EVENT_BUS.register(ClientEvent.class);
-        //NeoForge.EVENT_BUS.register(WorldEvent.class);
+        //NeoForge.EVENT_BUS.register(this);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

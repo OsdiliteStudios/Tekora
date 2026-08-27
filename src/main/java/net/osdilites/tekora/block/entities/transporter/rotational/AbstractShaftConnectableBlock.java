@@ -15,7 +15,7 @@ public abstract class AbstractShaftConnectableBlock extends BaseEntityBlock impl
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
 
     protected AbstractShaftConnectableBlock(Properties pProperties) {
-        super(pProperties.noOcclusion());
+        super(pProperties.noOcclusion().requiresCorrectToolForDrops());
         registerDefaultState(defaultBlockState().setValue(AXIS, Direction.Axis.Y));
     }
 

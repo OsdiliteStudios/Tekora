@@ -6,14 +6,14 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 
-public record BasinRecipeInput(List<ItemStack> itemInputs, List<FluidStack> fluidInputs) implements RecipeInput {
+public record BasinRecipeInput(List<ItemStack> items, List<FluidStack> fluids, String machineType) implements RecipeInput {
     @Override
     public ItemStack getItem(int i) {
-        return itemInputs.get(i);
+        return items.get(i);
     }
 
     @Override
     public int size() {
-        return itemInputs.size();
+        return items.size();
     }
 }

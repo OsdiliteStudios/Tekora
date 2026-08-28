@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": "minecraft:cobblestone",
+    "I": "#c:plates/steel"
+  },
+  "pattern": [
+    "C C",
+    "ICI"
+  ],
+  "result": {
+    "id": "tekora:basin"
+  }
+}

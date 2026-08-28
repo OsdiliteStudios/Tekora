@@ -6,9 +6,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -45,52 +43,17 @@ public class DepotEntity extends AbstractModularCraftEntity {
         };
     }
 
-    @Override
-    protected double startCutting(double velocity, double torque) {
-        DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack());
-        Optional<RecipeHolder<CuttingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.CUTTING_TYPE.get(), input);
-        return crafting(recipe, input, velocity, torque);
-    }
-
-    @Override
-    protected double startCrushing(double velocity, double torque) {
-        DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack());
-        Optional<RecipeHolder<CrushingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.CRUSHING_TYPE.get(), input);
-        return crafting(recipe, input, velocity, torque);
-    }
-
-    @Override
-    protected double startPressing(double velocity, double torque) {
-        DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack());
-        System.out.println("1"); // todo remove debug
-        Optional<RecipeHolder<PressingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.PRESSING_TYPE.get(), input);
-        return crafting(recipe, input, velocity, torque);
-    }
-
-    @Override
-    protected double startPrinting(double velocity, double torque) {
-        DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack());
-        Optional<RecipeHolder<PrintingRecipe>> recipe = getCurrentRecipe(TekoraRecipes.PRINTING_TYPE.get(), input);
-        return crafting(recipe, input, velocity, torque);
-    }
-
-    @Override
-    protected double startMixing(double velocity, double torque) {
-        return 0; // does nothing here
-    }
-
-    private <T extends TekoraMechanicalRecipe<DepotRecipeInput>> double crafting(Optional<RecipeHolder<T>> recipe, DepotRecipeInput input, double velocity, double torque) {
-        if (recipe.isPresent()) { // error, recipe not read
-            System.out.println("2"); // todo remove debug
-            T val = recipe.get().value();
+    protected double crafting(String type, double velocity, double torque) {
+        DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack(), type);
+        Optional<RecipeHolder<DepotRecipe>> recipe = getCurrentRecipe(TekoraRecipes.DEPOT_TYPE.get(), input);
+        if (recipe.isPresent()) {
+            DepotRecipe val = recipe.get().value();
             ItemStack output = val.assemble(input);
             double ratedVelocity = val.ratedVelocity();
             var resource = handler.getResource(1);
             boolean hasRecipe = level != null && val.matches(input, level) && (resource.isEmpty() || resource.is(output.getItem()))
                     && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= handler.getAmountAsInt(1) + output.getCount();
-            System.out.println(hasRecipe); // todo remove debug
             if (hasRecipe && Math.abs(velocity) >= ratedVelocity) {
-                System.out.println("3"); // todo remove debug
                 double cutTorque = val.cutTorque();
                 double cutConst = (torque - cutTorque) / ratedVelocity;
                 progress++;

@@ -7,14 +7,11 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.osdilites.tekora.block.TekoraBlocks;
-import net.osdilites.tekora.datagen.recipetypes.PressingRecipeBuilder;
 import net.osdilites.tekora.datagen.tags.TekoraTags;
 import net.osdilites.tekora.item.TekoraItems;
-import net.osdilites.tekora.item.typical.TekoraItem;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -41,7 +38,7 @@ public class TekoraRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes() {
-        // todo, make it so that the Wrench can be used as an upgrader type item.
+        // todo, make it so that the Wrench can be used as an upgrader machineType item.
         shaped(RecipeCategory.TOOLS, TekoraItems.WRENCH.get())
                 .pattern("P P")
                 .pattern(" S ")
@@ -67,8 +64,8 @@ public class TekoraRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
 
-        PressingRecipeBuilder.pressingBuilder(RecipeCategory.TOOLS, Ingredient.of(TekoraItems.STEEL_INGOT.get()), TekoraItems.STEEL_PLATE.get(), 1, 1)
-                .save(output, "tekora:pressing/steel_plate"); // todo, change the cuttorque and ratedvelocity values in the future
+        //PressingRecipeBuilder.pressingBuilder(RecipeCategory.TOOLS, Ingredient.of(TekoraItems.STEEL_INGOT.get()), TekoraItems.STEEL_PLATE.get(), 1, 1)
+        //        .save(output, "tekora:pressing/steel_plate"); // todo, change the cuttorque and ratedvelocity values in the future
     }
 
     private void buildGearRecipe(Item gear, Item gearPart) {

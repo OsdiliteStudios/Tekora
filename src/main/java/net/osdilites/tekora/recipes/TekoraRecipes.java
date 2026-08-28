@@ -15,73 +15,23 @@ public class TekoraRecipes {
     public static final DeferredRegister<RecipeType<?>> TYPES =
             DeferredRegister.create(Registries.RECIPE_TYPE, Tekora.MODID);
 
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CuttingRecipe>> CUTTING_SERIALIZER =
-            SERIALIZERS.register("cutting", () -> new RecipeSerializer<>(CuttingRecipe.CODEC, CuttingRecipe.STREAM_CODEC));
-    public static final DeferredHolder<RecipeType<?>, RecipeType<CuttingRecipe>> CUTTING_TYPE =
-            TYPES.register("cutting", () -> new RecipeType<>() {
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<DepotRecipe>> DEPOT_SERIALIZER =
+            SERIALIZERS.register("depot", () -> new RecipeSerializer<>(DepotRecipe.CODEC, DepotRecipe.STREAM_CODEC));
+    public static final DeferredHolder<RecipeType<?>, RecipeType<DepotRecipe>> DEPOT_TYPE =
+            TYPES.register("depot", () -> new RecipeType<>() {
                 @Override
                 public String toString() {
-                    return "cutting";
+                    return "depot";
                 }
             });
 
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CrushingRecipe>> CRUSHING_SERIALIZER =
-            SERIALIZERS.register("crushing", () -> new RecipeSerializer<>(CrushingRecipe.CODEC, CrushingRecipe.STREAM_CODEC));
-    public static final DeferredHolder<RecipeType<?>, RecipeType<CrushingRecipe>> CRUSHING_TYPE =
-            TYPES.register("crushing", () -> new RecipeType<>() {
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BasinRecipe>> BASIN_SERIALIZER =
+            SERIALIZERS.register("basin", () -> new RecipeSerializer<>(BasinRecipe.CODEC, BasinRecipe.STREAM_CODEC));
+    public static final DeferredHolder<RecipeType<?>, RecipeType<BasinRecipe>> BASIN_TYPE =
+            TYPES.register("basin", () -> new RecipeType<>() {
                 @Override
                 public String toString() {
-                    return "crushing";
-                }
-            });
-
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PressingRecipe>> PRESSING_SERIALIZER =
-            SERIALIZERS.register("pressing", () -> new RecipeSerializer<>(PressingRecipe.CODEC, PressingRecipe.STREAM_CODEC));
-    public static final DeferredHolder<RecipeType<?>, RecipeType<PressingRecipe>> PRESSING_TYPE =
-            TYPES.register("pressing", () -> new RecipeType<>() {
-                @Override
-                public String toString() {
-                    return "pressing";
-                }
-            });
-
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PrintingRecipe>> PRINTING_SERIALIZER =
-            SERIALIZERS.register("printing", () -> new RecipeSerializer<>(PrintingRecipe.CODEC, PrintingRecipe.STREAM_CODEC));
-    public static final DeferredHolder<RecipeType<?>, RecipeType<PrintingRecipe>> PRINTING_TYPE =
-            TYPES.register("printing", () -> new RecipeType<>() {
-                @Override
-                public String toString() {
-                    return "printing";
-                }
-            });
-
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<MacerationRecipe>> MACERATION_SERIALIZER =
-            SERIALIZERS.register("maceration", () -> new RecipeSerializer<>(MacerationRecipe.CODEC, MacerationRecipe.STREAM_CODEC));
-    public static final DeferredHolder<RecipeType<?>, RecipeType<MacerationRecipe>> MACERATION_TYPE =
-            TYPES.register("maceration", () -> new RecipeType<>() {
-                @Override
-                public String toString() {
-                    return "maceration";
-                }
-            });
-
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CompressingRecipe>> COMPRESSING_SERIALIZER =
-            SERIALIZERS.register("compression", () -> new RecipeSerializer<>(CompressingRecipe.CODEC, CompressingRecipe.STREAM_CODEC));
-    public static final DeferredHolder<RecipeType<?>, RecipeType<CompressingRecipe>> COMPRESSING_TYPE =
-            TYPES.register("compression", () -> new RecipeType<>() {
-                @Override
-                public String toString() {
-                    return "compression";
-                }
-            });
-
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<MixingRecipe>> MIXING_SERIALIZER =
-            SERIALIZERS.register("mixing", () -> new RecipeSerializer<>(MixingRecipe.CODEC, MixingRecipe.STREAM_CODEC));
-    public static final DeferredHolder<RecipeType<?>, RecipeType<MixingRecipe>> MIXING_TYPE =
-            TYPES.register("mixing", () -> new RecipeType<>() {
-                @Override
-                public String toString() {
-                    return "mixing";
+                    return "basin";
                 }
             });
 

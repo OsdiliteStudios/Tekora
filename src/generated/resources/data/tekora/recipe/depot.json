@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": "minecraft:cobblestone",
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    "ICI",
+    "ICI"
+  ],
+  "result": {
+    "id": "tekora:depot"
+  }
+}

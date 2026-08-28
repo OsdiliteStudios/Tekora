@@ -19,6 +19,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableBlock;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
@@ -76,11 +77,12 @@ public class TekoraItems {
             msg += "Object has a id of " + rotational.getBodyHashcode();
             msg += (rotational.isBodyTicker() ? " and ticks the body\n" : "\n");
             msg += "Object properties " + body + "\n";
-          }
-          if (ent instanceof AbstractModularMachineEntity modular) {
+          } else if (ent instanceof AbstractModularMachineEntity modular) {
             GearType type = modular.getBlockState().getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE);
             msg += "Object has a geartype of " + type + "\n";
             msg += "Object has a velocity of " + modular.getVelocity() + "\n";
+          } else if (ent instanceof AbstractModularCraftEntity crafter) {
+            msg += "Progress at " + crafter.getProgress() + "\n";
           }
           if (state.hasProperty(AbstractShaftConnectableBlock.AXIS)) {
             Direction.Axis axis = state.getValue(AbstractShaftConnectableBlock.AXIS);

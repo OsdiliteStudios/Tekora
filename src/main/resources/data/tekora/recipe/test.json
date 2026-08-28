@@ -1,10 +1,10 @@
 {
-  "type": "tekora:pressing",
-  "ingredient": {
-    "tag": "c:plates/steel"
-  },
+  "type": "tekora:depot",
+  "machine_type": "press",
+  "ingredient": "#c:ingots/steel",
   "result": {
-    "item": "tekora:steel_plate"
+    "count": 1,
+    "id": "tekora:steel_plate"
   },
   "cut_torque": 1,
   "rated_velocity": 1

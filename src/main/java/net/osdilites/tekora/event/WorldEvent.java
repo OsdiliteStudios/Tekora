@@ -53,7 +53,7 @@ public class WorldEvent {
         }
     }
 
-    // this type of code could also be applied to Tekora cables in the future.
+    // this machineType of code could also be applied to Tekora cables in the future.
     @SubscribeEvent
     public static void rightClick(PlayerInteractEvent.RightClickItem event) {
         ItemStack stack = event.getItemStack();

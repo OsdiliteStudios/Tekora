@@ -80,9 +80,9 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
             double temperature = reactionRecipeInput.temperature();
             double k = Math.exp((temperature * deltaEntropy - deltaEnthalpy) / (temperature * UtilFunctions.IDEAL_GAS_CONST));
             double q = q_numerator / q_denominator;
-
-            return (k < q && new HashSet<>(reactionRecipeInput.reactants()).containsAll(reactants))
-                    || (q > k && new HashSet<>(reactionRecipeInput.products()).containsAll(products));
+            // todo, figure out the overall behavior (which may require statistical permutations)
+//            return (k < q && new HashSet<>(reactionRecipeInput.reactants()).containsAll(reactants))
+//                    || (q > k && new HashSet<>(reactionRecipeInput.products()).containsAll(products));
         }
         return false;
     }

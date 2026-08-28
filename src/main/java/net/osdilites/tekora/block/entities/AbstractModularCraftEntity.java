@@ -26,6 +26,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
+import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -92,34 +93,29 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
             double torque = ent.getTorque(); // determines recipe progress
             Block block = ent.getBlockState().getBlock();
 
-            double newTorque = 0;
+            String machineType = "";
             if (block.equals(TekoraBlocks.CRUSHER.get())) {
-                newTorque = startCrushing(ent.getVelocity(), torque);
+                machineType = TekoraMechanicalRecipe.CRUSHER;
             } else if (block.equals(TekoraBlocks.MIXER.get())) {
-                newTorque = startMixing(ent.getVelocity(), torque);
+                machineType = TekoraMechanicalRecipe.MIXER;
             } else if (block.equals(TekoraBlocks.PRESS.get())) {
-                newTorque = startPressing(ent.getVelocity(), torque);
+                machineType = TekoraMechanicalRecipe.PRESS;
             } else if (block.equals(TekoraBlocks.PRINTER.get())) {
-                newTorque = startPrinting(ent.getVelocity(), torque);
+                machineType = TekoraMechanicalRecipe.PRINTER;
             } else if (block.equals(TekoraBlocks.CUTTER.get())) {
-                newTorque = startCutting(ent.getVelocity(), torque);
-            }
-            ent.addTorque(newTorque);
+                machineType = TekoraMechanicalRecipe.CUTTER;
+            } //else if (block.equals(TekoraBlocks.MAGNETIC_SPLITTER.get())) {
+//                machineType = TekoraMechanicalRecipe.SPLITTER;
+//            }
+            if (!machineType.isEmpty()) ent.addTorque(crafting(machineType, ent.getVelocity(), torque));
         }
     }
 
-    protected abstract double startCutting(double velocity, double torque);
-    protected abstract double startCrushing(double velocity, double torque);
-    protected abstract double startPressing(double velocity, double torque);
-    protected abstract double startPrinting(double velocity, double torque);
-    protected abstract double startMixing(double velocity, double torque);
+    abstract protected double crafting(String type, double velocity, double torque);
 
     protected <S extends RecipeInput, T extends Recipe<S>> Optional<RecipeHolder<T>> getCurrentRecipe(RecipeType<T> recipeType, S input) {
-        if (level != null) {
-            return ((ServerLevel) level).recipeAccess()
-                    .getRecipeFor(recipeType, input, level);
-        }
-        return Optional.empty();
+        return ((ServerLevel) level).recipeAccess()
+                .getRecipeFor(recipeType, input, level);
     }
 
     public int getProgress() {

@@ -32,7 +32,7 @@ public record ChemicalIngredient(Either<Ingredient, FluidIngredient> input) {
             ChemicalIngredient::new
     );
 
-    // Helper methods to easily query the type during reaction checks
+    // Helper methods to easily query the machineType during reaction checks
     public boolean isFluid() { return input.right().isPresent(); }
     public boolean isItem() { return input.left().isPresent(); }
 
@@ -41,7 +41,7 @@ public record ChemicalIngredient(Either<Ingredient, FluidIngredient> input) {
 
     public double getMol() {
         // todo, for solids and liquids we'll use mol/L to find the values
-        // all solid items either has 0.111 L or 0.25 L depending on the type.
+        // all solid items either has 0.111 L or 0.25 L depending on the machineType.
         // quartz and amethyst has 0.25L, diamonds meanwhile will have 0.111L
         // for liquids, mB is the same as a mL.
         if (isFluid()) {

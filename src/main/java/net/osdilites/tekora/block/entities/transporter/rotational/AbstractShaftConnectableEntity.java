@@ -9,13 +9,13 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.osdilites.tekora.block.entities.mechanical.AbstractMechanicalEntity;
 import net.osdilites.tekora.util.TekoraShaftBody;
 import org.jspecify.annotations.Nullable;
 
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-public abstract class AbstractShaftConnectableEntity extends AbstractMechanicalEntity {
+public abstract class AbstractShaftConnectableEntity extends BlockEntity {
     protected TekoraShaftBody body;
 
     private boolean bodyTicker = false;
@@ -368,6 +368,9 @@ public abstract class AbstractShaftConnectableEntity extends AbstractMechanicalE
         }
         return checkedState.hasProperty(BlockStateProperties.AXIS) && checkedState.getValue(BlockStateProperties.AXIS) == axis;
     }
+
+    public abstract double getMoment();
+    public abstract double componentRadius();
 
     // for debugging purposes
     public int getBodyHashcode() {

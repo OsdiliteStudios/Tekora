@@ -20,12 +20,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.TekoraBlocks;
-import net.osdilites.tekora.block.entities.mechanical.AbstractMechanicalEntity;
+import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 
-public class ModularGearRenderer implements BlockEntityRenderer<AbstractMechanicalEntity, MechRenderState> {
+public class ModularGearRenderer implements BlockEntityRenderer<AbstractShaftConnectableEntity, MechRenderState> {
     protected final BlockEntityRenderDispatcher renderer;
 
     public ModularGearRenderer(BlockEntityRendererProvider.Context pContext) {
@@ -33,7 +33,7 @@ public class ModularGearRenderer implements BlockEntityRenderer<AbstractMechanic
     }
 
     @Override
-    public void extractRenderState(AbstractMechanicalEntity blockEntity, MechRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    public void extractRenderState(AbstractShaftConnectableEntity blockEntity, MechRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
 
         BlockState gearState = blockEntity.getBlockState();

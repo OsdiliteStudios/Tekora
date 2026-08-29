@@ -16,7 +16,7 @@ import net.osdilites.tekora.util.TekoraShaftBody;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractModularMachineEntity extends AbstractMechanicalEntity {
+public abstract class AbstractModularMachineEntity extends BlockEntity {
     private float oldRot;
     private float curRot;
     private double torque;
@@ -37,7 +37,6 @@ public abstract class AbstractModularMachineEntity extends AbstractMechanicalEnt
         return body == null ? curRot : body.getAngle();
     }
 
-    @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         // todo, make an implementation plan here
         if (pLevel != null) {
@@ -122,7 +121,6 @@ public abstract class AbstractModularMachineEntity extends AbstractMechanicalEnt
         return 0;
     }
 
-    @Override
     public double getMoment() {
         if (body != null) {
             return body.getMoment();
@@ -149,7 +147,6 @@ public abstract class AbstractModularMachineEntity extends AbstractMechanicalEnt
         return state.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE;
     }
 
-    @Override
     public double componentRadius() {
         BlockState state = getBlockState();
         if (state.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE) {

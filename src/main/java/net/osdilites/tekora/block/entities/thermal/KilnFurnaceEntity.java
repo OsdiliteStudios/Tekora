@@ -54,7 +54,6 @@ public class KilnFurnaceEntity extends AbstractThermalEntity {
     }
 
     @Nullable
-    @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return new KilnFurnaceMenu(pContainerId, pPlayerInventory, this, this.data);
     }

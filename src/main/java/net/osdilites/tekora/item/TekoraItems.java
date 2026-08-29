@@ -74,6 +74,7 @@ public class TekoraItems {
           String msg = state.getBlock() + "\n";
           if (ent instanceof AbstractShaftConnectableEntity rotational) {
             TekoraShaftBody body = rotational.getBody();
+            // this method is unreliable
             msg += "Object has a id of " + rotational.getBodyHashcode();
             msg += (rotational.isBodyTicker() ? " and ticks the body\n" : "\n");
             msg += "Object properties " + body + "\n";

@@ -326,6 +326,7 @@ public class TekoraShaftBody {
         if (moment == 0) throw new IllegalStateException("Moment cannot be 0");
         if (isValid && withinRange(pA, pB, val)) {
             velocity += torque * 0.05 / moment;
+            if (Math.abs(velocity) <= 1E-8) velocity = 0;
         }
     }
 
@@ -339,9 +340,9 @@ public class TekoraShaftBody {
     }
 
     public void tick() {
-        if (velocity == 0 || Double.isNaN(velocity) || Double.isInfinite(velocity)) {
-            angle = 0;
+        if (velocity <= 1E-8 || Double.isNaN(velocity) || Double.isInfinite(velocity)) {
             oldAngle = angle;
+            velocity = 0;
         } else if (Double.isNaN(angle) || Double.isNaN(oldAngle) || Double.isInfinite(angle) || Double.isInfinite(oldAngle)) {
             oldAngle = 0;
             angle = (float)velocity;
@@ -382,10 +383,13 @@ public class TekoraShaftBody {
 
     public void load(ValueInput input) {
         this.velocity = input.getDoubleOr("velocity", 0);
+        this.angle = input.getFloatOr("angle", 0);
+        this.oldAngle = angle;
     }
 
     public void save(ValueOutput output) {
         output.putDouble("velocity", velocity);
+        output.putFloat("angle", angle);
     }
 
     public void setMoment(int loc, double moment) {

@@ -12,20 +12,24 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
 
     // Function used to apply force by the player
     public void applyForce(FoodData data) {
-        int hunger = data.getFoodLevel();
-        float saturation = data.getSaturationLevel();
-        double energy = (hunger + saturation) / 25;
-        double speed = Math.abs(body.getVelocity());
-        double radius = componentRadius();
+        if (level != null && !level.isClientSide()) {
+            int hunger = data.getFoodLevel();
+            float saturation = data.getSaturationLevel();
+            double energy = (hunger + saturation) / 25;
+            double speed = Math.abs(body.getVelocity());
+            double radius = componentRadius();
 
-        if (energy > 0) {
-            double force = 30.0 * (0.25 + 0.75 * energy) * Math.max(0, 1 - 4 * speed / (Math.PI));
-            body.addTorque(getBlockPos(), force);
+            if (energy > 0) {
+                double force = 60.0 * (0.25 + 0.75 * energy) * Math.max(0, 1 - 2 * speed / (Math.PI));
+                body.addTorque(getBlockPos(), force);
 
-            if (saturation > 0) {
-                float foodDrain = (float) (1.5E-5 * force * speed * radius);
-                data.addExhaustion(foodDrain);
+                if (saturation > 0) {
+                    float foodDrain = (float) (1.5E-5 * force * speed * radius);
+                    data.addExhaustion(foodDrain);
+                }
             }
+            setChanged();
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
 

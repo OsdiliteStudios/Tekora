@@ -9,5 +9,17 @@ This is a mod about the interplay between mechanical, thermal, and electric mach
 
 Tekora plans on having an exploration item called manuscripts meant to provide a multitude of things from recipe visualizations to block structures. Right clicking saves the visual to your memory which can be accessed while pressing on the inventory!
 
-This mod is currently heavily work in progress.
+<hr>
+
+This mod is extremely ambitious and as such is currently heavily work in progress.
 Here's the current roadmap for the mod: [roadmap](<https://docs.google.com/document/d/19nPWbKGZ7zAPLwc-8828sfKvfIqNtlr8WrVWmepaTOA/edit?usp=sharing>)
+
+This mod is estimated to take a year or two to become feature-complete but major milestones reached along the way will be released as pre-release or development versions of the mod.
+<br>
+<br>
+Alpha stages will get released on Github as Github released, and on Curseforge/Modrinth.
+- Alpha stages are the stages that are not feature-complete
+<br>
+
+Beta stages of the mod (successive stages of feature-completion) will be released on Curseforge/Modrinth exclusively.
+- Beta stages are the stages that are feature-complete but not thoroughly debugged

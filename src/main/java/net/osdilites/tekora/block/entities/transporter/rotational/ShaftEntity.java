@@ -47,7 +47,7 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
 
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (body != null && pLevel.getBlockEntity(pPos) instanceof AbstractShaftConnectableEntity ent && pState.hasProperty(AbstractShaftConnectableBlock.AXIS)
+        if (body != null && pLevel.getBlockEntity(pPos) instanceof AbstractShaftConnectableEntity && pState.hasProperty(AbstractShaftConnectableBlock.AXIS)
                 && pState.getValueOrElse(Shaft.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
             Direction.Axis axis = pState.getValue(AbstractShaftConnectableBlock.AXIS);
             double orgV = componentRadius() * body.getVelocity();

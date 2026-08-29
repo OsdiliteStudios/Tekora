@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -95,24 +97,22 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         boolean hasFacing = pState.hasProperty(BlockStateProperties.FACING);
         boolean hasAxis = pState.hasProperty(BlockStateProperties.AXIS);
-        if (pLevel.isClientSide() && bodyTicker && (hasFacing || hasAxis)) {
-            body.tick();
-        }
-        if (!pLevel.isClientSide()) {
-            if (body != null) {
-                double pressure = 1; // in bars todo make this number dimension specific
-                // If Tekora space became a thing, this may also need to read from dimension json files.
-                // For any possible Ad Astra, Stellaris, or Northstar compatibility, read off json files.
-                // For other mods that add dimensions, we'll treat 1 as the default value.
-
-                // todo, beyond air resistance, we need to wonder about friction applied by blocks in contact with the block.
-                //  This could be done by hard coding it (as in using class hierarchies etc) or the use of json files for datapack creators or mods.
-                body.addTorque(pPos, -0.5 * pressure * componentRadius() * body.getVelocity()); // this value inputted in air resistance
+        if (body != null) {
+            if (bodyTicker && (hasFacing || hasAxis)) {
+                body.tick();
             }
-            this.setChanged(); // ensures that the block gets calculated.
+            double pressure = 1; // in bars todo make this number dimension specific
+            // If Tekora space became a thing, this may also need to read from dimension json files.
+            // For any possible Ad Astra, Stellaris, or Northstar compatibility, read off json files.
+            // For other mods that add dimensions, we'll treat 1 as the default value.
+
+            // todo, beyond air resistance, we need to wonder about friction applied by blocks in contact with the block.
+            //  This could be done by hard coding it (as in using class hierarchies etc) or the use of json files for datapack creators or mods.
+            body.addTorque(pPos, -0.5 * pressure * componentRadius() * body.getVelocity()); // this value inputted in air resistance
         } else {
-            pLevel.sendBlockUpdated(pPos, pState, pState, 3); // used on client side.
+            createOrJoinBody();
         }
+        this.setChanged(); // ensures that the block gets calculated.
     }
 
     public float getOldAngle() {
@@ -135,10 +135,17 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
     }
 
     @Override
+    public void onDataPacket(Connection net, ValueInput valueInput) {
+        this.handleUpdateTag(valueInput);
+    }
+
+    @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
         TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, registries);
         this.saveAdditional(output);
-        return output.buildResult();
+        tag.merge(output.buildResult());
+        return tag;
     }
 
     @Override
@@ -296,7 +303,7 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
     }
 
     private void synchronizeEntities() {
-        if (body != null) {
+        if (body != null && level != null) {
             Queue<AbstractShaftConnectableEntity> queue = body.getEntities();
             if (!queue.isEmpty()) {
                 AbstractShaftConnectableEntity first = queue.poll();
@@ -329,15 +336,20 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
     public void onLoad() {
         super.onLoad();
         if (body == null && level != null) {
-            createOrJoinBody(); // there is a random statistic chance that both bodies are null
-            // that is unlikely but if it does happen, a solution needs to be present to remove this issue.
+            createOrJoinBody();
         }
+    }
+
+    @Override
+    public void handleUpdateTag(ValueInput input) {
+        super.handleUpdateTag(input);
+        loadAdditional(input);
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        if (body != null) {
+        if (level != null && body != null) {
             body.save(output);
         }
     }
@@ -345,7 +357,7 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        if (body != null && isBodyTicker()) {
+        if (body != null) {
             body.load(input);
         }
     }

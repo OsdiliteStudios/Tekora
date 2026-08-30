@@ -8,6 +8,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -19,10 +20,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
-import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
@@ -34,7 +35,8 @@ import java.util.Optional;
 public abstract class AbstractModularCraftEntity extends BlockEntity implements MenuProvider {
     public final ItemStacksResourceHandler handler;
     protected final ContainerData data;
-    protected int progress = 0; // we have to take equilibrium constants and rate laws into consideration here for the chemical reaction recipes
+    protected float progress = 0; // this is now a float between 0 and 1
+    @Deprecated
     public static final int MAX_PROGRESS = 128;
 
     public AbstractModularCraftEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
@@ -43,15 +45,14 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
         this.data = new ContainerData() { // for mechanical and fluid mech entities, we just need these two
             @Override
             public int get(int i) {
-                return AbstractModularCraftEntity.this.progress;
+                return (int)(AbstractModularCraftEntity.this.progress * 64);
             }
 
             @Override
             public void set(int i, int i1) {
                 if (i == 0) {
-                    AbstractModularCraftEntity.this.progress = i1;
+                    AbstractModularCraftEntity.this.progress = i1 / 64.0f;
                 }
-                ;
             }
 
             @Override
@@ -75,20 +76,19 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        output.putInt("modcraft.progress", progress);
+        output.putFloat("modcraft.progress", progress);
         output.putChild("inventory", handler);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        progress = input.getIntOr("modcraft.progress", 0);
-
+        progress = input.getFloatOr("modcraft.progress", 0.0f);
         input.child("inventory").ifPresent(handler::deserialize);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (pLevel != null && pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
+        if (pLevel != null && !pLevel.isClientSide() && pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
             // this calculates for "angular" acceleration specifically
             double torque = ent.getTorque(); // determines recipe progress
             Block block = ent.getBlockState().getBlock();
@@ -104,25 +104,30 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
                 machineType = TekoraMechanicalRecipe.PRINTER;
             } else if (block.equals(TekoraBlocks.CUTTER.get())) {
                 machineType = TekoraMechanicalRecipe.CUTTER;
-            } //else if (block.equals(TekoraBlocks.MAGNETIC_SPLITTER.get())) {
-//                machineType = TekoraMechanicalRecipe.SPLITTER;
-//            }
-            if (!machineType.isEmpty()) ent.addTorque(crafting(machineType, ent.getVelocity(), torque));
+            }
+            if (!machineType.isEmpty()) ent.addTorque(crafting(pLevel, machineType, ent.getVelocity(), torque));
+            //setChanged(pLevel, pPos, pState);
         }
     }
 
-    abstract protected double crafting(String type, double velocity, double torque);
+    abstract protected double crafting(Level level, String type, double velocity, double torque);
 
     protected <S extends RecipeInput, T extends Recipe<S>> Optional<RecipeHolder<T>> getCurrentRecipe(RecipeType<T> recipeType, S input) {
         return ((ServerLevel) level).recipeAccess()
                 .getRecipeFor(recipeType, input, level);
     }
 
-    public int getProgress() {
+    public float getProgress() {
         return progress;
     }
 
     // BLOCK ENTITY SYNC
+    @Override
+    public void handleUpdateTag(ValueInput input) {
+        super.handleUpdateTag(input);
+        loadAdditional(input);
+    }
+
     @Nullable
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
@@ -131,7 +136,11 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
-        return saveWithoutMetadata(pRegistries);
+        CompoundTag tag = super.getUpdateTag(pRegistries);
+        TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, pRegistries);
+        this.saveAdditional(output);
+        tag.merge(output.buildResult());
+        return tag;
     }
 
     @Override

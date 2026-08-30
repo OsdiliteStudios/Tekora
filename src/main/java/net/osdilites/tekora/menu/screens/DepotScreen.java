@@ -40,8 +40,8 @@ public class DepotScreen extends AbstractContainerScreen<DepotMenu> {
     }
 
     private void renderProcess(GuiGraphicsExtractor guiGraphics, int x, int y) {
-        int process = Mth.ceil(this.menu.getProgress() * 0.109375f);
-        guiGraphics.blitSprite(
-                RenderPipelines.GUI_TEXTURED, PROGRESS_ARROW, 14, 14, 0, 14 - process, x + 80, y + 18 + 14 - process, 14, process);
+        int process = Mth.ceil(this.menu.getProgress() * 24.0f);
+        guiGraphics.blit(
+                RenderPipelines.GUI_TEXTURED, PROGRESS_ARROW, x+80, y+34, 0, 0, process, 16, 24, 16);
     }
 }

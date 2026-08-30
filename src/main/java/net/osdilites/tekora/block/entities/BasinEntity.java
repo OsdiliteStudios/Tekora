@@ -76,7 +76,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
         super.tick(pLevel, pPos, pState);
     }
 
-    protected double crafting(String type, double velocity, double torque) {
+    protected double crafting(Level level, String type, double velocity, double torque) {
         return 0;
     }
 

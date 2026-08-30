@@ -27,33 +27,32 @@ public abstract class TekoraItemMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+    public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
-        if (!sourceSlot.hasItem()) {
-            return ItemStack.EMPTY;
-        }
+        if (!sourceSlot.hasItem()) return ItemStack.EMPTY;
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
+
+        int teInvCnt = teInventorySlotCount();
+
         if (pIndex < 36) {
-            if (!moveItemStackTo(sourceStack, 36, 36 + teInventorySlotCount(), false)) {
+            if (!moveItemStackTo(sourceStack, 36, teInvCnt, false)) {
                 return ItemStack.EMPTY;
             }
-        } else if (pIndex < 36 + teInventorySlotCount()) {
+        } else if (pIndex < 36 + teInvCnt) {
             if (!moveItemStackTo(sourceStack, 0, 36, false)) {
                 return ItemStack.EMPTY;
             }
         } else {
-            Tekora.LOGGER.debug("Invalid slotIndex: " + pIndex);
+            Tekora.LOGGER.debug("Invalid slotIndex: {}", pIndex);
             return ItemStack.EMPTY;
         }
-
         if (sourceStack.getCount() == 0) {
             sourceSlot.set(ItemStack.EMPTY);
         } else {
             sourceSlot.setChanged();
         }
-
-        sourceSlot.onTake(pPlayer, sourceStack);
+        sourceSlot.onTake(playerIn, sourceStack);
         return copyOfSourceStack;
     }
 

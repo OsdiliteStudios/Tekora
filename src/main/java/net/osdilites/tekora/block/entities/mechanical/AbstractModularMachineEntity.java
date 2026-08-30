@@ -65,22 +65,23 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
                     }
 
                     if (body == null) {
-                        usualUpdate(tot);
+                        usualUpdate(pLevel, pPos, pState, tot);
                     } else {
                         torque = tot;
-                        body.addTorque(above, tot);
+                        body.addTorque(above, tot); // todo, check for any other potential conditions for calling torque
                         velocity = (float)body.getVelocity();
+                        pLevel.sendBlockUpdated(pPos, pState, pState, 3);
                     }
                 } else if (getMoment() != 0) {
-                    usualUpdate(tot);
+                    usualUpdate(pLevel, pPos, pState, tot);
                 }
             } else if (getMoment() != 0) {
-                usualUpdate(tot);
+                usualUpdate(pLevel, pPos, pState, tot);
             }
         }
     }
 
-    private void usualUpdate(double torque) {
+    private void usualUpdate(Level level, BlockPos pos, BlockState state, double torque) {
         if (this.body != null && !this.body.hasAttachment()) {
             this.body.checkAttached();
             this.body = null;
@@ -89,6 +90,7 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
         this.velocity += (float) (torque / getMoment());
         this.oldRot = this.curRot;
         this.curRot += this.velocity;
+        level.sendBlockUpdated(pos, state, state, 3);
     }
 
     private double contact(Level pLevel, BlockPos curPos, BlockPos otherPos, double selfV, BlockEntity ent) {
@@ -164,10 +166,12 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
 
     public void addTorque(double torque) {
         if (body == null) {
-            velocity += (float) (torque / getMoment());
+            this.velocity += (float) (torque / getMoment());
+            this.torque += torque;
         } else {
-            body.addTorque(getBlockPos().above(), torque);
-            velocity = (float)body.getVelocity();
+            this.body.addTorque(getBlockPos().above(), torque);
+            this.velocity = (float)this.body.getVelocity();
+            this.torque += torque;
         }
     }
 

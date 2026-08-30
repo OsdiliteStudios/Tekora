@@ -20,7 +20,7 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
             double radius = componentRadius();
 
             if (energy > 0) {
-                double force = 60.0 * (0.25 + 0.75 * energy) * Math.max(0, 1 - 2 * speed / (Math.PI));
+                double force = 60.0 * (0.25 + 0.75 * energy);
                 body.addTorque(getBlockPos(), force);
 
                 if (saturation > 0) {
@@ -28,7 +28,7 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
                     data.addExhaustion(foodDrain);
                 }
             }
-            setChanged();
+            setChanged(); // allowed because only the server-side is being called here
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }

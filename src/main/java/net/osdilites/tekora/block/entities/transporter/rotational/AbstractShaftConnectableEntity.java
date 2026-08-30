@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -112,7 +111,7 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
         } else {
             createOrJoinBody();
         }
-        this.setChanged(); // ensures that the block gets calculated.
+        // no set changed because server side and client side are both being called.
     }
 
     public float getOldAngle() {

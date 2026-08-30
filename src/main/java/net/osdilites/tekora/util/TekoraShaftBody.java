@@ -298,8 +298,9 @@ public class TekoraShaftBody {
         }
     }
 
-    private static boolean withinRange(double a, double b, double val) {
-        return (a <= val && val <= b) || (b <= val && val <= a);
+    private boolean withinRange(double a, double b, double val) {
+        double low = attachedMoment == 0 ? a : a-1;
+        return (low <= val && val <= b) || (b <= val && val <= low);
     }
 
     // Units is in kg * m^2 / (time)^2,
@@ -340,7 +341,7 @@ public class TekoraShaftBody {
     }
 
     public void tick() {
-        if (velocity <= 1E-8 || Double.isNaN(velocity) || Double.isInfinite(velocity)) {
+        if (Math.abs(velocity) <= 1E-8 || Double.isNaN(velocity) || Double.isInfinite(velocity)) {
             oldAngle = angle;
             velocity = 0;
         } else if (Double.isNaN(angle) || Double.isNaN(oldAngle) || Double.isInfinite(angle) || Double.isInfinite(oldAngle)) {

@@ -6,6 +6,6 @@
     "count": 1,
     "id": "tekora:steel_plate"
   },
-  "cut_torque": 0.001,
-  "rated_velocity": 0.001
+  "cut_torque": 8.0,
+  "rated_velocity": 0.2
 }

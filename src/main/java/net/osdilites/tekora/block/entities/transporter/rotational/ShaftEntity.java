@@ -83,8 +83,6 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
                         }
                     }
                 }
-                // todo, make the chain implementation here
-                body.addTorque(pPos, tot);
             } else {
                 BlockEntity up = pLevel.getBlockEntity(pPos.above());
                 BlockEntity down = pLevel.getBlockEntity(pPos.below());
@@ -108,9 +106,9 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
                     tot += contact(pLevel, pPos, pPos.above(), orgV, up);
                     tot += contact(pLevel, pPos, pPos.below(), orgV, down);
                 }
-                // todo make the chain/conveyor belt implementation here.
-                body.addTorque(pPos, tot);
             }
+            body.addTorque(pPos, tot);
+            pLevel.sendBlockUpdated(pPos, pState, pState, 3);
 
             if (components().has(TekoraComponents.PARTNERS)) {
                 Partners partners = components().get(TekoraComponents.PARTNERS);
@@ -122,7 +120,7 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
                             if (gearType == GearType.NONE) continue;
 
                             double moment = partnerState.getValueOrElse(TekoraBlockStates.IS_LARGE, false) ? gearType.getLargeMoment() : gearType.getSmallMoment();
-                            // todo, figure an equation to figure what to do with the moment.
+                            // todo, make the chain and conveyor belt implementation here
                         }
                     }
                 }

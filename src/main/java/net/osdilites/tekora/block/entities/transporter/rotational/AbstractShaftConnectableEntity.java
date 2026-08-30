@@ -129,25 +129,6 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
     }
 
     @Override
-    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ValueInput valueInput) {
-        this.handleUpdateTag(valueInput);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = super.getUpdateTag(registries);
-        TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, registries);
-        this.saveAdditional(output);
-        tag.merge(output.buildResult());
-        return tag;
-    }
-
-    @Override
     public void setChanged() {
         super.setChanged();
         if (body != null) {
@@ -340,12 +321,6 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
     }
 
     @Override
-    public void handleUpdateTag(ValueInput input) {
-        super.handleUpdateTag(input);
-        loadAdditional(input);
-    }
-
-    @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         if (level != null && body != null) {
@@ -379,6 +354,33 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
         }
         return checkedState.hasProperty(BlockStateProperties.AXIS) && checkedState.getValue(BlockStateProperties.AXIS) == axis;
     }
+
+    // BLOCK ENTITY SYNC
+    @Override
+    public void handleUpdateTag(ValueInput input) {
+        super.handleUpdateTag(input);
+        loadAdditional(input);
+    }
+
+    @Override
+    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ValueInput valueInput) {
+        this.handleUpdateTag(valueInput);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, registries);
+        this.saveAdditional(output);
+        tag.merge(output.buildResult());
+        return tag;
+    }
+    //
 
     public abstract double getMoment();
     public abstract double componentRadius();

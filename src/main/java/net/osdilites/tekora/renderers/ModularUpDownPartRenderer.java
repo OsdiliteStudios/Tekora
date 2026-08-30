@@ -110,7 +110,10 @@ public class ModularUpDownPartRenderer implements BlockEntityRenderer<AbstractMo
         poseStack.pushPose();
 
         poseStack.translate(0.5D, 0.5D, 0.5D);
-        poseStack.translate(0.0D, -(1 - Math.cos(Math.PI * state.progress / AbstractModularCraftEntity.MAX_PROGRESS)) / 2.0d, 0.0D);
+        // todo, make the transformation more "sound"
+        // if progress has a positive derivative at the current tick, than it goes down and stays down
+        // otherwise, the thing goes up and stays up.
+        poseStack.translate(0.0D, -(4.0 + Math.cos(Math.PI * state.progress)) / 6.0d, 0.0D);
         poseStack.translate(-0.5D, -0.5D, -0.5D);
 
         for (Map.Entry<RenderType, List<BakedQuad>> entry : quadsByRenderType.entrySet()) {

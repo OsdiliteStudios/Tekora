@@ -40,7 +40,7 @@ public class DepotMenu extends TekoraItemMenu {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, TekoraBlocks.DEPOT.get());
     }
 
-    public int getProgress() {
+    public float getProgress() {
         return blockEntity.getProgress();
     }
 }

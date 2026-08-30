@@ -43,7 +43,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
         };
     }
 
-    protected double crafting(String type, double velocity, double torque) {
+    protected double crafting(Level level, String type, double velocity, double torque) {
         DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack(), type);
         Optional<RecipeHolder<DepotRecipe>> recipe = getCurrentRecipe(TekoraRecipes.DEPOT_TYPE.get(), input);
         if (recipe.isPresent()) {
@@ -51,14 +51,12 @@ public class DepotEntity extends AbstractModularCraftEntity {
             ItemStack output = val.assemble(input);
             double ratedVelocity = val.ratedVelocity();
             var resource = handler.getResource(1);
-            boolean hasRecipe = level != null && val.matches(input, level) && (resource.isEmpty() || resource.is(output.getItem()))
+            boolean hasRecipe = val.matches(input, level) && (resource.isEmpty() || resource.is(output.getItem()))
                     && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= handler.getAmountAsInt(1) + output.getCount();
-            if (hasRecipe && Math.abs(velocity) >= ratedVelocity) {
+            if (hasRecipe /*&& Math.abs(velocity) >= ratedVelocity*/) {
                 double cutTorque = val.cutTorque();
                 double cutConst = (torque - cutTorque) / ratedVelocity;
-                progress++;
-                setChanged(level, getBlockPos(), getBlockState());
-                if (progress == MAX_PROGRESS) {
+                if (progress == 1.0f) {
                     try (Transaction transaction = Transaction.openRoot()) {
                         ItemAccess access = ItemAccess.forHandlerIndex(handler, 1);
                         handler.extract(handler.getResource(0), 1, transaction);
@@ -66,11 +64,16 @@ public class DepotEntity extends AbstractModularCraftEntity {
                         transaction.commit();
                     }
                     progress = 0;
+                    setChanged();
+                    return 0;
                 }
+                progress += 0.015625f; // todo, make this physically motivated
+                setChanged();
                 return (torque < 0 ? -1 : 1) * Math.max(0, Math.min(cutTorque, cutTorque + cutConst * Math.abs(velocity)));
             }
         } else {
             progress = 0;
+            setChanged(level, getBlockPos(), getBlockState());
         }
         return 0;
     }

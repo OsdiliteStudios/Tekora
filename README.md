@@ -17,7 +17,14 @@ Here's the current roadmap for the mod: [roadmap](<https://docs.google.com/docum
 This mod is estimated to take a year or two to become feature-complete but major milestones reached along the way will be released as pre-release or development versions of the mod.
 <br>
 <br>
-Alpha stages will get released on Github as Github released, and on Curseforge/Modrinth.
+Versions have numbers updated for every new jar file/release created whether it'd be on GitHub, a mod hosting service like Curseforge/Modrinth, or privately in the discord.
+
+Each number has a meaning but is formatted as A.B.C (ex. 1.3.1) where:
+- A is the release version
+- B means a major feature added
+- C means a minor fix.
+
+Alpha stages will get released on GitHub as GitHub releases, and on Curseforge/Modrinth.
 - Alpha stages are the stages that are not feature-complete
 <br>
 

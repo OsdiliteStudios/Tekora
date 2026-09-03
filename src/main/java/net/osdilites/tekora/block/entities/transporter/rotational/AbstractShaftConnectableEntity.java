@@ -300,6 +300,7 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
 
     private void createBody(Direction.Axis axis) {
         body = new TekoraShaftBody(getLevel(), axis, getBlockPos(), getBlockPos(), new ArrayList<>(List.of(getMoment())));
+        updateTickerStatus();
     }
 
     public TekoraShaftBody getBody() {

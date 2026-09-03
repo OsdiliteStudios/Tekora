@@ -12,7 +12,7 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
 
     // Function used to apply force by the player
     public void applyForce(FoodData data) {
-        if (level != null && !level.isClientSide()) {
+        if (level != null) {
             int hunger = data.getFoodLevel();
             float saturation = data.getSaturationLevel();
             double energy = (hunger + saturation) / 25;
@@ -28,8 +28,8 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
                     data.addExhaustion(foodDrain);
                 }
             }
-            setChanged(); // allowed because only the server-side is being called here
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            // allowed because only the server-side is being called here
+            //level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
 

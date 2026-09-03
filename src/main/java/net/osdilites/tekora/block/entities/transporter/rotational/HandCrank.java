@@ -75,11 +75,10 @@ public class HandCrank extends AbstractShaftConnectableBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        BlockEntity te = pLevel.getBlockEntity(pPos);
         if (!pLevel.isClientSide()) {
+            BlockEntity te = pLevel.getBlockEntity(pPos);
             if (te instanceof HandCrankEntity crankEnt) {
-                FoodData data = pPlayer.getFoodData();
-                crankEnt.applyForce(data); // this changes the velocity
+                crankEnt.applyForce(pPlayer.getFoodData()); // this changes the velocity
                 pLevel.sendBlockUpdated(pPos, pState, pState, 3);
                 return InteractionResult.SUCCESS;
             }

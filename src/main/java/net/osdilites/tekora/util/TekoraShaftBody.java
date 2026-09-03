@@ -21,7 +21,7 @@ import java.util.Queue;
 public class TekoraShaftBody {
     private double moment;
     private double velocity = 0; // m/tick
-                   // If axis == x | y | z
+                         // If axis == x | y | z
     private final int f; // a =        y | x | x
     private final int g; // b =        z | z | y
     private int pA;

@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
       "model": "tekora:block/depot"
+    },
+    "facing=north": {
+      "model": "tekora:block/depot",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "tekora:block/depot",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "tekora:block/depot",
+      "y": 180
     }
   }
 }

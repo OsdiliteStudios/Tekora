@@ -23,9 +23,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.block.entities.transporter.AbstractModularCrafter;
 import org.jetbrains.annotations.Nullable;
 
-public class Basin extends BaseEntityBlock {
+public class Basin extends AbstractModularCrafter {
     public static final MapCodec<Basin> CODEC = simpleCodec(Basin::new);
 
     private static final VoxelShape SHAPE = Shapes.or(

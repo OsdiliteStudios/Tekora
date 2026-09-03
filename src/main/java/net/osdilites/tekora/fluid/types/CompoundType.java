@@ -1,4 +1,4 @@
-package net.osdilites.tekora.renderers;
+package net.osdilites.tekora.fluid.types;
 
 import net.minecraft.util.StringRepresentable;
 

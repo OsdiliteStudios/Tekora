@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class AbstractModularCraftEntity extends BlockEntity implements MenuProvider {
-    public final ItemStacksResourceHandler handler;
+    public final ItemStacksResourceHandler inventory;
     protected final ContainerData data;
     protected float progress = 0; // this is now a float between 0 and 1
     @Deprecated
@@ -41,7 +41,7 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
 
     public AbstractModularCraftEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
         super(type, worldPosition, blockState);
-        this.handler = makeHandler();
+        this.inventory = makeInventory();
         this.data = new ContainerData() { // for mechanical and fluid mech entities, we just need these two
             @Override
             public int get(int i) {
@@ -62,12 +62,12 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
         };
     }
 
-    protected abstract ItemStacksResourceHandler makeHandler();
+    protected abstract ItemStacksResourceHandler makeInventory();
 
     public void drops() {
-        SimpleContainer inv = new SimpleContainer(handler.size());
-        for(int i = 0; i < handler.size(); i++) {
-            ItemAccess itemAccess = ItemAccess.forHandlerIndex(handler, 0);
+        SimpleContainer inv = new SimpleContainer(inventory.size());
+        for(int i = 0; i < inventory.size(); i++) {
+            ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 0);
             inv.setItem(i, new ItemStack(itemAccess.getResource().getItem(), itemAccess.getAmount()));
         }
         if (this.level != null) Containers.dropContents(this.level, this.worldPosition, inv);
@@ -77,14 +77,14 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putFloat("modcraft.progress", progress);
-        output.putChild("inventory", handler);
+        output.putChild("inventory", inventory);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         progress = input.getFloatOr("modcraft.progress", 0.0f);
-        input.child("inventory").ifPresent(handler::deserialize);
+        input.child("inventory").ifPresent(inventory::deserialize);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
@@ -100,8 +100,6 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
                 machineType = TekoraMechanicalRecipe.MIXER;
             } else if (block.equals(TekoraBlocks.PRESS.get())) {
                 machineType = TekoraMechanicalRecipe.PRESS;
-            } else if (block.equals(TekoraBlocks.PRINTER.get())) {
-                machineType = TekoraMechanicalRecipe.PRINTER;
             } else if (block.equals(TekoraBlocks.CUTTER.get())) {
                 machineType = TekoraMechanicalRecipe.CUTTER;
             }

@@ -11,7 +11,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.item.ItemResource;
@@ -26,21 +25,11 @@ import org.jspecify.annotations.Nullable;
 import java.util.Optional;
 
 public class DepotEntity extends AbstractModularCraftEntity {
-    public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(2) {
-        @Override
-        protected void onContentsChanged(int index, ItemStack previousContents) {
-            super.onContentsChanged(index, previousContents);
-            DepotEntity.this.setChanged();
-        }
-    };
-    private final ResourceHandler<ItemResource> inputHandler = RangedResourceHandler.of(inventory, 0, 1);
-    private final ResourceHandler<ItemResource> outputHandler = RangedResourceHandler.of(inventory, 1, 2);
-
     public DepotEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.DEPOT.get(), pPos, pState);
     }
 
-    protected ItemStacksResourceHandler makeHandler() {
+    protected ItemStacksResourceHandler makeInventory() {
         return new ItemStacksResourceHandler(2) {
             @Override
             protected void onContentsChanged(int index, ItemStack previousContents) {
@@ -53,25 +42,31 @@ public class DepotEntity extends AbstractModularCraftEntity {
         };
     }
 
+    @Override
+    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
+        // todo, implement the deployment recipes
+        super.tick(pLevel, pPos, pState);
+    }
+
     protected double crafting(Level level, String type, double velocity, double torque) {
-        DepotRecipeInput input = new DepotRecipeInput(this.handler.getResource(0).toStack(), type);
+        DepotRecipeInput input = new DepotRecipeInput(this.inventory.getResource(0).toStack(), type);
         Optional<RecipeHolder<DepotRecipe>> recipe = getCurrentRecipe(TekoraRecipes.DEPOT_TYPE.get(), input);
         if (recipe.isPresent()) {
             DepotRecipe val = recipe.get().value();
             ItemStack output = val.assemble(input);
             double ratedVelocity = val.ratedVelocity();
-            var resource = handler.getResource(1);
+            var resource = inventory.getResource(1);
             boolean hasRecipe = val.matches(input, level) && (resource.isEmpty() || resource.is(output.getItem()))
-                    && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= handler.getAmountAsInt(1) + output.getCount();
+                    && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= inventory.getAmountAsInt(1) + output.getCount();
             if (hasRecipe && Math.abs(velocity) >= ratedVelocity) {
                 double cutTorque = val.cutTorque();
                 double cutConst = (torque - cutTorque) / ratedVelocity;
-                progress += 0.015625f; // todo, make this physically motivated
+                progress += 0.015625f;
                 if (progress == 1.0f) {
                     try (Transaction transaction = Transaction.openRoot()) {
-                        ItemAccess access = ItemAccess.forHandlerIndex(handler, 1);
-                        handler.extract(handler.getResource(0), 1, transaction);
-                        handler.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
+                        ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
+                        inventory.extract(inventory.getResource(0), 1, transaction);
+                        inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
                         transaction.commit();
                     }
                     progress = 0;
@@ -108,10 +103,10 @@ public class DepotEntity extends AbstractModularCraftEntity {
 
     public ResourceHandler<ItemResource> getItemHandler(Direction direction) {
         if (direction == null) {
-            return inventory;
+            return this.inventory;
         }
         // todo, restructure the code after implementing directional blockstates for the basin and the depot
-        return inputHandler;
+        return null;
     }
 
     @Override

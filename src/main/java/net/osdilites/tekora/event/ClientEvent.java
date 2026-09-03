@@ -23,6 +23,8 @@ import net.osdilites.tekora.menu.TekoraMenus;
 import net.osdilites.tekora.menu.screens.BasinScreen;
 import net.osdilites.tekora.menu.screens.DepotScreen;
 import net.osdilites.tekora.menu.screens.KilnFurnaceScreen;
+import net.osdilites.tekora.renderers.models.ModularPartModel;
+import net.osdilites.tekora.renderers.models.TekoraBlockRenderers;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -58,6 +60,8 @@ public class ClientEvent {
         registerModularUpDown(event, TekoraBlockEntities.CUTTER.get(), CUTTER, CUTTER_KEY);
         registerModularUpDown(event, TekoraBlockEntities.PRINTER.get(), INK_PRESS_SHAFT, INK_PRESS_SHAFT_KEY);
         registerModularUpDown(event, TekoraBlockEntities.PRESS.get(), PRESS_SHAFT, PRESS_SHAFT_KEY);
+
+        event.registerBlockEntityRenderer(TekoraBlockEntities.DEPOT.get(), DepotRenderer::new);
 
         registerWithGearPart(event, TekoraBlockEntities.TOP_MECH.get());
     }

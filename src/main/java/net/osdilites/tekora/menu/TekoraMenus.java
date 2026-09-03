@@ -8,8 +8,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
 
-import java.util.function.Supplier;
-
 public class TekoraMenus {
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(Registries.MENU, Tekora.MODID);
@@ -22,6 +20,9 @@ public class TekoraMenus {
 
     public static final DeferredHolder<MenuType<?>, MenuType<DepotMenu>> DEPOT_MENU =
             MENUS.register("depot", () -> IMenuTypeExtension.create(DepotMenu::new));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<DeployerMenu>> PRINTER_MENU =
+            MENUS.register("printer", () -> IMenuTypeExtension.create(DeployerMenu::new));
 
     public static void register(IEventBus eventBus) {
         MENUS.register(eventBus);

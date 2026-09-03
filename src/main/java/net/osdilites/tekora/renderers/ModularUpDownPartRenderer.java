@@ -27,9 +27,9 @@ import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelLoader;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.TekoraBlocks;
-import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.event.ClientEvent;
+import net.osdilites.tekora.renderers.states.MechRenderState;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// this applies to the printer, the press, the assembler, and the cutter
 public class ModularUpDownPartRenderer implements BlockEntityRenderer<AbstractModularMachineEntity, MechRenderState> {
     protected final BlockEntityRenderDispatcher renderer;
     private final Identifier texture;
@@ -95,7 +96,7 @@ public class ModularUpDownPartRenderer implements BlockEntityRenderer<AbstractMo
         // renders the model part
         QuadInstance instance = new QuadInstance();
         instance.setColor(0xFFFFFFFF);
-        instance.setLightCoords(state.packedLight);
+        instance.setLightCoords(state.lightCoords);
         instance.setOverlayCoords(OverlayTexture.NO_OVERLAY);
         Map<RenderType, List<BakedQuad>> quadsByRenderType = new HashMap<>();
 
@@ -136,7 +137,7 @@ public class ModularUpDownPartRenderer implements BlockEntityRenderer<AbstractMo
             poseStack.mulPose(Axis.YP.rotationDegrees(state.getAngle()));
             poseStack.translate(-0.5D, -0.5D, -0.5D);
 
-            collector.submitMultiLayerBlockModel(poseStack, state.parts, true, new int[]{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, state.packedLight, OverlayTexture.NO_OVERLAY, 0);
+            collector.submitMultiLayerBlockModel(poseStack, state.parts, true, new int[]{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
             poseStack.popPose();
         }

@@ -1,4 +1,4 @@
-package net.osdilites.tekora.renderers;
+package net.osdilites.tekora.renderers.models;
 
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
@@ -8,6 +8,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.osdilites.tekora.renderers.states.MechRenderState;
 
 public class ModularPartModel extends Model<MechRenderState> {
     public ModularPartModel(ModelPart root) {

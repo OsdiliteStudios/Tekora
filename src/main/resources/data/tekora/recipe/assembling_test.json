@@ -1,0 +1,11 @@
+{
+  "type": "tekora:assembling",
+  "ingredient": "minecraft:oak_log",
+  "deployed": "minecraft:axe",
+  "result": {
+    "id": "minecraft:stripped_oak_log"
+  },
+  "cut_torque": 8.0,
+  "rated_velocity": 0.2,
+  "is_consumed": false
+}

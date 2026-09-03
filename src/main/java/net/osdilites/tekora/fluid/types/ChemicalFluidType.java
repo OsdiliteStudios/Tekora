@@ -1,7 +1,6 @@
 package net.osdilites.tekora.fluid.types;
 
 import net.neoforged.neoforge.fluids.FluidType;
-import net.osdilites.tekora.renderers.CompoundType;
 import net.osdilites.tekora.util.UtilFunctions;
 
 public class ChemicalFluidType extends FluidType {

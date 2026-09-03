@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "tekora:mechanical_top"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "tekora:assembling_shaft"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "tekora:blocks/assembler"
+}

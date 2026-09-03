@@ -1,4 +1,4 @@
-package net.osdilites.tekora.renderers;
+package net.osdilites.tekora.renderers.states;
 
 import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;

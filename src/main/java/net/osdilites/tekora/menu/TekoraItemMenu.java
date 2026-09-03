@@ -36,7 +36,7 @@ public abstract class TekoraItemMenu extends AbstractContainerMenu {
         int teInvCnt = teInventorySlotCount();
 
         if (pIndex < 36) {
-            if (!moveItemStackTo(sourceStack, 36, teInvCnt, false)) {
+            if (!moveItemStackTo(sourceStack, 36, 36 + teInvCnt, false)) {
                 return ItemStack.EMPTY;
             }
         } else if (pIndex < 36 + teInvCnt) {

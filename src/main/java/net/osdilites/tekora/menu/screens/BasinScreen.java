@@ -36,11 +36,9 @@ public class BasinScreen extends AbstractContainerScreen<BasinMenu> {
         graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 
-//    private void renderProcess(GuiGraphicsExtractor guiGraphics, int x, int y) {
-//        if(this.menu.isBurning()) {
-//            int process = Mth.ceil(this.menu.getFuelProgress() * 13.0F) + 1;
-//            guiGraphics.blitSprite(
-//                    RenderPipelines.GUI_TEXTURED, PROCESS_TEXTURE, 14, 14, 0, 14 - process, x + 80, y + 18 + 14 - process, 14, process);
-//        }
-//    }
+    private void renderProcess(GuiGraphicsExtractor guiGraphics, int x, int y) {
+        int process = Mth.ceil(this.menu.getProgress() * 24.0f);
+        guiGraphics.blit(
+                RenderPipelines.GUI_TEXTURED, PROCESS_TEXTURE, x+80, y+34, 0, 0, process, 16, 24, 16);
+    }
 }

@@ -1,6 +1,7 @@
 package net.osdilites.tekora.block.entities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +11,8 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.RangedResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
@@ -23,13 +26,20 @@ import org.jspecify.annotations.Nullable;
 import java.util.Optional;
 
 public class DepotEntity extends AbstractModularCraftEntity {
+    public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(2) {
+        @Override
+        protected void onContentsChanged(int index, ItemStack previousContents) {
+            super.onContentsChanged(index, previousContents);
+            DepotEntity.this.setChanged();
+        }
+    };
+    private final ResourceHandler<ItemResource> inputHandler = RangedResourceHandler.of(inventory, 0, 1);
+    private final ResourceHandler<ItemResource> outputHandler = RangedResourceHandler.of(inventory, 1, 2);
+
     public DepotEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.DEPOT.get(), pPos, pState);
     }
 
-    // meaning of each index in the inventory
-    // 0 = input
-    // 1 = output
     protected ItemStacksResourceHandler makeHandler() {
         return new ItemStacksResourceHandler(2) {
             @Override
@@ -53,9 +63,10 @@ public class DepotEntity extends AbstractModularCraftEntity {
             var resource = handler.getResource(1);
             boolean hasRecipe = val.matches(input, level) && (resource.isEmpty() || resource.is(output.getItem()))
                     && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= handler.getAmountAsInt(1) + output.getCount();
-            if (hasRecipe /*&& Math.abs(velocity) >= ratedVelocity*/) {
+            if (hasRecipe && Math.abs(velocity) >= ratedVelocity) {
                 double cutTorque = val.cutTorque();
                 double cutConst = (torque - cutTorque) / ratedVelocity;
+                progress += 0.015625f; // todo, make this physically motivated
                 if (progress == 1.0f) {
                     try (Transaction transaction = Transaction.openRoot()) {
                         ItemAccess access = ItemAccess.forHandlerIndex(handler, 1);
@@ -64,16 +75,13 @@ public class DepotEntity extends AbstractModularCraftEntity {
                         transaction.commit();
                     }
                     progress = 0;
-                    setChanged();
-                    return 0;
                 }
-                progress += 0.015625f; // todo, make this physically motivated
-                setChanged();
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 return (torque < 0 ? -1 : 1) * Math.max(0, Math.min(cutTorque, cutTorque + cutConst * Math.abs(velocity)));
             }
         } else {
             progress = 0;
-            setChanged(level, getBlockPos(), getBlockState());
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
         return 0;
     }
@@ -98,8 +106,16 @@ public class DepotEntity extends AbstractModularCraftEntity {
         return Component.translatable("block.tekora.depot");
     }
 
+    public ResourceHandler<ItemResource> getItemHandler(Direction direction) {
+        if (direction == null) {
+            return inventory;
+        }
+        // todo, restructure the code after implementing directional blockstates for the basin and the depot
+        return inputHandler;
+    }
+
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new DepotMenu(i, inventory, this, data);
+        return new DepotMenu(i, inventory, this, this.inventory, data);
     }
 }

@@ -1,4 +1,4 @@
-package net.osdilites.tekora.renderers;
+package net.osdilites.tekora.renderers.states;
 
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.resources.model.geometry.QuadCollection;

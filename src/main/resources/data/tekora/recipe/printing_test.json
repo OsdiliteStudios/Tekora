@@ -1,0 +1,9 @@
+{
+  "type": "tekora:printing",
+  "ingredient": "minecraft:paper",
+  "result": {
+    "id": "minecraft:map"
+  },
+  "cut_torque": 8.0,
+  "rated_velocity": 0.2
+}

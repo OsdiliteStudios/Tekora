@@ -1,0 +1,11 @@
+{
+  "type": "tekora:depot",
+  "machine_type": "crusher",
+  "ingredient": "#c:ingots/steel",
+  "result": {
+    "count": 1,
+    "id": "tekora:steel_dust"
+  },
+  "cut_torque": 8.0,
+  "rated_velocity": 0.2
+}

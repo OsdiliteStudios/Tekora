@@ -1,4 +1,4 @@
-package net.osdilites.tekora.renderers;
+package net.osdilites.tekora.renderers.models;
 
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.Identifier;

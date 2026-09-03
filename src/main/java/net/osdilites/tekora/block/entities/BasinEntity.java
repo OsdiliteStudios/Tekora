@@ -42,14 +42,6 @@ public class BasinEntity extends AbstractModularCraftEntity {
         // todo, for this value allow fluids to "mix", the "mixing" process may trigger a chemical reaction so keep that in mind on every tick.
     };
 
-    public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(11) {
-        @Override
-        protected void onContentsChanged(int index, ItemStack previousContents) {
-            super.onContentsChanged(index, previousContents);
-            BasinEntity.this.setChanged();
-        }
-    };
-
     public BasinEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState);
     }
@@ -58,7 +50,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
     // 0 = fluid container input
     // 1 = fluid container output
     // 2-10 = items...
-    protected ItemStacksResourceHandler makeHandler() {
+    protected ItemStacksResourceHandler makeInventory() {
         return new ItemStacksResourceHandler(11) {
             @Override
             protected void onContentsChanged(int index, ItemStack previousContents) {
@@ -117,7 +109,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new BasinMenu(pContainerId, pPlayerInventory, this, data);
+        return new BasinMenu(pContainerId, pPlayerInventory, this, inventory, data);
     }
 
     // FLUID HANDLING

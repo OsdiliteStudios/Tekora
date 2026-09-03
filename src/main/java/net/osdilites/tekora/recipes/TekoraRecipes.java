@@ -25,6 +25,26 @@ public class TekoraRecipes {
                 }
             });
 
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AssemblingRecipe>> ASSEMBLING_SERIALIZER =
+            SERIALIZERS.register("assembling", () -> new RecipeSerializer<>(AssemblingRecipe.CODEC, AssemblingRecipe.STREAM_CODEC));
+    public static final DeferredHolder<RecipeType<?>, RecipeType<AssemblingRecipe>> ASSEMBLING_TYPE =
+            TYPES.register("assembling", () -> new RecipeType<>() {
+                @Override
+                public String toString() {
+                    return "assembling";
+                }
+            });
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PrintingRecipe>> PRINTING_SERIALIZER =
+            SERIALIZERS.register("printing", () -> new RecipeSerializer<>(PrintingRecipe.CODEC, PrintingRecipe.STREAM_CODEC));
+    public static final DeferredHolder<RecipeType<?>, RecipeType<PrintingRecipe>> PRINTING_TYPE =
+            TYPES.register("printing", () -> new RecipeType<>() {
+                @Override
+                public String toString() {
+                    return "printing";
+                }
+            });
+
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BasinRecipe>> BASIN_SERIALIZER =
             SERIALIZERS.register("basin", () -> new RecipeSerializer<>(BasinRecipe.CODEC, BasinRecipe.STREAM_CODEC));
     public static final DeferredHolder<RecipeType<?>, RecipeType<BasinRecipe>> BASIN_TYPE =

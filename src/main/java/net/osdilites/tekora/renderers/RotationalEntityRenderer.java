@@ -16,6 +16,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
+import net.osdilites.tekora.renderers.states.TekoraRotatingRenderState;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class RotationalEntityRenderer implements BlockEntityRenderer<AbstractSha
             poseStack.mulPose(axis.rotationDegrees(state.getAngle()));
             poseStack.translate(-0.5D, -0.5D, -0.5D);
 
-            collector.submitMultiLayerBlockModel(poseStack, state.parts, true, new int[]{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, state.packedLight, OverlayTexture.NO_OVERLAY, 0);
+            collector.submitMultiLayerBlockModel(poseStack, state.parts, true, new int[]{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
             poseStack.popPose();
         }

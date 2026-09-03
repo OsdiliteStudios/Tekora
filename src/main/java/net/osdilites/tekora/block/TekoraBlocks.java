@@ -27,6 +27,8 @@ public class TekoraBlocks {
 
     public static final DeferredHolder<Block, HandCrank> HAND_CRANK =
             createBlock("hand_crank", () -> new HandCrank("hand_crank", 1));
+    public static final DeferredHolder<Block, AssemblerMechanical> ASSEMBLER =
+            BLOCKS.register("assembler", AssemblerMechanical::new);
     public static final DeferredHolder<Block, MixerMechanical> MIXER =
             BLOCKS.register("mixer", MixerMechanical::new);
     public static final DeferredHolder<Block, CrusherMechanical> CRUSHER =

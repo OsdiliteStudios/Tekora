@@ -28,7 +28,7 @@ public class TekoraDatapackProvider extends DatapackBuiltinEntriesProvider {
 
             //.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, TekoraBiomeModifiers::bootstrap)
 
-            // template system for Tekora Space
+            // deployed system for Tekora Space
             //.add(Registries.DIMENSION_TYPE, TekoraDimensions::bootstrapType)
             //.add(Registries.LEVEL_STEM, TekoraDimensions::bootstrapStem)
             //.add(Registries.BIOME, TekoraBiomes::bootstrap)

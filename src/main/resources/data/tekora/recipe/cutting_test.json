@@ -1,0 +1,11 @@
+{
+  "type": "tekora:depot",
+  "machine_type": "cutter",
+  "ingredient": "#c:ingots/steel",
+  "result": {
+    "count": 2,
+    "id": "tekora:steel_rod"
+  },
+  "cut_torque": 8.0,
+  "rated_velocity": 0.2
+}

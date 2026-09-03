@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
       "model": "tekora:block/basin"
+    },
+    "facing=north": {
+      "model": "tekora:block/basin",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "tekora:block/basin",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "tekora:block/basin",
+      "y": 180
     }
   }
 }

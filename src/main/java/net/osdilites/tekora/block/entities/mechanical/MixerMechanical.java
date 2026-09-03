@@ -25,13 +25,13 @@ public class MixerMechanical extends AbstractModularMachine {
         super(properties);
     }
 
+    public MixerMechanical() {
+        this(Properties.ofFullCopy(Blocks.STONECUTTER).setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, "mixer"))));
+    }
+
     @Override
     public Item getAssocItem() {
         return TekoraItems.WHISK.get();
-    }
-
-    public MixerMechanical() {
-        this(Properties.ofFullCopy(Blocks.STONECUTTER).setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, "mixer"))));
     }
 
     @Nullable

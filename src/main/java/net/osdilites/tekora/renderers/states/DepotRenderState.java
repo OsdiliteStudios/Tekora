@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.world.level.Level;
 
-public class CrafterRenderState extends BlockEntityRenderState {
+public class DepotRenderState extends BlockEntityRenderState {
     public Level level;
     public double x = 0.5d;
     public double z = 0.5d;

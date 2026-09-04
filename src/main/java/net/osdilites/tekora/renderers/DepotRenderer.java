@@ -15,10 +15,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.osdilites.tekora.block.entities.DepotEntity;
-import net.osdilites.tekora.renderers.states.CrafterRenderState;
+import net.osdilites.tekora.renderers.states.DepotRenderState;
 import org.jspecify.annotations.Nullable;
 
-public class DepotRenderer implements BlockEntityRenderer<DepotEntity, CrafterRenderState> {
+public class DepotRenderer implements BlockEntityRenderer<DepotEntity, DepotRenderState> {
     private final ItemModelResolver resolver;
 
     public DepotRenderer(BlockEntityRendererProvider.Context context) {
@@ -26,12 +26,12 @@ public class DepotRenderer implements BlockEntityRenderer<DepotEntity, CrafterRe
     }
 
     @Override
-    public CrafterRenderState createRenderState() {
-        return new CrafterRenderState();
+    public DepotRenderState createRenderState() {
+        return new DepotRenderState();
     }
 
     @Override
-    public void extractRenderState(DepotEntity blockEntity, CrafterRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    public void extractRenderState(DepotEntity blockEntity, DepotRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
 
         state.level = blockEntity.getLevel();
@@ -49,7 +49,7 @@ public class DepotRenderer implements BlockEntityRenderer<DepotEntity, CrafterRe
     }
 
     @Override
-    public void submit(CrafterRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+    public void submit(DepotRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
 
         poseStack.translate(0.5d, 0.5d, 0.5d);

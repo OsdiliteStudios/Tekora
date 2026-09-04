@@ -37,7 +37,7 @@ public class TekoraModelProvider extends ModelProvider {
         itemModels.generateFlatItem(TekoraItems.STEEL_GEAR_PART.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.WOODEN_GEAR_PART.get(), ModelTemplates.FLAT_ITEM);
 
-        itemModels.generateFlatItem(TekoraItems.ASSEMBLING_SHAFT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.APPLYING_SHAFT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.WHISK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.PRESS_SHAFT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.INK_PRESS_SHAFT.get(), ModelTemplates.FLAT_ITEM);

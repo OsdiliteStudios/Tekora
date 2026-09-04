@@ -375,11 +375,45 @@ public class TekoraShaftBody {
             };
             if (level.getBlockEntity(pos) instanceof AbstractShaftConnectableEntity newRot) {
                 entities.add(newRot);
-            } // else {
-            //    split(pos, null);
-            // }
+            }
         }
         return entities;
+    }
+
+    public AbstractShaftConnectableEntity getEntityBefore() {
+        BlockEntity checked = level.getBlockEntity(switch (axis) {
+            case X -> start.west();
+            case Y -> start.below();
+            case Z -> start.north();
+        });
+        if (checked instanceof AbstractShaftConnectableEntity connectable) {
+            BlockState state = connectable.getBlockState();
+            if (state.hasProperty(BlockStateProperties.AXIS) && state.getValue(BlockStateProperties.AXIS) == axis) {
+                if (state.hasProperty(BlockStateProperties.FACING)) {
+                    return state.getValue(BlockStateProperties.FACING).getAxisDirection() == Direction.AxisDirection.POSITIVE ? connectable : null;
+                }
+                return connectable;
+            }
+        }
+        return null;
+    }
+
+    public AbstractShaftConnectableEntity getEntityAfter() {
+        BlockEntity checked = level.getBlockEntity(switch (axis) {
+            case X -> start.east();
+            case Y -> start.above();
+            case Z -> start.south();
+        });
+        if (checked instanceof AbstractShaftConnectableEntity connectable) {
+            BlockState state = connectable.getBlockState();
+            if (state.hasProperty(BlockStateProperties.AXIS) && state.getValue(BlockStateProperties.AXIS) == axis) {
+                if (state.hasProperty(BlockStateProperties.FACING)) {
+                    return state.getValue(BlockStateProperties.FACING).getAxisDirection() == Direction.AxisDirection.NEGATIVE ? connectable : null;
+                }
+                return connectable;
+            }
+        }
+        return null;
     }
 
     public void load(ValueInput input) {

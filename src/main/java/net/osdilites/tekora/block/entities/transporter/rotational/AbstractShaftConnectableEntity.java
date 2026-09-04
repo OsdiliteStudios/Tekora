@@ -218,26 +218,30 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
                                 createBody(axis);
                                 if (connectable(afterState, axis, true)) {
                                     body.join(after, aRotEnt.getMoment());
+                                    aRotEnt.body = body;
                                 }
                                 if (connectable(beforeState, axis, false)) {
                                     body.join(before, bRotEnt.getMoment());
+                                    bRotEnt.body = body;
                                 }
                             } else if (connectable(afterState, axis, true)) {
                                 aRotEnt.body.join(pos, getMoment());
+                                body = aRotEnt.body;
                                 if (connectable(beforeState, axis, false)) {
                                     aRotEnt.body.join(before, bRotEnt.getMoment());
+                                    bRotEnt.body = aRotEnt.body;
                                 }
-                                body = aRotEnt.body;
                             } else {
                                 createBody(axis);
                             }
                         } else if (connectable(beforeState, axis, false)) {
                             if (aRotEnt.body == null) {
                                 bRotEnt.body.join(pos, getMoment());
+                                body = bRotEnt.body;
                                 if (connectable(afterState, axis, true)) {
                                     bRotEnt.body.join(after, aRotEnt.getMoment());
+                                    aRotEnt.body = bRotEnt.body;
                                 }
-                                body = bRotEnt.body;
                             } else if (connectable(afterState, axis, true)) {
                                 bRotEnt.body.join(aRotEnt.body, pos, aRotEnt.getMoment());
                                 body = bRotEnt.body;
@@ -252,6 +256,7 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
                             createBody(axis);
                             if (connectable(beforeState, axis, false)) {
                                 body.join(before, bRotEnt.getMoment());
+                                bRotEnt.body = body;
                             }
                         } else if (connectable(beforeState, axis, false)) {
                             bRotEnt.body.join(pos, getMoment());
@@ -266,6 +271,7 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
                             createBody(axis);
                             if (connectable(afterState, axis, true)) {
                                 body.join(after, aRotEnt.getMoment());
+                                aRotEnt.body = body;
                             }
                         } else if (connectable(afterState, axis, true)) {
                             aRotEnt.body.join(pos, getMoment());
@@ -284,15 +290,31 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
 
     private void synchronizeEntities() {
         if (body != null && level != null) {
-            Queue<AbstractShaftConnectableEntity> queue = body.getEntities();
-            if (!queue.isEmpty()) {
-                AbstractShaftConnectableEntity first = queue.poll();
-                first.body = body;
-                first.bodyTicker = true;
-                while (!queue.isEmpty()) {
-                    AbstractShaftConnectableEntity current = queue.poll();
-                    current.body = body;
-                    current.bodyTicker = false;
+            AbstractShaftConnectableEntity before = body.getEntityBefore();
+            boolean sync = true;
+            if (before != null) {
+                body.join(before.getBlockPos(), before.getMoment());
+                before.body = body;
+                sync = false;
+            }
+
+            AbstractShaftConnectableEntity after = body.getEntityAfter();
+            if (after != null) {
+                body.join(after.getBlockPos(), after.getMoment());
+                after.body = body;
+            }
+
+            if (sync) {
+                Queue<AbstractShaftConnectableEntity> queue = body.getEntities();
+                if (!queue.isEmpty()) {
+                    AbstractShaftConnectableEntity first = queue.poll();
+                    first.body = body;
+                    first.bodyTicker = true;
+                    while (!queue.isEmpty()) {
+                        AbstractShaftConnectableEntity current = queue.poll();
+                        current.body = body;
+                        current.bodyTicker = false;
+                    }
                 }
             }
         }
@@ -340,7 +362,7 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
     private boolean connectable(BlockState checkedState, Direction.Axis axis, boolean isPos) {
         if (checkedState.hasProperty(BlockStateProperties.FACING)) {
             Direction checkedDir = checkedState.getValue(BlockStateProperties.FACING);
-            return (checkedDir.getAxisDirection() == Direction.AxisDirection.POSITIVE) == isPos && checkedDir.getAxis() == axis;
+            return checkedDir.getAxis() == axis && (checkedDir.getAxisDirection() == Direction.AxisDirection.POSITIVE) == isPos;
         }
         return checkedState.hasProperty(BlockStateProperties.AXIS) && checkedState.getValue(BlockStateProperties.AXIS) == axis;
     }
@@ -351,7 +373,7 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
         }
         if (checkedState.hasProperty(BlockStateProperties.FACING)) {
             Direction checkedDir = checkedState.getValue(BlockStateProperties.FACING);
-            return checkedDir == dir.getOpposite();
+            return checkedDir == dir;
         }
         return checkedState.hasProperty(BlockStateProperties.AXIS) && checkedState.getValue(BlockStateProperties.AXIS) == axis;
     }

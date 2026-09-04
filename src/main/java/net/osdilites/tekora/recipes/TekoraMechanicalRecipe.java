@@ -4,7 +4,6 @@ import net.minecraft.world.item.crafting.*;
 
 public interface TekoraMechanicalRecipe<T extends RecipeInput> extends Recipe<T> {
     String PRESS = "press";
-    String PRINTER = "printer";
     String MIXER = "mixer";
     String CUTTER = "cutter";
     String CRUSHER = "crusher";

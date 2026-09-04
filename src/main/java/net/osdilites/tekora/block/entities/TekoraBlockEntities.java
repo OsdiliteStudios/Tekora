@@ -26,8 +26,8 @@ public class TekoraBlockEntities {
             BLOCK_ENTITIES.register("shaft", () -> new BlockEntityType<>(ShaftEntity::new,
                     Set.of(TekoraBlocks.STEEL_SHAFT.get())));
 
-    public static final Supplier<BlockEntityType<AssemblerMechanicalEntity>> ASSEMBLER =
-            BLOCK_ENTITIES.register("assmbler", () -> new BlockEntityType<>(AssemblerMechanicalEntity::new,
+    public static final Supplier<BlockEntityType<ApplyerMechanicalEntity>> ASSEMBLER =
+            BLOCK_ENTITIES.register("assmbler", () -> new BlockEntityType<>(ApplyerMechanicalEntity::new,
                     Set.of(TekoraBlocks.ASSEMBLER.get())));
 
     public static final Supplier<BlockEntityType<MixerMechanicalEntity>> MIXER =

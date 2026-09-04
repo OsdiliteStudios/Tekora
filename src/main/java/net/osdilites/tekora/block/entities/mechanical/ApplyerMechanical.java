@@ -14,20 +14,20 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.item.TekoraItems;
 import org.jspecify.annotations.Nullable;
 
-public class AssemblerMechanical extends AbstractModularMachine{
-    public static final MapCodec<AssemblerMechanical> CODEC = simpleCodec(AssemblerMechanical::new);
+public class ApplyerMechanical extends AbstractModularMachine{
+    public static final MapCodec<ApplyerMechanical> CODEC = simpleCodec(ApplyerMechanical::new);
 
-    private AssemblerMechanical(Properties properties) {
+    private ApplyerMechanical(Properties properties) {
         super(properties);
     }
 
-    public AssemblerMechanical() {
+    public ApplyerMechanical() {
         this(Properties.ofFullCopy(Blocks.STONECUTTER).setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, "assembler"))));
     }
 
     @Override
     public Item getAssocItem() {
-        return TekoraItems.ASSEMBLING_SHAFT.get();
+        return TekoraItems.APPLYING_SHAFT.get();
     }
 
     @Override
@@ -37,6 +37,6 @@ public class AssemblerMechanical extends AbstractModularMachine{
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new AssemblerMechanicalEntity(blockPos, blockState);
+        return new ApplyerMechanicalEntity(blockPos, blockState);
     }
 }

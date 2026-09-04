@@ -49,7 +49,7 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> PLASTIC_GEAR_PART = ITEMS.register("plastic_gear_part", () -> new GearPartItem("plastic_gear_part", GearType.PLASTIC, true));
   public static final DeferredHolder<Item, Item> STEEL_GEAR_PART = ITEMS.register("steel_gear_part", () -> new GearPartItem("steel_gear_part", GearType.STEEL, false));
 
-  public static final DeferredHolder<Item, Item> ASSEMBLING_SHAFT = ITEMS.register("assembling_shaft", () -> new MachinePartItem("assembling_shaft", TekoraBlocks.ASSEMBLER.get()));
+  public static final DeferredHolder<Item, Item> APPLYING_SHAFT = ITEMS.register("applying_shaft", () -> new MachinePartItem("applying_shaft", TekoraBlocks.ASSEMBLER.get()));
   public static final DeferredHolder<Item, Item> CRUSHING_WHEEL = ITEMS.register("crushing_wheel", () -> new MachinePartItem("crushing_wheel", TekoraBlocks.CRUSHER.get()));
   public static final DeferredHolder<Item, Item> WHISK = ITEMS.register("whisk", () -> new MachinePartItem("whisk", TekoraBlocks.MIXER.get()));
   public static final DeferredHolder<Item, Item> PRESS_SHAFT = ITEMS.register("press_shaft", () -> new MachinePartItem("press_shaft", TekoraBlocks.PRESS.get()));

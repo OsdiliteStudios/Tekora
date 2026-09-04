@@ -17,6 +17,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.menu.DepotMenu;
 import net.osdilites.tekora.recipes.*;
 import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
@@ -44,7 +45,9 @@ public class DepotEntity extends AbstractModularCraftEntity {
 
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        // todo, implement the deployment recipes
+        if (pLevel != null && !pLevel.isClientSide() && pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
+            // todo, implement the deployment recipes
+        }
         super.tick(pLevel, pPos, pState);
     }
 

@@ -25,13 +25,13 @@ public class TekoraRecipes {
                 }
             });
 
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AssemblingRecipe>> ASSEMBLING_SERIALIZER =
-            SERIALIZERS.register("assembling", () -> new RecipeSerializer<>(AssemblingRecipe.CODEC, AssemblingRecipe.STREAM_CODEC));
-    public static final DeferredHolder<RecipeType<?>, RecipeType<AssemblingRecipe>> ASSEMBLING_TYPE =
-            TYPES.register("assembling", () -> new RecipeType<>() {
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ApplyingRecipe>> APPLYING_SERIALIZER =
+            SERIALIZERS.register("applying", () -> new RecipeSerializer<>(ApplyingRecipe.CODEC, ApplyingRecipe.STREAM_CODEC));
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ApplyingRecipe>> APPLYING_TYPE =
+            TYPES.register("applying", () -> new RecipeType<>() {
                 @Override
                 public String toString() {
-                    return "assembling";
+                    return "applying";
                 }
             });
 

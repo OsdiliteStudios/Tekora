@@ -307,20 +307,20 @@ public class TekoraShaftBody {
     // we don't know whether time will be in seconds since
     // we need to define seconds relative to Minecraft ticks.
     public void addTorque(BlockPos pPos, double torque) {
-        boolean isValid;
+        boolean isValid = !(Double.isNaN(torque) || Double.isInfinite(torque));
         double val;
         switch (axis) {
             case X -> {
                 val = pPos.getX();
-                isValid = pPos.getY() == f && pPos.getZ() == g;
+                isValid = isValid && pPos.getY() == f && pPos.getZ() == g;
             }
             case Y -> {
                 val = pPos.getY();
-                isValid = pPos.getX() == f && pPos.getZ() == g;
+                isValid = isValid && pPos.getX() == f && pPos.getZ() == g;
             }
             default -> {
                 val = pPos.getZ();
-                isValid = pPos.getX() == f && pPos.getY() == g;
+                isValid = isValid && pPos.getX() == f && pPos.getY() == g;
             }
         }
 
@@ -381,6 +381,11 @@ public class TekoraShaftBody {
     }
 
     public AbstractShaftConnectableEntity getEntityBefore() {
+        BlockEntity endTest = level.getBlockEntity(start);
+        if (endTest == null || endTest.getBlockState().hasProperty(BlockStateProperties.FACING)) {
+            return null;
+        }
+
         BlockEntity checked = level.getBlockEntity(switch (axis) {
             case X -> start.west();
             case Y -> start.below();
@@ -399,10 +404,15 @@ public class TekoraShaftBody {
     }
 
     public AbstractShaftConnectableEntity getEntityAfter() {
+        BlockEntity endTest = level.getBlockEntity(end);
+        if (endTest == null || endTest.getBlockState().hasProperty(BlockStateProperties.FACING)) {
+            return null;
+        }
+
         BlockEntity checked = level.getBlockEntity(switch (axis) {
-            case X -> start.east();
-            case Y -> start.above();
-            case Z -> start.south();
+            case X -> end.east();
+            case Y -> end.above();
+            case Z -> end.south();
         });
         if (checked instanceof AbstractShaftConnectableEntity connectable) {
             BlockState state = connectable.getBlockState();
@@ -471,9 +481,9 @@ public class TekoraShaftBody {
         moment = val;
     }
 
+    // for Debugging purposes
     @Override
     public String toString() {
-        // for Debugging purposes
         return "\n  id: " + hashCode() + "\n  velocity: " + velocity + ", oldRot: " + oldAngle + ", newRot: " + angle +
                 "\n  moment of inertia: " + moment + ", attached moment of inertia: " + attachedMoment + "\n  moments array: " + moments +
                 "\n  axis: " + axis + ", starts: " + pA + ", ends: " + pB;

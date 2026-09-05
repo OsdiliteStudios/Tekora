@@ -6,7 +6,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class CrusherMechanicalEntity extends AbstractModularMachineEntity {
     public CrusherMechanicalEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.CRUSHER.get(), pPos, pBlockState);
+        super(TekoraBlockEntities.CRUSHER.get(), pPos, pBlockState, true);
     }
 
     @Override

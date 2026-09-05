@@ -2,13 +2,22 @@ package net.osdilites.tekora.block.entities.mechanical;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.osdilites.tekora.block.TekoraBlockStates;
-import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
@@ -22,11 +31,17 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
     private double torque;
     private float velocity; // note as with all Tekora object classes, velocity here describes angular velocity (omega)
 
+    private float yPos = 0.0f;
+    private final float g;
+    private final boolean rotational;
+
     @Nullable
     private TekoraShaftBody body;
 
-    public AbstractModularMachineEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+    public AbstractModularMachineEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, boolean rotational) {
         super(pType, pPos, pBlockState);
+        this.g = -0.49f; // todo, make this defined by dimensional gravity
+        this.rotational = rotational;
     }
 
     public float getOldAngle() {
@@ -43,16 +58,20 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
             double orgV = componentRadius() * velocity;
             double tot = 0;
 
-            BlockEntity north = pLevel.getBlockEntity(pPos.north());
-            BlockEntity south = pLevel.getBlockEntity(pPos.south());
-            BlockEntity east = pLevel.getBlockEntity(pPos.east());
-            BlockEntity west = pLevel.getBlockEntity(pPos.west());
+            GearType type = pState.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE);
+            if (type != GearType.NONE) {
+                BlockEntity north = pLevel.getBlockEntity(pPos.north());
+                BlockEntity south = pLevel.getBlockEntity(pPos.south());
+                BlockEntity east = pLevel.getBlockEntity(pPos.east());
+                BlockEntity west = pLevel.getBlockEntity(pPos.west());
 
-            // the contact math works in theory, the math still needs to be fixed
-            tot += contact(pLevel, pPos, pPos.north(), orgV, north);
-            tot += contact(pLevel, pPos, pPos.south(), orgV, south);
-            tot += contact(pLevel, pPos, pPos.east(), orgV, east);
-            tot += contact(pLevel, pPos, pPos.west(), orgV, west);
+                // the contact math works in theory, the math still needs to be fixed
+                tot += contact(pLevel, pPos, pPos.north(), orgV, north);
+                tot += contact(pLevel, pPos, pPos.south(), orgV, south);
+                tot += contact(pLevel, pPos, pPos.east(), orgV, east);
+                tot += contact(pLevel, pPos, pPos.west(), orgV, west);
+            }
+
 
             BlockPos above = pPos.above();
             if (pLevel.getBlockEntity(above) instanceof AbstractShaftConnectableEntity rot) {
@@ -98,7 +117,7 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
 
         if (ent instanceof ShaftEntity cog && canBeCog() && cog.canBeCog()) {
             BlockState otherState = pLevel.getBlockState(otherPos);
-            if (otherState.hasProperty(BlockStateProperties.AXIS) && otherState.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) {
+            if (otherState.hasProperty(BlockStateProperties.AXIS) && otherState.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y && otherState.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
                 double r1 = componentRadius();
                 double r2 = cog.componentRadius();
 
@@ -109,7 +128,7 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
                 cog.getBody().addTorque(otherPos, r2 * factor);
                 return r1 * factor;
             }
-        } else if (ent instanceof AbstractModularMachineEntity machine) {
+        } else if (ent instanceof AbstractModularMachineEntity machine && machine.getBlockState().getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
             double r1 = componentRadius();
             double r2 = machine.componentRadius();
 
@@ -165,23 +184,98 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
     }
 
     public void addTorque(double torque) {
-        if (body == null) {
-            this.velocity += (float) (torque / getMoment());
-            this.torque += torque;
-        } else {
-            this.body.addTorque(getBlockPos().above(), torque);
-            this.velocity = (float)this.body.getVelocity();
-            this.torque += torque;
+        if (!(Double.isNaN(torque) || Double.isInfinite(torque))) {
+            if (body == null) {
+                this.velocity += (float) (torque * 0.05 / getMoment());
+                this.torque += torque;
+            } else if (body.axisMatch(Direction.Axis.Y)) {
+                this.body.addTorque(getBlockPos().above(), torque);
+                this.velocity = (float) this.body.getVelocity();
+                this.torque += torque;
+            }
         }
     }
 
-    public float getProgress() {
-        if (level != null) {
-            BlockPos below = getBlockPos().below();
-            if (level.getBlockEntity(below) instanceof AbstractModularCraftEntity crafter) {
-                return crafter.getProgress();
+    public void increment(Level level) {
+        if (yPos > -0.5f) {
+            yPos -= (float)Math.sqrt((-2 * yPos + 1) * ((velocity * velocity * -g))) / 20f;
+            if (yPos < -0.5f || Double.isNaN(yPos) || Double.isInfinite(yPos)) {
+                yPos = -0.5f;
             }
+            if (level != null) level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
-        return 0;
+    }
+
+    public void decrement(Level level) {
+        float factor = (velocity * velocity);
+        if (yPos < 0 && factor > g) {
+            yPos += (float)Math.sqrt((2 * yPos + 0.5f) * (factor * -g)) / 20f;
+            if (yPos >= 0 || Double.isNaN(yPos) || Double.isInfinite(yPos)) {
+                yPos = 0;
+            }
+            if (level != null) level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
+    }
+
+    public boolean canCraft(double ratedVelocity) {
+        if (rotational) {
+            return velocity > ratedVelocity;
+        } else {
+            return yPos <= -0.5f;
+        }
+    }
+    
+    public float getHeightPosition() {
+        return yPos;
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        if (level != null && body != null) {
+            body.save(output);
+        } else {
+            output.putDouble("velocity", velocity);
+            output.putFloat("angle", curRot);
+        }
+        output.putFloat("machine.ypos", yPos);
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        if (body != null) {
+            body.load(input);
+        } else {
+            velocity = input.getFloatOr("velocity", 0);
+            curRot = oldRot = input.getFloatOr("angle", 0);
+        }
+        yPos = input.getFloatOr("machine.ypos", 0);
+    }
+
+    // BLOCK ENTITY SYNC
+    @Override
+    public void handleUpdateTag(ValueInput input) {
+        super.handleUpdateTag(input);
+        loadAdditional(input);
+    }
+
+    @Override
+    public @org.jspecify.annotations.Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ValueInput valueInput) {
+        this.handleUpdateTag(valueInput);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, registries);
+        this.saveAdditional(output);
+        tag.merge(output.buildResult());
+        return tag;
     }
 }

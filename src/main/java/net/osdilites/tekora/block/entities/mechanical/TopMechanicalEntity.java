@@ -6,7 +6,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class TopMechanicalEntity extends AbstractModularMachineEntity {
     public TopMechanicalEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.TOP_MECH.get(), pPos, pBlockState);
+        super(TekoraBlockEntities.TOP_MECH.get(), pPos, pBlockState, false);
     }
 
     @Override

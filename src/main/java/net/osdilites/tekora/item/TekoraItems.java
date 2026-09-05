@@ -83,6 +83,7 @@ public class TekoraItems {
             GearType type = modular.getBlockState().getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE);
             msg += "Object has a geartype of " + type + "\n";
             msg += "Object has a velocity of " + modular.getVelocity() + "\n";
+            msg += "Object has a height position of " + modular.getHeightPosition() + "\n";
           } else if (ent instanceof AbstractModularCraftEntity crafter) {
             msg += "Progress at " + crafter.getProgress() + "\n";
           }

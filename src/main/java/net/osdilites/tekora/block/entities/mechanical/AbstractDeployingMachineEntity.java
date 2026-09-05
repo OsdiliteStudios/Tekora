@@ -35,7 +35,7 @@ public abstract class AbstractDeployingMachineEntity extends AbstractModularMach
     };
 
     public AbstractDeployingMachineEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
-        super(pType, pPos, pBlockState);
+        super(pType, pPos, pBlockState, false);
     }
 
     @Override

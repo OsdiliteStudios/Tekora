@@ -135,7 +135,7 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
         if (ent instanceof ShaftEntity cog && canBeCog() && cog.canBeCog()) {
             BlockState otherState = pLevel.getBlockState(otherPos);
             BlockState selfState = pLevel.getBlockState(curPos);
-            if (otherState.hasProperty(BlockStateProperties.AXIS) && selfState.hasProperty(BlockStateProperties.AXIS)) {
+            if (otherState.hasProperty(BlockStateProperties.AXIS) && selfState.hasProperty(BlockStateProperties.AXIS) && otherState.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
                 Direction.Axis otherVal = otherState.getValue(BlockStateProperties.AXIS);
                 Direction.Axis selfVal = selfState.getValue(BlockStateProperties.AXIS);
                 if (otherVal == selfVal) {
@@ -150,7 +150,7 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
                     return r1 * factor;
                 }
             }
-        } else if (ent instanceof AbstractModularMachineEntity machine) {
+        } else if (ent instanceof AbstractModularMachineEntity machine && machine.getBlockState().getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
             BlockState selfState = pLevel.getBlockState(curPos);
             if (selfState.hasProperty(BlockStateProperties.AXIS) && selfState.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) {
                 double r1 = componentRadius();

@@ -64,7 +64,7 @@ public class ModularUpDownPartRenderer implements BlockEntityRenderer<AbstractMo
 
         state.crumbling = breakProgress;
         state.texture = this.texture;
-        state.progress = blockEntity.getProgress();
+        state.yPos = blockEntity.getHeightPosition();
         state.setAngle(Mth.lerp(partialTicks, blockEntity.getOldAngle(), blockEntity.getAngle()));
         BlockStateModel shaftModel = Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(hypothetical);
         state.parts = new ArrayList<>();
@@ -114,7 +114,7 @@ public class ModularUpDownPartRenderer implements BlockEntityRenderer<AbstractMo
         // todo, make the transformation more "sound"
         // if progress has a positive derivative at the current tick, than it goes down and stays down
         // otherwise, the thing goes up and stays up.
-        poseStack.translate(0.0D, (Math.sin(Math.sin(Math.PI * (2 * state.progress + 1.0)) + 1 - Math.PI/2) - 0.5) / 3.0, 0.0D);
+        poseStack.translate(0.0D, state.yPos, 0.0D);
         poseStack.translate(-0.5D, -0.5D, -0.5D);
 
         for (Map.Entry<RenderType, List<BakedQuad>> entry : quadsByRenderType.entrySet()) {

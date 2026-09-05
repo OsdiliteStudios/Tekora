@@ -63,7 +63,6 @@ public class ModularRotatingRenderer implements BlockEntityRenderer<AbstractModu
 
         state.crumbling = breakProgress;
         state.texture = this.texture;
-        state.progress = blockEntity.getProgress();
         state.setAngle(Mth.lerp(partialTicks, blockEntity.getOldAngle(), blockEntity.getAngle()));
         BlockStateModel shaftModel = Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(hypothetical);
         state.parts = new ArrayList<>();

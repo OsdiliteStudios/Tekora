@@ -6,7 +6,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class PressMechanicalEntity extends AbstractModularMachineEntity {
     public PressMechanicalEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.PRESS.get(), pPos, pBlockState);
+        super(TekoraBlockEntities.PRESS.get(), pPos, pBlockState, false);
     }
 
     @Override

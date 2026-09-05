@@ -290,6 +290,8 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
 
     private void synchronizeEntities() {
         if (body != null && level != null) {
+            // do NOT remove the before and after statements
+            // these solve an edge case with joining shafft bodies
             AbstractShaftConnectableEntity before = body.getEntityBefore();
             boolean sync = true;
             if (before != null) {
@@ -348,6 +350,9 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
         super.saveAdditional(output);
         if (level != null && body != null) {
             body.save(output);
+        } else {
+            output.putDouble("velocity", 0);
+            output.putFloat("angle", getAngle());
         }
     }
 

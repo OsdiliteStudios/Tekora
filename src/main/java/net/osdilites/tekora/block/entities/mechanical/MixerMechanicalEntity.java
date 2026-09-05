@@ -7,7 +7,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class MixerMechanicalEntity extends AbstractModularMachineEntity {
     public MixerMechanicalEntity(BlockPos pPos, BlockState pState) {
-        super(TekoraBlockEntities.MIXER.get(), pPos, pState);
+        super(TekoraBlockEntities.MIXER.get(), pPos, pState, true);
     }
 
     @Override

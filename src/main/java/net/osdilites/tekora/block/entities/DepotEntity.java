@@ -26,6 +26,8 @@ import org.jspecify.annotations.Nullable;
 import java.util.Optional;
 
 public class DepotEntity extends AbstractModularCraftEntity {
+    boolean activeMode = true;
+
     public DepotEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.DEPOT.get(), pPos, pState);
     }
@@ -51,7 +53,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
         super.tick(pLevel, pPos, pState);
     }
 
-    protected double crafting(Level level, String type, double velocity, double torque) {
+    protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
         DepotRecipeInput input = new DepotRecipeInput(this.inventory.getResource(0).toStack(), type);
         Optional<RecipeHolder<DepotRecipe>> recipe = getCurrentRecipe(TekoraRecipes.DEPOT_TYPE.get(), input);
         if (recipe.isPresent()) {
@@ -61,24 +63,36 @@ public class DepotEntity extends AbstractModularCraftEntity {
             var resource = inventory.getResource(1);
             boolean hasRecipe = val.matches(input, level) && (resource.isEmpty() || resource.is(output.getItem()))
                     && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= inventory.getAmountAsInt(1) + output.getCount();
-            if (hasRecipe && Math.abs(velocity) >= ratedVelocity) {
+            if (activeMode && hasRecipe && Math.abs(velocity) >= ratedVelocity) {
                 double cutTorque = val.cutTorque();
                 double cutConst = (torque - cutTorque) / ratedVelocity;
-                progress += 0.015625f;
-                if (progress == 1.0f) {
-                    try (Transaction transaction = Transaction.openRoot()) {
-                        ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
-                        inventory.extract(inventory.getResource(0), 1, transaction);
-                        inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
-                        transaction.commit();
+                if (ent.canCraft(ratedVelocity)) {
+                    progress += (float) (Math.abs(velocity) / (256 * ratedVelocity));
+                    if (progress >= 1.0f) {
+                        try (Transaction transaction = Transaction.openRoot()) {
+                            ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
+                            inventory.extract(inventory.getResource(0), 1, transaction);
+                            inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
+                            transaction.commit();
+                        }
+                        progress = 0;
+                        ent.decrement(level);
+                        activeMode = false;
                     }
-                    progress = 0;
+                    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                } else {
+                    ent.increment(level);
                 }
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 return (torque < 0 ? -1 : 1) * Math.max(0, Math.min(cutTorque, cutTorque + cutConst * Math.abs(velocity)));
+            } else {
+                ent.decrement(level);
+            }
+            if (ent.getHeightPosition() >= 0) {
+                activeMode = true;
             }
         } else {
             progress = 0;
+            ent.decrement(level);
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
         return 0;

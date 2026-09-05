@@ -7,7 +7,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class CutterMechanicalEntity extends AbstractModularMachineEntity {
     public CutterMechanicalEntity(BlockPos pPos, BlockState pState) {
-        super(TekoraBlockEntities.CUTTER.get(), pPos, pState);
+        super(TekoraBlockEntities.CUTTER.get(), pPos, pState, false);
     }
 
     @Override

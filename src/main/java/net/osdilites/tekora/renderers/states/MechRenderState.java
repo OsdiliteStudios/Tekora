@@ -10,5 +10,5 @@ public class MechRenderState extends TekoraRotatingRenderState {
     public StandaloneModelLoader.BakedModels bakedModels;
     public Identifier texture;
     public QuadCollection quads;
-    public float progress;
+    public float yPos;
 }

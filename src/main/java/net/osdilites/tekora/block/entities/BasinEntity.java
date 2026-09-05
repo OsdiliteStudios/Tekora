@@ -21,8 +21,11 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.menu.BasinMenu;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 
 public class BasinEntity extends AbstractModularCraftEntity {
     private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 8000) {
@@ -41,6 +44,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
         }
         // todo, for this value allow fluids to "mix", the "mixing" process may trigger a chemical reaction so keep that in mind on every tick.
     };
+
+    private final ArrayList<ItemStack> toBeRemoved = new ArrayList<>(11);
 
     public BasinEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState);
@@ -82,7 +87,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
         super.tick(pLevel, pPos, pState);
     }
 
-    protected double crafting(Level level, String type, double velocity, double torque) {
+    protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
         return 0;
     }
 

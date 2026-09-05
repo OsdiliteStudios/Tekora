@@ -103,11 +103,11 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
             } else if (block.equals(TekoraBlocks.CUTTER.get())) {
                 machineType = TekoraMechanicalRecipe.CUTTER;
             }
-            if (!machineType.isEmpty()) ent.addTorque(crafting(pLevel, machineType, ent.getVelocity(), torque));
+            if (!machineType.isEmpty()) ent.addTorque(crafting(pLevel, ent, machineType, ent.getVelocity(), torque));
         }
     }
 
-    abstract protected double crafting(Level level, String type, double velocity, double torque);
+    abstract protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque);
 
     protected <S extends RecipeInput, T extends Recipe<S>> Optional<RecipeHolder<T>> getCurrentRecipe(RecipeType<T> recipeType, S input) {
         return ((ServerLevel) level).recipeAccess()

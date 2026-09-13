@@ -14,6 +14,8 @@ import net.osdilites.tekora.block.entities.Depot;
 import net.osdilites.tekora.block.entities.mechanical.*;
 import net.osdilites.tekora.block.entities.thermal.KilnFurnace;
 import net.osdilites.tekora.block.entities.transporter.rotational.*;
+import net.osdilites.tekora.block.fluids.ChemicalLiquidBlock;
+import net.osdilites.tekora.fluid.TekoraFluids;
 import net.osdilites.tekora.item.TekoraItems;
 
 import java.util.function.Supplier;
@@ -21,11 +23,13 @@ import java.util.function.Supplier;
 public class TekoraBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Tekora.MODID);
 
+    // shaft connectables
     public static final DeferredHolder<Block, Shaft> STEEL_SHAFT =
             createBlock("steel_shaft", () -> new Shaft("steel_shaft", ShaftEntity.STEEL_I));
-
     public static final DeferredHolder<Block, HandCrank> HAND_CRANK =
             createBlock("hand_crank", () -> new HandCrank("hand_crank", 1));
+
+    // mech attachments
     public static final DeferredHolder<Block, ApplyerMechanical> ASSEMBLER =
             BLOCKS.register("assembler", ApplyerMechanical::new);
     public static final DeferredHolder<Block, MixerMechanical> MIXER =
@@ -40,12 +44,26 @@ public class TekoraBlocks {
             BLOCKS.register("cutter", CutterMechanical::new);
     public static final DeferredHolder<Block, TopMechanical> MECH_TOP =
             createBlock("mechanical_top", TopMechanical::new);
-    public static final DeferredHolder<Block, KilnFurnace> KILN_FURNACE =
-            createBlock("kiln_furnace", () -> new KilnFurnace(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
+
+    // machine holders
     public static final DeferredHolder<Block, Basin> BASIN =
             createBlock("basin", Basin::new);
     public static final DeferredHolder<Block, Depot> DEPOT =
             createBlock("depot", Depot::new);
+
+    // megablock components
+    public static final DeferredHolder<Block, KilnFurnace> KILN_FURNACE =
+            createBlock("kiln_furnace", () -> new KilnFurnace(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
+
+    // fluids
+    public static final DeferredHolder<Block, ChemicalLiquidBlock> ACETONE =
+            createBlock("acetone", () -> new ChemicalLiquidBlock(TekoraFluids.ACETONE_SOURCE.get()));
+    public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFUR_DIOXIDE =
+            createBlock("sulfur_dioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_DIOXIDE_SOURCE.get()));
+    public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFUR_TRIOXIDE =
+            createBlock("sulfur_trioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_TRIOXIDE_SOURCE.get()));
+    public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFURIC_ACID =
+            createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get()));
 
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);

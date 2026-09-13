@@ -18,6 +18,7 @@ import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.osdilites.tekora.util.TekoraShaftBody;
+import net.osdilites.tekora.util.UtilFunctions;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -100,14 +101,7 @@ public abstract class AbstractShaftConnectableEntity extends BlockEntity {
             if (bodyTicker && (hasFacing || hasAxis)) {
                 body.tick();
             }
-            double pressure = 1; // in bars todo make this number dimension specific
-            // If Tekora space became a thing, this may also need to read from dimension json files.
-            // For any possible Ad Astra, Stellaris, or Northstar compatibility, read off json files.
-            // For other mods that add dimensions, we'll treat 1 as the default value.
-
-            // todo, beyond air resistance, we need to wonder about friction applied by blocks in contact with the block.
-            //  This could be done by hard coding it (as in using class hierarchies etc) or the use of json files for datapack creators or mods.
-            body.addTorque(pPos, -0.5 * pressure * componentRadius() * body.getVelocity()); // this value inputted in air resistance
+            body.addTorque(pPos, UtilFunctions.getAirResTorque(level, componentRadius(), body.getVelocity())); // this value inputted in air resistance
         } else {
             createOrJoinBody();
         }

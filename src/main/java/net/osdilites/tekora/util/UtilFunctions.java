@@ -1,10 +1,14 @@
 package net.osdilites.tekora.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.item.TekoraItems;
 
@@ -71,10 +75,68 @@ public class UtilFunctions {
         };
     }
 
-    public static double getPressure(Level level) {
+    public static double getPressure(Level level) { // bars (or hundred kPa)
         if (level != null && !level.isClientSide()) {
-            level.environmentAttributes();
+            ResourceKey<Level> type = level.dimension();
+            if (type.equals(Level.OVERWORLD)) {
+                return 1.013;
+            } else if (type.equals(Level.NETHER)) {
+                return 2.0;
+            } else if (type.equals(Level.END)) {
+                return 0.5;
+            } else {
+                // todo, use dimension jsons to find value.
+            }
+
+        }
+        return 1.013;
+    }
+
+    public static double getAirHeatTransfer(Level level) { // J/g K
+        if (level != null && !level.isClientSide()) {
+            ResourceKey<Level> type = level.dimension();
+            if (type.equals(Level.OVERWORLD)) {
+                return 1005;
+            } else if (type.equals(Level.NETHER)) {
+                return 1200;
+            } else if (type.equals(Level.END)) {
+                return 1500;
+            } else {
+                // todo, use dimension jsons to find value.
+            }
+
         }
         return 0;
+    }
+
+    public static double getAirResTorque(Level level, double radius, double velocity) {
+        double pressure = getPressure(level);
+        // todo, beyond air resistance, we need to wonder about friction applied by blocks in contact with the block.
+        //  This could be done by hard coding it (as in using class hierarchies etc) or the use of json files for datapack creators or mods.
+        return -0.5 * pressure * radius * velocity; // this value inputted in air resistance
+    }
+
+    public static double fromMcTempToKelvins(double mcTemp) {
+        return mcTemp * 25 + 273.15;
+    }
+
+    public static double fromMcTempToCelsius(double mcTemp) {
+        return mcTemp * 25;
+    }
+
+    public static double fromMcTempToFahrenheit(double mcTemp) {
+        return mcTemp * 45 + 32;
+    }
+
+    public static double fromFahrenheitToMcTemp(double fahrenheit) {
+        return (fahrenheit - 32) / 45;
+    }
+
+    public static double fromCelsiusToMcTemp(double celsius) {
+        return celsius / 25;
+    }
+
+    public static double fromKelvinsToMcTemp(double kelvins) {
+        return (kelvins - 273.15) / 25;
     }
 }

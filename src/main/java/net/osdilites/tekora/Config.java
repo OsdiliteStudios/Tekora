@@ -14,6 +14,10 @@ public class Config {
     public static final ModConfigSpec.BooleanValue ALKALI_EXPLODE = BUILDER
             .comment("Do ingots, nuggets, and blocks composed of alkali metals explode in water?")
             .define("alkaliExplode", true);
+
+    public static final ModConfigSpec.ConfigValue<Character> UNIT = BUILDER
+            .comment("Define the visible temperature unit in game, (C for Celsius, F for Fahrenheit, K for Kelvin)")
+            .define("temperatureUnit", 'C');
 //
 //    public static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
 //            .comment("A magic number")

@@ -30,7 +30,7 @@ public class TekoraBlocks {
             createBlock("hand_crank", () -> new HandCrank("hand_crank", 1));
 
     // mech attachments
-    public static final DeferredHolder<Block, ApplyerMechanical> ASSEMBLER =
+    public static final DeferredHolder<Block, ApplyerMechanical> APPLYER =
             BLOCKS.register("assembler", ApplyerMechanical::new);
     public static final DeferredHolder<Block, MixerMechanical> MIXER =
             BLOCKS.register("mixer", MixerMechanical::new);
@@ -57,13 +57,13 @@ public class TekoraBlocks {
 
     // fluids
     public static final DeferredHolder<Block, ChemicalLiquidBlock> ACETONE =
-            createBlock("acetone", () -> new ChemicalLiquidBlock(TekoraFluids.ACETONE_SOURCE.get()));
+            createBlock("acetone", () -> new ChemicalLiquidBlock(TekoraFluids.ACETONE_SOURCE.get(), "acetone"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFUR_DIOXIDE =
-            createBlock("sulfur_dioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_DIOXIDE_SOURCE.get()));
+            createBlock("sulfur_dioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_DIOXIDE_SOURCE.get(), "sulfur_dioxide"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFUR_TRIOXIDE =
-            createBlock("sulfur_trioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_TRIOXIDE_SOURCE.get()));
+            createBlock("sulfur_trioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_TRIOXIDE_SOURCE.get(), "sulfur_trioxide"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFURIC_ACID =
-            createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get()));
+            createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get(), "sulfuric_acid"));
 
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);

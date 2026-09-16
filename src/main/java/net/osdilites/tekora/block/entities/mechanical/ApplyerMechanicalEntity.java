@@ -6,7 +6,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class ApplyerMechanicalEntity extends AbstractDeployingMachineEntity {
     public ApplyerMechanicalEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.ASSEMBLER.get(), pPos, pBlockState);
+        super(TekoraBlockEntities.APPLYER.get(), pPos, pBlockState);
     }
 
     @Override

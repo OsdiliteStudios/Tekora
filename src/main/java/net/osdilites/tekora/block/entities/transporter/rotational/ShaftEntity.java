@@ -54,6 +54,7 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
             double tot = 0;
 
             if (pState.getValueOrElse(Shaft.IS_LARGE, false)) {
+                // todo, test large gears
                 // if i == -2 or 2, j != k
                 // if i == 0, j == k
                 int x = pPos.getX();

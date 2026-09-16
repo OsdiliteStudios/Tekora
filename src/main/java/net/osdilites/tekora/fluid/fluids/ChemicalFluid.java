@@ -30,6 +30,16 @@ public abstract class ChemicalFluid extends BaseFlowingFluid {
     public static class Flowing extends ChemicalFluid {
         public Flowing(Properties p) {
             super(p);
+            registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
+        }
+
+        protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
+            super.createFluidStateDefinition(builder);
+            builder.add(LEVEL);
+        }
+
+        public int getAmount(FluidState state) {
+            return state.getValue(LEVEL);
         }
 
         @Override
@@ -40,6 +50,10 @@ public abstract class ChemicalFluid extends BaseFlowingFluid {
     public static class Source extends ChemicalFluid {
         public Source(Properties p) {
             super(p);
+        }
+
+        public int getAmount(FluidState state) {
+            return 8;
         }
 
         @Override

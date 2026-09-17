@@ -20,6 +20,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
+import net.osdilites.tekora.block.entities.BasinEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableBlock;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
@@ -85,6 +86,9 @@ public class TekoraItems {
             msg += "Object has a velocity of " + modular.getVelocity() + "\n";
             msg += "Object has a height position of " + modular.getHeightPosition() + "\n";
           } else if (ent instanceof AbstractModularCraftEntity crafter) {
+            if (crafter instanceof BasinEntity basin) {
+              msg += "Tank data " + basin.getFluid() + "\n";
+            }
             msg += "Progress at " + crafter.getProgress() + "\n";
           }
           if (state.hasProperty(AbstractShaftConnectableBlock.AXIS)) {

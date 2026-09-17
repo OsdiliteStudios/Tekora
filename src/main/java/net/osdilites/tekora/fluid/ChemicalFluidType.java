@@ -1,9 +1,9 @@
-package net.osdilites.tekora.fluid.types;
+package net.osdilites.tekora.fluid;
 
 import net.neoforged.neoforge.fluids.FluidType;
 
 public class ChemicalFluidType extends FluidType {
-    private final double molarVolume; // mol/L or mol/L
+    private final double molarVolume; // mol/L or mol/L, only applies to liquids, for gases we use the ideal gas law
 
     // anchor values
     private final double tripleTemperature; // K
@@ -241,5 +241,6 @@ public class ChemicalFluidType extends FluidType {
             this.polymerDegradationRate = rate;
             return this;
         }
+        // todo, include a solid block form property, a smoke particle color property, and an "effect" or "damage" property
     }
 }

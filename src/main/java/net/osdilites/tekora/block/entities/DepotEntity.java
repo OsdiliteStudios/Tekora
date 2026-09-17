@@ -17,6 +17,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.menu.DepotMenu;
 import net.osdilites.tekora.recipes.*;
@@ -45,15 +46,12 @@ public class DepotEntity extends AbstractModularCraftEntity {
         };
     }
 
-    @Override
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (pLevel != null && !pLevel.isClientSide() && pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
-            // todo, implement the deployment recipes
-        }
-        super.tick(pLevel, pPos, pState);
-    }
-
     protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
+        if (ent instanceof AbstractDeployingMachineEntity deployer) {
+            // todo, add applying and printing recipes here
+            return 0;
+        }
+
         DepotRecipeInput input = new DepotRecipeInput(this.inventory.getResource(0).toStack(), type);
         Optional<RecipeHolder<DepotRecipe>> recipe = getCurrentRecipe(TekoraRecipes.DEPOT_TYPE.get(), input);
         if (recipe.isPresent()) {
@@ -111,6 +109,8 @@ public class DepotEntity extends AbstractModularCraftEntity {
                 return Component.translatable("blockfunc.tekora.printer");
             } else if (block.equals(TekoraBlocks.CUTTER.get())) {
                 return Component.translatable("blockfunc.tekora.cutter");
+            } else if (block.equals(TekoraBlocks.APPLYER.get())) {
+                return Component.translatable("blockfunc.tekora.applyer");
             } else {
                 return Component.translatable("block.tekora.depot");
             }

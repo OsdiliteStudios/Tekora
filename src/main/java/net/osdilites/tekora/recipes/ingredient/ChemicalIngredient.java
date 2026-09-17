@@ -9,6 +9,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 
+// todo, figure out how gas and dissolution behavior works
 public record ChemicalIngredient(Either<Ingredient, FluidIngredient> input) {
     public static final Codec<ChemicalIngredient> CODEC = Codec.either(
             Ingredient.CODEC,

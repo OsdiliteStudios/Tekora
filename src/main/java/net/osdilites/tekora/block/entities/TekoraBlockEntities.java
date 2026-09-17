@@ -10,7 +10,6 @@ import net.osdilites.tekora.block.entities.mechanical.*;
 import net.osdilites.tekora.block.entities.transporter.rotational.HandCrankEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 import net.osdilites.tekora.block.entities.thermal.KilnFurnaceEntity;
-import net.osdilites.tekora.block.fluids.ChemicalLiquidBlockEntity;
 
 import java.util.Set;
 import java.util.function.Supplier;
@@ -66,10 +65,6 @@ public class TekoraBlockEntities {
 //    public static final Supplier<BlockEntityType<WaterwheelEntity.Wood>> WOODEN_WATERWHEEL =
 //            BLOCK_ENTITIES.register("wooden_waterwheel", () -> new BlockEntityType<>(WaterwheelEntity.Wood::new,
 //                    Set.of(TekoraBlocks.WOODEN_WATERWHEEL.get())));
-
-    public static final Supplier<BlockEntityType<ChemicalLiquidBlockEntity>> CHEMICAL_LIQUID =
-            BLOCK_ENTITIES.register("chemical_liquid", () -> new BlockEntityType<>(ChemicalLiquidBlockEntity::new,
-                    Set.of(TekoraBlocks.ACETONE.get(), TekoraBlocks.SULFUR_DIOXIDE.get(), TekoraBlocks.SULFUR_TRIOXIDE.get(), TekoraBlocks.SULFURIC_ACID.get())));
 
     public static final Supplier<BlockEntityType<KilnFurnaceEntity>> KILN_FURNACE =
             BLOCK_ENTITIES.register("kiln_furnace", () -> new BlockEntityType<>(KilnFurnaceEntity::new,

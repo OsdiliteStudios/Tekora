@@ -14,6 +14,7 @@ import net.osdilites.tekora.item.TekoraItems;
 
 public class UtilFunctions {
     public static double IDEAL_GAS_CONST = 8.31446261815324; // J/mol K
+    public static double IDEAL_GAS_CONST_BARS = 0.083144; // L bar/mol K
 
     // The values below assume that the block has a blockstate of Direction.UP (or Direction.Axis.Y)
     public static VoxelShape[] generateShapeForAllRotations(double pX1, double pY1, double pZ1, double pX2, double pY2, double pZ2) {

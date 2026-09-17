@@ -10,8 +10,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
-import net.osdilites.tekora.fluid.fluids.ChemicalFluid;
-import net.osdilites.tekora.fluid.types.TekoraFluidTypes;
 
 public class TekoraFluids {
     public static final DeferredRegister<Fluid> FLUIDS =

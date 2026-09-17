@@ -21,13 +21,18 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.menu.BasinMenu;
+import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
 public class BasinEntity extends AbstractModularCraftEntity {
+    private double temperature; // K
+    private double heatCapacity; // K/L
+
     private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 8000) {
         @Override
         protected void onContentsChanged(int index, FluidStack previousContents) {
@@ -81,13 +86,16 @@ public class BasinEntity extends AbstractModularCraftEntity {
         return true; // todo, make the recipe consume fluid
     }
 
-    @Override
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        // todo, take chemical reaction recipe into consideration.
-        super.tick(pLevel, pPos, pState);
-    }
-
     protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
+        // todo, use handler to check if a recipe containing them exists.
+        if (type.equals(TekoraMechanicalRecipe.MIXER)) {
+            // todo, create chemical reaction recipes
+        }
+        if (ent instanceof AbstractDeployingMachineEntity deployer) {
+            // todo, add applying and printing recipes here
+            // possible idea, maybe this creates ink water and allows maps to be made
+            return 0;
+        }
         return 0;
     }
 
@@ -146,16 +154,11 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 && ItemAccess.forHandlerIndex(inventory, 0).getCapability(Capabilities.Fluid.ITEM).getAmountAsInt(0) != 0;
     }
 
-
     // todo, modify the two methods below in accordance with the JSON files
     private void extractFluidForCrafting() {
         try(Transaction transaction = Transaction.openRoot()) {
             tank.extract(tank.getResource(0), 1000, transaction);
             transaction.commit();
         }
-    }
-
-    private boolean hasEnoughFluidToCraft() {
-        return tank.getAmountAsInt(0) >= 1000;
     }
 }

@@ -10,7 +10,7 @@ import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.data.TekoraComponents;
 import net.osdilites.tekora.fluid.TekoraFluids;
-import net.osdilites.tekora.fluid.types.TekoraFluidTypes;
+import net.osdilites.tekora.fluid.TekoraFluidTypes;
 import net.osdilites.tekora.item.TekoraItems;
 import net.osdilites.tekora.item.TekoraCreativeTabs;
 import net.osdilites.tekora.menu.TekoraMenus;

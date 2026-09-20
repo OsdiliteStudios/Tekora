@@ -10,6 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -30,9 +32,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 
 public class BasinEntity extends AbstractModularCraftEntity {
-    private double temperature; // K
-    private double heatCapacity; // K/L
-
     private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 8000) {
         @Override
         protected void onContentsChanged(int index, FluidStack previousContents) {
@@ -67,6 +66,11 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 super.onContentsChanged(index, previousContents);
                 BasinEntity.this.setChanged();
                 if(level != null && !level.isClientSide()) {
+                    if (index == 0) {
+                        fillTank();
+                    } else if (index == 1) {
+                        emptyTank();
+                    }
                     level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 }
             }
@@ -88,8 +92,13 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
     protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
         // todo, use handler to check if a recipe containing them exists.
+        // note, it is possible to hardcode mole behavior
         if (type.equals(TekoraMechanicalRecipe.MIXER)) {
             // todo, create chemical reaction recipes
+
+            // test code for compoundTags
+            FluidResource fluidResource = tank.getResource(0);
+
         }
         if (ent instanceof AbstractDeployingMachineEntity deployer) {
             // todo, add applying and printing recipes here
@@ -125,6 +134,18 @@ public class BasinEntity extends AbstractModularCraftEntity {
         return new BasinMenu(pContainerId, pPlayerInventory, this, inventory, data);
     }
 
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putChild("modcraft.tank", tank);
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        input.child("modcraft.tank").ifPresent(tank::deserialize);
+    }
+
     // FLUID HANDLING
     public FluidStacksResourceHandler getFluidTank(@Nullable Direction direction) {
         return this.tank;
@@ -134,16 +155,34 @@ public class BasinEntity extends AbstractModularCraftEntity {
         return new FluidStack(tank.getResource(0).getFluid(), tank.getAmountAsInt(0));
     }
 
-    private void transferFluidFromItemToTank() {
+    private void fillTank() {
         try(Transaction transaction = Transaction.openRoot()) {
             ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 0);
             var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
 
-            int fluidMoved = ResourceHandlerUtil.move(itemCapability, tank, fluidResource -> true,
+            // todo, allow water bottles to get used.
+            // water bottles has a value of 333 mB
+            int fluidMoved = ResourceHandlerUtil.move(itemCapability, tank,
+                    fluidResource -> tank.getResource(0).isEmpty() || tank.getResource(0).is(fluidResource.getFluidType()),
                     FluidType.BUCKET_VOLUME, transaction);
 
             if(fluidMoved == FluidType.BUCKET_VOLUME) {
                 transaction.commit();
+            }
+        }
+    }
+
+    private void emptyTank() {
+        try(Transaction transaction = Transaction.openRoot()) {
+            int amt = tank.getAmountAsInt(0);
+            if (amt >= 1000) {
+                FluidResource fluid = tank.getResource(0);
+
+                ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 1);
+                var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
+                // todo, implement a mechanism by which a tank could be emptied.
+
+                tank.set(0, fluid, amt - 1000);
             }
         }
     }

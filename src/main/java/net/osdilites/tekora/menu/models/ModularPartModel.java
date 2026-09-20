@@ -1,4 +1,4 @@
-package net.osdilites.tekora.renderers.models;
+package net.osdilites.tekora.menu.models;
 
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;

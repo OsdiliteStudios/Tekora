@@ -13,7 +13,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import net.osdilites.tekora.block.TekoraBlocks;
-import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
 import net.osdilites.tekora.block.entities.BasinEntity;
 
 public class BasinMenu extends TekoraItemMenu {

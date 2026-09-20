@@ -3,6 +3,8 @@ package net.osdilites.tekora.util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -11,6 +13,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.item.TekoraItems;
+import net.osdilites.tekora.item.typical.TekoraChemicalItem;
 
 public class UtilFunctions {
     public static double IDEAL_GAS_CONST = 8.31446261815324; // J/mol K
@@ -139,5 +142,15 @@ public class UtilFunctions {
 
     public static double fromKelvinsToMcTemp(double kelvins) {
         return (kelvins - 273.15) / 25;
+    }
+
+    public static double getMoleCountFromIngredient(Ingredient ing) {
+        Item item = ing.getValues().get(0).value();
+        if (item instanceof TekoraChemicalItem chemicalItem) {
+            return chemicalItem.getMoles();
+        } else {
+            // todo, use JSON to derive the value
+        }
+        return 1;
     }
 }

@@ -16,7 +16,7 @@ public class Config {
             .define("alkaliExplode", true);
 
     public static final ModConfigSpec.ConfigValue<Character> UNIT = BUILDER
-            .comment("Define the visible temperature unit in game, (C for Celsius, F for Fahrenheit, K for Kelvin)")
+            .comment("Define the visible temperature unit in game, (C for Celsius, F for Fahrenheit, M for Minecraft Biome Temperature)")
             .define("temperatureUnit", 'C');
 //
 //    public static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER

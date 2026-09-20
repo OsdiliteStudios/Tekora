@@ -24,7 +24,7 @@ import java.util.List;
 // Under MIT-License: https://github.com/mezz/JustEnoughItems/blob/1.19/LICENSE.txt
 // Includes major rewrites and methods from:
 // https://github.com/mezz/JustEnoughItems/blob/1.19/Forge/src/main/java/mezz/jei/forge/platform/FluidHelper.java
-
+// Major rewrites from Kaupenjoe
 public class FluidTankRenderer {
     private static final NumberFormat nf = NumberFormat.getIntegerInstance();
     private static final int MIN_FLUID_HEIGHT = 1;
@@ -97,8 +97,9 @@ public class FluidTankRenderer {
         Fluid fluidType = fluidStack.getFluid();
         try {
             if (fluidType.isSame(Fluids.EMPTY)) {
-                tooltip.add(Component.literal("Empty"));
-                tooltip.add(Component.translatable("mccourse.tooltip.liquid.amount.with.capacity", 0, nf.format(capacity)).withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.translatable("tekora.tooltip.liquid.empty"));
+                tooltip.add(Component.translatable("tekora.tooltip.liquid.amount.with.capacity", 0, nf.format(capacity)).withStyle(ChatFormatting.GRAY));
+                // todo, include compoundTags here
                 return tooltip;
             }
 
@@ -106,17 +107,17 @@ public class FluidTankRenderer {
             tooltip.add(displayName);
 
             long amount = fluidStack.getAmount();
-            long milliBuckets = (amount * 1000) / FluidType.BUCKET_VOLUME;
+            long milliBuckets = (amount * 500) / FluidType.BUCKET_VOLUME;
 
             if (tooltipMode == TooltipMode.SHOW_AMOUNT_AND_CAPACITY) {
-                MutableComponent amountString = Component.translatable("mccourse.tooltip.liquid.amount.with.capacity", nf.format(milliBuckets), nf.format(capacity));
+                MutableComponent amountString = Component.translatable("tekora.tooltip.liquid.amount.with.capacity", nf.format(milliBuckets), nf.format(capacity));
                 tooltip.add(amountString.withStyle(ChatFormatting.GRAY));
             } else if (tooltipMode == TooltipMode.SHOW_AMOUNT) {
-                MutableComponent amountString = Component.translatable("mccourse.tooltip.liquid.amount", nf.format(milliBuckets));
+                MutableComponent amountString = Component.translatable("tekora.tooltip.liquid.amount", nf.format(milliBuckets));
                 tooltip.add(amountString.withStyle(ChatFormatting.GRAY));
             }
         } catch (RuntimeException e) {
-            Tekora.LOGGER.error("Failed to get tooltip for fluid: " + e);
+            Tekora.LOGGER.error("Failed to get tooltip for fluid: {}", String.valueOf(e));
         }
 
         return tooltip;

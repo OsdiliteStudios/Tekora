@@ -40,5 +40,10 @@
   "item.tekora.press_shaft": "Press Shaft",
   "item.tekora.ink_press_shaft": "Ink Press Shaft",
   "item.tekora.cutter_shaft": "Cutter Shaft",
-  "item.tekora.wrench": "Wrench"
+  "item.tekora.wrench": "Wrench",
+
+  "tekora.tooltip.liquid.empty": "Empty",
+  "tekora.tooltip.liquid.amount.with.capacity": "%s / %s L",
+  "tekora.tooltip.liquid.amount": "%s L",
+  "tekora.tooltip.liquid.molarity": "%s M"
 }

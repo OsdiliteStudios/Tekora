@@ -33,6 +33,9 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class AbstractModularCraftEntity extends BlockEntity implements MenuProvider {
+    private float temperature; // K
+    private float heatCapacity; // K/L
+
     public final ItemStacksResourceHandler inventory;
     protected final ContainerData data;
     protected float progress = 0; // this is now a float between 0 and 1
@@ -77,14 +80,16 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putFloat("modcraft.progress", progress);
-        output.putChild("inventory", inventory);
+        output.putChild("modcraft.inventory", inventory);
+        output.putFloat("modcraft.temperature", temperature);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         progress = input.getFloatOr("modcraft.progress", 0.0f);
-        input.child("inventory").ifPresent(inventory::deserialize);
+        input.child("modcraft.inventory").ifPresent(inventory::deserialize);
+        temperature = input.getFloatOr("modcraft.temperature", 300);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {

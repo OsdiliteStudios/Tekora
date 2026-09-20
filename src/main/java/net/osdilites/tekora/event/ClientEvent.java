@@ -23,8 +23,8 @@ import net.osdilites.tekora.menu.TekoraMenus;
 import net.osdilites.tekora.menu.screens.BasinScreen;
 import net.osdilites.tekora.menu.screens.DepotScreen;
 import net.osdilites.tekora.menu.screens.KilnFurnaceScreen;
-import net.osdilites.tekora.renderers.models.ModularPartModel;
-import net.osdilites.tekora.renderers.models.TekoraBlockRenderers;
+import net.osdilites.tekora.menu.models.ModularPartModel;
+import net.osdilites.tekora.menu.models.TekoraBlockRenderers;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -43,6 +43,8 @@ public class Tekora {
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
 
+    // Test comment
+
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
 //        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
 //        }

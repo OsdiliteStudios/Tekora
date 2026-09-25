@@ -19,8 +19,4 @@ public record Chemical(ChemicalIngredient chemical, int coefficient, int order) 
             ByteBufCodecs.VAR_INT, Chemical::order,
             Chemical::new
     );
-
-    public double getMol() {
-        return chemical.getMol();
-    }
 }

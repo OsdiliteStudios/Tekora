@@ -2,14 +2,17 @@ package net.osdilites.tekora.block.entities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -25,11 +28,17 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
+import net.osdilites.tekora.data.IonValue;
+import net.osdilites.tekora.data.TekoraComponents;
+import net.osdilites.tekora.fluid.ChemicalFluid;
+import net.osdilites.tekora.item.typical.IonicCompoundItem;
 import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class BasinEntity extends AbstractModularCraftEntity {
     private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 8000) {
@@ -96,8 +105,32 @@ public class BasinEntity extends AbstractModularCraftEntity {
         if (type.equals(TekoraMechanicalRecipe.MIXER)) {
             // todo, create chemical reaction recipes
 
-            // test code for compoundTags
-            FluidResource fluidResource = tank.getResource(0);
+            HashMap<String, Double> itemIons = new HashMap<>();
+            HashMap<Item, Integer> items = new HashMap<>();
+
+            for (int i = 0; i < inventory.size(); i++) {
+                ItemResource resource = inventory.getResource(i);
+                ItemStack stack = resource.toStack();
+                int count = stack.count();
+                Item item = stack.getItem();
+                if (resource.getComponents().has(TekoraComponents.IONS)) {
+                    IonValue val = resource.getComponents().get(TekoraComponents.IONS);
+                    itemIons.put(val.ion(), val.molarity());
+                }
+                items.put(item, items.getOrDefault(item, 0) + count);
+            }
+            HashMap<String, Double> dissolvedIons = new HashMap<>();
+            HashMap<Fluid, Integer> fluids = new HashMap<>();
+            for (int i = 0; i < tank.size(); i++) {
+                FluidResource fluidResource = tank.getResource(i);
+                Fluid fluid = fluidResource.getFluid();
+                int amt = tank.getAmountAsInt(i);
+                if (fluidResource.getComponents().has(TekoraComponents.IONS)) {
+                    IonValue val = fluidResource.getComponents().get(TekoraComponents.IONS);
+                    dissolvedIons.put(val.ion(), val.molarity());
+                }
+                fluids.put(fluid, fluids.getOrDefault(fluid, 0) + amt);
+            }
 
         }
         if (ent instanceof AbstractDeployingMachineEntity deployer) {

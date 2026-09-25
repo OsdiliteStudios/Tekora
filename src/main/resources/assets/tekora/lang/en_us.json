@@ -9,6 +9,14 @@
   "block.tekora.mechanical_top": "Mechanical Top",
   "block.tekora.steel_shaft": "Steel Shaft",
 
+  "fluid.tekora.acetic_acid": "Acetic Acid",
+  "fluid.tekora.acetone": "Acetone",
+  "fluid.tekora.ammonia": "Liquid Ammonia",
+  "fluid.tekora.ethanol": "Ethanol",
+  "fluid.tekora.sulfur_dioxide": "Liquid Sulfur Dioxide",
+  "fluid.tekora.sulfur_trioxide": "Sulfur Trioxide",
+  "fluid.tekora.sulfuric_acid": "Sulfuric Acid",
+
   "blockfunc.tekora.applyer": "Applyer",
   "blockfunc.tekora.compressor": "Compressor",
   "blockfunc.tekora.crusher": "Crusher",

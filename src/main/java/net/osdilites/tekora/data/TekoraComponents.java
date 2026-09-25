@@ -23,6 +23,12 @@ public class TekoraComponents {
                     .networkSynchronized(ManuscriptComponent.STREAM_CODEC)
                     .build());
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<IonValue>> IONS =
+            COMPONENTS.register("ions", () -> DataComponentType.<IonValue>builder()
+                    .persistent(IonValue.CODEC)
+                    .networkSynchronized(IonValue.STREAM_CODEC)
+                    .build());
+
     public static void register(IEventBus eventBus) {
         COMPONENTS.register(eventBus);
     }

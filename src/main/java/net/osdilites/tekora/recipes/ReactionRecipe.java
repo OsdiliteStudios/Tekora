@@ -9,25 +9,24 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.osdilites.tekora.recipes.ingredient.Catalyst;
 import net.osdilites.tekora.recipes.ingredient.Chemical;
 import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
 import net.osdilites.tekora.util.UtilFunctions;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
-public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, double deltaEnthalpy, double deltaEntropy, double arrheniusConst, double activationEnergy, double cutTorque, double ratedVelocity) implements TekoraMechanicalRecipe<ReactionRecipeInput> {
+public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double arrheniusConst, double activationEnergy) implements TekoraGeneralRecipe<ReactionRecipeInput> {
     public static final MapCodec<ReactionRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Chemical.CODEC.listOf().fieldOf("reactants").forGetter(ReactionRecipe::reactants),
             Chemical.CODEC.listOf().fieldOf("products").forGetter(ReactionRecipe::products),
             Catalyst.CODEC.fieldOf("catalyst").forGetter(ReactionRecipe::catalyst),
-            Codec.DOUBLE.fieldOf("d_enthalpy").forGetter(ReactionRecipe::deltaEnthalpy),
-            Codec.DOUBLE.fieldOf("d_entropy").forGetter(ReactionRecipe::deltaEntropy),
+            FluidIngredient.CODEC.fieldOf("solvent").forGetter(ReactionRecipe::solvent),
+            Codec.DOUBLE.fieldOf("d_enthalpy").forGetter(ReactionRecipe::deltaEnthalpy), // J/mol
+            Codec.DOUBLE.fieldOf("d_entropy").forGetter(ReactionRecipe::deltaEntropy), // J/mol K
             Codec.DOUBLE.fieldOf("arrhenius_const").forGetter(ReactionRecipe::arrheniusConst),
-            Codec.DOUBLE.fieldOf("activation_energy").forGetter(ReactionRecipe::activationEnergy),
-            Codec.DOUBLE.fieldOf("cut_torque").forGetter(ReactionRecipe::cutTorque),
-            Codec.DOUBLE.fieldOf("rated_velocity").forGetter(ReactionRecipe::ratedVelocity)
+            Codec.DOUBLE.fieldOf("activation_energy").forGetter(ReactionRecipe::activationEnergy)
     ).apply(inst, ReactionRecipe::new));
 
     // JSON structure
@@ -46,18 +45,29 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
             Chemical.STREAM_CODEC.apply(ByteBufCodecs.list()), ReactionRecipe::reactants,
             Chemical.STREAM_CODEC.apply(ByteBufCodecs.list()), ReactionRecipe::products,
             Catalyst.STREAM_CODEC, ReactionRecipe::catalyst,
+            FluidIngredient.STREAM_CODEC, ReactionRecipe::solvent,
             ByteBufCodecs.DOUBLE, ReactionRecipe::deltaEnthalpy,
             ByteBufCodecs.DOUBLE, ReactionRecipe::deltaEntropy,
             ByteBufCodecs.DOUBLE, ReactionRecipe::arrheniusConst,
             ByteBufCodecs.DOUBLE, ReactionRecipe::activationEnergy,
-            ByteBufCodecs.DOUBLE, ReactionRecipe::cutTorque,
-            ByteBufCodecs.DOUBLE, ReactionRecipe::ratedVelocity,
             ReactionRecipe::new
     );
 
     @Override
-    public boolean matches(ReactionRecipeInput reactionRecipeInput, Level level) {
+    public boolean matches(ReactionRecipeInput input, Level level) {
         if (!level.isClientSide()) {
+            // todo, determine whether input contains only reactants or only products
+            boolean hasReactants = true;
+            Set<Chemical> inputs = input.inputs();
+            double q_numerator = 1;
+            double q_denominator = 1;
+            for (Chemical r : reactants) {
+                Chemical ret = null;
+            }
+            for (Chemical p : products) {
+                Chemical ret = null;
+            }
+
             double energyAvail = activationEnergy - (catalyst != null ? catalyst.energyRed() : 0);
             if (energyAvail < activationEnergy) {
                 return false;
@@ -67,17 +77,8 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
             // for kiln furnaces or sealed mixers, the situation is different.
             // mixers have an upper temperature limit of 800K while kiln furnaces have an upper limit of 2000K.
 
-            double q_numerator = 1;
-            double q_denominator = 1;
 
-            for (Chemical c : reactants) {
-                q_denominator *= Math.pow(c.chemical().getMol(), c.coefficient());
-            }
-            for (Chemical c : products) {
-                q_numerator *= Math.pow(c.chemical().getMol(), c.coefficient());
-            }
-
-            double temperature = reactionRecipeInput.temperature();
+            double temperature = input.temperature();
             double k = Math.exp((temperature * deltaEntropy - deltaEnthalpy) / (temperature * UtilFunctions.IDEAL_GAS_CONST));
             double q = q_numerator / q_denominator;
             // todo, figure out the overall behavior (which may require statistical permutations)

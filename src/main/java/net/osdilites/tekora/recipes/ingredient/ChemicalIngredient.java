@@ -8,6 +8,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
+import net.osdilites.tekora.data.IonValue;
 
 // todo, figure out how gas and dissolution behavior works
 public record ChemicalIngredient(Either<Ingredient, FluidIngredient> input) {
@@ -40,16 +41,11 @@ public record ChemicalIngredient(Either<Ingredient, FluidIngredient> input) {
     public Ingredient asItem() { return input.left().orElseThrow(); }
     public FluidIngredient asFluid() { return input.right().orElseThrow(); }
 
-    public double getMol() {
-        // todo, for solids and liquids we'll use mol/L to find the values
-        // all solid items either has 0.111 L or 0.25 L depending on the machineType.
-        // quartz and amethyst has 0.25L, diamonds meanwhile will have 0.111L
-        // for liquids, mB is the same as a mL.
-        if (isFluid()) {
-            // use of Mols here
-        } else if (isItem()) {
-            // use in mols
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ChemicalIngredient(Either<Ingredient, FluidIngredient> input1)) {
+            return input.equals(input1);
         }
-        return 0;
+        return false;
     }
 }

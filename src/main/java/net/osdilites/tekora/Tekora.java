@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 
 @Mod(Tekora.MODID)
 public class Tekora {
+    // grzegorz brzeczyszczykiewicz
     /** Thanks to <a href="https://github.com/Tutorials-By-Kaupenjoe">Kaupenjoe</a> for making a tutorial for modding for
      * the Tekora team! As some code in this project were copied directly from his tutorials.
      */
@@ -42,8 +43,6 @@ public class Tekora {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
-
-    // Test comment
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
 //        if (event.getTabKey() == CreativeModeTabs.COMBAT) {

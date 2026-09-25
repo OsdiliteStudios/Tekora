@@ -42,6 +42,7 @@ public class Tekora {
     }
 
     // Test comment
+    // test comment
 
     private void commonSetup(final FMLCommonSetupEvent event) {
     }

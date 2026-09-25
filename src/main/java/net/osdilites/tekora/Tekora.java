@@ -42,6 +42,7 @@ public class Tekora {
     }
 
 
+
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
 
@@ -51,5 +52,4 @@ public class Tekora {
 //        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
 //        }
     }
-    // thing
 }

@@ -106,7 +106,7 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
             this.body = null;
         }
         this.torque = torque;
-        this.velocity += (float) (torque / getMoment());
+        this.velocity += (float) (torque * 0.05 / getMoment());
         this.oldRot = this.curRot;
         this.curRot += this.velocity;
         level.sendBlockUpdated(pos, state, state, 3);

@@ -40,6 +40,7 @@ public class Tekora {
         // uncomment the code below if a subscribe event annotated method was here.
         //NeoForge.EVENT_BUS.register(this);
     }
+    // hello
 
     private void commonSetup(final FMLCommonSetupEvent event) {
     }

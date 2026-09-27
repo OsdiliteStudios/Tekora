@@ -40,6 +40,8 @@ public class Tekora {
         //NeoForge.EVENT_BUS.register(this);
     }
 
+
+
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
 
@@ -49,5 +51,4 @@ public class Tekora {
 //        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
 //        }
     }
-    // thing
 }

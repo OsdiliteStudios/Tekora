@@ -109,6 +109,13 @@ public class UtilFunctions {
         return 0;
     }
 
+    public static double getBiomeTemperatureInK(Level level, BlockPos pos) {
+        if (level != null && !level.isClientSide()) {
+            return fromMcTempToKelvins(level.getBiome(pos).value().getBaseTemperature());
+        }
+        return 300;
+    }
+
     public static double getAirResTorque(Level level, double radius, double velocity) {
         double pressure = getPressure(level);
         // todo, beyond air resistance, we need to wonder about friction applied by blocks in contact with the block.

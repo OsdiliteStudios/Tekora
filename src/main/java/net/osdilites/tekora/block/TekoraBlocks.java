@@ -65,6 +65,10 @@ public class TekoraBlocks {
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFURIC_ACID =
             createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get(), "sulfuric_acid"));
 
+            // how do I add a block!?
+// public static final DeferredHolder<Block, KilnFurnace> GOGOG = 
+//         createBlock("gogog", () -> new KilnFurnace(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
+
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);
         TekoraItems.ITEMS.registerSimpleBlockItem(ret, Item.Properties::useBlockDescriptionPrefix);

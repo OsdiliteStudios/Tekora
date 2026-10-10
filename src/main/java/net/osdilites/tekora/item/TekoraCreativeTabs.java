@@ -45,7 +45,7 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraItems.CUTTER_SHAFT.get());
 
                         out.accept(TekoraItems.WRENCH.get());
-                        out.accept(TekoraBlocks.GOGOG.get());
+                        // out.accept(TekoraBlocks.GOGOG.get());
 
                         out.accept(TekoraBlocks.ACETONE.get());
 

@@ -19,7 +19,7 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
-public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double arrheniusConst, double activationEnergy) implements TekoraGeneralRecipe<ReactionRecipeInput> {
+public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double freqFactor, double activationEnergy) implements TekoraGeneralRecipe<ReactionRecipeInput> {
     public static final MapCodec<ReactionRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Chemical.CODEC.listOf().fieldOf("reactants").forGetter(ReactionRecipe::reactants),
             Chemical.CODEC.listOf().fieldOf("products").forGetter(ReactionRecipe::products),
@@ -27,8 +27,8 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
             FluidIngredient.CODEC.fieldOf("solvent").forGetter(ReactionRecipe::solvent),
             Codec.DOUBLE.fieldOf("d_enthalpy").forGetter(ReactionRecipe::deltaEnthalpy), // J/mol
             Codec.DOUBLE.fieldOf("d_entropy").forGetter(ReactionRecipe::deltaEntropy), // J/mol K
-            Codec.DOUBLE.fieldOf("arrhenius_const").forGetter(ReactionRecipe::arrheniusConst),
-            Codec.DOUBLE.fieldOf("activation_energy").forGetter(ReactionRecipe::activationEnergy)
+            Codec.DOUBLE.fieldOf("freq_factor").forGetter(ReactionRecipe::freqFactor),
+            Codec.DOUBLE.fieldOf("activation_energy").forGetter(ReactionRecipe::activationEnergy) // J
     ).apply(inst, ReactionRecipe::new));
 
     // JSON structure
@@ -40,7 +40,7 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
     //  - name
     //  - coefficient (int) - optional, none means 1
     //  - rate order (int) - optional, none means 0
-    // arrhenius_const (float)
+    // freq_factor (float)
     // activation_energy (float)
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ReactionRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -50,7 +50,7 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
             FluidIngredient.STREAM_CODEC, ReactionRecipe::solvent,
             ByteBufCodecs.DOUBLE, ReactionRecipe::deltaEnthalpy,
             ByteBufCodecs.DOUBLE, ReactionRecipe::deltaEntropy,
-            ByteBufCodecs.DOUBLE, ReactionRecipe::arrheniusConst,
+            ByteBufCodecs.DOUBLE, ReactionRecipe::freqFactor,
             ByteBufCodecs.DOUBLE, ReactionRecipe::activationEnergy,
             ReactionRecipe::new
     );

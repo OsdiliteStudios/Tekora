@@ -31,6 +31,9 @@ import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEnti
 import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
 import net.osdilites.tekora.data.TekoraComponents;
+import net.osdilites.tekora.fluid.ChemicalFluid;
+import net.osdilites.tekora.fluid.ChemicalFluidType;
+import net.osdilites.tekora.item.typical.CompoundItem;
 import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.recipes.DepotRecipe;
 import net.osdilites.tekora.recipes.ReactionRecipe;
@@ -118,7 +121,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
             // these values do NOT determine Q
             HashMap<SoluteKey, Double> staticSolutes = new HashMap<>();
-            HashMap<Item, Integer> items = new HashMap<>();
+            HashMap<Item, Double> items = new HashMap<>();
 
             for (int i = 0; i < inventory.size(); i++) {
                 ItemResource resource = inventory.getResource(i);
@@ -133,19 +136,24 @@ public class BasinEntity extends AbstractModularCraftEntity {
                     }
                 } else {
                     ItemStack stack = resource.toStack();
-                    int count = stack.count(); // todo, define this in terms of moles
                     Item item = stack.getItem();
-                    items.put(item, items.getOrDefault(item, 0) + count);
+                    if (item instanceof CompoundItem compound) {
+                        double count = stack.count() * compound.getMoles(); // todo, define this in terms of moles
+                        items.put(item, items.getOrDefault(item, 0.0) + count);
+                    }
                 }
             }
 
             // only items in "fluidSolutes" determines Q
             HashMap<SoluteKey, Double> fluidSolutes = new HashMap<>();
-            HashMap<Fluid, Integer> fluids = new HashMap<>();
+            HashMap<Fluid, Double> fluids = new HashMap<>();
             for (int i = 0; i < tank.size(); i++) {
                 FluidResource fluidResource = tank.getResource(i);
                 Fluid fluid = fluidResource.getFluid();
-                int amt = tank.getAmountAsInt(i); // todo, define this in terms of moles
+                if (fluid.getFluidType() instanceof ChemicalFluidType fluidType) {
+                    double amt = tank.getAmountAsInt(i) * fluidType.getMolarVolume();
+                    fluids.put(fluid, fluids.getOrDefault(fluid, 0.0) + amt);
+                }
                 if (fluidResource.getComponents().has(TekoraComponents.SOLUTES_LIST)) {
                     Solutes val = fluidResource.getComponents().get(TekoraComponents.SOLUTES_LIST);
                     if (val != null) {
@@ -156,7 +164,6 @@ public class BasinEntity extends AbstractModularCraftEntity {
                         }
                     }
                 }
-                fluids.put(fluid, fluids.getOrDefault(fluid, 0) + amt);
             }
 
             // note, the reason we are starting with 3 hashmaps before merging into one is because
@@ -164,10 +171,10 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
             HashMap<ChemicalIngredient, Double> ingredients = new HashMap<>();
             for (var pair : items.entrySet()) {
-                ingredients.put(ChemicalIngredient.of(new ItemStack(pair.getKey())), (double)pair.getValue());
+                ingredients.put(ChemicalIngredient.of(new ItemStack(pair.getKey())), pair.getValue());
             }
             for (var pair : fluids.entrySet()) {
-                ingredients.put(ChemicalIngredient.of(pair.getKey()), (double)pair.getValue());
+                ingredients.put(ChemicalIngredient.of(pair.getKey()), pair.getValue());
             }
             for (var pair : staticSolutes.entrySet()) {
                 ingredients.put(ChemicalIngredient.solidSolute(pair.getKey()), pair.getValue());

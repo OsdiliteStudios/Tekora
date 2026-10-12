@@ -37,7 +37,7 @@ public class Tekora {
         TekoraFluidTypes.register(modEventBus);
         TekoraFluids.register(modEventBus);
         // uncomment the code below if a subscribe event annotated method was here.
-        // it may be possible to connec these to the client/server event classes
+        // it may be possible to connect these to the client/server event classes
         //NeoForge.EVENT_BUS.register(this);
     }
 

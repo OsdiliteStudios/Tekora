@@ -2,6 +2,7 @@ package net.osdilites.tekora.block;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -69,14 +70,24 @@ public class TekoraBlocks {
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFURIC_ACID =
             createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get(), "sulfuric_acid"));
 
-    public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register(
+    // public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register(
+    //     "steel_block", 
+    //     registryName -> new Block(BlockBehaviour.Properties.of()
+    //     .setId(ResourceKey.create(Registries.BLOCK, registryName))
+    //     .destroyTime(4.f)
+    //     .explosionResistance(10.f)
+    //     .sound(SoundType.IRON)
+    // ));
+
+    public static final DeferredHolder<Block, Block> STEEL_BLOCK = createBlock(
         "steel_block", 
-        registryName -> new Block(BlockBehaviour.Properties.of()
-        .setId(ResourceKey.create(Registries.BLOCK, registryName))
-        .destroyTime(4.f)
-        .explosionResistance(10.f)
-        .sound(SoundType.IRON)
-    ));
+        () -> new Block(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
+                .setId(ResourceKey.create(Registries.BLOCK, 
+                    Identifier.fromNamespaceAndPath(Tekora.MODID, "steel_block")
+                ))
+        )
+    );
         
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);

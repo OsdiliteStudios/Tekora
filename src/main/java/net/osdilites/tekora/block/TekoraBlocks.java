@@ -83,9 +83,9 @@ public class TekoraBlocks {
         "steel_block", 
         () -> new Block(
             BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
-                .setId(ResourceKey.create(Registries.BLOCK, 
-                    Identifier.fromNamespaceAndPath(Tekora.MODID, "steel_block")
-                ))
+            .setId(ResourceKey.create(Registries.BLOCK, 
+                Identifier.fromNamespaceAndPath(Tekora.MODID, "steel_block")
+            ))
         )
     );
         

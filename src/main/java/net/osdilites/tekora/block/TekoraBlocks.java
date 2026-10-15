@@ -21,6 +21,7 @@ import net.osdilites.tekora.block.entities.transporter.rotational.*;
 import net.osdilites.tekora.block.fluids.ChemicalLiquidBlock;
 import net.osdilites.tekora.fluid.TekoraFluids;
 import net.osdilites.tekora.item.TekoraItems;
+import net.osdilites.tekora.block.basic.TekoraBaseBlock;
 
 import java.rmi.registry.Registry;
 import java.util.function.Supplier;
@@ -81,12 +82,7 @@ public class TekoraBlocks {
 
     public static final DeferredHolder<Block, Block> STEEL_BLOCK = createBlock(
         "steel_block", 
-        () -> new Block(
-            BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
-            .setId(ResourceKey.create(Registries.BLOCK, 
-                Identifier.fromNamespaceAndPath(Tekora.MODID, "steel_block")
-            ))
-        )
+        () -> new TekoraBaseBlock("steel_block")
     );
         
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {

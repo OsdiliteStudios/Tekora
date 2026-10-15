@@ -28,6 +28,7 @@ import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
+import net.osdilites.tekora.util.UtilFunctions;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -97,6 +98,11 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
             // this calculates for "angular" acceleration specifically
             double torque = ent.getTorque(); // determines recipe progress
             Block block = ent.getBlockState().getBlock();
+
+            double biomeTemp = UtilFunctions.getBiomeTemperatureInK(pLevel, pPos);
+            double diff = biomeTemp - temperature;
+            double capacity = UtilFunctions.getAirHeatTransfer(pLevel);
+            // todo, figure out the formula by which temperature may be affected
 
             String machineType = "";
             if (block.equals(TekoraBlocks.CRUSHER.get())) {

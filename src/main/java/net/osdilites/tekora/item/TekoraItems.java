@@ -58,6 +58,7 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> CUTTER_SHAFT = ITEMS.register("cutter_shaft", () -> new MachinePartItem("cutter_shaft", TekoraBlocks.CUTTER.get()));
 
   public static final DeferredHolder<Item, Item> STEEL_INGOT = ITEMS.register("steel_ingot", () -> new TekoraItem(true, "steel_ingot"));
+  public static final DeferredHolder<Item, Item> STEEL_DUST = ITEMS.register("steel_dust", () -> new TekoraItem(true, "steel_dust"));
   public static final DeferredHolder<Item, Item> STEEL_PLATE = ITEMS.register("steel_plate", () -> new TekoraItem(true, "steel_plate"));
   public static final DeferredHolder<Item, Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem("wrench", 560));
 

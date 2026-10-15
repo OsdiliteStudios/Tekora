@@ -44,6 +44,8 @@ public class Tekora {
     //test 2
 
 
+    // hello
+    // hi
 
     private void commonSetup(final FMLCommonSetupEvent event) {
     }

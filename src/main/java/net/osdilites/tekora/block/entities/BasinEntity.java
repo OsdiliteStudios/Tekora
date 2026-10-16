@@ -120,7 +120,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
             // todo, create chemical reaction recipes
 
             // these values do NOT determine Q
-            HashMap<SoluteKey, Double> staticSolutes = new HashMap<>();
+            HashMap<SoluteKey, Double> solutes = new HashMap<>();
             HashMap<Item, Double> items = new HashMap<>();
 
             for (int i = 0; i < inventory.size(); i++) {
@@ -131,7 +131,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
                         Map<SoluteKey, Double> map = val.dataMap();
                         for (SoluteKey key : map.keySet()) {
                             double moles = map.get(key); // todo, define this in terms of moles
-                            staticSolutes.put(key, staticSolutes.getOrDefault(key, 0d) + moles);
+                            solutes.put(key, solutes.getOrDefault(key, 0d) + moles);
                         }
                     }
                 } else {
@@ -144,8 +144,6 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 }
             }
 
-            // only items in "fluidSolutes" determines Q
-            HashMap<SoluteKey, Double> fluidSolutes = new HashMap<>();
             HashMap<Fluid, Double> fluids = new HashMap<>();
             for (int i = 0; i < tank.size(); i++) {
                 FluidResource fluidResource = tank.getResource(i);
@@ -160,7 +158,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
                         Map<SoluteKey, Double> map = val.dataMap();
                         for (SoluteKey key : map.keySet()) {
                             double moles = map.get(key); // todo, define this in terms of moles
-                            fluidSolutes.put(key, fluidSolutes.getOrDefault(key, 0d) + moles);
+                            solutes.put(key, solutes.getOrDefault(key, 0d) + moles);
                         }
                     }
                 }
@@ -176,11 +174,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
             for (var pair : fluids.entrySet()) {
                 ingredients.put(ChemicalIngredient.of(pair.getKey()), pair.getValue());
             }
-            for (var pair : staticSolutes.entrySet()) {
+            for (var pair : solutes.entrySet()) {
                 ingredients.put(ChemicalIngredient.solidSolute(pair.getKey()), pair.getValue());
-            }
-            for (var pair : fluidSolutes.entrySet()) {
-                ingredients.put(ChemicalIngredient.liquidSolute(pair.getKey()), pair.getValue());
             }
 
             ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy

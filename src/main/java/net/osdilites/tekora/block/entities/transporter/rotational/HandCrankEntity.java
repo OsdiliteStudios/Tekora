@@ -6,6 +6,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class HandCrankEntity extends AbstractShaftConnectableEntity {
+
+    final private double FORCE_COEFF = 60.0; 
+
     public HandCrankEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState);
     }
@@ -20,7 +23,7 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
             double radius = componentRadius();
 
             if (energy > 0) {
-                double force = 60.0 * (0.25 + 0.75 * energy);
+                double force = FORCE_COEFF * (0.25 + 0.75 * energy);
                 body.addTorque(getBlockPos(), force);
 
                 if (saturation > 0) {

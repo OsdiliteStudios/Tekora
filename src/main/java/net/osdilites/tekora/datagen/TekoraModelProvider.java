@@ -4,6 +4,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
@@ -45,6 +46,7 @@ public class TekoraModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(TekoraItems.STEEL_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.STEEL_PLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.STEEL_ROD.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(TekoraItems.DEBUG_ITEM.get(), ModelTemplates.FLAT_ITEM);
 

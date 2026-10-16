@@ -31,6 +31,7 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraItems.PLASTIC_GEAR.get());
                         out.accept(TekoraItems.STEEL_GEAR.get());
                         out.accept(TekoraItems.WOODEN_GEAR.get());
+                        out.accept(TekoraItems.LARGE_ALUMINUM_GEAR.get());
                         out.accept(TekoraItems.ALUMINUM_GEAR_PART.get());
                         out.accept(TekoraItems.BRASS_GEAR_PART.get());
                         out.accept(TekoraItems.BRONZE_GEAR_PART.get());

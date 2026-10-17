@@ -2,6 +2,8 @@ package net.osdilites.tekora.block.entities.transporter.rotational;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -54,58 +56,72 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
             double tot = 0;
 
             if (pState.getValueOrElse(Shaft.IS_LARGE, false)) {
-                // todo, test large gears
                 // if i == -2 or 2, j != k
                 // if i == 0, j == k
-                int x = pPos.getX();
-                int y = pPos.getY();
-                int z = pPos.getZ();
-                for (int i = -2; i <= 2; i += 2) {
-                    for (int j = -2; j <= 2; ++j) {
-                        for (int k = -2; k <= 2; ++k) {
-                            if (((i == 0 && j != 0 && k != 0) || (i != 0 && ((j == 0) != (k == 0))))
-                                    && ((Math.abs(j) == 2) != (Math.abs(k) == 2))) {
-                                BlockPos newPos = switch (axis) {
-                                    case X -> new BlockPos(x+i, y+j, z+k);
-                                    case Y -> new BlockPos(x+j, y+i, z+k);
-                                    case Z -> new BlockPos(x+j, y+k, z+i);
-                                };
-                                if (pLevel.getBlockEntity(newPos) instanceof ShaftEntity cog) {
-                                    BlockState analyzedState = cog.getBlockState();
-                                    if (analyzedState.getValueOrElse(Shaft.GEAR_TYPE, GearType.NONE) != GearType.NONE
-                                            && ((analyzedState.getValueOrElse(Shaft.IS_LARGE, false) && Math.abs(i) == 2 || Math.abs(j) == 2 || Math.abs(k) == 2)
-                                            || (!analyzedState.getValueOrElse(Shaft.IS_LARGE, false) && Math.abs(i) < 2 && Math.abs(j) < 2 && Math.abs(k) < 2))) {
-                                        tot += contact(pLevel, pPos, pPos.above(), orgV, cog);
-                                    } else {
-                                        pLevel.removeBlockEntity(newPos);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                BlockEntity up = pLevel.getBlockEntity(pPos.above());
-                BlockEntity down = pLevel.getBlockEntity(pPos.below());
-                BlockEntity north = pLevel.getBlockEntity(pPos.north());
-                BlockEntity south = pLevel.getBlockEntity(pPos.south());
-                BlockEntity east = pLevel.getBlockEntity(pPos.east());
-                BlockEntity west = pLevel.getBlockEntity(pPos.west());
+//                int x = pPos.getX();
+//                int y = pPos.getY();
+//                int z = pPos.getZ();
+//                for (int i = -2; i <= 2; i += 2) {
+//                    for (int j = -2; j <= 2; ++j) {
+//                        for (int k = -2; k <= 2; ++k) {
+//                            if (((i == 0 && j != 0 && k != 0) || (i != 0 && ((j == 0) != (k == 0))))
+//                                    && ((Math.abs(j) == 2) != (Math.abs(k) == 2))) {
+//                                BlockPos newPos = switch (axis) {
+//                                    case X -> new BlockPos(x+i, y+j, z+k);
+//                                    case Y -> new BlockPos(x+j, y+i, z+k);
+//                                    case Z -> new BlockPos(x+j, y+k, z+i);
+//                                };
+//                                if (pLevel.getBlockEntity(newPos) instanceof ShaftEntity cog) {
+//                                    BlockState analyzedState = cog.getBlockState();
+//                                    if (analyzedState.getValueOrElse(Shaft.GEAR_TYPE, GearType.NONE) != GearType.NONE
+//                                            && ((analyzedState.getValueOrElse(Shaft.IS_LARGE, false) && Math.abs(i) == 2 || Math.abs(j) == 2 || Math.abs(k) == 2)
+//                                            || (!analyzedState.getValueOrElse(Shaft.IS_LARGE, false) && Math.abs(i) < 2 && Math.abs(j) < 2 && Math.abs(k) < 2))) {
+//                                        tot += contact(pLevel, pPos, pPos.above(), orgV, cog);
+//                                    } else {
+//                                        pLevel.removeBlockEntity(newPos);
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+
+                // TODO: fix contact logic to make large gears work, make small gears rotate large gears, make large gears rotate other large gears on different axis
+
                 if (axis == Direction.Axis.X) {
-                    tot += contact(pLevel, pPos, pPos.above(), orgV, up);
-                    tot += contact(pLevel, pPos, pPos.below(), orgV, down);
-                    tot += contact(pLevel, pPos, pPos.north(), orgV, north);
-                    tot += contact(pLevel, pPos, pPos.south(), orgV, south);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, 0, -1, -1); // doesnt work on (-z)
+                    tot += rotateNeighbor(pLevel, pPos, orgV, 0, -1,  1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, 0,  1, -1); // doesnt work (-z)
+                    tot += rotateNeighbor(pLevel, pPos, orgV, 0,  1,  1);
                 } else if (axis == Direction.Axis.Y) {
-                    tot += contact(pLevel, pPos, pPos.east(), orgV, east);
-                    tot += contact(pLevel, pPos, pPos.west(), orgV, west);
-                    tot += contact(pLevel, pPos, pPos.north(), orgV, north);
-                    tot += contact(pLevel, pPos, pPos.south(), orgV, south);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, 0, -1); // doesnt work (-x)
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, 0,  1); // doesnt work (-x)
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1, 0, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1, 0,  1);
                 } else if (axis == Direction.Axis.Z) {
-                    tot += contact(pLevel, pPos, pPos.east(), orgV, east);
-                    tot += contact(pLevel, pPos, pPos.west(), orgV, west);
-                    tot += contact(pLevel, pPos, pPos.above(), orgV, up);
-                    tot += contact(pLevel, pPos, pPos.below(), orgV, down);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, -1, 0); // doesnt on (-x)
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  1, 0); // doesnt on (-x)
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1, -1, 0); // Works
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  1, 0); // Works
+                }
+
+            } else {
+                // Small gear rotation logic
+                if (axis == Direction.Axis.X) {
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  1,  0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0, -1,  0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0,  1);
+                } else if (axis == Direction.Axis.Y) {
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  0,  0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  0,  0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0,  1);
+                } else if (axis == Direction.Axis.Z) {
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  0,  0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  0,  0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  1,  0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0, -1,  0);
                 }
             }
             body.addTorque(pPos, tot);
@@ -130,7 +146,22 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
         super.tick(pLevel, pPos, pState);
     }
 
+    private double rotateNeighbor(Level level, BlockPos originalPos, double orgV, int xOffset, int yOffset, int zOffset) {
+        BlockPos neighborPos = originalPos.offset(xOffset, yOffset, zOffset);
+        BlockEntity neighbor = level.getBlockEntity(neighborPos);
+
+        return contact(level, originalPos, neighborPos, orgV, neighbor);
+    }
+
     private double contact(Level pLevel, BlockPos curPos, BlockPos otherPos, double selfV, BlockEntity ent) {
+    // TODO: fix the line below
+        // i assume it was meant for preventing duplication of contacts, as preventing
+        // a small gear rotating a small gear, causing that gear to rotate the gear that rotated it
+        // currently it's preventing large gears from spinning some small gears (Depending on the large gear's axis)
+            // deleting it causes large gears to work fine (since small gears don't check to rotate large gears yet)
+            // but deleting it also means small gears double contact each other, and spin extremely fast
+            // you can find the list of what gears don't work in the gear logic above
+
         if (curPos.asLong() >= otherPos.asLong()) return 0;
 
         if (ent instanceof ShaftEntity cog && canBeCog() && cog.canBeCog()) {

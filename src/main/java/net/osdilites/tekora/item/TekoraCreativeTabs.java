@@ -59,6 +59,7 @@ public class TekoraCreativeTabs {
                     .displayItems((param, out) -> {
                         out.accept(TekoraItems.STEEL_INGOT.get());
                         out.accept(TekoraItems.STEEL_PLATE.get());
+                        out.accept(TekoraItems.STEEL_ROD.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

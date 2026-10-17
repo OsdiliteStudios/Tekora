@@ -2,19 +2,22 @@ package net.osdilites.tekora.block.entities.transporter.rotational;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.food.FoodData;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class HandCrankEntity extends AbstractShaftConnectableEntity {
 
-    final private double FORCE_COEFF = 60.0; 
-
     public HandCrankEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState);
     }
 
+    public HandCrankEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+        super(pType, pPos, pBlockState);
+    }
+
     // Function used to apply force by the player
-    public void applyForce(FoodData data) {
+    public void applyForce(FoodData data, double forceCoeff) {
         if (level != null) {
             int hunger = data.getFoodLevel();
             float saturation = data.getSaturationLevel();
@@ -23,7 +26,7 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
             double radius = componentRadius();
 
             if (energy > 0) {
-                double force = FORCE_COEFF * (0.25 + 0.75 * energy);
+                double force = forceCoeff * (0.25 + 0.75 * energy);
                 body.addTorque(getBlockPos(), force);
 
                 if (saturation > 0) {
@@ -34,6 +37,11 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
             // allowed because only the server-side is being called here
             //level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
+    }
+
+    public void applyForce(FoodData data) {
+        // default value
+        applyForce(data, 60.0);
     }
 
     @Override

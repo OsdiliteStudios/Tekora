@@ -48,7 +48,7 @@ public class HandCrank extends AbstractShaftConnectableBlock {
     private static final VoxelShape SHAPE_DOWN = Shapes.or(COMPS_A[4], COMPS_B[4]);
     private static final VoxelShape SHAPE_NORTH = Shapes.or(COMPS_A[5], COMPS_B[5]);
 
-    protected HandCrank(Properties properties) {
+    private HandCrank(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }

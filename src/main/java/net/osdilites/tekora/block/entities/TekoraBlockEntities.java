@@ -8,6 +8,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.*;
 import net.osdilites.tekora.block.entities.transporter.rotational.HandCrankEntity;
+import net.osdilites.tekora.block.entities.transporter.rotational.SuperCrankEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 import net.osdilites.tekora.block.entities.thermal.KilnFurnaceEntity;
 
@@ -21,6 +22,10 @@ public class TekoraBlockEntities {
     public static final Supplier<BlockEntityType<HandCrankEntity>> HAND_CRANK =
             BLOCK_ENTITIES.register("hand_crank", () -> new BlockEntityType<>(HandCrankEntity::new,
                     Set.of(TekoraBlocks.HAND_CRANK.get())));
+
+    public static final Supplier<BlockEntityType<HandCrankEntity>> SUPER_CRANK = 
+            BLOCK_ENTITIES.register("super_crank", () -> new BlockEntityType<>(SuperCrankEntity::new,
+                    Set.of(TekoraBlocks.SUPER_CRANK.get())));
 
     public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT =
             BLOCK_ENTITIES.register("shaft", () -> new BlockEntityType<>(ShaftEntity::new,

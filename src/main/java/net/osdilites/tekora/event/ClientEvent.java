@@ -66,18 +66,22 @@ public class ClientEvent {
         registerWithGearPart(event, TekoraBlockEntities.TOP_MECH.get());
     }
 
+    // for any block entities that is an instance ShaftEntity
     private static void registerWithGearPart(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type) {
         event.registerBlockEntityRenderer(type, ModularGearRenderer::new);
     }
 
+    // for any block entities that inherits AbstractDeployerEntity or AbstractModularMachineEntity
     private static void registerModularUpDown(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type, Identifier identifier, StandaloneModelKey<QuadCollection> key) {
         event.registerBlockEntityRenderer(type, c -> new ModularUpDownPartRenderer(c, identifier, key));
     }
 
+    // for specific block entities that inherits AbstractModularMachineEntity
     private static void registerModularRotating(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type, Identifier identifier, StandaloneModelKey<QuadCollection> key) {
         event.registerBlockEntityRenderer(type, c -> new ModularRotatingRenderer(c, identifier, key));
     }
 
+    // for any block entities that inherits AbstractShaftConnectableEntity
     private static void registerGeneralRotator(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type) {
         event.registerBlockEntityRenderer(type, RotationalEntityRenderer::new);
     }

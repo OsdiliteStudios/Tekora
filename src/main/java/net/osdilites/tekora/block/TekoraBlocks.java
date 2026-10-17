@@ -1,11 +1,15 @@
 package net.osdilites.tekora.block;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.data.SoundDefinition;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
@@ -17,7 +21,9 @@ import net.osdilites.tekora.block.entities.transporter.rotational.*;
 import net.osdilites.tekora.block.fluids.ChemicalLiquidBlock;
 import net.osdilites.tekora.fluid.TekoraFluids;
 import net.osdilites.tekora.item.TekoraItems;
+import net.osdilites.tekora.block.basic.TekoraBaseBlock;
 
+import java.rmi.registry.Registry;
 import java.util.function.Supplier;
 
 public class TekoraBlocks {
@@ -65,6 +71,20 @@ public class TekoraBlocks {
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFURIC_ACID =
             createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get(), "sulfuric_acid"));
 
+    // public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register(
+    //     "steel_block", 
+    //     registryName -> new Block(BlockBehaviour.Properties.of()
+    //     .setId(ResourceKey.create(Registries.BLOCK, registryName))
+    //     .destroyTime(4.f)
+    //     .explosionResistance(10.f)
+    //     .sound(SoundType.IRON)
+    // ));
+
+    public static final DeferredHolder<Block, Block> STEEL_BLOCK = createBlock(
+        "steel_block", 
+        () -> new TekoraBaseBlock("steel_block")
+    );
+        
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);
         TekoraItems.ITEMS.registerSimpleBlockItem(ret, Item.Properties::useBlockDescriptionPrefix);

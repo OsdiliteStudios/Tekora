@@ -65,6 +65,8 @@ public class TekoraBlockEntities {
 //    public static final Supplier<BlockEntityType<WaterwheelEntity.Wood>> WOODEN_WATERWHEEL =
 //            BLOCK_ENTITIES.register("wooden_waterwheel", () -> new BlockEntityType<>(WaterwheelEntity.Wood::new,
 //                    Set.of(TekoraBlocks.WOODEN_WATERWHEEL.get())));
+    
+    
 
     public static final Supplier<BlockEntityType<KilnFurnaceEntity>> KILN_FURNACE =
             BLOCK_ENTITIES.register("kiln_furnace", () -> new BlockEntityType<>(KilnFurnaceEntity::new,

@@ -12,8 +12,10 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.osdilites.tekora.recipes.ingredient.Catalyst;
 import net.osdilites.tekora.recipes.ingredient.Chemical;
+import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
 import net.osdilites.tekora.util.UtilFunctions;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -54,36 +56,48 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
     );
 
     @Override
-    public boolean matches(ReactionRecipeInput input, Level level) {
+    public boolean matches(@NonNull ReactionRecipeInput input, Level level) {
         if (!level.isClientSide()) {
-            // todo, determine whether input contains only reactants or only products
-            boolean hasReactants = true;
-            Set<Chemical> inputs = input.inputs();
-            double q_numerator = 1;
-            double q_denominator = 1;
-            for (Chemical r : reactants) {
-                Chemical ret = null;
+            double reqEnergy = activationEnergy;
+            boolean hasAllOutput = true;
+            boolean hasAllInput = true;
+            double q = 1;
+
+            Set<ChemicalIngredient> ingredients = input.inputs().keySet();
+            for (Chemical chemical : reactants) {
+                double c = chemical.coefficient();
+                for (ChemicalIngredient ing : ingredients) {
+                    if (ing.equals(chemical.chemical())) {
+                        q *= Math.pow(input.inputs().get(ing), c);
+                    } else {
+                        hasAllInput = false;
+                        q = 0;
+                        break;
+                    }
+                }
             }
-            for (Chemical p : products) {
-                Chemical ret = null;
+            for (Chemical chemical : products) {
+                double c = chemical.coefficient();
+                for (ChemicalIngredient ing : ingredients) {
+                    if (ing.equals(chemical.chemical())) {
+                        q /= Math.pow(input.inputs().get(ing), c);
+                    } else {
+                        hasAllOutput = false;
+                        if (q == 0) return false;
+                        else {
+                            q = Double.POSITIVE_INFINITY;
+                        }
+                        break;
+                    }
+                }
             }
 
-            double energyAvail = activationEnergy - (catalyst != null ? catalyst.energyRed() : 0);
-            if (energyAvail < activationEnergy) {
-                return false;
+
+            if (hasAllOutput && !hasAllInput) {
+                reqEnergy += deltaEnthalpy;
             }
 
-            // for mixers in Tekora, the game will always attempt to put atmospheric gases into the inputs somehow in some way.
-            // for kiln furnaces or sealed mixers, the situation is different.
-            // mixers have an upper temperature limit of 800K while kiln furnaces have an upper limit of 2000K.
-
-
-            double temperature = input.temperature();
-            double k = Math.exp((temperature * deltaEntropy - deltaEnthalpy) / (temperature * UtilFunctions.IDEAL_GAS_CONST));
-            double q = q_numerator / q_denominator;
-            // todo, figure out the overall behavior (which may require statistical permutations)
-//            return (k < q && new HashSet<>(reactionRecipeInput.reactants()).containsAll(reactants))
-//                    || (q > k && new HashSet<>(reactionRecipeInput.products()).containsAll(products));
+            return reqEnergy <= input.availableEnergy();
         }
         return false;
     }
@@ -121,5 +135,9 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
     @Override
     public RecipeBookCategory recipeBookCategory() {
         return RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    public double getLnK(double temperature) {
+        return (deltaEnthalpy - temperature * deltaEntropy) / (temperature * UtilFunctions.IDEAL_GAS_CONST);
     }
 }

@@ -46,6 +46,7 @@ public class TekoraModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(TekoraItems.STEEL_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.STEEL_PLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.STEEL_ROD.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.STEEL_DUST.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.DEBUG_ITEM.get(), ModelTemplates.FLAT_ITEM);
 

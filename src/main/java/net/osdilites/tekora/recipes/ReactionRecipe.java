@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
+import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.recipes.ingredient.Catalyst;
 import net.osdilites.tekora.recipes.ingredient.Chemical;
 import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
@@ -19,16 +20,63 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
-public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double freqFactor, double activationEnergy) implements TekoraGeneralRecipe<ReactionRecipeInput> {
+public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeInput> {
+    private final List<Chemical> reactants;
+    private final List<Chemical> products;
+    private final Catalyst catalyst;
+    private final FluidIngredient solvent;
+    private final double deltaEnthalpy;
+    private final double deltaEntropy;
+    private final double freqFactor;
+    private final double activationEnergy;
+
+    private final Map<SoluteKey, Integer> reactCoeffs;
+    private final Map<SoluteKey, Integer> prodCoeffs;
+    private final Map<SoluteKey, Integer> reactOrders;
+    private final Map<SoluteKey, Integer> prodOrders;
+
+    public ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double freqFactor, double activationEnergy) {
+        this.reactants = reactants;
+        this.products = products;
+        this.catalyst = catalyst;
+        this.solvent = solvent;
+        this.deltaEnthalpy = deltaEnthalpy;
+        this.deltaEntropy = deltaEntropy;
+        this.freqFactor = freqFactor;
+        this.activationEnergy = activationEnergy;
+
+        this.reactCoeffs = new HashMap<>();
+        this.reactOrders = new HashMap<>();
+
+        double equ = 1;
+        for (Chemical chemical : reactants) {
+            if (chemical.chemical().isSolute()) {
+                SoluteKey key = chemical.chemical().asSolute();
+                this.reactCoeffs.put(key, chemical.coefficient());
+                this.reactOrders.put(key, chemical.order());
+            }
+        }
+
+        this.prodCoeffs = new HashMap<>();
+        this.prodOrders = new HashMap<>();
+        for (Chemical chemical : products) {
+            if (chemical.chemical().isSolute()) {
+                SoluteKey key = chemical.chemical().asSolute();
+                this.prodCoeffs.put(key, chemical.coefficient());
+                this.prodOrders.put(key, chemical.order());
+            }
+        }
+    }
+
     public static final MapCodec<ReactionRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            Chemical.CODEC.listOf().fieldOf("reactants").forGetter(ReactionRecipe::reactants),
-            Chemical.CODEC.listOf().fieldOf("products").forGetter(ReactionRecipe::products),
-            Catalyst.CODEC.fieldOf("catalyst").forGetter(ReactionRecipe::catalyst),
-            FluidIngredient.CODEC.fieldOf("solvent").forGetter(ReactionRecipe::solvent),
-            Codec.DOUBLE.fieldOf("d_enthalpy").forGetter(ReactionRecipe::deltaEnthalpy), // J/mol
-            Codec.DOUBLE.fieldOf("d_entropy").forGetter(ReactionRecipe::deltaEntropy), // J/mol K
-            Codec.DOUBLE.fieldOf("freq_factor").forGetter(ReactionRecipe::freqFactor),
-            Codec.DOUBLE.fieldOf("activation_energy").forGetter(ReactionRecipe::activationEnergy) // J
+            Chemical.CODEC.listOf().fieldOf("reactants").forGetter(r -> r.reactants),
+            Chemical.CODEC.listOf().fieldOf("products").forGetter(r -> r.products),
+            Catalyst.CODEC.fieldOf("catalyst").forGetter(r -> r.catalyst),
+            FluidIngredient.CODEC.fieldOf("solvent").forGetter(r -> r.solvent),
+            Codec.DOUBLE.fieldOf("d_enthalpy").forGetter(r -> r.deltaEnthalpy), // J/mol
+            Codec.DOUBLE.fieldOf("d_entropy").forGetter(r -> r.deltaEntropy), // J/mol K
+            Codec.DOUBLE.fieldOf("freq_factor").forGetter(r -> r.freqFactor),
+            Codec.DOUBLE.fieldOf("activation_energy").forGetter(r -> r.activationEnergy) // J
     ).apply(inst, ReactionRecipe::new));
 
     // JSON structure
@@ -44,14 +92,14 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
     // activation_energy (float)
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ReactionRecipe> STREAM_CODEC = StreamCodec.composite(
-            Chemical.STREAM_CODEC.apply(ByteBufCodecs.list()), ReactionRecipe::reactants,
-            Chemical.STREAM_CODEC.apply(ByteBufCodecs.list()), ReactionRecipe::products,
-            Catalyst.STREAM_CODEC, ReactionRecipe::catalyst,
-            FluidIngredient.STREAM_CODEC, ReactionRecipe::solvent,
-            ByteBufCodecs.DOUBLE, ReactionRecipe::deltaEnthalpy,
-            ByteBufCodecs.DOUBLE, ReactionRecipe::deltaEntropy,
-            ByteBufCodecs.DOUBLE, ReactionRecipe::freqFactor,
-            ByteBufCodecs.DOUBLE, ReactionRecipe::activationEnergy,
+            Chemical.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.reactants,
+            Chemical.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.products,
+            Catalyst.STREAM_CODEC, r -> r.catalyst,
+            FluidIngredient.STREAM_CODEC, r -> r.solvent,
+            ByteBufCodecs.DOUBLE, r -> r.deltaEnthalpy,
+            ByteBufCodecs.DOUBLE, r -> r.deltaEntropy,
+            ByteBufCodecs.DOUBLE, r -> r.freqFactor,
+            ByteBufCodecs.DOUBLE, r -> r.activationEnergy,
             ReactionRecipe::new
     );
 
@@ -95,9 +143,8 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
 
             if (hasAllOutput && !hasAllInput) {
                 reqEnergy += deltaEnthalpy;
+                return reqEnergy <= input.availableEnergy();
             }
-
-            return reqEnergy <= input.availableEnergy();
         }
         return false;
     }
@@ -137,7 +184,37 @@ public record ReactionRecipe(List<Chemical> reactants, List<Chemical> products, 
         return RecipeBookCategories.CRAFTING_MISC;
     }
 
+    // algorithm used to implement the natural log of the reaction quotient, used to compare against the equilibrium constant
+    public double getLnQ(HashMap<SoluteKey, Double> ingredients, double tankVol) {
+        double q = 1.0;
+
+        for (var entry : ingredients.entrySet()) {
+            SoluteKey key = entry.getKey();
+            double concentration = entry.getValue() / tankVol;
+
+            int reactCoeff = this.reactCoeffs.getOrDefault(key, 0);
+            int prodCoeff = this.prodCoeffs.getOrDefault(key, 0);
+
+            if (reactCoeff != 0 && prodCoeff != 0) {
+                continue;
+            }
+
+            if (reactCoeff != 0) {
+                q /= Math.pow(concentration, reactCoeff);
+            } else if (prodCoeff != 0) {
+                q *= Math.pow(concentration, prodCoeff);
+            }
+        }
+
+        return Math.log(q);
+    }
+
     public double getLnK(double temperature) {
         return (deltaEnthalpy - temperature * deltaEntropy) / (temperature * UtilFunctions.IDEAL_GAS_CONST);
+    }
+
+    // function returns Ae^(-E/RT) * delta_t or in other words, the rate constant multiplied by the time period
+    public double getRateTicks(double temperature) {
+        return freqFactor * Math.exp(-activationEnergy / (temperature * UtilFunctions.IDEAL_GAS_CONST)) / 20;
     }
 }

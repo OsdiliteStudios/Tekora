@@ -35,7 +35,7 @@ public class TekoraBlocks {
     public static final DeferredHolder<Block, HandCrank> HAND_CRANK =
             createBlock("hand_crank", () -> new HandCrank("hand_crank", 1));
     public static final DeferredHolder<Block, HandCrank> SUPER_CRANK = 
-            createBlock("super_crank", () -> new SuperCrank("super_crank", 2));
+            createBlock("super_crank", () -> new HandCrank("super_crank", 4, HandCrankEntity.SUPER_F));
 
     // mech attachments
     public static final DeferredHolder<Block, ApplyerMechanical> APPLYER =

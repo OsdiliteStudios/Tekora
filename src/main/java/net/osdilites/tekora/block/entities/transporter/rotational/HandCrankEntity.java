@@ -8,13 +8,16 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class HandCrankEntity extends AbstractShaftConnectableEntity {
 
+    public static final double WOODEN_F = 60.0;
+    public static final double SUPER_F = 90441.0; 
+
     public HandCrankEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState);
     }
 
-    public HandCrankEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
-        super(pType, pPos, pBlockState);
-    }
+    // public HandCrankEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+    //     super(pType, pPos, pBlockState);
+    // }
 
     // Function used to apply force by the player
     public void applyForce(FoodData data, double forceCoeff) {
@@ -37,11 +40,6 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
             // allowed because only the server-side is being called here
             //level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
-    }
-
-    public void applyForce(FoodData data) {
-        // default value
-        applyForce(data, 60.0);
     }
 
     @Override

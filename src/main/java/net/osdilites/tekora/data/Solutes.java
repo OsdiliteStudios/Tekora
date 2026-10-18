@@ -5,11 +5,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public record Solutes(Map<SoluteKey, Double> dataMap) {
+public record Solutes(@NotNull Map<SoluteKey, Double> dataMap) {
     public static final Codec<Solutes> CODEC = RecordCodecBuilder.create((
             instance) -> instance.group(
             Codec.unboundedMap(SoluteKey.CODEC, Codec.DOUBLE).fieldOf("solutes").forGetter(Solutes::dataMap)

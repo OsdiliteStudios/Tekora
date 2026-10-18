@@ -18,6 +18,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
@@ -41,10 +42,7 @@ import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class BasinEntity extends AbstractModularCraftEntity {
     private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 8000) {
@@ -68,11 +66,13 @@ public class BasinEntity extends AbstractModularCraftEntity {
     private boolean hasRxn = false;
     private double lnK = 0;
     private double lnQ = 0;
-
-    private final ArrayList<ItemStack> toBeRemoved = new ArrayList<>(11);
+    private Map<Integer, float[]> itemReactants = new HashMap<>();
+    private Map<Integer, float[]> fluidReactants = new HashMap<>();
+    private Map<Integer, float[]> itemProducts = new HashMap<>();
+    private Map<Integer, float[]> fluidProducts = new HashMap<>();
 
     public BasinEntity(BlockPos pPos, BlockState pState) {
-        super(TekoraBlockEntities.BASIN.get(), pPos, pState);
+        super(TekoraBlockEntities.BASIN.get(), pPos, pState, 4.815f);
     }
 
     // meaning of each index in the inventory
@@ -125,7 +125,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
                     if (val != null) {
                         Map<SoluteKey, Double> map = val.dataMap();
                         for (SoluteKey key : map.keySet()) {
-                            double moles = map.get(key); // todo, define this in terms of moles
+                            double moles = map.get(key);
                             solidSolutes.put(key, solidSolutes.getOrDefault(key, 0d) + moles);
                         }
                     }
@@ -133,13 +133,14 @@ public class BasinEntity extends AbstractModularCraftEntity {
                     ItemStack stack = resource.toStack();
                     Item item = stack.getItem();
                     if (item instanceof CompoundItem compound) {
-                        double count = stack.count() * compound.getMoles(); // todo, define this in terms of moles
+                        double count = stack.count() * compound.getMoles();
                         items.put(item, items.getOrDefault(item, 0.0) + count);
                     }
                 }
             }
 
             HashMap<Fluid, Double> fluids = new HashMap<>();
+            // note, if we support gases, they would be added in the liquidSolutes array
             HashMap<SoluteKey, Double> liquidSolutes = new HashMap<>();
             int volume = 0;
             for (int i = 0; i < tank.size(); i++) {
@@ -155,7 +156,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
                     if (val != null) {
                         Map<SoluteKey, Double> map = val.dataMap();
                         for (SoluteKey key : map.keySet()) {
-                            double moles = map.get(key); // todo, define this in terms of moles
+                            double moles = map.get(key);
                             liquidSolutes.put(key, liquidSolutes.getOrDefault(key, 0d) + moles);
                         }
                     }
@@ -183,25 +184,37 @@ public class BasinEntity extends AbstractModularCraftEntity {
             Optional<RecipeHolder<ReactionRecipe>> recipe = getCurrentRecipe(TekoraRecipes.REACTION_TYPE.get(), input);
             if (recipe.isPresent()) {
                 ReactionRecipe accessedRec = recipe.get().value();
-                double temperature = 300;// todo, replace the number 300 in the future with a baseEntity native temperature tracker
+                // something to debug, if you switch recipes fast enough, does it still register as present?
+                if (!this.hasRxn) {
+                    // description: use this to develop a map of indices containing reactants/products including those with solutes
+                    accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
+                    accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
+                    this.hasRxn = true;
+                }
                 this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
                 this.lnK = accessedRec.getLnK(temperature);
-                this.hasRxn = true;
 
-                // value used
-                double kdt = accessedRec.getRateTicks(temperature);
-                if (lnQ < lnK) {
-                    // todo, make it make more products
-                } else if (lnQ > lnK) {
-                    // todo, make it make more reactants
-                }
+                float rate = accessedRec.getRateTicks(liquidSolutes, temperature);
+                int action = Double.compare(lnQ, lnK);
+
+                // this code has been untested
+                // todo, test this piece of code
+                ReactionRecipe.modifyCrafterInventory(itemReactants, inventory, rate, action);
+                ReactionRecipe.modifyCrafterTank(fluidReactants, tank, rate, action);
+
+                ReactionRecipe.modifyCrafterInventory(itemProducts, inventory, rate, -action);
+                ReactionRecipe.modifyCrafterTank(fluidProducts, tank, rate, -action);
             } else {
                 this.hasRxn = false;
+                itemReactants.clear();
+                itemProducts.clear();
+                fluidReactants.clear();
+                fluidProducts.clear();
             }
         }
         if (ent instanceof AbstractDeployingMachineEntity deployer) {
             // todo, add applying and printing recipes here
-            // possible idea, maybe this creates ink water and allows maps to be made
+            // possible idea, maybe this creates ink water and allows maps to be copied
             return 0;
         }
 

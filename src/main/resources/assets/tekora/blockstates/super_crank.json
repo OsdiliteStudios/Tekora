@@ -1,29 +1,29 @@
 {
   "variants": {
     "facing=east": {
-      "model": "tekora:block/hand_crank",
+      "model": "tekora:block/super_crank",
       "z": 90
     },
     "facing=north": {
-      "model": "tekora:block/hand_crank",
+      "model": "tekora:block/super_crank",
       "x": 90,
       "z": 180
     },
     "facing=south": {
-      "model": "tekora:block/hand_crank",
+      "model": "tekora:block/super_crank",
       "x": 270,
       "z": 180
     },
     "facing=west": {
-      "model": "tekora:block/hand_crank",
+      "model": "tekora:block/super_crank",
       "y": 180,
       "z": 270
     },
     "facing=up": {
-      "model": "tekora:block/hand_crank"
+      "model": "tekora:block/super_crank"
     },
     "facing=down": {
-      "model": "tekora:block/hand_crank",
+      "model": "tekora:block/super_crank",
       "x": 180
     }
   }

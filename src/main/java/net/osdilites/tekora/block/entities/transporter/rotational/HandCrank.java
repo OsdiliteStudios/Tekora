@@ -48,8 +48,6 @@ public class HandCrank extends AbstractShaftConnectableBlock {
     private static final VoxelShape SHAPE_DOWN = Shapes.or(COMPS_A[4], COMPS_B[4]);
     private static final VoxelShape SHAPE_NORTH = Shapes.or(COMPS_A[5], COMPS_B[5]);
 
-    // should use an enum or similar to represent the different levels of hand cranks
-    // Bowen "the constructor should have everything needed" please 😭😭😭
     private double forceCoeff = 60.0;
     
     private HandCrank(Properties properties) {

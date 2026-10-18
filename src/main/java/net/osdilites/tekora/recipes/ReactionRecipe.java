@@ -189,6 +189,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         return RecipeBookCategories.CRAFTING_MISC;
     }
 
+    // METHODS FOR BLOCK ENTITIES
+
     // algorithm used to implement the natural log of the reaction quotient, used to compare against the equilibrium constant
     public double getLnQ(HashMap<SoluteKey, Double> ingredients, double tankVol) {
         double q = 1.0;
@@ -275,13 +277,14 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         fillBasedOnData(products, items, inventory, fluids, tank);
     }
 
-    public static void modifyCrafterInventory(@NonNull Map<Integer, float[]> itemReactants, ItemStacksResourceHandler inventory, double rate, int action) {
+    public void modifyCrafterInventory(@NonNull Map<Integer, float[]> itemReactants, ItemStacksResourceHandler inventory, double rate, int action) {
         for (Integer ind : itemReactants.keySet()) {
             boolean hasSolutes = ind < 0;
             float[] vals = itemReactants.get(hasSolutes ? -ind - 1 : ind);
             ItemResource resource = inventory.getResource(ind);
             if (hasSolutes && resource.has(TekoraComponents.SOLUTES_LIST)) {
                 int mapInd = 0;
+                // todo, work products/reactants that are not in the list but in the recipe within the recipe.
                 Map<SoluteKey, Double> data = resource.get(TekoraComponents.SOLUTES_LIST).dataMap();
                 for (var entry : data.entrySet()) {
                     float coeff = vals[mapInd++];
@@ -305,13 +308,14 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         }
     }
 
-    public static void modifyCrafterTank(@NonNull Map<Integer, float[]> fluidReactants, FluidStacksResourceHandler tank, double rate, int action) {
+    public void modifyCrafterTank(@NonNull Map<Integer, float[]> fluidReactants, FluidStacksResourceHandler tank, double rate, int action) {
         for (Integer ind : fluidReactants.keySet()) {
             boolean hasSolutes = ind < 0;
             float[] vals = fluidReactants.get(hasSolutes ? -ind - 1 : ind);
             FluidResource resource = tank.getResource(ind);
             if (hasSolutes && resource.has(TekoraComponents.SOLUTES_LIST)) {
                 int mapInd = 0;
+                // todo, work products/reactants that are not in the list but in the recipe within the recipe.
                 Map<SoluteKey, Double> data = resource.get(TekoraComponents.SOLUTES_LIST).dataMap();
                 for (var entry : data.entrySet()) {
                     float coeff = vals[mapInd++];

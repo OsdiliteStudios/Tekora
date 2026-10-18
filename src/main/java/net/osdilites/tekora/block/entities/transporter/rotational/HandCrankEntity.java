@@ -15,9 +15,6 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
         super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState);
     }
 
-    // public HandCrankEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
-    //     super(pType, pPos, pBlockState);
-    // }
 
     // Function used to apply force by the player
     public void applyForce(FoodData data, double forceCoeff) {

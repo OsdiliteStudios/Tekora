@@ -11,6 +11,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -23,9 +25,14 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
+import net.osdilites.tekora.block.entities.mechanical.ApplyerMechanicalEntity;
+import net.osdilites.tekora.block.entities.mechanical.PrinterMechanicalEntity;
 import net.osdilites.tekora.menu.DepotMenu;
 import net.osdilites.tekora.recipes.DepotRecipe;
+import net.osdilites.tekora.recipes.ApplyingRecipe;
+import net.osdilites.tekora.recipes.PrintingRecipe;
 import net.osdilites.tekora.recipes.TekoraRecipes;
+import net.osdilites.tekora.recipes.inputs.DeployingRecipeInput;
 import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
 
 public class DepotEntity extends AbstractModularCraftEntity {
@@ -48,88 +55,129 @@ public class DepotEntity extends AbstractModularCraftEntity {
         };
     }
 
+    private double deployerCrafting(Level level, AbstractDeployingMachineEntity deployer, String type, double velocity, double torque) {
+        // TODO: figure out how to fetch info that recipe input requires
+        // TODO: hint pssh, see deployer properties!
+
+        ItemStack itemToConvert = this.inventory.getResource(0).toStack();
+        ItemStack itemDeployed = this.inventory.getResource(1).toStack(); // TODO: CHANGE THIS
+        // resource at index 1 is just air
+        
+        // TODO: maybe get the deployed item by using the level, then fetching the entity from there?
+        Block block = level.getBlockState(getBlockPos().above()).getBlock();
+        // System.out.println(block);
+        if (block.equals(TekoraBlocks.APPLYER.get())) {
+            itemDeployed = new ItemStack(Items.IRON_AXE);
+        } else if (block.equals(TekoraBlocks.PRINTER.get())) {
+            itemDeployed = new ItemStack(Items.MAP);
+        }
+
+        // TODO: fetch exp gain depending on the crafted item
+        int exp = 0;
+        DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, exp);
+
+        // Variables that should be initialized based on instance type
+        ItemStack output = input.getItem(1); // TODO: get rid of this unnecessary allocation; it is an unholy sin
+        double ratedVelocity = 0.0;
+        var resource = this.inventory.getResource(1);
+        boolean hasRecipe = false;
+
+        double cutTorque = 0.0;
+        double cutConst = 0.0;
+
+        if (deployer instanceof PrinterMechanicalEntity) {
+            // TODO: figure out relevant printer properties besides deployed 
+            Optional<RecipeHolder<PrintingRecipe>> recipe = 
+                getCurrentRecipe(TekoraRecipes.PRINTING_TYPE.get(), input);
+
+            if (!recipe.isPresent()) {
+                // System.out.println(itemDeployed); // nope
+                // TODO: investigate why recipes aren't present
+                this.progress = 0;
+                deployer.decrement(level);
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                return 0.0;
+            }
+
+            PrintingRecipe val = recipe.get().value();
+            output = val.assemble(input);
+            ratedVelocity = val.ratedVelocity();
+
+            hasRecipe = val.matches(input, level) 
+                && (resource.isEmpty() || resource.is(output.getItem()))
+                && (resource.isEmpty() ? 64 : output.getMaxStackSize()) 
+                >= inventory.getAmountAsInt(1) + output.getCount();
+
+            cutTorque = val.cutTorque();
+            cutConst = (torque - cutTorque) / ratedVelocity;
+
+        } else if (deployer instanceof ApplyerMechanicalEntity) {
+            Optional<RecipeHolder<ApplyingRecipe>> recipe = 
+                getCurrentRecipe(TekoraRecipes.APPLYING_TYPE.get(), input);
+
+            if (!recipe.isPresent()) {
+                // TODO: investigate why recipes aren't present
+                this.progress = 0;
+                deployer.decrement(level);
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                return 0.0;
+            }
+
+            ApplyingRecipe val = recipe.get().value();
+            output = val.assemble(input);
+            ratedVelocity = val.ratedVelocity();
+
+            hasRecipe = val.matches(input, level) 
+                && (resource.isEmpty() || resource.is(output.getItem()))
+                && (resource.isEmpty() ? 64 : output.getMaxStackSize()) 
+                >= inventory.getAmountAsInt(1) + output.getCount();
+
+            cutTorque = val.cutTorque();
+            cutConst = (torque - cutTorque) / ratedVelocity;
+
+        } else {
+            System.err.println("Unsupported deployer!");
+            return 0.0;
+        }
+
+        boolean canProgress = activeMode && hasRecipe && Math.abs(velocity) >= ratedVelocity;
+        if (!canProgress) {
+            deployer.decrement(level);
+            if (deployer.getHeightPosition() >= 0) {
+                this.activeMode = true;
+            }
+            return 0;
+        }
+
+        // TODO: better name needed
+        var craftProgress = (torque < 0 ? -1 : 1) * Math.max(0, Math.min(cutTorque, cutTorque + cutConst * Math.abs(velocity)));
+
+        if (!deployer.canCraft(ratedVelocity)) {
+            deployer.increment(level);
+            return craftProgress;
+        }
+        
+        this.progress += (float) (Math.abs(velocity) / (256 * ratedVelocity));
+        if (this.progress >= 1.0f) {
+            try (Transaction transaction = Transaction.openRoot()) {
+                ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
+                inventory.extract(inventory.getResource(0), 1, transaction);
+                inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
+                transaction.commit();
+                System.err.println("PRINTING. APPLYING!");
+            }
+            this.progress = 0;
+            deployer.decrement(level);
+            this.activeMode = false;
+        }
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+
+        return craftProgress;
+    }
+
     protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
         if (ent instanceof AbstractDeployingMachineEntity deployer) {
-            // todo, add applying and printing recipes here
-            System.err.println("PRINTING. APPLYING!");
-
-            // TODO: to distinguish btwn printing and applying, use similar approaches
-            // TODO: have to extract parts into private methods
-
-            // TODO: figure out how to fetch info that recipe input requires
-            // TODO: hint pssh, see deployer properties!
-            // itemstack input = this.inventory.getResource(0).toStack();
-            // itemstack output = ???
-            // int exp = 0;
-            // DeployingRecipeInput input = new DeployingRecipeInput(input, output, exp);
-            // Optional<RecipeHolder<DepotRecipe>> recipe = getCurrentRecipe(TekoraRecipes.PRINTING_TYPE.get(), input);
-
-            // if (!recipe.isPresent()) {
-            //     progress = 0;
-            //     ent.decrement(level);
-            //     level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-            //     return 0;
-            // }
-
-            // PrintingRecipe val = recipe.get().value();
-            // ItemStack output = val.assemble(input);
-            // double ratedVelocity = val.ratedVelocity();
-            // var resource = inventory.getResource(1);
-            // boolean hasRecipe = val.matches(input, level) && (resource.isEmpty() || resource.is(output.getItem()))
-            //         && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= inventory.getAmountAsInt(1) + output.getCount();
-
-            // TODO: calculations are similar to depot, but no more nested-ifs of doom
-
-            // logic below should be shared bwtn both deployers
-
-            /*
-            // better name maybe?
-            bool canProgress = activeMode && hasRecipe && Math.abs(velocity) >= ratedVelocity;
-
-            if (!canProgress) {
-                ent.decrement(level);
-                if (ent.getHeightPosition() >= 0) {
-                    activeMode = true;
-                }
-                return 0;
-            }
-            
-            double cutTorque = val.cutTorque();
-            double cutConst = (torque - cutTorque) / ratedVelocity;
-
-            // TODO: better name needed
-            var craftProgress = 
-            (torque < 0 ? -1 : 1) * Math.max(
-                0, 
-                Math.min(
-                    cutTorque, 
-                    cutTorque + cutConst * Math.abs(velocity)
-                )
-            );
-            
-            if (!ent.canCraft(ratedVelocity)) {
-                ent.increment(level);
-                return craftProgress;
-            }
-            
-            progress += (float) (Math.abs(velocity) / (256 * ratedVelocity));
-            if (progress >= 1.0f) {
-                try (Transaction transaction = Transaction.openRoot()) {
-                    ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
-                    inventory.extract(inventory.getResource(0), 1, transaction);
-                    inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
-                    transaction.commit();
-                }
-                progress = 0;
-                ent.decrement(level);
-                activeMode = false;
-            }
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-
-            return craftProgress
-            */
-
-            return 0;
+            return deployerCrafting(level, deployer, type, velocity, torque);
         }
 
         DepotRecipeInput input = new DepotRecipeInput(this.inventory.getResource(0).toStack(), type);

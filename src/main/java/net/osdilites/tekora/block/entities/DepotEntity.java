@@ -1,5 +1,9 @@
 package net.osdilites.tekora.block.entities;
 
+import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -20,11 +24,9 @@ import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.menu.DepotMenu;
-import net.osdilites.tekora.recipes.*;
+import net.osdilites.tekora.recipes.DepotRecipe;
+import net.osdilites.tekora.recipes.TekoraRecipes;
 import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
-import org.jspecify.annotations.Nullable;
-
-import java.util.Optional;
 
 public class DepotEntity extends AbstractModularCraftEntity {
     boolean activeMode = true;
@@ -49,6 +51,84 @@ public class DepotEntity extends AbstractModularCraftEntity {
     protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
         if (ent instanceof AbstractDeployingMachineEntity deployer) {
             // todo, add applying and printing recipes here
+            System.err.println("PRINTING. APPLYING!");
+
+            // TODO: to distinguish btwn printing and applying, use similar approaches
+            // TODO: have to extract parts into private methods
+
+            // TODO: figure out how to fetch info that recipe input requires
+            // TODO: hint pssh, see deployer properties!
+            // itemstack input = this.inventory.getResource(0).toStack();
+            // itemstack output = ???
+            // int exp = 0;
+            // DeployingRecipeInput input = new DeployingRecipeInput(input, output, exp);
+            // Optional<RecipeHolder<DepotRecipe>> recipe = getCurrentRecipe(TekoraRecipes.PRINTING_TYPE.get(), input);
+
+            // if (!recipe.isPresent()) {
+            //     progress = 0;
+            //     ent.decrement(level);
+            //     level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            //     return 0;
+            // }
+
+            // PrintingRecipe val = recipe.get().value();
+            // ItemStack output = val.assemble(input);
+            // double ratedVelocity = val.ratedVelocity();
+            // var resource = inventory.getResource(1);
+            // boolean hasRecipe = val.matches(input, level) && (resource.isEmpty() || resource.is(output.getItem()))
+            //         && (resource.isEmpty() ? 64 : output.getMaxStackSize()) >= inventory.getAmountAsInt(1) + output.getCount();
+
+            // TODO: calculations are similar to depot, but no more nested-ifs of doom
+
+            // logic below should be shared bwtn both deployers
+
+            /*
+            // better name maybe?
+            bool canProgress = activeMode && hasRecipe && Math.abs(velocity) >= ratedVelocity;
+
+            if (!canProgress) {
+                ent.decrement(level);
+                if (ent.getHeightPosition() >= 0) {
+                    activeMode = true;
+                }
+                return 0;
+            }
+            
+            double cutTorque = val.cutTorque();
+            double cutConst = (torque - cutTorque) / ratedVelocity;
+
+            // TODO: better name needed
+            var craftProgress = 
+            (torque < 0 ? -1 : 1) * Math.max(
+                0, 
+                Math.min(
+                    cutTorque, 
+                    cutTorque + cutConst * Math.abs(velocity)
+                )
+            );
+            
+            if (!ent.canCraft(ratedVelocity)) {
+                ent.increment(level);
+                return craftProgress;
+            }
+            
+            progress += (float) (Math.abs(velocity) / (256 * ratedVelocity));
+            if (progress >= 1.0f) {
+                try (Transaction transaction = Transaction.openRoot()) {
+                    ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
+                    inventory.extract(inventory.getResource(0), 1, transaction);
+                    inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
+                    transaction.commit();
+                }
+                progress = 0;
+                ent.decrement(level);
+                activeMode = false;
+            }
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+
+            return craftProgress
+            */
+
             return 0;
         }
 

@@ -1,7 +1,9 @@
 package net.osdilites.tekora.block.entities;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
@@ -20,7 +22,9 @@ public class TekoraBlockEntities {
 
     public static final Supplier<BlockEntityType<HandCrankEntity>> HAND_CRANK =
             BLOCK_ENTITIES.register("hand_crank", () -> new BlockEntityType<>(HandCrankEntity::new,
-                    Set.of(TekoraBlocks.HAND_CRANK.get())));
+                    Set.of(TekoraBlocks.HAND_CRANK.get(),
+                           TekoraBlocks.SUPER_CRANK.get()
+                          )));
 
     public static final Supplier<BlockEntityType<ShaftEntity>> SHAFT =
             BLOCK_ENTITIES.register("shaft", () -> new BlockEntityType<>(ShaftEntity::new,

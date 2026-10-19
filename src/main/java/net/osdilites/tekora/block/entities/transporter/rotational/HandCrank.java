@@ -48,7 +48,7 @@ public class HandCrank extends AbstractShaftConnectableBlock {
     private static final VoxelShape SHAPE_DOWN = Shapes.or(COMPS_A[4], COMPS_B[4]);
     private static final VoxelShape SHAPE_NORTH = Shapes.or(COMPS_A[5], COMPS_B[5]);
 
-    private double forceCoeff = 60.0;
+    private double forceCoeff = HandCrankEntity.WOODEN_FORCE_COEFF;
     
     private HandCrank(Properties properties) {
         super(properties);

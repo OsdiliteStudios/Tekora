@@ -2,14 +2,13 @@ package net.osdilites.tekora.block.entities.transporter.rotational;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.food.FoodData;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class HandCrankEntity extends AbstractShaftConnectableEntity {
 
-    public static final double WOODEN_F = 60.0;
-    public static final double SUPER_F = 90441.0; 
+    public static final double WOODEN_FORCE_COEFF = 60.0;
+    public static final double SUPER_FORCE_COEFF = 90441.0;
 
     public HandCrankEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState);

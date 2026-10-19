@@ -1,15 +1,11 @@
 package net.osdilites.tekora.block;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.data.SoundDefinition;
-import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
@@ -23,7 +19,6 @@ import net.osdilites.tekora.fluid.TekoraFluids;
 import net.osdilites.tekora.item.TekoraItems;
 import net.osdilites.tekora.block.basic.TekoraBaseBlock;
 
-import java.rmi.registry.Registry;
 import java.util.function.Supplier;
 
 public class TekoraBlocks {
@@ -35,7 +30,7 @@ public class TekoraBlocks {
     public static final DeferredHolder<Block, HandCrank> HAND_CRANK =
             createBlock("hand_crank", () -> new HandCrank("hand_crank", 1));
     public static final DeferredHolder<Block, HandCrank> SUPER_CRANK = 
-            createBlock("super_crank", () -> new HandCrank("super_crank", 4, HandCrankEntity.SUPER_F));
+            createBlock("super_crank", () -> new HandCrank("super_crank", 4, HandCrankEntity.SUPER_FORCE_COEFF));
 
     // mech attachments
     public static final DeferredHolder<Block, ApplyerMechanical> APPLYER =

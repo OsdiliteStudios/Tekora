@@ -1,6 +1,7 @@
 {
   "type": "tekora:printing",
   "ingredient": "minecraft:paper",
+  "experience": 0,
   "result": {
     "id": "minecraft:map"
   },

@@ -36,6 +36,13 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
     private final HashMap<Item, ArrayList<BlockPos>> attachedPartners;
     private final double moment;
 
+    private static final int[][] PLANE_OFFSETS = {
+            // up, down, left, right
+            { 0,  1}, { 0, -1}, {-1,  0}, { 1,  0},
+            // bot. left, top left, bot. right, top right
+            {-1, -1}, {-1,  1}, { 1, -1}, { 1,  1}
+    };
+
     public ShaftEntity(BlockPos pPos, BlockState pState) {
         // WARNING: unsafe, only use in the registration
         this(pPos, pState, pState.getBlock() instanceof Shaft shaft ? shaft.getMoment() : 0);
@@ -86,7 +93,8 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
 //                    }
 //                }
 
-                // TODO: optimize this...
+                // TODO: optimize this... and add large gears spinning other large gears
+                    // large gears spinning large gears isn't the same as for small gears where you check up down left right
                 // Large gear rotation logic
                 if (axis == Direction.Axis.X) {
                     tot += rotateNeighbor(pLevel, pPos, orgV, 0, -1, -1);
@@ -107,40 +115,20 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
 
             } else {
                 // Small gear rotation logic
-                if (axis == Direction.Axis.X) {
-                    // rotate small cogs
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  1,  0);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0, -1,  0);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0, -1);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0,  1);
 
-                    // rotate large cogs(diagonal)
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0, -1, -1);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0, -1,  1);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  1, -1);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  1,  1);
+                // check neighbors by offsets relative to the current axis
+                // ex. if we looked at each axis orthagonally (like a tic tac toe board), the offset {-1, 1} refers to the top left corner
+                for (int[] offset : PLANE_OFFSETS)
+                {
+                    int row = offset[0];
+                    int col = offset[1];
 
-                } else if (axis == Direction.Axis.Y) {
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  0,  0);
-                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  0,  0);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0, -1);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0,  1);
-
-                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  0, -1);
-                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  0,  1);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  0, -1);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  0,  1);
-
-                } else if (axis == Direction.Axis.Z) {
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  0,  0);
-                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  0,  0);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  1,  0);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  0, -1,  0);
-
-                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, -1,  0);
-                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  1,  0);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  1, -1,  0);
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  1,  0);
+                    tot += switch (axis)
+                    {
+                        case X -> rotateNeighbor(pLevel, pPos, orgV, 0, row, col);
+                        case Y -> rotateNeighbor(pLevel, pPos, orgV, row, 0, col);
+                        case Z -> rotateNeighbor(pLevel, pPos, orgV, row, col, 0);
+                    };
                 }
             }
             body.addTorque(pPos, tot);

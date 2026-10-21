@@ -27,6 +27,9 @@ public class TekoraFluids {
     public static final DeferredHolder<Fluid, FlowingFluid> SULFURIC_ACID_SOURCE = FLUIDS.register("sulfuric_acid", () -> new ChemicalFluid.Source(TekoraFluids.SULFURIC_ACID_PROPERTIES));
     public static final DeferredHolder<Fluid, FlowingFluid> SULFURIC_ACID_FLOWING = FLUIDS.register("sulfuric_acid_flowing", () -> new ChemicalFluid.Flowing(TekoraFluids.SULFURIC_ACID_PROPERTIES));
 
+    public static final DeferredHolder<Fluid, FlowingFluid> AMMONIA_SOURCE = FLUIDS.register("ammonia", () -> new ChemicalFluid.Source(TekoraFluids.AMMONIA_PROPERTIES));
+    public static final DeferredHolder<Fluid, FlowingFluid> AMMONIA_FLOWING = FLUIDS.register("ammonia_flowing", () -> new ChemicalFluid.Flowing(TekoraFluids.AMMONIA_PROPERTIES));
+
     public static final BaseFlowingFluid.Properties ACETONE_PROPERTIES = new BaseFlowingFluid.Properties(
             TekoraFluidTypes.ACETONE_TYPE, ACETONE_SOURCE, ACETONE_FLOWING)
             .block(TekoraBlocks.ACETONE);
@@ -42,6 +45,10 @@ public class TekoraFluids {
     public static final BaseFlowingFluid.Properties SULFURIC_ACID_PROPERTIES = new BaseFlowingFluid.Properties(
             TekoraFluidTypes.SULFURIC_ACID_TYPE, SULFURIC_ACID_SOURCE, SULFURIC_ACID_FLOWING)
             .block(TekoraBlocks.SULFURIC_ACID);
+
+    public static final BaseFlowingFluid.Properties AMMONIA_PROPERTIES = new BaseFlowingFluid.Properties(
+            TekoraFluidTypes.AMMONIA_TYPE, AMMONIA_SOURCE, AMMONIA_FLOWING)
+            .block(TekoraBlocks.AMMONIA);
 
     public static ResourceKey<Fluid> getRK(FlowingFluid fluid) {
         return BuiltInRegistries.FLUID.getResourceKey(fluid).get();

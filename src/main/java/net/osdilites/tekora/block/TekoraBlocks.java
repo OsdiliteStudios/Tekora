@@ -17,6 +17,7 @@ import net.osdilites.tekora.block.entities.transporter.rotational.*;
 import net.osdilites.tekora.block.fluids.ChemicalLiquidBlock;
 import net.osdilites.tekora.fluid.TekoraFluids;
 import net.osdilites.tekora.item.TekoraItems;
+import net.osdilites.tekora.block.basic.TekoraBaseBlock;
 
 import java.util.function.Supplier;
 
@@ -28,6 +29,8 @@ public class TekoraBlocks {
             createBlock("steel_shaft", () -> new Shaft("steel_shaft", ShaftEntity.STEEL_I));
     public static final DeferredHolder<Block, HandCrank> HAND_CRANK =
             createBlock("hand_crank", () -> new HandCrank("hand_crank", 1));
+    public static final DeferredHolder<Block, HandCrank> SUPER_CRANK = 
+            createBlock("super_crank", () -> new HandCrank("super_crank", 4, HandCrankEntity.SUPER_FORCE_COEFF));
 
     // mech attachments
     public static final DeferredHolder<Block, ApplyerMechanical> APPLYER =
@@ -67,6 +70,20 @@ public class TekoraBlocks {
     public static final DeferredHolder<Block, ChemicalLiquidBlock> AMMONIA =
             createBlock("ammonia", () -> new ChemicalLiquidBlock(TekoraFluids.AMMONIA_SOURCE.get(), "ammonia"));
 
+    // public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register(
+    //     "steel_block", 
+    //     registryName -> new Block(BlockBehaviour.Properties.of()
+    //     .setId(ResourceKey.create(Registries.BLOCK, registryName))
+    //     .destroyTime(4.f)
+    //     .explosionResistance(10.f)
+    //     .sound(SoundType.IRON)
+    // ));
+
+    public static final DeferredHolder<Block, Block> STEEL_BLOCK = createBlock(
+        "steel_block", 
+        () -> new TekoraBaseBlock("steel_block")
+    );
+        
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);
         TekoraItems.ITEMS.registerSimpleBlockItem(ret, Item.Properties::useBlockDescriptionPrefix);

@@ -86,42 +86,61 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
 //                    }
 //                }
 
-                // TODO: fix contact logic to make large gears work, make small gears rotate large gears, make large gears rotate other large gears on different axis
-
+                // TODO: optimize this...
+                // Large gear rotation logic
                 if (axis == Direction.Axis.X) {
-                    tot += rotateNeighbor(pLevel, pPos, orgV, 0, -1, -1); // doesnt work on (-z)
+                    tot += rotateNeighbor(pLevel, pPos, orgV, 0, -1, -1);
                     tot += rotateNeighbor(pLevel, pPos, orgV, 0, -1,  1);
-                    tot += rotateNeighbor(pLevel, pPos, orgV, 0,  1, -1); // doesnt work (-z)
+                    tot += rotateNeighbor(pLevel, pPos, orgV, 0,  1, -1);
                     tot += rotateNeighbor(pLevel, pPos, orgV, 0,  1,  1);
                 } else if (axis == Direction.Axis.Y) {
-                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, 0, -1); // doesnt work (-x)
-                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, 0,  1); // doesnt work (-x)
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, 0, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, 0,  1);
                     tot += rotateNeighbor(pLevel, pPos, orgV,  1, 0, -1);
                     tot += rotateNeighbor(pLevel, pPos, orgV,  1, 0,  1);
                 } else if (axis == Direction.Axis.Z) {
-                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, -1, 0); // doesnt on (-x)
-                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  1, 0); // doesnt on (-x)
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  1, -1, 0); // Works
-                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  1, 0); // Works
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, -1, 0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  1, 0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1, -1, 0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  1, 0);
                 }
 
             } else {
                 // Small gear rotation logic
                 if (axis == Direction.Axis.X) {
+                    // rotate small cogs
                     tot += rotateNeighbor(pLevel, pPos, orgV,  0,  1,  0);
                     tot += rotateNeighbor(pLevel, pPos, orgV,  0, -1,  0);
                     tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0, -1);
                     tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0,  1);
+
+                    // rotate large cogs(diagonal)
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0, -1, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0, -1,  1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  1, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  0,  1,  1);
+
                 } else if (axis == Direction.Axis.Y) {
                     tot += rotateNeighbor(pLevel, pPos, orgV,  1,  0,  0);
                     tot += rotateNeighbor(pLevel, pPos, orgV, -1,  0,  0);
                     tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0, -1);
                     tot += rotateNeighbor(pLevel, pPos, orgV,  0,  0,  1);
+
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  0, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  0,  1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  0, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  0,  1);
+
                 } else if (axis == Direction.Axis.Z) {
                     tot += rotateNeighbor(pLevel, pPos, orgV,  1,  0,  0);
                     tot += rotateNeighbor(pLevel, pPos, orgV, -1,  0,  0);
                     tot += rotateNeighbor(pLevel, pPos, orgV,  0,  1,  0);
                     tot += rotateNeighbor(pLevel, pPos, orgV,  0, -1,  0);
+
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, -1,  0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  1,  0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1, -1,  0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  1,  0);
                 }
             }
             body.addTorque(pPos, tot);
@@ -154,14 +173,8 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
     }
 
     private double contact(Level pLevel, BlockPos curPos, BlockPos otherPos, double selfV, BlockEntity ent) {
-    // TODO: fix the line below
-        // i assume it was meant for preventing duplication of contacts, as preventing
-        // a small gear rotating a small gear, causing that gear to rotate the gear that rotated it
-        // currently it's preventing large gears from spinning some small gears (Depending on the large gear's axis)
-            // deleting it causes large gears to work fine (since small gears don't check to rotate large gears yet)
-            // but deleting it also means small gears double contact each other, and spin extremely fast
-            // you can find the list of what gears don't work in the gear logic above
-
+        // Prevents double application of torque by ensuring only one gear acts as the solver
+        // Since gears look at each other each tick, this is basically a tiebreaker that lets the gear with the smaller coordinate run the solver
         if (curPos.asLong() >= otherPos.asLong()) return 0;
 
         if (ent instanceof ShaftEntity cog && canBeCog() && cog.canBeCog()) {

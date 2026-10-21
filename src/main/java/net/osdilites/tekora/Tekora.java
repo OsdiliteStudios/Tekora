@@ -41,10 +41,6 @@ public class Tekora {
         //NeoForge.EVENT_BUS.register(this);
     }
 
-    //test 2
-
-
-
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
 

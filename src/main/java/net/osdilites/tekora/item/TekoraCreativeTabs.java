@@ -25,6 +25,8 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraBlocks.DEPOT.get().asItem());
                         out.accept(TekoraBlocks.BASIN.get().asItem());
 
+                        out.accept(TekoraBlocks.STEEL_BLOCK.get().asItem());
+
                         out.accept(TekoraItems.ALUMINUM_GEAR.get());
                         out.accept(TekoraItems.BRASS_GEAR.get());
                         out.accept(TekoraItems.BRONZE_GEAR.get());
@@ -45,6 +47,7 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraItems.CUTTER_SHAFT.get());
 
                         out.accept(TekoraItems.WRENCH.get());
+                        
                     }).build());
 
 
@@ -56,6 +59,7 @@ public class TekoraCreativeTabs {
                     .displayItems((param, out) -> {
                         out.accept(TekoraItems.STEEL_INGOT.get());
                         out.accept(TekoraItems.STEEL_PLATE.get());
+                        out.accept(TekoraItems.STEEL_ROD.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

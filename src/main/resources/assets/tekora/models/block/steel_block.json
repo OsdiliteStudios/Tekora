@@ -1,0 +1,7 @@
+{
+	"format_version": "1.21.11",
+	"parent": "minecraft:block/cube_all",
+	"textures": {
+		"all": "tekora:block/steel_block"
+	}
+}

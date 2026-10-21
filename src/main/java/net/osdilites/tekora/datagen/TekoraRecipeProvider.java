@@ -64,6 +64,14 @@ public class TekoraRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
 
+        shaped(RecipeCategory.TOOLS, TekoraBlocks.STEEL_BLOCK.get())
+                .pattern("PPP")
+                .pattern("PPP")
+                .pattern("PPP")
+                .define('P', TekoraItems.STEEL_INGOT.get())
+                .unlockedBy("has_steel_ingot", has(TekoraItems.STEEL_INGOT.get()))
+                .save(output);
+
         //PressingRecipeBuilder.pressingBuilder(RecipeCategory.TOOLS, Ingredient.of(TekoraItems.STEEL_INGOT.get()), TekoraItems.STEEL_PLATE.get(), 1, 1)
         //        .save(output, "tekora:pressing/steel_plate"); // todo, change the cuttorque and ratedvelocity values in the future
     }

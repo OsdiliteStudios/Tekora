@@ -67,6 +67,8 @@ public class TekoraBlocks {
             createBlock("sulfur_trioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_TRIOXIDE_SOURCE.get(), "sulfur_trioxide"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFURIC_ACID =
             createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get(), "sulfuric_acid"));
+    public static final DeferredHolder<Block, ChemicalLiquidBlock> AMMONIA =
+            createBlock("ammonia", () -> new ChemicalLiquidBlock(TekoraFluids.AMMONIA_SOURCE.get(), "ammonia"));
 
     // public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register(
     //     "steel_block", 

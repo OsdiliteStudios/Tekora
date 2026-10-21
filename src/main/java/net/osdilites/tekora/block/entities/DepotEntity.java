@@ -7,16 +7,21 @@ import org.jspecify.annotations.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.item.ItemResource;
@@ -55,44 +60,74 @@ public class DepotEntity extends AbstractModularCraftEntity {
         };
     }
 
+    // called in crafting()
     private double deployerCrafting(Level level, AbstractDeployingMachineEntity deployer, String type, double velocity, double torque) {
         // TODO: figure out how to fetch info that recipe input requires
-        // TODO: hint pssh, see deployer properties!
 
         ItemStack itemToConvert = this.inventory.getResource(0).toStack();
         ItemStack itemDeployed = this.inventory.getResource(1).toStack(); // TODO: CHANGE THIS
         // resource at index 1 is just air
+        // TODO: inspect registered recipes by printing all of them
+        // see neoforge manual on recipes
         
-        // TODO: maybe get the deployed item by using the level, then fetching the entity from there?
-        Block block = level.getBlockState(getBlockPos().above()).getBlock();
-        // System.out.println(block);
-        if (block.equals(TekoraBlocks.APPLYER.get())) {
-            itemDeployed = new ItemStack(Items.IRON_AXE);
-        } else if (block.equals(TekoraBlocks.PRINTER.get())) {
-            itemDeployed = new ItemStack(Items.MAP);
-        }
 
         // TODO: fetch exp gain depending on the crafted item
         int exp = 0;
         DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, exp);
 
         // Variables that should be initialized based on instance type
-        ItemStack output = input.getItem(1); // TODO: get rid of this unnecessary allocation; it is an unholy sin
+        ItemStack output = input.getItem(1); // TODO: temporary
         double ratedVelocity = 0.0;
-        var resource = this.inventory.getResource(1);
+        var resource = this.inventory.getResource(1); // ??
         boolean hasRecipe = false;
 
         double cutTorque = 0.0;
         double cutConst = 0.0;
 
-        if (deployer instanceof PrinterMechanicalEntity) {
+        if (deployer instanceof PrinterMechanicalEntity printer) {
             // TODO: figure out relevant printer properties besides deployed 
-            Optional<RecipeHolder<PrintingRecipe>> recipe = 
-                getCurrentRecipe(TekoraRecipes.PRINTING_TYPE.get(), input);
+            BlockState printerState = level.getBlockState(printer.getBlockPos());
+            // me when i have genuinely made no progress LOL
+            // hardcode it ig
+
+            itemDeployed = this.inventory.getResource(1).toStack(); // TODO: CHANGE THIS
+            input = new DeployingRecipeInput(itemToConvert, null, exp);
+            
+            Optional<RecipeHolder<PrintingRecipe>> recipe = Optional.ofNullable(null);
+
+            RecipeManager recipeManager = ((ServerLevel) level).recipeAccess();
+            // so there aren't any recipes in printing_type,
+            // but there's a crash when printing_test has experience field
+            recipeManager.recipeMap().byType(TekoraRecipes.PRINTING_TYPE.get())
+                .forEach(holder -> {
+                    System.out.print(holder.value());
+                    // this prints one recipe! so it exists!
+                    // but how the hell do I dynamically set it?
+                    // I could use this to hardcode the recipe...
+
+                    // without the "experience" field in the recipe json file,
+                    // no recipe matches 
+                })
+            ;
+
+            var printingRecipes = recipeManager.recipeMap().byType(TekoraRecipes.PRINTING_TYPE.get());
+
+            for (RecipeHolder<PrintingRecipe> printRecipe : printingRecipes) {
+                // ?
+                recipe = Optional.of(printRecipe);
+                break;
+            }
+
+
+            // okay, so the way I have to retrieve the recipe is clearly different
+            
+            // Optional<RecipeHolder<PrintingRecipe>> recipe = 
+                // getCurrentRecipe(TekoraRecipes.PRINTING_TYPE.get(), input); // crash at this line with exp field
 
             if (!recipe.isPresent()) {
                 // System.out.println(itemDeployed); // nope
                 // TODO: investigate why recipes aren't present
+
                 this.progress = 0;
                 deployer.decrement(level);
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
@@ -139,6 +174,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
             System.err.println("Unsupported deployer!");
             return 0.0;
         }
+        // ... rest is basically the same as crafting for depot recipes
 
         boolean canProgress = activeMode && hasRecipe && Math.abs(velocity) >= ratedVelocity;
         if (!canProgress) {

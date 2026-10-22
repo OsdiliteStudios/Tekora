@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.item.TekoraItems;
-import net.osdilites.tekora.item.typical.IonicCompoundItem;
+import net.osdilites.tekora.item.typical.CompoundItem;
 
 public class UtilFunctions {
     public static double IDEAL_GAS_CONST = 8.31446261815324; // J/mol K
@@ -109,6 +109,13 @@ public class UtilFunctions {
         return 0;
     }
 
+    public static double getBiomeTemperatureInK(Level level, BlockPos pos) {
+        if (level != null && !level.isClientSide()) {
+            return fromMcTempToKelvins(level.getBiome(pos).value().getBaseTemperature());
+        }
+        return 300;
+    }
+
     public static double getAirResTorque(Level level, double radius, double velocity) {
         double pressure = getPressure(level);
         // todo, beyond air resistance, we need to wonder about friction applied by blocks in contact with the block.
@@ -142,7 +149,7 @@ public class UtilFunctions {
 
     public static double getMoleCountFromIngredient(Ingredient ing) {
         Item item = ing.getValues().get(0).value();
-        if (item instanceof IonicCompoundItem chemicalItem) {
+        if (item instanceof CompoundItem chemicalItem) {
             return chemicalItem.getMoles();
         } else {
             // todo, use JSON to derive the value

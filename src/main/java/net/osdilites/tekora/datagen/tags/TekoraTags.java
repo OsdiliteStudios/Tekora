@@ -12,6 +12,7 @@ public class TekoraTags {
     public static class Items {
         public static final TagKey<Item> INGOTS_STEEL = tag("ingots/steel");
         public static final TagKey<Item> PLATES_STEEL = tag("plates/steel");
+        public static final TagKey<Item> RODS_STEEL = tag("rods/steel");
 
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(Identifier.fromNamespaceAndPath("c", name));

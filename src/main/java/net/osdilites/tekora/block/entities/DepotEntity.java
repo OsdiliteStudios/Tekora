@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.neoforged.neoforge.transfer.ResourceHandler;
@@ -32,6 +33,7 @@ import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEn
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.ApplyerMechanicalEntity;
 import net.osdilites.tekora.block.entities.mechanical.PrinterMechanicalEntity;
+import net.osdilites.tekora.menu.DeployerMenu;
 import net.osdilites.tekora.menu.DepotMenu;
 import net.osdilites.tekora.recipes.DepotRecipe;
 import net.osdilites.tekora.recipes.ApplyingRecipe;
@@ -62,21 +64,11 @@ public class DepotEntity extends AbstractModularCraftEntity {
 
     // called in crafting()
     private double deployerCrafting(Level level, AbstractDeployingMachineEntity deployer, String type, double velocity, double torque) {
-        // TODO: figure out how to fetch info that recipe input requires
-
         ItemStack itemToConvert = this.inventory.getResource(0).toStack();
         ItemStack itemDeployed = this.inventory.getResource(1).toStack(); // TODO: CHANGE THIS
-        // resource at index 1 is just air
-        // TODO: inspect registered recipes by printing all of them
-        // see neoforge manual on recipes
-        
-
-        // TODO: fetch exp gain depending on the crafted item
-        int exp = 0;
-        DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, exp);
+        ItemStack output = itemToConvert; // TODO: temporary
 
         // Variables that should be initialized based on instance type
-        ItemStack output = input.getItem(1); // TODO: temporary
         double ratedVelocity = 0.0;
         var resource = this.inventory.getResource(1); // ??
         boolean hasRecipe = false;
@@ -85,6 +77,11 @@ public class DepotEntity extends AbstractModularCraftEntity {
         double cutConst = 0.0;
 
         if (deployer instanceof PrinterMechanicalEntity printer) {
+            // TODO: figure out how to fetch info that recipe input requires
+            // TODO: fetch exp gain depending on the crafted item
+            int exp = 0;
+            DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, exp);
+
             // TODO: figure out relevant printer properties besides deployed 
             BlockState printerState = level.getBlockState(printer.getBlockPos());
             // me when i have genuinely made no progress LOL
@@ -92,42 +89,19 @@ public class DepotEntity extends AbstractModularCraftEntity {
 
             itemDeployed = this.inventory.getResource(1).toStack(); // TODO: CHANGE THIS
             input = new DeployingRecipeInput(itemToConvert, null, exp);
-            
-            Optional<RecipeHolder<PrintingRecipe>> recipe = Optional.ofNullable(null);
 
             RecipeManager recipeManager = ((ServerLevel) level).recipeAccess();
-            // so there aren't any recipes in printing_type,
-            // but there's a crash when printing_test has experience field
-            recipeManager.recipeMap().byType(TekoraRecipes.PRINTING_TYPE.get())
-                .forEach(holder -> {
-                    System.out.print(holder.value());
-                    // this prints one recipe! so it exists!
-                    // but how the hell do I dynamically set it?
-                    // I could use this to hardcode the recipe...
-
-                    // without the "experience" field in the recipe json file,
-                    // no recipe matches 
-                })
-            ;
-
+            // without the "experience" field in the recipe json file, no recipe matches 
             var printingRecipes = recipeManager.recipeMap().byType(TekoraRecipes.PRINTING_TYPE.get());
-
+            Optional<RecipeHolder<PrintingRecipe>> recipe = Optional.ofNullable(null);
+            // TODO: investigate how to get recipe without this ugly loop
             for (RecipeHolder<PrintingRecipe> printRecipe : printingRecipes) {
                 // ?
                 recipe = Optional.of(printRecipe);
                 break;
             }
 
-
-            // okay, so the way I have to retrieve the recipe is clearly different
-            
-            // Optional<RecipeHolder<PrintingRecipe>> recipe = 
-                // getCurrentRecipe(TekoraRecipes.PRINTING_TYPE.get(), input); // crash at this line with exp field
-
             if (!recipe.isPresent()) {
-                // System.out.println(itemDeployed); // nope
-                // TODO: investigate why recipes aren't present
-
                 this.progress = 0;
                 deployer.decrement(level);
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
@@ -147,29 +121,9 @@ public class DepotEntity extends AbstractModularCraftEntity {
             cutConst = (torque - cutTorque) / ratedVelocity;
 
         } else if (deployer instanceof ApplyerMechanicalEntity) {
-            Optional<RecipeHolder<ApplyingRecipe>> recipe = 
-                getCurrentRecipe(TekoraRecipes.APPLYING_TYPE.get(), input);
-
-            if (!recipe.isPresent()) {
-                // TODO: investigate why recipes aren't present
-                this.progress = 0;
-                deployer.decrement(level);
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-                return 0.0;
-            }
-
-            ApplyingRecipe val = recipe.get().value();
-            output = val.assemble(input);
-            ratedVelocity = val.ratedVelocity();
-
-            hasRecipe = val.matches(input, level) 
-                && (resource.isEmpty() || resource.is(output.getItem()))
-                && (resource.isEmpty() ? 64 : output.getMaxStackSize()) 
-                >= inventory.getAmountAsInt(1) + output.getCount();
-
-            cutTorque = val.cutTorque();
-            cutConst = (torque - cutTorque) / ratedVelocity;
-
+            // ...similar process to printer, except also maybe change these files:
+            // ...
+            return 0.0;
         } else {
             System.err.println("Unsupported deployer!");
             return 0.0;

@@ -241,10 +241,11 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
     public void setChanged() {
         super.setChanged();
         BlockState state = getBlockState();
+        System.out.println("setChanged called for state" + state);
         if (body != null && state.hasProperty(TekoraBlockStates.GEAR_TYPE) && state.hasProperty(BlockStateProperties.AXIS)) {
             GearType gearType = state.getValue(TekoraBlockStates.GEAR_TYPE);
             double added = state.getValueOrElse(TekoraBlockStates.IS_LARGE, false) ? gearType.getLargeMoment() : gearType.getSmallMoment();
-            double newVal = added + getMoment();
+            double newVal = getMoment();
             BlockPos pos = getBlockPos();
             Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);
             int loc = switch (axis) {

@@ -6,10 +6,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
+import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 
 // potentially inherit from GearItem?
 public class LargeGearItem extends TekoraItem
@@ -21,6 +23,7 @@ public class LargeGearItem extends TekoraItem
         this.gearType = gearType;
     }
 
+    //TODO: make this inherit from GearItem, since this entire function is essentially copied code except for one line
     @Override
     public InteractionResult useOn(UseOnContext context)
     {
@@ -39,6 +42,11 @@ public class LargeGearItem extends TekoraItem
                         case PLASTIC -> SoundEvents.GLASS_PLACE;
                         default -> SoundEvents.COPPER_BREAK;
                     }, 1, 1);
+                }
+
+                BlockEntity be = world.getBlockEntity(pos);
+                if (be instanceof ShaftEntity shaftEntity) {
+                    shaftEntity.setChanged();
                 }
                 return InteractionResult.SUCCESS;
             }

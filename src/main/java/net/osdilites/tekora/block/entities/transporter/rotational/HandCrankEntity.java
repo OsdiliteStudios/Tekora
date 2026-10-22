@@ -6,12 +6,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 
 public class HandCrankEntity extends AbstractShaftConnectableEntity {
+
+    public static final double WOODEN_FORCE_COEFF = 60.0;
+    public static final double SUPER_FORCE_COEFF = 90441.0;
+
     public HandCrankEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.HAND_CRANK.get(), pPos, pBlockState);
     }
 
+
     // Function used to apply force by the player
-    public void applyForce(FoodData data) {
+    public void applyForce(FoodData data, double forceCoeff) {
         if (level != null) {
             int hunger = data.getFoodLevel();
             float saturation = data.getSaturationLevel();
@@ -20,7 +25,7 @@ public class HandCrankEntity extends AbstractShaftConnectableEntity {
             double radius = componentRadius();
 
             if (energy > 0) {
-                double force = 60.0 * (0.25 + 0.75 * energy);
+                double force = forceCoeff * (0.25 + 0.75 * energy);
                 body.addTorque(getBlockPos(), force);
 
                 if (saturation > 0) {

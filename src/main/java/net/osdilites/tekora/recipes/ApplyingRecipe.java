@@ -22,7 +22,7 @@ public record ApplyingRecipe(Ingredient input, Ingredient deployed, ItemStackTem
             ItemStackTemplate.CODEC.fieldOf("result").forGetter(ApplyingRecipe::output),
             Codec.DOUBLE.fieldOf("cut_torque").forGetter(ApplyingRecipe::cutTorque),
             Codec.DOUBLE.fieldOf("rated_velocity").forGetter(ApplyingRecipe::ratedVelocity),
-            Codec.BOOL.fieldOf("consumed").forGetter(ApplyingRecipe::isConsumed)
+            Codec.BOOL.fieldOf("is_consumed").forGetter(ApplyingRecipe::isConsumed)
     ).apply(inst, ApplyingRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ApplyingRecipe> STREAM_CODEC = StreamCodec.composite(

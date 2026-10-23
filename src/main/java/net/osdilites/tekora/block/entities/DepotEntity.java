@@ -66,8 +66,8 @@ public class DepotEntity extends AbstractModularCraftEntity {
     private double deployerCrafting(Level level, AbstractDeployingMachineEntity deployer, String type, double velocity, double torque) {
         ItemStack itemToConvert = this.inventory.getResource(0).toStack();
 
-        // Variables that should be initialized based on instance type
-
+        // variables dependent on deployer instance
+        
         double ratedVelocity = 0.0;
         double cutTorque = 0.0;
         double cutConst = 0.0;
@@ -106,16 +106,14 @@ public class DepotEntity extends AbstractModularCraftEntity {
             cutConst = (torque - cutTorque) / ratedVelocity;
 
         } else if (deployer instanceof ApplyerMechanicalEntity) {
-            // ...similar implementation to printer, but also modify these files:
+            // ...similar implementation to printer, but also may 
+            // need to modify these files:
             // ...ApplyerMechanical and ApplyerMechanicalEntity
-            // ...or maybe not?
-            // TODO
             return 0.0;
         } else {
             System.err.println("Unsupported deployer!");
             return 0.0;
         }
-        // ... rest is basically the same as crafting for depot recipes
 
         boolean canProgress = activeMode && hasRecipe && Math.abs(velocity) >= ratedVelocity;
         if (!canProgress) {

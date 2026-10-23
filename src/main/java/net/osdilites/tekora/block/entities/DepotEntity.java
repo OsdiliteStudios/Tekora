@@ -1,9 +1,5 @@
 package net.osdilites.tekora.block.entities;
 
-import java.util.Optional;
-
-import org.jspecify.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -26,11 +22,13 @@ import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEnti
 import net.osdilites.tekora.block.entities.mechanical.ApplyerMechanicalEntity;
 import net.osdilites.tekora.block.entities.mechanical.PrinterMechanicalEntity;
 import net.osdilites.tekora.menu.DepotMenu;
-import net.osdilites.tekora.recipes.DepotRecipe;
-import net.osdilites.tekora.recipes.PrintingRecipe;
-import net.osdilites.tekora.recipes.TekoraRecipes;
+import net.osdilites.tekora.recipes.*;
 import net.osdilites.tekora.recipes.inputs.DeployingRecipeInput;
 import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
+
+import org.jspecify.annotations.Nullable;
+
+import java.util.Optional;
 
 public class DepotEntity extends AbstractModularCraftEntity {
     boolean activeMode = true;
@@ -96,6 +94,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
             cutConst = (torque - cutTorque) / ratedVelocity;
 
         } else if (deployer instanceof ApplyerMechanicalEntity) {
+            // TODO
             // ...similar implementation to printer, but also may 
             // need to modify these files:
             // ...ApplyerMechanical and ApplyerMechanicalEntity
@@ -128,7 +127,6 @@ public class DepotEntity extends AbstractModularCraftEntity {
                 inventory.extract(inventory.getResource(0), 1, transaction);
                 inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
                 transaction.commit();
-                System.err.println("PRINTING. APPLYING!");
             }
             this.progress = 0;
             deployer.decrement(level);

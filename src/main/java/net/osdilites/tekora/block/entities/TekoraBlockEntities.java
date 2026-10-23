@@ -70,11 +70,6 @@ public class TekoraBlockEntities {
             BLOCK_ENTITIES.register("kiln_furnace", () -> new BlockEntityType<>(KilnFurnaceEntity::new,
                     Set.of(TekoraBlocks.KILN_FURNACE.get())));
 
-        // public static final Supplier<BlockEntityType<KilnFurnaceEntity>> GOGOG = 
-        // BLOCK_ENTITIES.register("gogog", () -> new BlockEntityType<>(KilnFurnaceEntity::new,
-                // Set.of(TekoraBlocks.GOGOG.get())
-        // ));
-
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

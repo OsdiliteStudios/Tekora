@@ -3,6 +3,7 @@ package net.osdilites.tekora.block.entities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -53,7 +54,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
         }
 
         DepotRecipeInput input = new DepotRecipeInput(this.inventory.getResource(0).toStack(), type);
-        Optional<RecipeHolder<DepotRecipe>> recipe = getCurrentRecipe(TekoraRecipes.DEPOT_TYPE.get(), input);
+        Optional<RecipeHolder<DepotRecipe>> recipe = TekoraRecipes.getCurrentRecipe((ServerLevel) level, TekoraRecipes.DEPOT_TYPE.get(), input);
         if (recipe.isPresent()) {
             DepotRecipe val = recipe.get().value();
             ItemStack output = val.assemble(input);

@@ -1,12 +1,14 @@
 package net.osdilites.tekora.recipes;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.crafting.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
+
+import java.util.Optional;
 
 public class TekoraRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
@@ -64,6 +66,11 @@ public class TekoraRecipes {
                     return "reaction";
                 }
             });
+
+    public static <S extends RecipeInput, T extends Recipe<S>> Optional<RecipeHolder<T>> getCurrentRecipe(ServerLevel level, RecipeType<T> recipeType, S input) {
+        return level.recipeAccess()
+                .getRecipeFor(recipeType, input, level);
+    }
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);

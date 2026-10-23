@@ -33,8 +33,11 @@ public class DeployerMenu extends TekoraItemMenu {
         return 1;
     }
 
+    // verify that client can actually access UI of checked blocks; auto-closed otherwise  
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, TekoraBlocks.PRINTER.get());
+        ContainerLevelAccess containerLevelAccess = ContainerLevelAccess.create(level, blockEntity.getBlockPos());
+        return stillValid(containerLevelAccess, player, TekoraBlocks.PRINTER.get()) 
+            || stillValid(containerLevelAccess, player, TekoraBlocks.APPLYER.get());
     }
 }

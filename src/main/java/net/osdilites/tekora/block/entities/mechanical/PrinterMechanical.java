@@ -26,7 +26,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.item.TekoraItems;
 import org.jspecify.annotations.Nullable;
 
-public class PrinterMechanical extends AbstractModularMachine {
+public class PrinterMechanical extends AbstractDeployingMachine {
     public static final MapCodec<PrinterMechanical> CODEC = simpleCodec(PrinterMechanical::new);
 
     private PrinterMechanical(Properties properties) {
@@ -50,41 +50,6 @@ public class PrinterMechanical extends AbstractModularMachine {
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new PrinterMechanicalEntity(blockPos, blockState);
-    }
-
-    // Printers can hold items inside!
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        // TODO: possibly move this method to abstract modular machine class, and change instanceof check 
-
-        // return SUCCESS here so client doesn't attempt to place blocks instead of open menu 
-        if (level.isClientSide()) {
-            return InteractionResult.SUCCESS;
-        }
-
-        BlockEntity entity = level.getBlockEntity(pos);
-
-        Block block = level.getBlockState(entity.getBlockPos().below()).getBlock();
-        // so that gears can still be placed on use (no shift required)
-        if (!block.equals(TekoraBlocks.DEPOT.get())) {
-            return InteractionResult.PASS;
-        }
-
-        if (entity instanceof PrinterMechanicalEntity printer) {
-            player.openMenu(new SimpleMenuProvider(printer, printer.getDisplayName()), pos);
-        }
-        
-        return InteractionResult.SUCCESS;
-    }
-
-    // TODO: move this also?
-    @Override
-    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, ItemStack toolStack, boolean willHarvest, FluidState fluid) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof PrinterMechanicalEntity printer) {
-            printer.drops();
-        }
-        return super.onDestroyedByPlayer(state, level, pos, player, toolStack, willHarvest, fluid);
     }
 
     @Override

@@ -49,9 +49,11 @@ public class PrinterMechanical extends AbstractModularMachine {
         return new PrinterMechanicalEntity(blockPos, blockState);
     }
 
-    // Printers can hold items inside
+    // Printers can hold items inside!
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        // TODO: make it so that if there is not a depot below, players can still put gears on normal use
+        // TODO: possibly move this method to abstract modular machine class, and change instanceof check 
         if (!level.isClientSide()) {
             BlockEntity entity = level.getBlockEntity(pos);
             if (entity instanceof PrinterMechanicalEntity printer) {
@@ -60,6 +62,8 @@ public class PrinterMechanical extends AbstractModularMachine {
         }
         return InteractionResult.SUCCESS;
     }
+
+    // TODO: make the printer drop its inventory on destruction
 
     @Override
     public @org.jetbrains.annotations.Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {

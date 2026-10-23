@@ -65,41 +65,26 @@ public class DepotEntity extends AbstractModularCraftEntity {
     // called in crafting()
     private double deployerCrafting(Level level, AbstractDeployingMachineEntity deployer, String type, double velocity, double torque) {
         ItemStack itemToConvert = this.inventory.getResource(0).toStack();
-        ItemStack itemDeployed = this.inventory.getResource(1).toStack(); // TODO: CHANGE THIS
-        ItemStack output = itemToConvert; // TODO: temporary
 
         // Variables that should be initialized based on instance type
-        double ratedVelocity = 0.0;
-        var resource = this.inventory.getResource(1); // ??
-        boolean hasRecipe = false;
 
+        double ratedVelocity = 0.0;
         double cutTorque = 0.0;
         double cutConst = 0.0;
+        var resource = this.inventory.getResource(1);
+        // "give" the item back in output slot if not set to something else
+        ItemStack output = itemToConvert;
+        boolean hasRecipe = false;
 
         if (deployer instanceof PrinterMechanicalEntity printer) {
-            // TODO: figure out how to fetch info that recipe input requires
-            // TODO: fetch exp gain depending on the crafted item
-            int exp = 0;
+            int exp = 0; // TODO: what should be done about this
+            ItemStack itemDeployed = printer.getStoredItemResource().toStack();
+
             DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, exp);
-
-            // TODO: figure out relevant printer properties besides deployed 
-            BlockState printerState = level.getBlockState(printer.getBlockPos());
-            // me when i have genuinely made no progress LOL
-            // hardcode it ig
-
-            itemDeployed = this.inventory.getResource(1).toStack(); // TODO: CHANGE THIS
-            input = new DeployingRecipeInput(itemToConvert, null, exp);
-
-            RecipeManager recipeManager = ((ServerLevel) level).recipeAccess();
-            // without the "experience" field in the recipe json file, no recipe matches 
-            var printingRecipes = recipeManager.recipeMap().byType(TekoraRecipes.PRINTING_TYPE.get());
-            Optional<RecipeHolder<PrintingRecipe>> recipe = Optional.ofNullable(null);
-            // TODO: investigate how to get recipe without this ugly loop
-            for (RecipeHolder<PrintingRecipe> printRecipe : printingRecipes) {
-                // ?
-                recipe = Optional.of(printRecipe);
-                break;
-            }
+            
+            // TODO: without the "experience" field in printing_test.json, does a recipe match?
+            Optional<RecipeHolder<PrintingRecipe>> recipe = 
+                getCurrentRecipe(TekoraRecipes.PRINTING_TYPE.get(), input);
 
             if (!recipe.isPresent()) {
                 this.progress = 0;
@@ -121,8 +106,10 @@ public class DepotEntity extends AbstractModularCraftEntity {
             cutConst = (torque - cutTorque) / ratedVelocity;
 
         } else if (deployer instanceof ApplyerMechanicalEntity) {
-            // ...similar process to printer, except also maybe change these files:
-            // ...
+            // ...similar implementation to printer, but also modify these files:
+            // ...ApplyerMechanical and ApplyerMechanicalEntity
+            // ...or maybe not?
+            // TODO
             return 0.0;
         } else {
             System.err.println("Unsupported deployer!");
@@ -139,12 +126,11 @@ public class DepotEntity extends AbstractModularCraftEntity {
             return 0;
         }
 
-        // TODO: better name needed
-        var craftProgress = (torque < 0 ? -1 : 1) * Math.max(0, Math.min(cutTorque, cutTorque + cutConst * Math.abs(velocity)));
+        double addedTorque = (torque < 0 ? -1 : 1) * Math.max(0, Math.min(cutTorque, cutTorque + cutConst * Math.abs(velocity)));
 
         if (!deployer.canCraft(ratedVelocity)) {
             deployer.increment(level);
-            return craftProgress;
+            return addedTorque;
         }
         
         this.progress += (float) (Math.abs(velocity) / (256 * ratedVelocity));
@@ -162,7 +148,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
         }
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
 
-        return craftProgress;
+        return addedTorque;
     }
 
     protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {

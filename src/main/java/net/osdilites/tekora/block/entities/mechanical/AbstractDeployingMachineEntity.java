@@ -18,6 +18,7 @@ import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 import javax.annotation.Nullable;
@@ -61,6 +62,10 @@ public abstract class AbstractDeployingMachineEntity extends AbstractModularMach
 
     public Item getStoredItem() {
         return handler.getResource(0).getItem();
+    }
+
+    public ItemResource getStoredItemResource() {
+        return handler.getResource(0);
     }
 
     // BLOCK ENTITY SYNC

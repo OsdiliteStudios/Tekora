@@ -23,13 +23,12 @@ import net.osdilites.tekora.menu.DeployerMenu;
 import net.osdilites.tekora.menu.DepotMenu;
 
 public class PrinterMechanicalEntity extends AbstractDeployingMachineEntity implements MenuProvider {
-
-    public final ItemStacksResourceHandler inventory;
+    
     protected final ContainerData data;
 
     public PrinterMechanicalEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.PRINTER.get(), pPos, pBlockState);
-        this.inventory = makeInventory();
+        // this.handler is the deployer's inventory
         this.data = new ContainerData() { 
             @Override
             public int get(int i) {
@@ -52,30 +51,16 @@ public class PrinterMechanicalEntity extends AbstractDeployingMachineEntity impl
         return 0; // todo find value
     }
 
-    protected ItemStacksResourceHandler makeInventory() {
-        return new ItemStacksResourceHandler(1) {
-            @Override
-            protected void onContentsChanged(int index, ItemStack previousContents) {
-                super.onContentsChanged(index, previousContents);
-                PrinterMechanicalEntity.this.setChanged();
-                if (level == null || level.isClientSide()) return;
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-            }
-        };
-    }
-
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+        // TODO move block detection logic to useWithoutItem
         Level level = getLevel();
         if (level == null) return null;
-
-        // so I'm supposed to give the deploying machine (mechanical top)
-        // an inventory, and make the player interact with it...
 
         Block block = level.getBlockState(getBlockPos().below()).getBlock();
         if (!block.equals(TekoraBlocks.DEPOT.get())) return null;
 
-        return new DeployerMenu(i, inventory, this, this.inventory, data);
+        return new DeployerMenu(i, inventory, this, this.handler, data);
     }
 
     @Override

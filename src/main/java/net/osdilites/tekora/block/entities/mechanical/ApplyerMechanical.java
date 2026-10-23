@@ -18,7 +18,7 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.item.TekoraItems;
 import org.jspecify.annotations.Nullable;
 
-public class ApplyerMechanical extends AbstractModularMachine{
+public class ApplyerMechanical extends AbstractDeployingMachine {
     public static final MapCodec<ApplyerMechanical> CODEC = simpleCodec(ApplyerMechanical::new);
 
     private ApplyerMechanical(Properties properties) {

@@ -3,6 +3,7 @@ package net.osdilites.tekora.block.entities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -119,7 +120,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
             float volume = ReactionRecipeInput.fromReadingHandlersGetVolume(ingredients, liquidSolutes, inventory, tank);
 
             ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy
-            Optional<RecipeHolder<ReactionRecipe>> recipe = getCurrentRecipe(TekoraRecipes.REACTION_TYPE.get(), input);
+            Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getCurrentRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
             if (recipe.isPresent()) {
                 ReactionRecipe accessedRec = recipe.get().value();
                 // something to debug, if you switch recipes fast enough, does it still register as present?

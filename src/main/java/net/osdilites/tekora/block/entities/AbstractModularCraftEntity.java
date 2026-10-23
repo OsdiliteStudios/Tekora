@@ -133,11 +133,6 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
 
     abstract protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque);
 
-    protected <S extends RecipeInput, T extends Recipe<S>> Optional<RecipeHolder<T>> getCurrentRecipe(RecipeType<T> recipeType, S input) {
-        return ((ServerLevel) level).recipeAccess()
-                .getRecipeFor(recipeType, input, level);
-    }
-
     public float getProgress() {
         return progress;
     }

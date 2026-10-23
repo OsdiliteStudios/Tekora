@@ -7,13 +7,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -30,10 +28,6 @@ import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.data.SoluteKey;
-import net.osdilites.tekora.data.Solutes;
-import net.osdilites.tekora.data.TekoraComponents;
-import net.osdilites.tekora.fluid.ChemicalFluidType;
-import net.osdilites.tekora.item.typical.CompoundItem;
 import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.recipes.ReactionRecipe;
 import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
@@ -45,7 +39,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class BasinEntity extends AbstractModularCraftEntity {
-    private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 8000) {
+    private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 1000) {
         @Override
         protected void onContentsChanged(int index, FluidStack previousContents) {
             setChanged();

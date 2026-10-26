@@ -1,23 +1,29 @@
 package net.osdilites.tekora.event;
 
+import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.geometry.QuadCollection;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.fluid.FluidTintSource;
 import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelLoader;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
+import net.osdilites.tekora.fluid.TekoraFluids;
 import net.osdilites.tekora.renderers.*;
 import net.osdilites.tekora.menu.TekoraMenus;
 import net.osdilites.tekora.menu.screens.BasinScreen;
@@ -91,6 +97,26 @@ public class ClientEvent {
         event.register(TekoraMenus.BASIN_MENU.get(), BasinScreen::new);
         event.register(TekoraMenus.DEPOT_MENU.get(), DepotScreen::new);
         event.register(TekoraMenus.KILN_FURNACE_MENU.get(), KilnFurnaceScreen::new);
+    }
+
+
+    @SubscribeEvent 
+    public static void registerFluidModels(RegisterFluidModelsEvent event) {
+        // TODO: figure out better way of datagenning fluid data
+        event.register(new FluidModel.Unbaked(
+            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/sulfuric_acid_still")),
+            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/sulfuric_acid_flowing")),
+            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/sulfuric_acid_overlay")),
+            new FluidTintSource() { 
+                @Override 
+                public int color(FluidState state) { 
+                    // ARGB format, where FF0000FF is opaque blue
+                    return 0xFF00FFFF; 
+                } 
+            }),
+            TekoraFluids.SULFURIC_ACID_SOURCE,
+            TekoraFluids.SULFURIC_ACID_FLOWING
+        );
     }
 
     @SubscribeEvent

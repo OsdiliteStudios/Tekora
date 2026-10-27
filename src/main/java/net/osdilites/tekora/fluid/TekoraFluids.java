@@ -46,8 +46,8 @@ public class TekoraFluids {
             TekoraFluidTypes.SULFURIC_ACID_TYPE, SULFURIC_ACID_SOURCE, SULFURIC_ACID_FLOWING, TekoraFluidTypes.SULFURIC_ACID_DATA)
             .block(TekoraBlocks.SULFURIC_ACID);
 
-    public static final BaseFlowingFluid.Properties AMMONIA_PROPERTIES = new BaseFlowingFluid.Properties(
-            TekoraFluidTypes.AMMONIA_TYPE, AMMONIA_SOURCE, AMMONIA_FLOWING)
+    public static final BaseFlowingFluid.Properties AMMONIA_PROPERTIES = ChemicalFluid.createChemicalFluidProperties(
+            TekoraFluidTypes.AMMONIA_TYPE, AMMONIA_SOURCE, AMMONIA_FLOWING, TekoraFluidTypes.AMMONIA_FLUID_DATA)
             .block(TekoraBlocks.AMMONIA);
 
     public static ResourceKey<Fluid> getRK(FlowingFluid fluid) {

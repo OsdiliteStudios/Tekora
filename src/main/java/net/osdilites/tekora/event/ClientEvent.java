@@ -117,6 +117,20 @@ public class ClientEvent {
             TekoraFluids.SULFURIC_ACID_SOURCE,
             TekoraFluids.SULFURIC_ACID_FLOWING
         );
+
+        event.register(new FluidModel.Unbaked(
+            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/fluids/sulfuric_acid/sulfuric_acid_still")),
+            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/fluids/sulfuric_acid/sulfuric_acid_flowing")),
+            null, 
+            new FluidTintSource() { 
+                @Override 
+                public int color(FluidState state) { 
+                    return 0x690505FF;
+                } 
+            }),
+            TekoraFluids.AMMONIA_SOURCE,
+            TekoraFluids.AMMONIA_FLOWING
+        );
     }
 
     @SubscribeEvent

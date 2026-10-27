@@ -127,7 +127,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
                 this.lnK = accessedRec.getLnK(temperature);
 
-                float rate = accessedRec.getRateTicks(liquidSolutes, temperature);
+                // disabled realistic rate law checking for now
+                float rate = 1;//accessedRec.getRateTicks(liquidSolutes, temperature);
                 int action = Double.compare(lnQ, lnK);
 
                 // this code has been untested

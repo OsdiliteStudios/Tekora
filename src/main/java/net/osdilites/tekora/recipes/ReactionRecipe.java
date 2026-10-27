@@ -111,7 +111,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     @Override
     public boolean matches(@NonNull ReactionRecipeInput input, Level level) {
         if (!level.isClientSide()) {
-            double reqEnergy = activationEnergy;
             boolean hasAllOutput = true;
             boolean hasAllInput = true;
             double q = 1;
@@ -145,11 +144,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 }
             }
 
-
-            if (hasAllOutput && !hasAllInput) {
-                reqEnergy += deltaEnthalpy;
-                return reqEnergy <= input.availableEnergy();
-            }
+            return hasAllOutput || hasAllInput;
         }
         return false;
     }
@@ -278,6 +273,12 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     }
 
     public void modifyCrafterInventory(@NonNull Map<Integer, float[]> itemReactants, ItemStacksResourceHandler inventory, double rate, int action) {
+        if (action == 1) {
+            // checks if all the products are available
+        } else if (action == -1) {
+            // checks if all the reactants are available
+        }
+
         for (Integer ind : itemReactants.keySet()) {
             boolean hasSolutes = ind < 0;
             float[] vals = itemReactants.get(hasSolutes ? -ind - 1 : ind);

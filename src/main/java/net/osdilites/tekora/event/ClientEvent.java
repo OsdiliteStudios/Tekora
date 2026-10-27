@@ -104,8 +104,8 @@ public class ClientEvent {
     public static void registerFluidModels(RegisterFluidModelsEvent event) {
         // TODO: figure out better way of datagenning fluid data
         event.register(new FluidModel.Unbaked(
-            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/sulfuric_acid_still")),
-            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/sulfuric_acid_flowing")),
+            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/fluids/sulfuric_acid/sulfuric_acid_still")),
+            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/fluids/sulfuric_acid/sulfuric_acid_flowing")),
             null,
             new FluidTintSource() { 
                 @Override 
@@ -117,7 +117,6 @@ public class ClientEvent {
             TekoraFluids.SULFURIC_ACID_SOURCE,
             TekoraFluids.SULFURIC_ACID_FLOWING
         );
-        
     }
 
     @SubscribeEvent

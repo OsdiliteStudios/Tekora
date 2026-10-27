@@ -17,10 +17,10 @@ import java.util.concurrent.CompletableFuture;
 public class TekoraDatapackProvider extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             //.add(Registries.JUKEBOX_SONG, TekoraJukeboxSongs::bootstrap)// could be used for Tekora lore
-            //.add(Registries.DAMAGE_TYPE, TekoraDamageTypes::bootstrap) // add if necessary
+            // .add(Registries.DAMAGE_TYPE, TekoraDamageTypes::bootstrap) // add if necessary
             //.add(Registries.VILLAGER_TRADE, TekoraVillagerTrades::bootstrap) // add if necessary
             //.add(Registries.TRADE_SET, TekoraTradeSets::bootstrap) // add if necessary
-            //.add(Registries.PAINTING_VARIANT, TekoraPaintings::bootstrap) // add if necessary
+            // .add(Registries.PAINTING_VARIANT, TekoraPaintings::bootstrap) // add if necessary
             //.add(Registries.ENCHANTMENT, TekoraEnchantments::bootstrap) // add if necessary
 
             .add(Registries.CONFIGURED_FEATURE, TekoraConfiguredFeatures::bootstrap)

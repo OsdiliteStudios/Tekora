@@ -106,7 +106,7 @@ public class ClientEvent {
         event.register(new FluidModel.Unbaked(
             new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/sulfuric_acid_still")),
             new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/sulfuric_acid_flowing")),
-            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/sulfuric_acid_overlay")),
+            null,
             new FluidTintSource() { 
                 @Override 
                 public int color(FluidState state) { 
@@ -117,6 +117,7 @@ public class ClientEvent {
             TekoraFluids.SULFURIC_ACID_SOURCE,
             TekoraFluids.SULFURIC_ACID_FLOWING
         );
+        
     }
 
     @SubscribeEvent

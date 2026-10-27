@@ -41,6 +41,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     private final Map<SoluteKey, Integer> reactCoeffs;
     private final Map<SoluteKey, Integer> prodCoeffs;
     private final Map<SoluteKey, Integer> reactOrders;
+    private final Map<SoluteKey, Integer> prodOrders;
 
     public ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double freqFactor, double activationEnergy) {
         this.reactants = reactants;
@@ -54,8 +55,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
         this.reactCoeffs = new HashMap<>();
         this.reactOrders = new HashMap<>();
+        this.prodOrders = new HashMap<>();
 
-        double equ = 1;
         for (Chemical chemical : reactants) {
             if (chemical.chemical().isSolute()) {
                 SoluteKey key = chemical.chemical().asSolute();
@@ -69,6 +70,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             if (chemical.chemical().isSolute()) {
                 SoluteKey key = chemical.chemical().asSolute();
                 this.prodCoeffs.put(key, chemical.coefficient());
+                this.prodOrders.put(key, chemical.order());
             }
         }
     }
@@ -215,13 +217,30 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
     // function returns Ae^(-E/RT) * delta_t or in other words, the rate constant multiplied by the time period
     public float getRateTicks(HashMap<SoluteKey, Double> ingredients, double temperature) {
-        float rateTicks = (float)freqFactor * (float)Math.exp(-activationEnergy / (temperature * UtilFunctions.IDEAL_GAS_CONST)) / 20;
+        float rateTicks = 1;
+        boolean noReactants = false;
         for (var entry : ingredients.entrySet()) {
             if (reactOrders.containsKey(entry.getKey())) {
+                if (entry.getValue() == 0) {
+                    noReactants = true;
+                    break;
+                }
                 rateTicks = rateTicks * (float)Math.pow(entry.getValue(), reactOrders.get(entry.getKey()));
             }
         }
-        return rateTicks;
+        if (noReactants) {
+            rateTicks = 1;
+            for (var entry : ingredients.entrySet()) {
+                if (prodOrders.containsKey(entry.getKey())) {
+                    if (entry.getValue() == 0) {
+                        return 0;
+                    }
+                    rateTicks = rateTicks * (float)Math.pow(entry.getValue(), reactOrders.get(entry.getKey()));
+                }
+            }
+        }
+
+        return rateTicks * (float)freqFactor * (float)Math.exp(-activationEnergy / (temperature * UtilFunctions.IDEAL_GAS_CONST)) / 20;
     }
 
     private static void fillBasedOnData(List<Chemical> chemicals, Map<Integer, float[]> items, ItemStacksResourceHandler inventory, Map<Integer, float[]> fluids, FluidStacksResourceHandler tank) {

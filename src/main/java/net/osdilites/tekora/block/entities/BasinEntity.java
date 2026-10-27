@@ -129,15 +129,20 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
                 // disabled realistic rate law checking for now
                 float rate = 1;//accessedRec.getRateTicks(liquidSolutes, temperature);
-                int action = Double.compare(lnQ, lnK);
+                // if (rate == 0) {
+                //   break;
+                // }
+                //if (rate != 0) {
+                    int action = Double.compare(lnQ, lnK);
 
-                // this code has been untested
-                // todo, test this piece of code
-                accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
-                accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
+                    // this code has been untested
+                    // todo, test this piece of code
+                    accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
+                    accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
 
-                accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
-                accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
+                    accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
+                    accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
+                //}
             } else {
                 this.hasRxn = false;
                 itemReactants.clear();

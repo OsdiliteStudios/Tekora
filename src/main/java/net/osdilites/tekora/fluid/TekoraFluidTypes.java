@@ -60,29 +60,31 @@ public class TekoraFluidTypes {
                     )
             );
 
+    public static final FluidType AMMONIA_FLUID_DATA = 
+        new ChemicalFluidType(
+            FluidType.Properties.create()
+                    .viscosity(250)
+                    .density(682)
+                    .temperature(220)
+                    .canExtinguish(false),
+            ChemicalFluidType.ChemicalProperties.create()
+                    .molarVolume(0.02413)
+                    .triplePoint(195.49, 0.0606)
+                    .boilingPoint(239.82)
+                    .criticalPoint(405.4, 113)
+                    .meltingPointSP(195.42)
+                    .vacuumSublimationPoint(161.1)
+                    .heatFusion(5650)
+                    .tripleHeatVaporization(188000)
+                    .specificHeat(3.2)
+                    .gasSpecificHeat(35.6)
+                    .metalDegradationRate(0.003)
+                    .polymerDegradationRate(0.001)
+        );
     public static final DeferredHolder<FluidType, FluidType> AMMONIA_TYPE =
             FLUID_TYPES.register(
                     "ammonia",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(250)
-                                    .density(682)
-                                    .temperature(220)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.02413)
-                                    .triplePoint(195.49, 0.0606)
-                                    .boilingPoint(239.82)
-                                    .criticalPoint(405.4, 113)
-                                    .meltingPointSP(195.42)
-                                    .vacuumSublimationPoint(161.1)
-                                    .heatFusion(5650)
-                                    .tripleHeatVaporization(188000)
-                                    .specificHeat(3.2)
-                                    .gasSpecificHeat(35.6)
-                                    .metalDegradationRate(0.003)
-                                    .polymerDegradationRate(0.001)
-                    )
+                    () -> AMMONIA_FLUID_DATA
             );
 
     public static final DeferredHolder<FluidType, FluidType> ETHANOL_TYPE =

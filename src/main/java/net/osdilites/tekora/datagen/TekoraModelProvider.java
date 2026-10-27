@@ -53,8 +53,6 @@ public class TekoraModelProvider extends ModelProvider {
         itemModels.generateFlatItem(TekoraItems.DEBUG_ITEM.get(), ModelTemplates.FLAT_ITEM);
 
         // blockModels.createTrivialCube(ModBlocks.BAUXITE_ORE.get());
-        // TODO: is this necessary?
-        blockModels.createNonTemplateModelBlock(TekoraBlocks.SULFURIC_ACID.get());
     }
     
     private void generateGearModel(ItemModelGenerators itemModels, Item item, String name) {

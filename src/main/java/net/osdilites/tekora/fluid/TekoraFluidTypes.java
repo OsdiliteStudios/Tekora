@@ -158,28 +158,30 @@ public class TekoraFluidTypes {
                     )
             );
 
+    public static final ChemicalFluidType SULFURIC_ACID_DATA =
+        new ChemicalFluidType(
+            FluidType.Properties.create()
+                    .viscosity(24000)
+                    .density(1830)
+                    .canExtinguish(false),
+            ChemicalFluidType.ChemicalProperties.create()
+                    .molarVolume(0.0533)
+                    .triplePoint(283.46, 1.29E-8)
+                    .boilingPoint(610)
+                    .criticalPoint(924, 64)
+                    .meltingPointSP(283.46)
+                    .sublimationPoint(270, 1.25E-10)
+                    .heatFusion(10500)
+                    .tripleHeatVaporization(72500)
+                    .specificHeat(2.6)
+                    .gasSpecificHeat(83.7)
+                    .metalDegradationRate(0.02)
+                    .polymerDegradationRate(0.005)
+        );
     public static final DeferredHolder<FluidType, FluidType> SULFURIC_ACID_TYPE =
             FLUID_TYPES.register(
                     "sulfuric_acid",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(24000)
-                                    .density(1830)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.0533)
-                                    .triplePoint(283.46, 1.29E-8)
-                                    .boilingPoint(610)
-                                    .criticalPoint(924, 64)
-                                    .meltingPointSP(283.46)
-                                    .sublimationPoint(270, 1.25E-10)
-                                    .heatFusion(10500)
-                                    .tripleHeatVaporization(72500)
-                                    .specificHeat(2.6)
-                                    .gasSpecificHeat(83.7)
-                                    .metalDegradationRate(0.02)
-                                    .polymerDegradationRate(0.005)
-                    )
+                    () -> SULFURIC_ACID_DATA
             );
 
     public static final DeferredHolder<FluidType, FluidType> WATER_TYPE =

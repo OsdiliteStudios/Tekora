@@ -99,38 +99,20 @@ public class ClientEvent {
         event.register(TekoraMenus.KILN_FURNACE_MENU.get(), KilnFurnaceScreen::new);
     }
 
+    /// Color is in 0xAARRGGBB order
+    private static FluidModel.Unbaked createDefaultFluidModel(int hexColor) {
+        return new FluidModel.Unbaked(
+            new Material(Identifier.withDefaultNamespace("block/water_still")),
+            new Material(Identifier.withDefaultNamespace("block/water_flow")),
+            new Material(Identifier.withDefaultNamespace("block/water_overlay")),
+            state -> hexColor);
+    }
 
     @SubscribeEvent 
     public static void registerFluidModels(RegisterFluidModelsEvent event) {
-        // TODO: figure out better way of datagenning fluid data
-        event.register(new FluidModel.Unbaked(
-            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/fluids/sulfuric_acid/sulfuric_acid_still")),
-            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/fluids/sulfuric_acid/sulfuric_acid_flowing")),
-            null,
-            new FluidTintSource() { 
-                @Override 
-                public int color(FluidState state) { 
-                    // ARGB format, where FF0000FF is opaque blue
-                    return 0xFF00FFFF; 
-                } 
-            }),
-            TekoraFluids.SULFURIC_ACID_SOURCE,
-            TekoraFluids.SULFURIC_ACID_FLOWING
-        );
-
-        event.register(new FluidModel.Unbaked(
-            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/fluids/sulfuric_acid/sulfuric_acid_still")),
-            new Material(Identifier.fromNamespaceAndPath(Tekora.MODID, "block/fluids/sulfuric_acid/sulfuric_acid_flowing")),
-            null, 
-            new FluidTintSource() { 
-                @Override 
-                public int color(FluidState state) { 
-                    return 0x690505FF;
-                } 
-            }),
-            TekoraFluids.AMMONIA_SOURCE,
-            TekoraFluids.AMMONIA_FLOWING
-        );
+        // TODO: figure out better way of registering fluid models
+        event.register(createDefaultFluidModel(0xFF00FFFF), TekoraFluids.SULFURIC_ACID_SOURCE, TekoraFluids.SULFURIC_ACID_FLOWING);
+        event.register(createDefaultFluidModel(0x690505FF), TekoraFluids.AMMONIA_SOURCE, TekoraFluids.AMMONIA_FLOWING);
     }
 
     @SubscribeEvent

@@ -27,7 +27,9 @@ public abstract class ChemicalFluid extends BaseFlowingFluid {
         return fluidState.getAmount();
     }
 
-    /// Helper method for setting fluid properties based on other properties automatically.
+    /** Helper method for setting fluid properties based on other properties automatically.
+     * @param fluidData FluidType holding hardcoded properties of the fluid before event registration.
+     */
     public static Properties createChemicalFluidProperties(
         Supplier<? extends FluidType> fluidType, 
         Supplier<? extends Fluid> still, 

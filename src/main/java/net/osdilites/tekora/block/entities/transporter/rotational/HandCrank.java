@@ -48,10 +48,11 @@ public class HandCrank extends AbstractShaftConnectableBlock {
     private static final VoxelShape SHAPE_DOWN = Shapes.or(COMPS_A[4], COMPS_B[4]);
     private static final VoxelShape SHAPE_NORTH = Shapes.or(COMPS_A[5], COMPS_B[5]);
 
+    private double forceCoeff = HandCrankEntity.WOODEN_FORCE_COEFF;
+    
     private HandCrank(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
-
     }
 
     public HandCrank(String pName, int cat) {
@@ -60,6 +61,11 @@ public class HandCrank extends AbstractShaftConnectableBlock {
             case 2 -> Blocks.TINTED_GLASS;
             default -> Blocks.IRON_BLOCK;
         }).setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, pName))));
+    }
+
+    public HandCrank(String pName, int cat, double forceCoeff) {
+        this(pName, cat);
+        this.forceCoeff = forceCoeff;
     }
 
     @Override
@@ -78,7 +84,7 @@ public class HandCrank extends AbstractShaftConnectableBlock {
         if (!pLevel.isClientSide()) {
             BlockEntity te = pLevel.getBlockEntity(pPos);
             if (te instanceof HandCrankEntity crankEnt) {
-                crankEnt.applyForce(pPlayer.getFoodData()); // this changes the velocity
+                crankEnt.applyForce(pPlayer.getFoodData(), forceCoeff); // this changes the velocity
                 pLevel.sendBlockUpdated(pPos, pState, pState, 3);
                 return InteractionResult.SUCCESS;
             }

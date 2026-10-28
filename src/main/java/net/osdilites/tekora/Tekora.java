@@ -19,7 +19,6 @@ import org.slf4j.Logger;
 
 @Mod(Tekora.MODID)
 public class Tekora {
-    // grzegorz brzeczyszczykiewicz
     /** Thanks to <a href="https://github.com/Tutorials-By-Kaupenjoe">Kaupenjoe</a> for making a tutorial for modding for
      * the Tekora team! As some code in this project were copied directly from his tutorials.
      */
@@ -38,10 +37,9 @@ public class Tekora {
         TekoraFluidTypes.register(modEventBus);
         TekoraFluids.register(modEventBus);
         // uncomment the code below if a subscribe event annotated method was here.
+        // it may be possible to connect these to the client/server event classes
         //NeoForge.EVENT_BUS.register(this);
     }
-    // hello
-    // hi
 
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
@@ -52,5 +50,4 @@ public class Tekora {
 //        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
 //        }
     }
-    // thing
 }

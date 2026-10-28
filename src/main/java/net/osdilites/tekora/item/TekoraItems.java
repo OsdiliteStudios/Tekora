@@ -58,10 +58,14 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> CUTTER_SHAFT = ITEMS.register("cutter_shaft", () -> new MachinePartItem("cutter_shaft", TekoraBlocks.CUTTER.get()));
 
   public static final DeferredHolder<Item, Item> STEEL_INGOT = ITEMS.register("steel_ingot", () -> new TekoraItem(true, "steel_ingot"));
+  public static final DeferredHolder<Item, Item> STEEL_DUST = ITEMS.register("steel_dust", () -> new TekoraItem(true, "steel_dust"));
   public static final DeferredHolder<Item, Item> STEEL_PLATE = ITEMS.register("steel_plate", () -> new TekoraItem(true, "steel_plate"));
+  public static final DeferredHolder<Item, Item> STEEL_ROD   = ITEMS.register("steel_rod",   () -> new TekoraItem(true, "steel_rod"));
   public static final DeferredHolder<Item, Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem("wrench", 560));
 
   // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
+
+  public static final DeferredHolder<Item, Item> MAGNESIUM_CARBONATE = ITEMS.register("magnesium_carbonate", () -> new CompoundItem("magnesium_carbonate", "MgCO3", 9450));
 
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override

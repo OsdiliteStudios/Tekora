@@ -18,5 +18,6 @@ public class TekoraItemTagProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         tag(TekoraTags.Items.INGOTS_STEEL).add(TekoraItems.getKey(TekoraItems.STEEL_INGOT.get()));
         tag(TekoraTags.Items.PLATES_STEEL).add(TekoraItems.getKey(TekoraItems.STEEL_PLATE.get()));
+        tag(TekoraTags.Items.RODS_STEEL).add(TekoraItems.getKey(TekoraItems.STEEL_ROD.get()));
     }
 }

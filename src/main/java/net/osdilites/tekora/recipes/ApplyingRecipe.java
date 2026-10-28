@@ -37,7 +37,8 @@ public record ApplyingRecipe(Ingredient input, Ingredient deployed, ItemStackTem
 
     @Override
     public boolean matches(DeployingRecipeInput recipeInput, Level level) {
-        return !level.isClientSide() && input().test(recipeInput.getItem(0)) && deployed.test(recipeInput.deployed());
+        return !level.isClientSide() && input().test(recipeInput.getItem(0)) 
+               && deployed.test(recipeInput.deployed());
     }
 
     @Override

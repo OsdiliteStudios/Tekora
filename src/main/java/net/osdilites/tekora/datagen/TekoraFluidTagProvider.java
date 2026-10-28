@@ -15,7 +15,7 @@ public class TekoraFluidTagProvider extends FluidTagsProvider {
     }
 
     @Override 
-    protected void addTags(HolderLookup.Provider registries) {
+    protected void addTags(HolderLookup.Provider provider) {
         tag(FluidTags.WATER)
             .add(TekoraFluids.getRK(TekoraFluids.AMMONIA_SOURCE.get()))
             .add(TekoraFluids.getRK(TekoraFluids.AMMONIA_FLOWING.get()))

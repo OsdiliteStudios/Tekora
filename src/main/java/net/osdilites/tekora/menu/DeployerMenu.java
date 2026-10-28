@@ -19,7 +19,7 @@ public class DeployerMenu extends TekoraItemMenu {
         super(TekoraMenus.PRINTER_MENU.get(), containerId, inventory, data);
         this.blockEntity = (AbstractDeployingMachineEntity) blockEntity;
 
-        addSlot(new ResourceHandlerSlot(handler, handler::set, 0, 86, 35));
+        addSlot(new ResourceHandlerSlot(handler, handler::set, 0, 80, 32));
 
         addDataSlots(data);
     }

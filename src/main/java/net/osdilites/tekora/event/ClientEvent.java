@@ -19,8 +19,10 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.renderers.*;
+import net.osdilites.tekora.menu.DeployerMenu;
 import net.osdilites.tekora.menu.TekoraMenus;
 import net.osdilites.tekora.menu.screens.BasinScreen;
+import net.osdilites.tekora.menu.screens.DeployerScreen;
 import net.osdilites.tekora.menu.screens.DepotScreen;
 import net.osdilites.tekora.menu.screens.KilnFurnaceScreen;
 import net.osdilites.tekora.menu.models.ModularPartModel;
@@ -66,18 +68,22 @@ public class ClientEvent {
         registerWithGearPart(event, TekoraBlockEntities.TOP_MECH.get());
     }
 
+    // for any block entities that is an instance ShaftEntity
     private static void registerWithGearPart(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type) {
         event.registerBlockEntityRenderer(type, ModularGearRenderer::new);
     }
 
+    // for any block entities that inherits AbstractDeployerEntity or AbstractModularMachineEntity
     private static void registerModularUpDown(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type, Identifier identifier, StandaloneModelKey<QuadCollection> key) {
         event.registerBlockEntityRenderer(type, c -> new ModularUpDownPartRenderer(c, identifier, key));
     }
 
+    // for specific block entities that inherits AbstractModularMachineEntity
     private static void registerModularRotating(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type, Identifier identifier, StandaloneModelKey<QuadCollection> key) {
         event.registerBlockEntityRenderer(type, c -> new ModularRotatingRenderer(c, identifier, key));
     }
 
+    // for any block entities that inherits AbstractShaftConnectableEntity
     private static void registerGeneralRotator(EntityRenderersEvent.RegisterRenderers event, BlockEntityType type) {
         event.registerBlockEntityRenderer(type, RotationalEntityRenderer::new);
     }
@@ -87,6 +93,7 @@ public class ClientEvent {
         event.register(TekoraMenus.BASIN_MENU.get(), BasinScreen::new);
         event.register(TekoraMenus.DEPOT_MENU.get(), DepotScreen::new);
         event.register(TekoraMenus.KILN_FURNACE_MENU.get(), KilnFurnaceScreen::new);
+        event.register(TekoraMenus.PRINTER_MENU.get(), DeployerScreen::new);
     }
 
     @SubscribeEvent

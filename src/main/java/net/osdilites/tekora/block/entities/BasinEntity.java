@@ -2,13 +2,13 @@ package net.osdilites.tekora.block.entities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,17 +28,20 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
-import net.osdilites.tekora.data.IonValue;
+import net.osdilites.tekora.data.SoluteKey;
+import net.osdilites.tekora.data.Solutes;
 import net.osdilites.tekora.data.TekoraComponents;
-import net.osdilites.tekora.fluid.ChemicalFluid;
-import net.osdilites.tekora.item.typical.IonicCompoundItem;
+import net.osdilites.tekora.fluid.ChemicalFluidType;
+import net.osdilites.tekora.item.typical.CompoundItem;
 import net.osdilites.tekora.menu.BasinMenu;
+import net.osdilites.tekora.recipes.ReactionRecipe;
 import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
+import net.osdilites.tekora.recipes.TekoraRecipes;
+import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
+import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class BasinEntity extends AbstractModularCraftEntity {
     private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 8000) {
@@ -58,10 +61,17 @@ public class BasinEntity extends AbstractModularCraftEntity {
         // todo, for this value allow fluids to "mix", the "mixing" process may trigger a chemical reaction so keep that in mind on every tick.
     };
 
-    private final ArrayList<ItemStack> toBeRemoved = new ArrayList<>(11);
+    // variables for chemical reaction recipes
+    private boolean hasRxn = false;
+    private double lnK = 0;
+    private double lnQ = 0;
+    private Map<Integer, float[]> itemReactants = new HashMap<>();
+    private Map<Integer, float[]> fluidReactants = new HashMap<>();
+    private Map<Integer, float[]> itemProducts = new HashMap<>();
+    private Map<Integer, float[]> fluidProducts = new HashMap<>();
 
     public BasinEntity(BlockPos pPos, BlockState pState) {
-        super(TekoraBlockEntities.BASIN.get(), pPos, pState);
+        super(TekoraBlockEntities.BASIN.get(), pPos, pState, 4.815f);
     }
 
     // meaning of each index in the inventory
@@ -103,41 +113,50 @@ public class BasinEntity extends AbstractModularCraftEntity {
         // todo, use handler to check if a recipe containing them exists.
         // note, it is possible to hardcode mole behavior
         if (type.equals(TekoraMechanicalRecipe.MIXER)) {
-            // todo, create chemical reaction recipes
+            // the following code below reads the ingredients in inventory/tank
+            HashMap<ChemicalIngredient, Double> ingredients = new HashMap<>();
+            HashMap<SoluteKey, Double> liquidSolutes = new HashMap<>();
+            float volume = ReactionRecipeInput.fromReadingHandlersGetVolume(ingredients, liquidSolutes, inventory, tank);
 
-            HashMap<String, Double> itemIons = new HashMap<>();
-            HashMap<Item, Integer> items = new HashMap<>();
-
-            for (int i = 0; i < inventory.size(); i++) {
-                ItemResource resource = inventory.getResource(i);
-                ItemStack stack = resource.toStack();
-                int count = stack.count();
-                Item item = stack.getItem();
-                if (resource.getComponents().has(TekoraComponents.IONS)) {
-                    IonValue val = resource.getComponents().get(TekoraComponents.IONS);
-                    itemIons.put(val.ion(), val.molarity());
+            ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy
+            Optional<RecipeHolder<ReactionRecipe>> recipe = getCurrentRecipe(TekoraRecipes.REACTION_TYPE.get(), input);
+            if (recipe.isPresent()) {
+                ReactionRecipe accessedRec = recipe.get().value();
+                // something to debug, if you switch recipes fast enough, does it still register as present?
+                if (!this.hasRxn) {
+                    // description: use this to develop a map of indices containing reactants/products including those with solutes
+                    accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
+                    accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
+                    this.hasRxn = true;
                 }
-                items.put(item, items.getOrDefault(item, 0) + count);
-            }
-            HashMap<String, Double> dissolvedIons = new HashMap<>();
-            HashMap<Fluid, Integer> fluids = new HashMap<>();
-            for (int i = 0; i < tank.size(); i++) {
-                FluidResource fluidResource = tank.getResource(i);
-                Fluid fluid = fluidResource.getFluid();
-                int amt = tank.getAmountAsInt(i);
-                if (fluidResource.getComponents().has(TekoraComponents.IONS)) {
-                    IonValue val = fluidResource.getComponents().get(TekoraComponents.IONS);
-                    dissolvedIons.put(val.ion(), val.molarity());
-                }
-                fluids.put(fluid, fluids.getOrDefault(fluid, 0) + amt);
-            }
+                this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
+                this.lnK = accessedRec.getLnK(temperature);
 
+                float rate = accessedRec.getRateTicks(liquidSolutes, temperature);
+                int action = Double.compare(lnQ, lnK);
+
+                // this code has been untested
+                // todo, test this piece of code
+                accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
+                accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
+
+                accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
+                accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
+            } else {
+                this.hasRxn = false;
+                itemReactants.clear();
+                itemProducts.clear();
+                fluidReactants.clear();
+                fluidProducts.clear();
+            }
         }
         if (ent instanceof AbstractDeployingMachineEntity deployer) {
             // todo, add applying and printing recipes here
-            // possible idea, maybe this creates ink water and allows maps to be made
+            // possible idea, maybe this creates ink water and allows maps to be copied
             return 0;
         }
+
+        // todo, include misc test cases here
         return 0;
     }
 
@@ -232,5 +251,17 @@ public class BasinEntity extends AbstractModularCraftEntity {
             tank.extract(tank.getResource(0), 1000, transaction);
             transaction.commit();
         }
+    }
+
+    public double getLnK() {
+        return lnK;
+    }
+
+    public double getLnQ() {
+        return lnQ;
+    }
+
+    public boolean hasReaction() {
+        return hasRxn;
     }
 }

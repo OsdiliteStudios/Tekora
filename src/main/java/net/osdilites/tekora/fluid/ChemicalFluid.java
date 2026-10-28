@@ -27,18 +27,21 @@ public abstract class ChemicalFluid extends BaseFlowingFluid {
         return fluidState.getAmount();
     }
 
-    /** Helper method for setting fluid properties based on other properties automatically.
-     * @param fluidData FluidType holding hardcoded properties of the fluid before event registration.
+    /** Helper method.
+     * @param fluidData FluidType holding hardcoded properties of the fluid.
      */
-    public static Properties createChemicalFluidProperties(
+    public static Properties FluidProperties(
         Supplier<? extends FluidType> fluidType, 
         Supplier<? extends Fluid> still, 
         Supplier<? extends Fluid> flowing,
         FluidType fluidData) 
     {
-        // assumes viscosity of room temp water is 1000 cPa and water tickRate = 8
-        final int CONVERT_RATIO = 125; 
-        int viscosityToTickRate = fluidData.getViscosity() / CONVERT_RATIO;
+        // assumes viscosity of room temp water is 1 cPa and water tickRate = 8
+        // this is very very egregiously far from scientifically correct, 
+        // but is "okay" for fluids with high viscosity, since high tick/update seems absurdly slow
+        // TODO fix this with a better equation
+        final double CONVERT_RATIO = 1.0 / 125.0; 
+        int viscosityToTickRate = (int) Math.round(CONVERT_RATIO * Math.sqrt(1000 * fluidData.getViscosity()));
         return new BaseFlowingFluid.Properties(fluidType, still, flowing)
             .tickRate(Math.max(viscosityToTickRate, 1));
     }

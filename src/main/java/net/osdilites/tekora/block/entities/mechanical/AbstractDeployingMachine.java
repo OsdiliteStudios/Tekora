@@ -35,14 +35,8 @@ public abstract class AbstractDeployingMachine extends AbstractModularMachine {
             return InteractionResult.PASS;
         }
 
-        // since not every deploying machine may need to display ui? refactor if needed
-        // if (entity instanceof AbstractDeployingMachineEntity deployer) {
-        //     player.openMenu(new SimpleMenuProvider(deployer, deployer.getDisplayName()), pos);
-        // }
-        if (entity instanceof PrinterMechanicalEntity printer) {
-            player.openMenu(new SimpleMenuProvider(printer, printer.getDisplayName()), pos);
-        } else if (entity instanceof ApplyerMechanicalEntity applier) {
-            player.openMenu(new SimpleMenuProvider(applier, applier.getDisplayName()), pos);
+        if (entity instanceof AbstractDeployingMachineEntity deployer) {
+            player.openMenu(new SimpleMenuProvider(deployer, deployer.getDisplayName()), pos);
         }
         
         return InteractionResult.SUCCESS;

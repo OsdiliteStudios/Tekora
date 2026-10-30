@@ -42,7 +42,7 @@ public record PrintingRecipe(Ingredient input, ItemStackTemplate output, int exp
 
     @Override
     public ItemStack assemble(DeployingRecipeInput recipeInput) {
-        return output().create().copy();
+        return recipeInput.deployed().copyWithCount(1);
     }
 
     @Override

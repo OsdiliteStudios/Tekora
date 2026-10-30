@@ -22,7 +22,7 @@ public record SoluteKey(String formula, int charge) {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof SoluteKey(String formula1, int charge1)) {
-            return formula1.equals(formula) && charge1 == charge;
+            return charge1 == charge && formula1.equals(formula);
         }
         return false;
     }

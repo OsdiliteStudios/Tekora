@@ -65,6 +65,8 @@ public class TekoraItems {
 
   // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
 
+  public static final DeferredHolder<Item, Item> MAGNESIUM_CARBONATE = ITEMS.register("magnesium_carbonate", () -> new CompoundItem("magnesium_carbonate", "MgCO3", 9450));
+
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override
     public InteractionResult useOn(UseOnContext pContext) {

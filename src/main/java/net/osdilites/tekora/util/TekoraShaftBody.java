@@ -335,6 +335,7 @@ public class TekoraShaftBody {
     public boolean isStart(BlockPos pPos) {
         return pPos.equals(start);
     }
+    public boolean isEnd(BlockPos pPos) { return pPos.equals(end); }
 
     public BlockPos getStart() {
         return start;

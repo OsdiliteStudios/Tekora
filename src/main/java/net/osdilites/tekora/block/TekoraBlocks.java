@@ -9,6 +9,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.block.basic.TekoraExperienceBlock;
 import net.osdilites.tekora.block.entities.Basin;
 import net.osdilites.tekora.block.entities.Depot;
 import net.osdilites.tekora.block.entities.mechanical.*;
@@ -78,6 +79,9 @@ public class TekoraBlocks {
     //     .explosionResistance(10.f)
     //     .sound(SoundType.IRON)
     // ));
+
+    public static final DeferredHolder<Block, Block> BAUXITE_ORE = createBlock("bauxite_ore",
+            () -> new TekoraExperienceBlock("bauxite_ore", 2.0f, 1.0f));
 
     public static final DeferredHolder<Block, Block> STEEL_BLOCK = createBlock(
         "steel_block", 

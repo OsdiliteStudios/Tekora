@@ -4,7 +4,6 @@ import org.jspecify.annotations.Nullable;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -13,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.menu.DeployerMenu;
 
-public class PrinterMechanicalEntity extends AbstractDeployingMachineEntity implements MenuProvider {
+public class PrinterMechanicalEntity extends AbstractDeployingMachineEntity {
     public PrinterMechanicalEntity(BlockPos pPos, BlockState pBlockState) {
         super(TekoraBlockEntities.PRINTER.get(), pPos, pBlockState);
     }

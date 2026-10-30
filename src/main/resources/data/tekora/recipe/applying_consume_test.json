@@ -3,6 +3,7 @@
   "ingredient": "minecraft:stick",
   "deployed": "minecraft:coal",
   "result": {
+    "count": 6,
     "id": "minecraft:torch"
   },
   "cut_torque": 8.0,

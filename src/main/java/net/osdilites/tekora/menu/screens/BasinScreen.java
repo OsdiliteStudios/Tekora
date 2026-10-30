@@ -41,6 +41,8 @@ public class BasinScreen extends AbstractContainerScreen<BasinMenu> {
         graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
 
         fluidRenderer.render(graphics, x + 18, y + 24, menu.blockEntity.getFluid());
+
+        renderProcess(graphics, x, y);
     }
 
     private void assignFluidRenderer() {

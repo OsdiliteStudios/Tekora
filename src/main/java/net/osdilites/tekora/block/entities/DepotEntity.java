@@ -2,9 +2,7 @@ package net.osdilites.tekora.block.entities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -12,14 +10,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStackResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
@@ -55,12 +49,6 @@ public class DepotEntity extends AbstractModularCraftEntity {
             }
         };
     }
-
-    /// Get an ItemStack while preserving the durability information?
-    private ItemStack getDeployerItemStack(ItemStacksResourceHandler deployerHandler) {
-        var list = deployerHandler.copyToList();
-        return list.get(0);
-    }
     
     private void tryOutput(Level level, ItemStack output, AbstractDeployingMachineEntity deployer, boolean consumeDeployedItem) 
     {
@@ -69,6 +57,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
             inventory.extract(inventory.getResource(0), 1, transaction);
             
             if (!consumeDeployedItem) {
+                inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
                 transaction.commit();
                 return;
             }
@@ -86,18 +75,16 @@ public class DepotEntity extends AbstractModularCraftEntity {
                     // when an applier stops works because of no durability
 
                     return;
-                } else {
-                    // Do not lose an hour of your life thinking that damage goes from full durability to
-                    // 0 (i.e. 600 to 0) instead of going up as it takes damage. 
-                    // Are you absolutely stupid? Yes. Yes you are. Damn. 
-                    int currentDamage = deployed.getDamageValue();
-                    // TODO: make durability loss dependent on enchantments, if planned
-                    int damageDone = 1;
-                    int finalDamage = Math.min(currentDamage + damageDone, deployed.getMaxDamage());
-                    deployed.setDamageValue(finalDamage);
-                    // since deployed is just a copy, overwrite the changes in the actual slot
-                    deployerHandler.set(0, ItemResource.of(deployed), deployerAccess.getAmount());
                 }
+
+                int currentDamage = deployed.getDamageValue();
+                // TODO: make durability loss dependent on enchantments, if planned
+                int damageDone = 1;
+                int finalDamage = Math.min(currentDamage + damageDone, deployed.getMaxDamage());
+                deployed.setDamageValue(finalDamage);
+                // since deployed is just a copy, overwrite the changes in the actual slot
+                deployerHandler.set(0, ItemResource.of(deployed), deployerAccess.getAmount());
+                
             } else {
                 int newAmount = Math.max(deployerAccess.getAmount() - 1, 0);
                 deployerHandler.set(0, deployerHandler.getResource(0), newAmount);

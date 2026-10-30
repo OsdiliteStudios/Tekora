@@ -14,9 +14,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStackResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
@@ -53,49 +56,54 @@ public class DepotEntity extends AbstractModularCraftEntity {
         };
     }
 
+    /// Get an ItemStack while preserving the durability information?
+    private ItemStack getDeployerItemStack(ItemStacksResourceHandler deployerHandler) {
+        var list = deployerHandler.copyToList();
+        return list.get(0);
+    }
     
-    private void tryOutput(
-        ItemStack output, 
-        ItemStacksResourceHandler deployerInventory, 
-        boolean consumeDeployedItem,
-        AbstractDeployingMachineEntity deployer) 
+    private void tryOutput(Level level, ItemStack output, AbstractDeployingMachineEntity deployer, boolean consumeDeployedItem) 
     {
         try (Transaction transaction = Transaction.openRoot()) {
             ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
             inventory.extract(inventory.getResource(0), 1, transaction);
-            inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
             
             if (!consumeDeployedItem) {
                 transaction.commit();
                 return;
             }
             
-            int extractedCount = inventory.extract(deployerInventory.getResource(0), 1, transaction);
-            ItemStack deployed = deployerInventory.getResource(0).toStack();
+            ItemStacksResourceHandler deployerHandler = deployer.getHandler();
+            ItemAccess deployerAccess = ItemAccess.forHandlerIndex(deployerHandler, 0);
+            ItemStack deployed = deployerHandler.getResource(0).toStack();
 
             if (deployed.isDamageableItem()) {
                 if (deployed.nextDamageWillBreak()) {
-                    // revert changes to inventory, meaning no output should be produced
+                    // revert changes by extract(), but not set()
                     transaction.close();
+
+                    // TODO need some way to explicitly indicate to the player
+                    // when an applier stops works because of no durability
+
                     return;
                 } else {
-                    int currentDurability = deployed.getDamageValue();
+                    // Do not lose an hour of your life thinking that damage goes from full durability to
+                    // 0 (i.e. 600 to 0) instead of going up as it takes damage. 
+                    // Are you absolutely stupid? Yes. Yes you are. Damn. 
+                    int currentDamage = deployed.getDamageValue();
                     // TODO: make durability loss dependent on enchantments, if planned
-                    int durabilityLost = 1;
-                    int finalDurability = Math.max(currentDurability - durabilityLost, 1);
-                    deployed.setDamageValue(finalDurability);
-                    // overwrites the item in the slot, which doesn't seem ideal?
-                    deployerInventory.set(0, ItemResource.of(deployed), 1);
+                    int damageDone = 1;
+                    int finalDamage = Math.min(currentDamage + damageDone, deployed.getMaxDamage());
+                    deployed.setDamageValue(finalDamage);
+                    // since deployed is just a copy, overwrite the changes in the actual slot
+                    deployerHandler.set(0, ItemResource.of(deployed), deployerAccess.getAmount());
                 }
             } else {
-                deployed.setCount(deployed.getCount() - extractedCount);
+                int newAmount = Math.max(deployerAccess.getAmount() - 1, 0);
+                deployerHandler.set(0, deployerHandler.getResource(0), newAmount);
             }
 
-            // itemstack creates a new item, so it doesn't actually affect the item
-            // in the deployer inventory 
-
-            // deployerInventory.set(0, ItemResource.of(deployed), 1);
-
+            inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
             transaction.commit();
         }
     }
@@ -195,7 +203,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
         
         this.progress += (float) (Math.abs(velocity) / (256 * ratedVelocity));
         if (this.progress >= 1.0f) {
-            tryOutput(output, deployer.getHandler(), consumeDeployedItem, deployer);
+            tryOutput(level, output, deployer, consumeDeployedItem);
             this.progress = 0;
             deployer.decrement(level);
             this.activeMode = false;

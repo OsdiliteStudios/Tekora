@@ -28,9 +28,12 @@ import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftC
 import net.osdilites.tekora.block.entities.thermal.AbstractThermalMachine;
 import net.minecraft.world.item.*;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.data.SoluteKey;
+import net.osdilites.tekora.data.Solutes;
 import net.osdilites.tekora.item.typical.*;
 import net.osdilites.tekora.util.TekoraShaftBody;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class TekoraItems {
@@ -65,7 +68,12 @@ public class TekoraItems {
 
   // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
 
-  public static final DeferredHolder<Item, Item> MAGNESIUM_CARBONATE = ITEMS.register("magnesium_carbonate", () -> new CompoundItem("magnesium_carbonate", "MgCO3", 9450));
+  public static final DeferredHolder<Item, Item> MAGNESIUM_CARBONATE = ITEMS.register("magnesium_carbonate",
+          () -> new CompoundItem("magnesium_carbonate",
+                  Solutes.create()
+                          .addKey(SoluteKey.MAGNESIUM, 1)
+                          .addKey(SoluteKey.CARBONATE, 1),
+                  9450));
 
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override

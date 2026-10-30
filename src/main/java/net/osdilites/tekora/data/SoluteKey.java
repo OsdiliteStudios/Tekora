@@ -26,4 +26,16 @@ public record SoluteKey(String formula, int charge) {
         }
         return false;
     }
+
+    // cations
+    public static SoluteKey SODIUM = new SoluteKey("Na", 1);
+    public static SoluteKey MAGNESIUM = new SoluteKey("Mg", 2);
+    public static SoluteKey IRON2 = new SoluteKey("Fe", 2); // ferrous
+    public static SoluteKey IRON3 = new SoluteKey("Fe", 3); // ferric
+
+    // anions
+    public static SoluteKey CHLORIDE = new SoluteKey("Cl", -1);
+    public static SoluteKey CARBONATE = new SoluteKey("CO3", -2);
+    public static SoluteKey NITRATE = new SoluteKey("NO3", -1);
+    public static SoluteKey SULFATE = new SoluteKey("SO4", -2);
 }

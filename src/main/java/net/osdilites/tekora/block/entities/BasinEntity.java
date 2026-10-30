@@ -60,10 +60,10 @@ public class BasinEntity extends AbstractModularCraftEntity {
     private boolean hasRxn = false;
     private double lnK = 0;
     private double lnQ = 0;
-    private Map<Integer, float[]> itemReactants = new HashMap<>();
-    private Map<Integer, float[]> fluidReactants = new HashMap<>();
-    private Map<Integer, float[]> itemProducts = new HashMap<>();
-    private Map<Integer, float[]> fluidProducts = new HashMap<>();
+    private final Map<Integer, float[]> itemReactants = new HashMap<>();
+    private final Map<Integer, float[]> fluidReactants = new HashMap<>();
+    private final Map<Integer, float[]> itemProducts = new HashMap<>();
+    private final Map<Integer, float[]> fluidProducts = new HashMap<>();
 
     public BasinEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState, 4.815f);

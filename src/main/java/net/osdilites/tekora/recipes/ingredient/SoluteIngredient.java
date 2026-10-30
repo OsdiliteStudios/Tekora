@@ -11,6 +11,7 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.function.Predicate;
 
+@Deprecated // deprecated, reason: SoluteKey can handle most of the functions of SoluteIngredient
 public class SoluteIngredient implements Predicate<SoluteKey> {
     public static final Codec<SoluteIngredient> CODEC = RecordCodecBuilder.create((
             instance) -> instance.group(
@@ -58,5 +59,13 @@ public class SoluteIngredient implements Predicate<SoluteKey> {
 
     public static @NotNull SoluteIngredient solidSolute(@NotNull SoluteKey data) {
         return new SoluteIngredient(data.formula(), data.charge(), true);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof SoluteIngredient ing) {
+            return ing.isSolid == isSolid() && ing.formula.equals(formula) && ing.charge == charge;
+        }
+        return super.equals(obj);
     }
 }

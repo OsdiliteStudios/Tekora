@@ -30,6 +30,12 @@ public class TekoraFluids {
     public static final DeferredHolder<Fluid, FlowingFluid> AMMONIA_SOURCE = FLUIDS.register("ammonia", () -> new ChemicalFluid.Source(TekoraFluids.AMMONIA_PROPERTIES));
     public static final DeferredHolder<Fluid, FlowingFluid> AMMONIA_FLOWING = FLUIDS.register("ammonia_flowing", () -> new ChemicalFluid.Flowing(TekoraFluids.AMMONIA_PROPERTIES));
 
+    public static final DeferredHolder<Fluid, FlowingFluid> ETHANOL_SOURCE = FLUIDS.register("ethanol", () -> new ChemicalFluid.Source(TekoraFluids.ETHANOL_PROPERTIES));
+    public static final DeferredHolder<Fluid, FlowingFluid> ETHANOL_FLOWING = FLUIDS.register("ethanol_flowing", () -> new ChemicalFluid.Flowing(TekoraFluids.ETHANOL_PROPERTIES));
+
+    public static final DeferredHolder<Fluid, FlowingFluid> ACETIC_ACID_SOURCE = FLUIDS.register("acetic_acid", () -> new ChemicalFluid.Source(TekoraFluids.ACETIC_ACID_PROPERTIES));
+    public static final DeferredHolder<Fluid, FlowingFluid> ACETIC_ACID_FLOWING = FLUIDS.register("acetic_acid_flowing", () -> new ChemicalFluid.Flowing(TekoraFluids.ACETIC_ACID_PROPERTIES));
+
     public static final BaseFlowingFluid.Properties ACETONE_PROPERTIES = new BaseFlowingFluid.Properties(
             TekoraFluidTypes.ACETONE_TYPE, ACETONE_SOURCE, ACETONE_FLOWING)
             .block(TekoraBlocks.ACETONE);
@@ -49,6 +55,14 @@ public class TekoraFluids {
     public static final BaseFlowingFluid.Properties AMMONIA_PROPERTIES = new BaseFlowingFluid.Properties(
             TekoraFluidTypes.AMMONIA_TYPE, AMMONIA_SOURCE, AMMONIA_FLOWING)
             .block(TekoraBlocks.AMMONIA);
+
+    public static final BaseFlowingFluid.Properties ETHANOL_PROPERTIES = new BaseFlowingFluid.Properties(
+            TekoraFluidTypes.ETHANOL_TYPE, ETHANOL_SOURCE, ETHANOL_FLOWING)
+            .block(TekoraBlocks.ETHANOL);
+
+    public static final BaseFlowingFluid.Properties ACETIC_ACID_PROPERTIES = new BaseFlowingFluid.Properties(
+            TekoraFluidTypes.ACETIC_ACID_TYPE, ACETIC_ACID_SOURCE, ACETIC_ACID_FLOWING)
+            .block(TekoraBlocks.ACETIC_ACID);
 
     public static ResourceKey<Fluid> getRK(FlowingFluid fluid) {
         return BuiltInRegistries.FLUID.getResourceKey(fluid).get();

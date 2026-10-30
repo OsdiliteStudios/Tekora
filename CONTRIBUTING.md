@@ -22,7 +22,7 @@ Note that I haven't looked at other established CONTRIBUTING.md files for refere
 ## Commits
 - Commit small and often
 
-# Pull requests
+## Pull requests
 - Link the issue in the description with `Closes #12` (the specific sub-issue, not the parent).
 
 

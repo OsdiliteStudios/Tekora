@@ -3,12 +3,14 @@ package net.osdilites.tekora.block.entities.mechanical;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.Containers;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
@@ -24,7 +26,7 @@ import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractDeployingMachineEntity extends AbstractModularMachineEntity {
+public abstract class AbstractDeployingMachineEntity extends AbstractModularMachineEntity implements MenuProvider {
     
     protected final ContainerData data;
     // deployer's inventory
@@ -118,4 +120,8 @@ public abstract class AbstractDeployingMachineEntity extends AbstractModularMach
     public void onDataPacket(Connection net, ValueInput valueInput) {
         super.onDataPacket(net, valueInput);
     }
+
+    /// What the menu title displays when the deployer's menu is opened.
+    @Override 
+    public abstract Component getDisplayName();
 }

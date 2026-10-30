@@ -34,8 +34,8 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class AbstractModularCraftEntity extends BlockEntity implements MenuProvider {
-    private float temperature; // K
-    private float heatCapacity; // K/L
+    protected float temperature = -1; // K
+    protected final float heatCapacity; // J/L
 
     public final ItemStacksResourceHandler inventory;
     protected final ContainerData data;
@@ -43,9 +43,13 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
     @Deprecated
     public static final int MAX_PROGRESS = 128;
 
-    public AbstractModularCraftEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
+    // note: the specific heat capacity of steel is 16.219 J/L K
+    // for steel basins: use the number 4.815f for heatCapacity (the general value should be heatCapacity * 19/64)
+    // for steel depots: use the number 8.426f for heatCapacity (the general value should be heatCapacity * 133/256)
+    public AbstractModularCraftEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState, float heatCapacity) {
         super(type, worldPosition, blockState);
         this.inventory = makeInventory();
+        this.heatCapacity = heatCapacity;
         this.data = new ContainerData() { // for mechanical and fluid mech entities, we just need these two
             @Override
             public int get(int i) {
@@ -64,6 +68,11 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
                 return 1;
             }
         };
+    }
+
+    @Deprecated
+    public AbstractModularCraftEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
+        this(type, worldPosition, blockState, 1);
     }
 
     protected abstract ItemStacksResourceHandler makeInventory();

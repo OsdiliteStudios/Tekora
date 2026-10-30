@@ -132,7 +132,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
             ratedVelocity = val.ratedVelocity();
 
             hasRecipe = val.matches(input, level) 
-                && (resource.isEmpty() || resource.is(output.getItem()))
+                && (resource.isEmpty() || resource.equals(ItemResource.of(output)))
                 && (resource.isEmpty() ? 64 : output.getMaxStackSize()) 
                 >= inventory.getAmountAsInt(1) + output.getCount();
 
@@ -223,6 +223,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
                         try (Transaction transaction = Transaction.openRoot()) {
                             ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
                             inventory.extract(inventory.getResource(0), 1, transaction);
+                            // TODO: probably should change .set to .insert for safety
                             inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
                             transaction.commit();
                         }

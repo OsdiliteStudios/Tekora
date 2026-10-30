@@ -93,12 +93,32 @@ public class DepotEntity extends AbstractModularCraftEntity {
             cutTorque = val.cutTorque();
             cutConst = (torque - cutTorque) / ratedVelocity;
 
-        } else if (deployer instanceof ApplyerMechanicalEntity) {
-            // TODO
-            // ...similar implementation to printer, but also may 
-            // need to modify these files:
-            // ...ApplyerMechanical and ApplyerMechanicalEntity
-            return 0.0;
+        } else if (deployer instanceof ApplyerMechanicalEntity applyer) {
+            ItemStack itemDeployed = applyer.getStoredItemResource().toStack();
+
+            DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, 0);
+            Optional<RecipeHolder<ApplyingRecipe>> recipe = 
+                getCurrentRecipe(TekoraRecipes.APPLYING_TYPE.get(), input);
+            
+            if (!recipe.isPresent()) {
+                this.progress = 0;
+                deployer.decrement(level);
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                return 0.0;
+            }
+
+            ApplyingRecipe val = recipe.get().value();
+            output = val.assemble(input);
+            ratedVelocity = val.ratedVelocity();
+
+            hasRecipe = val.matches(input, level)
+                && (resource.isEmpty() || resource.is(output.getItem()))
+                && (resource.isEmpty() ? 64 : output.getMaxStackSize()) 
+                >= inventory.getAmountAsInt(1) + output.getCount();
+            
+            cutTorque = val.cutTorque();
+            cutConst = (torque - cutTorque) / ratedVelocity;
+
         } else {
             System.err.println("Unsupported deployer!");
             return 0.0;

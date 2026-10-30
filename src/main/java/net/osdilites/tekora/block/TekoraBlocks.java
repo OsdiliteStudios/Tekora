@@ -70,6 +70,11 @@ public class TekoraBlocks {
             createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get(), "sulfuric_acid"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> AMMONIA =
             createBlock("ammonia", () -> new ChemicalLiquidBlock(TekoraFluids.AMMONIA_SOURCE.get(), "ammonia"));
+    public static final DeferredHolder<Block, ChemicalLiquidBlock> ETHANOL =
+            createBlock("ethanol", () -> new ChemicalLiquidBlock(TekoraFluids.ETHANOL_SOURCE.get(), "ethanol"));
+
+    public static final DeferredHolder<Block, ChemicalLiquidBlock> ACETIC_ACID =
+            createBlock("acetic_acid", () -> new ChemicalLiquidBlock(TekoraFluids.ACETIC_ACID_SOURCE.get(), "acetic_acid"));
 
     // public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register(
     //     "steel_block", 

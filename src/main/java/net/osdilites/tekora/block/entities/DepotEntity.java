@@ -2,7 +2,9 @@ package net.osdilites.tekora.block.entities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -10,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
@@ -50,9 +53,58 @@ public class DepotEntity extends AbstractModularCraftEntity {
         };
     }
 
+    
+    private void tryOutput(
+        ItemStack output, 
+        ItemStacksResourceHandler deployerInventory, 
+        boolean consumeDeployedItem,
+        AbstractDeployingMachineEntity deployer) 
+    {
+        try (Transaction transaction = Transaction.openRoot()) {
+            ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
+            inventory.extract(inventory.getResource(0), 1, transaction);
+            inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
+            
+            if (!consumeDeployedItem) {
+                transaction.commit();
+                return;
+            }
+            
+            int extractedCount = inventory.extract(deployerInventory.getResource(0), 1, transaction);
+            ItemStack deployed = deployerInventory.getResource(0).toStack();
+
+            if (deployed.isDamageableItem()) {
+                if (deployed.nextDamageWillBreak()) {
+                    // revert changes to inventory, meaning no output should be produced
+                    transaction.close();
+                    return;
+                } else {
+                    int currentDurability = deployed.getDamageValue();
+                    // TODO: make durability loss dependent on enchantments, if planned
+                    int durabilityLost = 1;
+                    int finalDurability = Math.max(currentDurability - durabilityLost, 1);
+                    deployed.setDamageValue(finalDurability);
+                    // overwrites the item in the slot, which doesn't seem ideal?
+                    deployerInventory.set(0, ItemResource.of(deployed), 1);
+                }
+            } else {
+                deployed.setCount(deployed.getCount() - extractedCount);
+            }
+
+            // itemstack creates a new item, so it doesn't actually affect the item
+            // in the deployer inventory 
+
+            // deployerInventory.set(0, ItemResource.of(deployed), 1);
+
+            transaction.commit();
+        }
+    }
+
     // called in crafting()
     private double deployerCrafting(Level level, AbstractDeployingMachineEntity deployer, String type, double velocity, double torque) {
         ItemStack itemToConvert = this.inventory.getResource(0).toStack();
+        ItemStack itemDeployed = deployer.getStoredItemResource().toStack();
+        boolean consumeDeployedItem = false;
 
         // variables dependent on deployer instance
         
@@ -64,10 +116,8 @@ public class DepotEntity extends AbstractModularCraftEntity {
         ItemStack output = itemToConvert;
         boolean hasRecipe = false;
 
-        if (deployer instanceof PrinterMechanicalEntity printer) {
+        if (deployer instanceof PrinterMechanicalEntity) {
             int exp = 0; // TODO: what should be done about this
-            ItemStack itemDeployed = printer.getStoredItemResource().toStack();
-
             DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, exp);
             
             // TODO: without the "experience" field in printing_test.json, does a recipe match?
@@ -83,6 +133,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
 
             PrintingRecipe val = recipe.get().value();
             output = val.assemble(input);
+
             ratedVelocity = val.ratedVelocity();
 
             hasRecipe = val.matches(input, level) 
@@ -93,9 +144,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
             cutTorque = val.cutTorque();
             cutConst = (torque - cutTorque) / ratedVelocity;
 
-        } else if (deployer instanceof ApplyerMechanicalEntity applyer) {
-            ItemStack itemDeployed = applyer.getStoredItemResource().toStack();
-
+        } else if (deployer instanceof ApplyerMechanicalEntity) {
             DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, 0);
             Optional<RecipeHolder<ApplyingRecipe>> recipe = 
                 getCurrentRecipe(TekoraRecipes.APPLYING_TYPE.get(), input);
@@ -105,6 +154,10 @@ public class DepotEntity extends AbstractModularCraftEntity {
                 deployer.decrement(level);
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 return 0.0;
+            }
+
+            if (recipe.get().value().isConsumed()) {
+                consumeDeployedItem = true;
             }
 
             ApplyingRecipe val = recipe.get().value();
@@ -142,12 +195,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
         
         this.progress += (float) (Math.abs(velocity) / (256 * ratedVelocity));
         if (this.progress >= 1.0f) {
-            try (Transaction transaction = Transaction.openRoot()) {
-                ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
-                inventory.extract(inventory.getResource(0), 1, transaction);
-                inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
-                transaction.commit();
-            }
+            tryOutput(output, deployer.getHandler(), consumeDeployedItem, deployer);
             this.progress = 0;
             deployer.decrement(level);
             this.activeMode = false;

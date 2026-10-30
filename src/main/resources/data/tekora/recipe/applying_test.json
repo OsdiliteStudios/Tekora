@@ -7,5 +7,5 @@
   },
   "cut_torque": 8.0,
   "rated_velocity": 0.2,
-  "is_consumed": false
+  "is_consumed": true
 }

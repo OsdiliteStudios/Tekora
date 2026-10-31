@@ -11,6 +11,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
+import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -480,6 +481,28 @@ public class TekoraShaftBody {
         double orgI = moment;
         velocity = velocity * (val / (val + orgI));
         moment = val;
+    }
+
+    public void updateWithGear(BlockPos pos, GearType type, boolean isLarge) {
+        int ind = 0;
+        boolean canOperate = false;
+        switch (axis) {
+            case X -> {
+                ind = pos.getX() - pA;
+                canOperate = pos.getY() == start.getY() && pos.getZ() == start.getZ();
+            }
+            case Y -> {
+                ind = pos.getY() - pA;
+                canOperate = pos.getX() == start.getX() && pos.getZ() == start.getZ();
+            }
+            case Z -> {
+                ind = pos.getZ() - pA;
+                canOperate = pos.getX() == start.getX() && pos.getY() == start.getY();
+            }
+        }
+        if (canOperate) {
+            moments.set(ind, moments.get(ind) + (isLarge ? type.getLargeMoment() : type.getSmallMoment()));
+        }
     }
 
     // for Debugging purposes

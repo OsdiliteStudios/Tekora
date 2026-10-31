@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
 
 // energyRed means how much does a catalyst reduces the activation energy of a chemical reaction
 public record Catalyst(ChemicalIngredient catalyst, double energyRed /* J/mol */) {

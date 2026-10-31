@@ -1,0 +1,49 @@
+{
+  "type": "tekora:reaction",
+  "activation_energy": 75540.0,
+  "catalyst": {
+    "catalyst": {
+      "input": {
+        "charge": -2,
+        "formula": "SO4"
+      },
+      "is_solid": false
+    },
+    "energy_reduction": 10000.0
+  },
+  "d_enthalpy": 30540.0,
+  "d_entropy": 260.7,
+  "freq_factor": 2.51E8,
+  "products": [
+    {
+      "chemical": {
+        "input": "tekora:magnesium_carbonate",
+        "is_solid": true
+      },
+      "order": 1
+    }
+  ],
+  "reactants": [
+    {
+      "chemical": {
+        "input": {
+          "charge": 2,
+          "formula": "Mg"
+        },
+        "is_solid": false
+      },
+      "order": 1
+    },
+    {
+      "chemical": {
+        "input": {
+          "charge": -2,
+          "formula": "CO3"
+        },
+        "is_solid": false
+      },
+      "order": 1
+    }
+  ],
+  "solvent": "minecraft:water"
+}

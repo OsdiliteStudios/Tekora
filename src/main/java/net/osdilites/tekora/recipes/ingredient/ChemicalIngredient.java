@@ -8,6 +8,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
@@ -101,8 +102,8 @@ public record ChemicalIngredient(Either<MaterialIngredient, SoluteKey> input, bo
     }
 
     @Contract("_ -> new")
-    public static @NotNull ChemicalIngredient of(@NotNull ItemStack item) {
-        return new ChemicalIngredient(Either.left(MaterialIngredient.of(Ingredient.of(item.getItem()))), true);
+    public static @NotNull ChemicalIngredient of(@NotNull ItemLike item) {
+        return new ChemicalIngredient(Either.left(MaterialIngredient.of(Ingredient.of(item))), true);
     }
 
     @Contract("_ -> new")

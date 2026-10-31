@@ -9,8 +9,14 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.data.SoluteKey;
+import net.osdilites.tekora.data.Solutes;
+import net.osdilites.tekora.data.TekoraComponents;
 import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.menu.infoboxes.FluidTankRenderer;
+
+import java.util.List;
+import java.util.Map;
 
 public class BasinScreen extends AbstractContainerScreen<BasinMenu> {
     private static final Identifier GUI_TEXTURE = Identifier.fromNamespaceAndPath(Tekora.MODID, "textures/gui/container/basin_gui.png");
@@ -52,7 +58,12 @@ public class BasinScreen extends AbstractContainerScreen<BasinMenu> {
     private void renderFluidTooltipArea(GuiGraphicsExtractor guiGraphics, int pMouseX, int pMouseY, int x, int y,
                                         FluidStack stack, int offsetX, int offsetY, FluidTankRenderer renderer) {
         if(isMouseOver(pMouseX, pMouseY, x + offsetX, y + offsetY, renderer.getWidth(), renderer.getHeight())) {
-            guiGraphics.setComponentTooltipForNextFrame(this.font, renderer.getTooltip(stack), pMouseX, pMouseY);
+            List<Component> tooltip = renderer.getTooltip(stack);
+            if (stack.has(TekoraComponents.SOLUTES_LIST)) {
+                stack.get(TekoraComponents.SOLUTES_LIST).modifyTooltip(tooltip);
+            }
+            guiGraphics.setComponentTooltipForNextFrame(this.font, tooltip, pMouseX, pMouseY);
+
         }
     }
 

@@ -3,11 +3,14 @@ package net.osdilites.tekora.data;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public record Solutes(@NotNull Map<SoluteKey, Double> dataMap) {
@@ -48,4 +51,9 @@ public record Solutes(@NotNull Map<SoluteKey, Double> dataMap) {
         return new Solutes(new HashMap<>());
     }
 
+    public void modifyTooltip(List<Component> tooltip) {
+        for (var entry : dataMap.entrySet()) {
+            tooltip.add(Component.translatable("tekora.tooltip.data.chemical", entry.getKey().formula(), entry.getKey().charge(), entry.getValue()));
+        }
+    }
 }

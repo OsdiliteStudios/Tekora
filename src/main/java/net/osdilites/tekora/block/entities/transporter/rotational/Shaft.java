@@ -81,23 +81,23 @@ public class Shaft extends AbstractShaftConnectableBlock {
 
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
-        List<ItemStack> drops = super.getDrops(state, params);
-
         Level level = params.getLevel();
-        if (level.isClientSide()) return drops;
-
-        GearType gearType = state.getValueOrElse(GEAR_TYPE, GearType.NONE);
-        if (gearType == GearType.NONE) return drops;
-
-        Item item = UtilFunctions.getItemFromGearType(gearType);
-        if (item == null) return drops;
-
-        boolean isLarge = state.getValueOrElse(IS_LARGE, false);
-        if (isLarge) return drops;
-        // TODO: Change this so it drops the large cog variant. Large cog items aren't implemented yet.
-
-        drops.add(new ItemStack(item, 1));
-
+        List<ItemStack> drops = super.getDrops(state, params);
+        if (!level.isClientSide() && state.hasProperty(GEAR_TYPE)) {
+            GearType type = state.getValue(GEAR_TYPE);
+            if (type != GearType.NONE && state.hasProperty(IS_LARGE)) {
+                Item item = UtilFunctions.getItemFromGearType(type);
+                if (item != null) {
+                    if (state.getValue(IS_LARGE)) {
+                        Item part = UtilFunctions.getItemFromGearType(type);
+                        if (part != null) {
+                            drops.add(new ItemStack(part, 4));
+                        }
+                    }
+                    drops.add(new ItemStack(item, 1));
+                }
+            }
+        }
         return drops;
     }
 

@@ -6,11 +6,9 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
-import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 
 public class GearItem extends TekoraItem {
     private final GearType gearType;
@@ -36,11 +34,6 @@ public class GearItem extends TekoraItem {
                         case PLASTIC -> SoundEvents.GLASS_PLACE;
                         default -> SoundEvents.COPPER_BREAK;
                     }, 1, 1);
-                }
-
-                BlockEntity be = world.getBlockEntity(pos);
-                if (be instanceof ShaftEntity shaftEntity) {
-                    shaftEntity.setChanged();
                 }
                 return InteractionResult.SUCCESS;
             }

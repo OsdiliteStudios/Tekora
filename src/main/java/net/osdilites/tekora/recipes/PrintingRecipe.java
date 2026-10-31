@@ -36,13 +36,12 @@ public record PrintingRecipe(Ingredient input, ItemStackTemplate output, int exp
 
     @Override
     public boolean matches(DeployingRecipeInput recipeInput, Level level) {
-        return !level.isClientSide() && input().test(recipeInput.getItem(0))
-            && recipeInput.deployed().getItem().equals(output.item().value());
+        return !level.isClientSide() && input().test(recipeInput.getItem(0)) && recipeInput.deployed().getItem().equals(output.item());
     }
 
     @Override
     public ItemStack assemble(DeployingRecipeInput recipeInput) {
-        return recipeInput.deployed().copyWithCount(1);
+        return output().create().copy();
     }
 
     @Override

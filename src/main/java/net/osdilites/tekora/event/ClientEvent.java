@@ -19,10 +19,8 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.renderers.*;
-import net.osdilites.tekora.menu.DeployerMenu;
 import net.osdilites.tekora.menu.TekoraMenus;
 import net.osdilites.tekora.menu.screens.BasinScreen;
-import net.osdilites.tekora.menu.screens.DeployerScreen;
 import net.osdilites.tekora.menu.screens.DepotScreen;
 import net.osdilites.tekora.menu.screens.KilnFurnaceScreen;
 import net.osdilites.tekora.menu.models.ModularPartModel;
@@ -93,7 +91,6 @@ public class ClientEvent {
         event.register(TekoraMenus.BASIN_MENU.get(), BasinScreen::new);
         event.register(TekoraMenus.DEPOT_MENU.get(), DepotScreen::new);
         event.register(TekoraMenus.KILN_FURNACE_MENU.get(), KilnFurnaceScreen::new);
-        event.register(TekoraMenus.PRINTER_MENU.get(), DeployerScreen::new);
     }
 
     @SubscribeEvent

@@ -3,13 +3,16 @@ package net.osdilites.tekora.block.entities.mechanical;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.Containers;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -18,11 +21,15 @@ import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractDeployingMachineEntity extends AbstractModularMachineEntity {
+public abstract class AbstractDeployingMachineEntity extends AbstractModularMachineEntity implements MenuProvider {
+    
+    protected final ContainerData data;
+    // deployer's inventory
     protected final ItemStacksResourceHandler handler = new ItemStacksResourceHandler(1) {
         @Override
         protected void onContentsChanged(int index, ItemStack previousContents) {
@@ -36,6 +43,22 @@ public abstract class AbstractDeployingMachineEntity extends AbstractModularMach
 
     public AbstractDeployingMachineEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState, false);
+        // for deployer menu. why deployer menu?
+        this.data = new ContainerData() { 
+            @Override
+            public int get(int i) {
+                return 1;
+            }
+
+            @Override
+            public void set(int i, int i1) {
+            }
+
+            @Override
+            public int getCount() {
+                return 1;
+            }
+        };
     }
 
     @Override
@@ -61,6 +84,10 @@ public abstract class AbstractDeployingMachineEntity extends AbstractModularMach
 
     public Item getStoredItem() {
         return handler.getResource(0).getItem();
+    }
+
+    public ItemResource getStoredItemResource() {
+        return handler.getResource(0);
     }
 
     // BLOCK ENTITY SYNC
@@ -89,4 +116,8 @@ public abstract class AbstractDeployingMachineEntity extends AbstractModularMach
     public void onDataPacket(Connection net, ValueInput valueInput) {
         super.onDataPacket(net, valueInput);
     }
+
+    /// What the menu title displays when the deployer's menu is opened.
+    @Override 
+    public abstract Component getDisplayName();
 }

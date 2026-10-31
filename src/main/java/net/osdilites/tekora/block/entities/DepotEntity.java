@@ -20,9 +20,13 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
+import net.osdilites.tekora.block.entities.mechanical.ApplyerMechanicalEntity;
+import net.osdilites.tekora.block.entities.mechanical.PrinterMechanicalEntity;
 import net.osdilites.tekora.menu.DepotMenu;
 import net.osdilites.tekora.recipes.*;
+import net.osdilites.tekora.recipes.inputs.DeployingRecipeInput;
 import net.osdilites.tekora.recipes.inputs.DepotRecipeInput;
+
 import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
@@ -47,10 +51,116 @@ public class DepotEntity extends AbstractModularCraftEntity {
         };
     }
 
+    // called in crafting()
+    private double deployerCrafting(Level level, AbstractDeployingMachineEntity deployer, String type, double velocity, double torque) {
+        ItemStack itemToConvert = this.inventory.getResource(0).toStack();
+
+        // variables dependent on deployer instance
+        
+        double ratedVelocity = 0.0;
+        double cutTorque = 0.0;
+        double cutConst = 0.0;
+        var resource = this.inventory.getResource(1);
+        // "give" the item back in output slot if not set to something else
+        ItemStack output = itemToConvert;
+        boolean hasRecipe = false;
+
+        if (deployer instanceof PrinterMechanicalEntity printer) {
+            int exp = 0; // TODO: what should be done about this
+            ItemStack itemDeployed = printer.getStoredItemResource().toStack();
+
+            DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, exp);
+            
+            // TODO: without the "experience" field in printing_test.json, does a recipe match?
+            Optional<RecipeHolder<PrintingRecipe>> recipe = 
+                getCurrentRecipe(TekoraRecipes.PRINTING_TYPE.get(), input);
+
+            if (!recipe.isPresent()) {
+                this.progress = 0;
+                deployer.decrement(level);
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                return 0.0;
+            }
+
+            PrintingRecipe val = recipe.get().value();
+            output = val.assemble(input);
+            ratedVelocity = val.ratedVelocity();
+
+            hasRecipe = val.matches(input, level) 
+                && (resource.isEmpty() || resource.equals(ItemResource.of(output)))
+                && (resource.isEmpty() ? 64 : output.getMaxStackSize()) 
+                >= inventory.getAmountAsInt(1) + output.getCount();
+
+            cutTorque = val.cutTorque();
+            cutConst = (torque - cutTorque) / ratedVelocity;
+
+        } else if (deployer instanceof ApplyerMechanicalEntity applyer) {
+            ItemStack itemDeployed = applyer.getStoredItemResource().toStack();
+
+            DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, 0);
+            Optional<RecipeHolder<ApplyingRecipe>> recipe = 
+                getCurrentRecipe(TekoraRecipes.APPLYING_TYPE.get(), input);
+            
+            if (!recipe.isPresent()) {
+                this.progress = 0;
+                deployer.decrement(level);
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                return 0.0;
+            }
+
+            ApplyingRecipe val = recipe.get().value();
+            output = val.assemble(input);
+            ratedVelocity = val.ratedVelocity();
+
+            hasRecipe = val.matches(input, level)
+                && (resource.isEmpty() || resource.is(output.getItem()))
+                && (resource.isEmpty() ? 64 : output.getMaxStackSize()) 
+                >= inventory.getAmountAsInt(1) + output.getCount();
+            
+            cutTorque = val.cutTorque();
+            cutConst = (torque - cutTorque) / ratedVelocity;
+
+        } else {
+            System.err.println("Unsupported deployer!");
+            return 0.0;
+        }
+
+        boolean canProgress = activeMode && hasRecipe && Math.abs(velocity) >= ratedVelocity;
+        if (!canProgress) {
+            deployer.decrement(level);
+            if (deployer.getHeightPosition() >= 0) {
+                this.activeMode = true;
+            }
+            return 0;
+        }
+
+        double addedTorque = (torque < 0 ? -1 : 1) * Math.max(0, Math.min(cutTorque, cutTorque + cutConst * Math.abs(velocity)));
+
+        if (!deployer.canCraft(ratedVelocity)) {
+            deployer.increment(level);
+            return addedTorque;
+        }
+        
+        this.progress += (float) (Math.abs(velocity) / (256 * ratedVelocity));
+        if (this.progress >= 1.0f) {
+            try (Transaction transaction = Transaction.openRoot()) {
+                ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
+                inventory.extract(inventory.getResource(0), 1, transaction);
+                inventory.insert(1, ItemResource.of(output), output.getCount(), transaction);
+                transaction.commit();
+            }
+            this.progress = 0;
+            deployer.decrement(level);
+            this.activeMode = false;
+        }
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+
+        return addedTorque;
+    }
+
     protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
         if (ent instanceof AbstractDeployingMachineEntity deployer) {
-            // todo, add applying and printing recipes here
-            return 0;
+            return deployerCrafting(level, deployer, type, velocity, torque);
         }
 
         DepotRecipeInput input = new DepotRecipeInput(this.inventory.getResource(0).toStack(), type);
@@ -71,6 +181,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
                         try (Transaction transaction = Transaction.openRoot()) {
                             ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
                             inventory.extract(inventory.getResource(0), 1, transaction);
+                            // TODO: probably should change .set to .insert for safety
                             inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
                             transaction.commit();
                         }

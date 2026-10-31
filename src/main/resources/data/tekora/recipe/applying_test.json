@@ -1,7 +1,7 @@
 {
   "type": "tekora:applying",
   "ingredient": "minecraft:oak_log",
-  "deployed": "#minecraft:axes",
+  "deployed": "minecraft:axe",
   "result": {
     "id": "minecraft:stripped_oak_log"
   },

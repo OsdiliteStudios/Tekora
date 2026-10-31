@@ -6,13 +6,22 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.data.SoluteKey;
+import net.osdilites.tekora.datagen.recipetypes.ReactionRecipeBuilder;
 import net.osdilites.tekora.datagen.tags.TekoraTags;
 import net.osdilites.tekora.item.TekoraItems;
+import net.osdilites.tekora.recipes.ingredient.Catalyst;
+import net.osdilites.tekora.recipes.ingredient.Chemical;
+import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class TekoraRecipeProvider extends RecipeProvider {
@@ -71,6 +80,15 @@ public class TekoraRecipeProvider extends RecipeProvider {
                 .define('P', TekoraItems.STEEL_INGOT.get())
                 .unlockedBy("has_steel_ingot", has(TekoraItems.STEEL_INGOT.get()))
                 .save(output);
+
+        int reactionId = 1;
+        ReactionRecipeBuilder.createReactionRecipe(reactionId++,
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.MAGNESIUM), 1, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.CARBONATE), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(TekoraItems.MAGNESIUM_CARBONATE.get()), 1, 1)),
+                new Catalyst(ChemicalIngredient.liquidSolute(SoluteKey.SULFATE), 10000),
+                FluidIngredient.of(Fluids.WATER),
+                30540, 260.7, 2.51E8, 75540).save(output);
 
         //PressingRecipeBuilder.pressingBuilder(RecipeCategory.TOOLS, Ingredient.of(TekoraItems.STEEL_INGOT.get()), TekoraItems.STEEL_PLATE.get(), 1, 1)
         //        .save(output, "tekora:pressing/steel_plate"); // todo, change the cuttorque and ratedvelocity values in the future

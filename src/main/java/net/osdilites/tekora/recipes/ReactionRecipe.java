@@ -86,18 +86,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             Codec.DOUBLE.fieldOf("activation_energy").forGetter(r -> r.activationEnergy) // J
     ).apply(inst, ReactionRecipe::new));
 
-    // JSON structure
-    // reactants (list)
-    //  - name (string)
-    //  - coefficient (int) - optional, none means 1
-    //  - rate order (int) - optional, none means 0
-    // products (list)
-    //  - name
-    //  - coefficient (int) - optional, none means 1
-    //  - rate order (int) - optional, none means 0
-    // freq_factor (float)
-    // activation_energy (float)
-
     public static final StreamCodec<RegistryFriendlyByteBuf, ReactionRecipe> STREAM_CODEC = StreamCodec.composite(
             Chemical.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.reactants,
             Chemical.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.products,
@@ -153,7 +141,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
     @Override
     public ItemStack assemble(ReactionRecipeInput reactionRecipeInput) {
-        return null;
+        return null; // DO NOT USE
     }
 
     @Override

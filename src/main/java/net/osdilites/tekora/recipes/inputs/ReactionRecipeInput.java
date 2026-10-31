@@ -97,7 +97,7 @@ public record ReactionRecipeInput(Map<ChemicalIngredient, Double> inputs, double
         // note, the reason we are starting with 4 hashmaps before merging into one is because
         // using equals() on any ingredient classes might be unsafe.
         for (var pair : items.entrySet()) {
-            ingredients.put(ChemicalIngredient.of(new ItemStack(pair.getKey())), pair.getValue());
+            ingredients.put(ChemicalIngredient.of(pair.getKey()), pair.getValue());
         }
         for (var pair : fluids.entrySet()) {
             ingredients.put(ChemicalIngredient.of(pair.getKey()), pair.getValue());

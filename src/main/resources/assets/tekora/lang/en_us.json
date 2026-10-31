@@ -11,6 +11,8 @@
   
   "block.tekora.steel_block": "Steel Block",
 
+  "block.tekora.bauxite_ore": "Bauxite Ore",
+
   "fluid.tekora.acetic_acid": "Acetic Acid",
   "fluid.tekora.acetone": "Acetone",
   "fluid.tekora.ammonia": "Liquid Ammonia",
@@ -53,7 +55,12 @@
   "item.tekora.cutter_shaft": "Cutter Shaft",
   "item.tekora.wrench": "Wrench",
 
+  "item.tekora.magnesium_carbonate": "Magnesium Carbonate",
+
+  "item.tekora.bauxite": "Bauxite",
+
   "tekora.tooltip.liquid.empty": "Empty",
+  "tekora.tooltip.data.chemical": "Solute Formula: %s, Charge: %s, Concentration: %s mol/L",
   "tekora.tooltip.liquid.amount.with.capacity": "%s / %s L",
   "tekora.tooltip.liquid.amount": "%s L",
   "tekora.tooltip.liquid.molarity": "%s M"

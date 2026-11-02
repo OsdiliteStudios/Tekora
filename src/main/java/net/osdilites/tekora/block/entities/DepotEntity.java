@@ -49,10 +49,57 @@ public class DepotEntity extends AbstractModularCraftEntity {
             }
         };
     }
+    
+    private void tryOutput(Level level, ItemStack output, AbstractDeployingMachineEntity deployer, boolean consumeDeployedItem) 
+    {
+        try (Transaction transaction = Transaction.openRoot()) {
+            ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
+            inventory.extract(inventory.getResource(0), 1, transaction);
+            
+            if (!consumeDeployedItem) {
+                inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
+                transaction.commit();
+                return;
+            }
+            
+            ItemStacksResourceHandler deployerHandler = deployer.getHandler();
+            ItemAccess deployerAccess = ItemAccess.forHandlerIndex(deployerHandler, 0);
+            ItemStack deployed = deployerHandler.getResource(0).toStack();
+
+            if (deployed.isDamageableItem()) {
+                if (deployed.nextDamageWillBreak()) {
+                    // revert changes by extract(), but not set()
+                    transaction.close();
+
+                    // TODO need some way to explicitly indicate to the player
+                    // when an applier stops works because of no durability
+
+                    return;
+                }
+
+                int currentDamage = deployed.getDamageValue();
+                // TODO: make durability loss dependent on enchantments, if planned
+                int damageDone = 1;
+                int finalDamage = Math.min(currentDamage + damageDone, deployed.getMaxDamage());
+                deployed.setDamageValue(finalDamage);
+                // since deployed is just a copy, overwrite the changes in the actual slot
+                deployerHandler.set(0, ItemResource.of(deployed), deployerAccess.getAmount());
+                
+            } else {
+                int newAmount = Math.max(deployerAccess.getAmount() - 1, 0);
+                deployerHandler.set(0, deployerHandler.getResource(0), newAmount);
+            }
+
+            inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
+            transaction.commit();
+        }
+    }
 
     // called in crafting()
     private double deployerCrafting(Level level, AbstractDeployingMachineEntity deployer, String type, double velocity, double torque) {
         ItemStack itemToConvert = this.inventory.getResource(0).toStack();
+        ItemStack itemDeployed = deployer.getStoredItemResource().toStack();
+        boolean consumeDeployedItem = false;
 
         // variables dependent on deployer instance
         
@@ -64,10 +111,8 @@ public class DepotEntity extends AbstractModularCraftEntity {
         ItemStack output = itemToConvert;
         boolean hasRecipe = false;
 
-        if (deployer instanceof PrinterMechanicalEntity printer) {
+        if (deployer instanceof PrinterMechanicalEntity) {
             int exp = 0; // TODO: what should be done about this
-            ItemStack itemDeployed = printer.getStoredItemResource().toStack();
-
             DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, exp);
             
             // TODO: without the "experience" field in printing_test.json, does a recipe match?
@@ -83,6 +128,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
 
             PrintingRecipe val = recipe.get().value();
             output = val.assemble(input);
+
             ratedVelocity = val.ratedVelocity();
 
             hasRecipe = val.matches(input, level) 
@@ -93,9 +139,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
             cutTorque = val.cutTorque();
             cutConst = (torque - cutTorque) / ratedVelocity;
 
-        } else if (deployer instanceof ApplyerMechanicalEntity applyer) {
-            ItemStack itemDeployed = applyer.getStoredItemResource().toStack();
-
+        } else if (deployer instanceof ApplyerMechanicalEntity) {
             DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, 0);
             Optional<RecipeHolder<ApplyingRecipe>> recipe = 
                 getCurrentRecipe(TekoraRecipes.APPLYING_TYPE.get(), input);
@@ -105,6 +149,10 @@ public class DepotEntity extends AbstractModularCraftEntity {
                 deployer.decrement(level);
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 return 0.0;
+            }
+
+            if (recipe.get().value().isConsumed()) {
+                consumeDeployedItem = true;
             }
 
             ApplyingRecipe val = recipe.get().value();
@@ -142,12 +190,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
         
         this.progress += (float) (Math.abs(velocity) / (256 * ratedVelocity));
         if (this.progress >= 1.0f) {
-            try (Transaction transaction = Transaction.openRoot()) {
-                ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
-                inventory.extract(inventory.getResource(0), 1, transaction);
-                inventory.insert(1, ItemResource.of(output), output.getCount(), transaction);
-                transaction.commit();
-            }
+            tryOutput(level, output, deployer, consumeDeployedItem);
             this.progress = 0;
             deployer.decrement(level);
             this.activeMode = false;

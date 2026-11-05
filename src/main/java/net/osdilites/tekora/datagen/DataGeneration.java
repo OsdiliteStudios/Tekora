@@ -39,5 +39,6 @@ public class DataGeneration {
         //gen.addProvider(true, new TekoraDatamapProvider(output, provider));
         gen.addProvider(true, new TekoraModelProvider(output));
         //gen.addProvider(true, new TekoraDatapackProvider(output, provider));
+        gen.addProvider(true, new TekoraFluidTagProvider(output, provider));
     }
 }

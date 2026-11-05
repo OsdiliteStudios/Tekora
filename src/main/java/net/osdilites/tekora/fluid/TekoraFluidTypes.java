@@ -60,29 +60,31 @@ public class TekoraFluidTypes {
                     )
             );
 
+    public static final FluidType AMMONIA_FLUID_DATA = 
+        new ChemicalFluidType(
+            FluidType.Properties.create()
+                    .viscosity(250)
+                    .density(682)
+                    .temperature(220)
+                    .canExtinguish(false),
+            ChemicalFluidType.ChemicalProperties.create()
+                    .molarVolume(0.02413)
+                    .triplePoint(195.49, 0.0606)
+                    .boilingPoint(239.82)
+                    .criticalPoint(405.4, 113)
+                    .meltingPointSP(195.42)
+                    .vacuumSublimationPoint(161.1)
+                    .heatFusion(5650)
+                    .tripleHeatVaporization(188000)
+                    .specificHeat(3.2)
+                    .gasSpecificHeat(35.6)
+                    .metalDegradationRate(0.003)
+                    .polymerDegradationRate(0.001)
+        );
     public static final DeferredHolder<FluidType, FluidType> AMMONIA_TYPE =
             FLUID_TYPES.register(
                     "ammonia",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(250)
-                                    .density(682)
-                                    .temperature(220)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.02413)
-                                    .triplePoint(195.49, 0.0606)
-                                    .boilingPoint(239.82)
-                                    .criticalPoint(405.4, 113)
-                                    .meltingPointSP(195.42)
-                                    .vacuumSublimationPoint(161.1)
-                                    .heatFusion(5650)
-                                    .tripleHeatVaporization(188000)
-                                    .specificHeat(3.2)
-                                    .gasSpecificHeat(35.6)
-                                    .metalDegradationRate(0.003)
-                                    .polymerDegradationRate(0.001)
-                    )
+                    () -> AMMONIA_FLUID_DATA
             );
 
     public static final DeferredHolder<FluidType, FluidType> ETHANOL_TYPE =
@@ -158,28 +160,30 @@ public class TekoraFluidTypes {
                     )
             );
 
+    public static final ChemicalFluidType SULFURIC_ACID_DATA =
+        new ChemicalFluidType(
+            FluidType.Properties.create()
+                    .viscosity(24000)
+                    .density(1830)
+                    .canExtinguish(false),
+            ChemicalFluidType.ChemicalProperties.create()
+                    .molarVolume(0.0533)
+                    .triplePoint(283.46, 1.29E-8)
+                    .boilingPoint(610)
+                    .criticalPoint(924, 64)
+                    .meltingPointSP(283.46)
+                    .sublimationPoint(270, 1.25E-10)
+                    .heatFusion(10500)
+                    .tripleHeatVaporization(72500)
+                    .specificHeat(2.6)
+                    .gasSpecificHeat(83.7)
+                    .metalDegradationRate(0.02)
+                    .polymerDegradationRate(0.005)
+        );
     public static final DeferredHolder<FluidType, FluidType> SULFURIC_ACID_TYPE =
             FLUID_TYPES.register(
                     "sulfuric_acid",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(24000)
-                                    .density(1830)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.0533)
-                                    .triplePoint(283.46, 1.29E-8)
-                                    .boilingPoint(610)
-                                    .criticalPoint(924, 64)
-                                    .meltingPointSP(283.46)
-                                    .sublimationPoint(270, 1.25E-10)
-                                    .heatFusion(10500)
-                                    .tripleHeatVaporization(72500)
-                                    .specificHeat(2.6)
-                                    .gasSpecificHeat(83.7)
-                                    .metalDegradationRate(0.02)
-                                    .polymerDegradationRate(0.005)
-                    )
+                    () -> SULFURIC_ACID_DATA
             );
 
     public static final DeferredHolder<FluidType, FluidType> WATER_TYPE =

@@ -1,6 +1,8 @@
 package net.osdilites.tekora.event;
 
+import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.geometry.QuadCollection;
 import net.minecraft.resources.Identifier;
@@ -11,6 +13,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
@@ -18,6 +21,7 @@ import net.neoforged.neoforge.client.model.standalone.StandaloneModelLoader;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
+import net.osdilites.tekora.fluid.TekoraFluids;
 import net.osdilites.tekora.renderers.*;
 import net.osdilites.tekora.menu.TekoraMenus;
 import net.osdilites.tekora.menu.screens.BasinScreen;
@@ -91,6 +95,22 @@ public class ClientEvent {
         event.register(TekoraMenus.BASIN_MENU.get(), BasinScreen::new);
         event.register(TekoraMenus.DEPOT_MENU.get(), DepotScreen::new);
         event.register(TekoraMenus.KILN_FURNACE_MENU.get(), KilnFurnaceScreen::new);
+    }
+
+    /// Color is in 0xAARRGGBB order
+    private static FluidModel.Unbaked createDefaultFluidModel(int hexColor) {
+        return new FluidModel.Unbaked(
+            new Material(Identifier.withDefaultNamespace("block/water_still")),
+            new Material(Identifier.withDefaultNamespace("block/water_flow")),
+            new Material(Identifier.withDefaultNamespace("block/water_overlay")),
+            state -> hexColor);
+    }
+
+    @SubscribeEvent 
+    public static void registerFluidModels(RegisterFluidModelsEvent event) {
+        // TODO: figure out better way of registering fluid models
+        event.register(createDefaultFluidModel(0xFF00FFFF), TekoraFluids.SULFURIC_ACID_SOURCE, TekoraFluids.SULFURIC_ACID_FLOWING);
+        event.register(createDefaultFluidModel(0x690505FF), TekoraFluids.AMMONIA_SOURCE, TekoraFluids.AMMONIA_FLOWING);
     }
 
     @SubscribeEvent

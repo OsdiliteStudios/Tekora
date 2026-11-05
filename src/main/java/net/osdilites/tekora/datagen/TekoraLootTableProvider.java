@@ -12,6 +12,12 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachine;
 
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.osdilites.tekora.item.TekoraItems;
+
 import java.util.Set;
 
 public class TekoraLootTableProvider extends BlockLootSubProvider {
@@ -36,6 +42,10 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
         add(TekoraBlocks.PRINTER.get(), this::dropMechTopPart);
         add(TekoraBlocks.PRESS.get(), this::dropMechTopPart);
         add(TekoraBlocks.CUTTER.get(), this::dropMechTopPart);
+
+        add(TekoraBlocks.APATITE_ORE.get(), block -> LootTable.lootTable()
+                .withPool(elementPool(TekoraItems.CALCIUM.get(), 1, 3))
+                .withPool(elementPool(TekoraItems.PHOSPHORUS.get(), 1, 2)));
     }
 
     private LootTable.Builder dropMechTopPart(Block block) {
@@ -49,7 +59,21 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
         return LootTable.lootTable().withPool(
                 modMech.equals(TekoraBlocks.MECH_TOP.get()) ? builder : builder.add(LootItem.lootTableItem(modMech.getAssocItem())));
     }
+    // guaranteed drop of min..max of an element
+    private LootPool.Builder elementPool(Item item, float min, float max) {
+        return LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .add(LootItem.lootTableItem(item)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max))));
+    }
 
+    // rare bonus drop, for impurities
+    private LootPool.Builder impurityPool(Item item, float chance) {
+        return LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .when(LootItemRandomChanceCondition.randomChance(chance))
+                .add(LootItem.lootTableItem(item));
+    }
     @Override
     protected Iterable<Block> getKnownBlocks() {
         return TekoraBlocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;

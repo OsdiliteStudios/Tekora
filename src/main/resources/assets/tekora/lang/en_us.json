@@ -53,5 +53,9 @@
   "tekora.tooltip.liquid.empty": "Empty",
   "tekora.tooltip.liquid.amount.with.capacity": "%s / %s L",
   "tekora.tooltip.liquid.amount": "%s L",
-  "tekora.tooltip.liquid.molarity": "%s M"
+  "tekora.tooltip.liquid.molarity": "%s M",
+
+  "block.tekora.apatite_ore": "Apatite Ore",
+  "item.tekora.calcium": "Calcium",
+  "item.tekora.phosphorus": "Phosphorus"
 }

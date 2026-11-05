@@ -17,7 +17,8 @@ import net.osdilites.tekora.block.entities.transporter.rotational.*;
 import net.osdilites.tekora.block.fluids.ChemicalLiquidBlock;
 import net.osdilites.tekora.fluid.TekoraFluids;
 import net.osdilites.tekora.item.TekoraItems;
-
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import java.util.function.Supplier;
 
 public class TekoraBlocks {
@@ -65,10 +66,19 @@ public class TekoraBlocks {
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFURIC_ACID =
             createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get(), "sulfuric_acid"));
 
+    //ores
+    public static final DeferredHolder<Block, Block> APATITE_ORE = createOre("apatite_ore");
+
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);
         TekoraItems.ITEMS.registerSimpleBlockItem(ret, Item.Properties::useBlockDescriptionPrefix);
         return ret;
+    }
+    private static DeferredHolder<Block, Block> createOre(String name) {
+        return createBlock(name, () -> new Block(
+                BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE)
+                        .setId(ResourceKey.create(Registries.BLOCK,
+                                Identifier.fromNamespaceAndPath(Tekora.MODID, name)))));
     }
 
     public static ResourceKey<Block> getKey(Block block) {

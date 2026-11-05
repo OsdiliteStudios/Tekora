@@ -9,7 +9,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "tekora:assembling_shaft"
+          "name": "tekora:applying_shaft"
         }
       ],
       "rolls": 1.0

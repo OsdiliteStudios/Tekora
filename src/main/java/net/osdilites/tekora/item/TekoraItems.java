@@ -39,7 +39,7 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> WOODEN_GEAR = ITEMS.register("wooden_gear", () -> new GearItem("wooden_gear", GearType.WOOD, true));
   public static final DeferredHolder<Item, Item> ALUMINUM_GEAR = ITEMS.register("aluminum_gear", () -> new GearItem("aluminum_gear", GearType.ALUMINUM, false));
   public static final DeferredHolder<Item, Item> BRASS_GEAR = ITEMS.register("brass_gear", () -> new GearItem("brass_gear", GearType.BRASS, false));
-  public static final DeferredHolder<Item, Item> BRONZE_GEAR = ITEMS.register("bronze_gear", () -> new GearItem("bronze_gear", GearType.BRONZE, false));
+  public static final  DeferredHolder<Item, Item> BRONZE_GEAR = ITEMS.register("bronze_gear", () -> new GearItem("bronze_gear", GearType.BRONZE, false));
   public static final DeferredHolder<Item, Item> PLASTIC_GEAR = ITEMS.register("plastic_gear", () -> new GearItem("plastic_gear", GearType.PLASTIC, true));
   public static final DeferredHolder<Item, Item> STEEL_GEAR = ITEMS.register("steel_gear", () -> new GearItem("steel_gear", GearType.STEEL, false));
 
@@ -61,6 +61,8 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> STEEL_PLATE = ITEMS.register("steel_plate", () -> new TekoraItem(true, "steel_plate"));
   public static final DeferredHolder<Item, Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem("wrench", 560));
 
+  public static final DeferredHolder<Item, Item> CALCIUM = ITEMS.register("calcium", () -> new TekoraItem("calcium"));
+  public static final DeferredHolder<Item, Item> PHOSPHORUS = ITEMS.register("phosphorus", () -> new TekoraItem("phosphorus"));
   // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
 
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {

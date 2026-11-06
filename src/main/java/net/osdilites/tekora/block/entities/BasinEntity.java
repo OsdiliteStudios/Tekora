@@ -28,6 +28,7 @@ import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.data.SoluteKey;
+import net.osdilites.tekora.item.BottleResourceHandler;
 import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.recipes.ReactionRecipe;
 import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
@@ -227,19 +228,18 @@ public class BasinEntity extends AbstractModularCraftEntity {
             var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
 
             // todo, allow water bottles to get used.
-            // water bottles has a value of 333 mB
-            
-            // TODO use or register a capability for water bottles
-            if ( UtilFunctions.isWaterBottle(itemAccess.getResource().toStack()) ) {
-                // note, this if statement may be redundent
-            }
-
+            // water bottles has a value of 333 mB            
             int fluidMoved = ResourceHandlerUtil.move(itemCapability, tank,
                     fluidResource -> tank.getResource(0).isEmpty() || tank.getResource(0).is(fluidResource.getFluidType()),
                     FluidType.BUCKET_VOLUME, transaction);
 
-            if(fluidMoved == FluidType.BUCKET_VOLUME) {
+            // TODO empty the bucket in the item access, if there is a bucket there
+            
+            switch(fluidMoved) {
+            case BottleResourceHandler.BOTTLE_VOLUME:
+            case FluidType.BUCKET_VOLUME:
                 transaction.commit();
+            default:   
             }
         }
     }
@@ -253,6 +253,11 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 1);
                 var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
                 // todo, implement a mechanism by which a tank could be emptied.
+
+                // TODO currently empty buckets do not get filled from basin, 
+                // set empty buckets to valid fluid bucket
+                // also make sure that max stack size of output slot is 1 for empty buckets
+                // probably do this first
 
                 tank.set(0, fluid, amt - 1000);
             }

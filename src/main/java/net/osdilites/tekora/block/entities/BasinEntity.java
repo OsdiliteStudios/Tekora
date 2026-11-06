@@ -238,12 +238,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
                     fluidResource -> tank.getResource(0).isEmpty() || tank.getResource(0).is(fluidResource.getFluidType()),
                     FluidType.BUCKET_VOLUME, transaction);
 
-            final int BOTTLE_VOLUME = 333; // mB
-            switch(fluidMoved) {
-                case BOTTLE_VOLUME:
-                case FluidType.BUCKET_VOLUME:
-                    transaction.commit();
-                default:
+            if(fluidMoved == FluidType.BUCKET_VOLUME) {
+                transaction.commit();
             }
         }
     }

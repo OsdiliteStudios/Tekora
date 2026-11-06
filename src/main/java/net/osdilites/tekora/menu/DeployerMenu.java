@@ -38,6 +38,6 @@ public class DeployerMenu extends TekoraItemMenu {
     public boolean stillValid(Player player) {
         ContainerLevelAccess containerLevelAccess = ContainerLevelAccess.create(level, blockEntity.getBlockPos());
         return stillValid(containerLevelAccess, player, TekoraBlocks.PRINTER.get()) 
-            || stillValid(containerLevelAccess, player, TekoraBlocks.APPLYER.get());
+            || stillValid(containerLevelAccess, player, TekoraBlocks.APPLIER.get());
     }
 }

@@ -1,9 +1,7 @@
 package net.osdilites.tekora.block.entities;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
@@ -30,9 +28,9 @@ public class TekoraBlockEntities {
             BLOCK_ENTITIES.register("shaft", () -> new BlockEntityType<>(ShaftEntity::new,
                     Set.of(TekoraBlocks.STEEL_SHAFT.get())));
 
-    public static final Supplier<BlockEntityType<ApplyerMechanicalEntity>> APPLYER =
-            BLOCK_ENTITIES.register("applyer", () -> new BlockEntityType<>(ApplyerMechanicalEntity::new,
-                    Set.of(TekoraBlocks.APPLYER.get())));
+    public static final Supplier<BlockEntityType<ApplierMechanicalEntity>> APPLIER =
+            BLOCK_ENTITIES.register("applier", () -> new BlockEntityType<>(ApplierMechanicalEntity::new,
+                    Set.of(TekoraBlocks.APPLIER.get())));
 
     public static final Supplier<BlockEntityType<MixerMechanicalEntity>> MIXER =
             BLOCK_ENTITIES.register("mixer", () -> new BlockEntityType<>(MixerMechanicalEntity::new,

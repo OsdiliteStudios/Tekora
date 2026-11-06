@@ -11,9 +11,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.menu.DeployerMenu;
 
-public class ApplyerMechanicalEntity extends AbstractDeployingMachineEntity {
-    public ApplyerMechanicalEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.APPLYER.get(), pPos, pBlockState);
+public class ApplierMechanicalEntity extends AbstractDeployingMachineEntity {
+    public ApplierMechanicalEntity(BlockPos pPos, BlockState pBlockState) {
+        super(TekoraBlockEntities.APPLIER.get(), pPos, pBlockState);
     }
 
     @Override
@@ -28,6 +28,6 @@ public class ApplyerMechanicalEntity extends AbstractDeployingMachineEntity {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("blockfunc.tekora.applyer");
+        return Component.translatable("blockfunc.tekora.applier");
     }
 }

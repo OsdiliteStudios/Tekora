@@ -19,7 +19,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
-import net.osdilites.tekora.block.entities.mechanical.ApplyerMechanicalEntity;
+import net.osdilites.tekora.block.entities.mechanical.ApplierMechanicalEntity;
 import net.osdilites.tekora.block.entities.mechanical.PrinterMechanicalEntity;
 import net.osdilites.tekora.menu.DepotMenu;
 import net.osdilites.tekora.recipes.*;
@@ -93,8 +93,8 @@ public class DepotEntity extends AbstractModularCraftEntity {
             cutTorque = val.cutTorque();
             cutConst = (torque - cutTorque) / ratedVelocity;
 
-        } else if (deployer instanceof ApplyerMechanicalEntity applyer) {
-            ItemStack itemDeployed = applyer.getStoredItemResource().toStack();
+        } else if (deployer instanceof ApplierMechanicalEntity applier) {
+            ItemStack itemDeployed = applier.getStoredItemResource().toStack();
 
             DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, 0);
             Optional<RecipeHolder<ApplyingRecipe>> recipe = 
@@ -220,8 +220,8 @@ public class DepotEntity extends AbstractModularCraftEntity {
                 return Component.translatable("blockfunc.tekora.printer");
             } else if (block.equals(TekoraBlocks.CUTTER.get())) {
                 return Component.translatable("blockfunc.tekora.cutter");
-            } else if (block.equals(TekoraBlocks.APPLYER.get())) {
-                return Component.translatable("blockfunc.tekora.applyer");
+            } else if (block.equals(TekoraBlocks.APPLIER.get())) {
+                return Component.translatable("blockfunc.tekora.applier");
             } else {
                 return Component.translatable("block.tekora.depot");
             }

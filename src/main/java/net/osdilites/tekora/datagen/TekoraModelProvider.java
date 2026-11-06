@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.data.OreData;
 import net.osdilites.tekora.item.TekoraItems;
 import java.util.stream.Stream;
 
@@ -47,12 +48,12 @@ public class TekoraModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(TekoraItems.DEBUG_ITEM.get(), ModelTemplates.FLAT_ITEM);
 
-        // ores
-        blockModels.createTrivialCube(TekoraBlocks.APATITE_ORE.get());
-
-        // elements
-        itemModels.generateFlatItem(TekoraItems.CALCIUM.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(TekoraItems.PHOSPHORUS.get(), ModelTemplates.FLAT_ITEM);
+        for (OreData.Ore ore : OreData.ORES) {
+            blockModels.createTrivialCube(TekoraBlocks.ORES.get(ore.name()).get());
+        }
+        for (String element : OreData.ELEMENTS) {
+            itemModels.generateFlatItem(TekoraItems.ELEMENTS.get(element).get(), ModelTemplates.FLAT_ITEM);
+        }
     }
     
     private void generateGearModel(ItemModelGenerators itemModels, Item item, String name) {

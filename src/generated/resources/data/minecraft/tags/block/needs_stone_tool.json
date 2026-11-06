@@ -11,6 +11,23 @@
     "tekora:basin",
     "tekora:depot",
     "tekora:hand_crank",
-    "tekora:apatite_ore"
+    "tekora:apatite_ore",
+    "tekora:aquamarine_ore",
+    "tekora:bauxite_ore",
+    "tekora:chromite_ore",
+    "tekora:cinnabar_ore",
+    "tekora:coltan_ore",
+    "tekora:dolomite_ore",
+    "tekora:emerald_ore",
+    "tekora:fluorite_ore",
+    "tekora:halite_ore",
+    "tekora:lepidolite_ore",
+    "tekora:monazite_ore",
+    "tekora:ruby_ore",
+    "tekora:rutile_ore",
+    "tekora:sapphire_ore",
+    "tekora:uraninite_ore",
+    "tekora:wolframite_ore",
+    "tekora:zircon_ore"
   ]
 }

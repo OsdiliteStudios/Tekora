@@ -17,6 +17,7 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.osdilites.tekora.item.TekoraItems;
+import net.osdilites.tekora.data.OreData;
 
 import java.util.Set;
 
@@ -43,9 +44,18 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
         add(TekoraBlocks.PRESS.get(), this::dropMechTopPart);
         add(TekoraBlocks.CUTTER.get(), this::dropMechTopPart);
 
-        add(TekoraBlocks.APATITE_ORE.get(), block -> LootTable.lootTable()
-                .withPool(elementPool(TekoraItems.CALCIUM.get(), 1, 3))
-                .withPool(elementPool(TekoraItems.PHOSPHORUS.get(), 1, 2)));
+        for (OreData.Ore ore : OreData.ORES) {
+            add(TekoraBlocks.ORES.get(ore.name()).get(), block -> {
+                LootTable.Builder table = LootTable.lootTable();
+                for (OreData.Drop drop : ore.primary()) {
+                    table.withPool(elementPool(TekoraItems.ELEMENTS.get(drop.element()).get(), drop.min(), drop.max()));
+                }
+                for (String impurity : ore.impurities()) {
+                    table.withPool(impurityPool(TekoraItems.ELEMENTS.get(impurity).get(), OreData.IMPURITY_CHANCE));
+                }
+                return table;
+            });
+        }
     }
 
     private LootTable.Builder dropMechTopPart(Block block) {

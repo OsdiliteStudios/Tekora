@@ -30,6 +30,9 @@ import net.minecraft.world.item.*;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.item.typical.*;
 import net.osdilites.tekora.util.TekoraShaftBody;
+import java.util.Map;
+import java.util.LinkedHashMap;
+import net.osdilites.tekora.data.OreData;
 
 import java.util.function.Consumer;
 
@@ -61,9 +64,7 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> STEEL_PLATE = ITEMS.register("steel_plate", () -> new TekoraItem(true, "steel_plate"));
   public static final DeferredHolder<Item, Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem("wrench", 560));
 
-  public static final DeferredHolder<Item, Item> CALCIUM = ITEMS.register("calcium", () -> new TekoraItem("calcium"));
-  public static final DeferredHolder<Item, Item> PHOSPHORUS = ITEMS.register("phosphorus", () -> new TekoraItem("phosphorus"));
-  // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
+    // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
 
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override
@@ -127,5 +128,11 @@ public class TekoraItems {
 
   public static void register(IEventBus eventBus) {
     ITEMS.register(eventBus);
+  }
+  public static final Map<String, DeferredHolder<Item, Item>> ELEMENTS = new LinkedHashMap<>();
+  static {
+    for (String element : OreData.ELEMENTS) {
+      ELEMENTS.put(element, ITEMS.register(element, () -> new TekoraItem(element)));
+    }
   }
 }

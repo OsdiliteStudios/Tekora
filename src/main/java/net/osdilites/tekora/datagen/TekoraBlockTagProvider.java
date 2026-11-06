@@ -27,8 +27,7 @@ public class TekoraBlockTagProvider extends BlockTagsProvider {
                 .add(TekoraBlocks.getKey(TekoraBlocks.KILN_FURNACE.get()))
                 .add(TekoraBlocks.getKey(TekoraBlocks.BASIN.get()))
                 .add(TekoraBlocks.getKey(TekoraBlocks.DEPOT.get()))
-                .add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()))
-                .add(TekoraBlocks.getKey(TekoraBlocks.APATITE_ORE.get()));
+                .add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()));
 
         tag(BlockTags.MINEABLE_WITH_AXE).add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()));
 
@@ -43,8 +42,11 @@ public class TekoraBlockTagProvider extends BlockTagsProvider {
                 .add(TekoraBlocks.getKey(TekoraBlocks.KILN_FURNACE.get()))
                 .add(TekoraBlocks.getKey(TekoraBlocks.BASIN.get()))
                 .add(TekoraBlocks.getKey(TekoraBlocks.DEPOT.get()))
-                .add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()))
-                .add(TekoraBlocks.getKey(TekoraBlocks.APATITE_ORE.get()));
+                .add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()));
+        for (var ore : TekoraBlocks.ORES.values()) {
+            tag(BlockTags.MINEABLE_WITH_PICKAXE).add(TekoraBlocks.getKey(ore.get()));
+            tag(BlockTags.NEEDS_STONE_TOOL).add(TekoraBlocks.getKey(ore.get()));
+        }
 
 
     }

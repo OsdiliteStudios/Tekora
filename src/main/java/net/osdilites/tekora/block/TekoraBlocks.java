@@ -21,6 +21,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import java.util.function.Supplier;
 
+import net.osdilites.tekora.data.OreData;
+import java.util.LinkedHashMap;
+import java.util.Map;
 public class TekoraBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Tekora.MODID);
 
@@ -67,7 +70,7 @@ public class TekoraBlocks {
             createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get(), "sulfuric_acid"));
 
     //ores
-    public static final DeferredHolder<Block, Block> APATITE_ORE = createOre("apatite_ore");
+
 
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);
@@ -87,5 +90,11 @@ public class TekoraBlocks {
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
+    }
+    public static final Map<String, DeferredHolder<Block, Block>> ORES = new LinkedHashMap<>();
+    static {
+        for (OreData.Ore ore : OreData.ORES) {
+            ORES.put(ore.name(), createOre(ore.blockName()));
+        }
     }
 }

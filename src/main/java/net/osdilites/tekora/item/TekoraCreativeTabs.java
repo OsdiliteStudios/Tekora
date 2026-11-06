@@ -57,7 +57,15 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraItems.STEEL_INGOT.get());
                         out.accept(TekoraItems.STEEL_PLATE.get());
                     }).build());
-
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ORES = CREATIVE_MODE_TABS.register("ores",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.tekora_ores"))
+                    .icon(() -> TekoraBlocks.ORES.get("apatite").get().asItem().getDefaultInstance())
+                    .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                    .displayItems((param, out) -> {
+                        TekoraBlocks.ORES.values().forEach(ore -> out.accept(ore.get().asItem()));
+                        TekoraItems.ELEMENTS.values().forEach(element -> out.accept(element.get()));
+                    }).build());
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);
     }

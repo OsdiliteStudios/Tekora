@@ -34,6 +34,8 @@ import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 import net.osdilites.tekora.recipes.TekoraRecipes;
 import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
+import net.osdilites.tekora.util.UtilFunctions;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -226,14 +228,20 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
             // todo, allow water bottles to get used.
             // water bottles has a value of 333 mB
+            
+            // TODO use or register a capability for water bottles
+            if ( UtilFunctions.isWaterBottle(itemAccess.getResource().toStack()) ) {
+                // note, this if statement may be redundent
+            }
+
             int fluidMoved = ResourceHandlerUtil.move(itemCapability, tank,
                     fluidResource -> tank.getResource(0).isEmpty() || tank.getResource(0).is(fluidResource.getFluidType()),
                     FluidType.BUCKET_VOLUME, transaction);
 
             final int BOTTLE_VOLUME = 333; // mB
             switch(fluidMoved) {
-                case FluidType.BUCKET_VOLUME:
                 case BOTTLE_VOLUME:
+                case FluidType.BUCKET_VOLUME:
                     transaction.commit();
                 default:
             }

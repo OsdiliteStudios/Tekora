@@ -1,7 +1,5 @@
 package net.osdilites.tekora.menu;
 
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.client.color.item.Potion;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -11,26 +9,16 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.BottleItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.BasinEntity;
+import net.osdilites.tekora.util.UtilFunctions;
 
 public class BasinMenu extends TekoraItemMenu {
     public final BasinEntity blockEntity;
-
-    private static boolean isWaterBottle(ItemStack itemStack) {
-        if ( itemStack.getItem() instanceof PotionItem ) {
-            PotionContents potionContents = ((PotionContents)itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)); 
-            return potionContents.is(Potions.WATER);
-        }
-        return false;
-    }
 
     public BasinMenu(int containerId, Inventory inventory, BlockEntity blockEntity, ItemStacksResourceHandler handler, ContainerData data) {
         super(TekoraMenus.BASIN_MENU.get(), containerId, inventory, data);
@@ -40,7 +28,7 @@ public class BasinMenu extends TekoraItemMenu {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 boolean isBucket = itemStack.getItem() instanceof BucketItem;
-                return isBucket || isWaterBottle(itemStack);
+                return isBucket || UtilFunctions.isWaterBottle(itemStack);
             }
         });
         addSlot(new ResourceHandlerSlot(handler, handler::set, 1, 52, 55) {

@@ -97,6 +97,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
     }
 
     private double craftItem() {
+
         return 0;
     }
 
@@ -107,6 +108,16 @@ public class BasinEntity extends AbstractModularCraftEntity {
     protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
         // todo, use handler to check if a recipe containing them exists.
         // note, it is possible to hardcode mole behavior
+        if (!hasFluidItemStackInSlot()) {
+            return 0;
+        }
+
+        if (ent instanceof AbstractDeployingMachineEntity deployer) {
+            // todo, add applying and printing recipes here
+            // possible idea, maybe this creates ink water and allows maps to be copied
+            return 0;
+        }
+
         if (type.equals(TekoraMechanicalRecipe.MIXER)) {
             // the following code below reads the ingredients in inventory/tank
             HashMap<ChemicalIngredient, Double> ingredients = new HashMap<>();
@@ -115,46 +126,46 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
             ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy
             Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getCurrentRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
-            if (recipe.isPresent()) {
-                ReactionRecipe accessedRec = recipe.get().value();
-                // something to debug, if you switch recipes fast enough, does it still register as present?
-                if (!this.hasRxn) {
-                    // description: use this to develop a map of indices containing reactants/products including those with solutes
-                    accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
-                    accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
-                    this.hasRxn = true;
-                }
-                this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
-                this.lnK = accessedRec.getLnK(temperature);
 
-                // disabled realistic rate law checking for now
-                float rate = 1;//accessedRec.getRateTicks(liquidSolutes, temperature);
-                // if (rate == 0) {
-                //   break;
-                // }
-                //if (rate != 0) {
-                    int action = Double.compare(lnQ, lnK);
-
-                    // this code has been untested
-                    // todo, test this piece of code
-                    accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
-                    accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
-
-                    accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
-                    accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
-                //}
-            } else {
+            if (!recipe.isPresent()) {
                 this.hasRxn = false;
                 itemReactants.clear();
                 itemProducts.clear();
                 fluidReactants.clear();
                 fluidProducts.clear();
+                return 0;
+            }        
+            
+            System.out.println("so, i cann access recipe");
+
+            ReactionRecipe accessedRec = recipe.get().value();
+            // something to debug, if you switch recipes fast enough, does it still register as present?
+            if (!this.hasRxn) {
+                // description: use this to develop a map of indices containing reactants/products including those with solutes
+                accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
+                accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
+                this.hasRxn = true;
             }
-        }
-        if (ent instanceof AbstractDeployingMachineEntity deployer) {
-            // todo, add applying and printing recipes here
-            // possible idea, maybe this creates ink water and allows maps to be copied
-            return 0;
+            this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
+            this.lnK = accessedRec.getLnK(temperature);
+
+            // disabled realistic rate law checking for now
+            float rate = 1;//accessedRec.getRateTicks(liquidSolutes, temperature);
+            // if (rate == 0) {
+            //   break;
+            // }
+            //if (rate != 0) {
+                int action = Double.compare(lnQ, lnK);
+
+                // this code has been untested
+                // todo, test this piece of code
+                accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
+                accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
+
+                accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
+                accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
+                
+            //}
         }
 
         // todo, include misc test cases here
@@ -219,8 +230,12 @@ public class BasinEntity extends AbstractModularCraftEntity {
                     fluidResource -> tank.getResource(0).isEmpty() || tank.getResource(0).is(fluidResource.getFluidType()),
                     FluidType.BUCKET_VOLUME, transaction);
 
-            if(fluidMoved == FluidType.BUCKET_VOLUME) {
-                transaction.commit();
+            final int BOTTLE_VOLUME = 333; // mB
+            switch(fluidMoved) {
+                case FluidType.BUCKET_VOLUME:
+                case BOTTLE_VOLUME:
+                    transaction.commit();
+                default:
             }
         }
     }

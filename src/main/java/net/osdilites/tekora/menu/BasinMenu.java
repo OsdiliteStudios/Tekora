@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.BottleItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -14,6 +15,7 @@ import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.BasinEntity;
+import net.osdilites.tekora.util.UtilFunctions;
 
 public class BasinMenu extends TekoraItemMenu {
     public final BasinEntity blockEntity;
@@ -25,13 +27,17 @@ public class BasinMenu extends TekoraItemMenu {
         addSlot(new ResourceHandlerSlot(handler, handler::set, 0, 52, 11) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
-                return itemStack.getItem() instanceof BucketItem;
+                boolean isBucket = itemStack.getItem() instanceof BucketItem;
+                return isBucket || UtilFunctions.isWaterBottle(itemStack);
             }
         });
         addSlot(new ResourceHandlerSlot(handler, handler::set, 1, 52, 55) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
-                return itemStack.getItem() instanceof BucketItem bucket && bucket.content == Fluids.EMPTY;
+                boolean isEmptyBucket = itemStack.getItem() instanceof BucketItem bucket && bucket.content == Fluids.EMPTY;
+                // TODO should water basins fill empty bottles? 
+                boolean isBottle = itemStack.getItem() instanceof BottleItem;
+                return isEmptyBucket || isBottle;
             }
         });
 

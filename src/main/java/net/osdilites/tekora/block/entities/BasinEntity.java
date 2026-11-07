@@ -12,6 +12,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -72,6 +73,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState, 4.815f);
     }
 
+    private boolean tankTransactionEnabled = false;
+
     // meaning of each index in the inventory
     // 0 = fluid container input
     // 1 = fluid container output
@@ -94,7 +97,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
             @Override
             protected int getCapacity(int index, ItemResource resource) {
-                return 11;
+                return resource.getMaxStackSize();
             }
         };
     }
@@ -234,6 +237,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
                     FluidType.BUCKET_VOLUME, transaction);
 
             // TODO empty the bucket in the item access, if there is a bucket there
+            System.err.println(tank.getAmountAsInt(0));
             
             switch(fluidMoved) {
             case BottleResourceHandler.BOTTLE_VOLUME:
@@ -247,7 +251,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
     private void emptyTank() {
         try(Transaction transaction = Transaction.openRoot()) {
             int amt = tank.getAmountAsInt(0);
-            if (amt >= 1000) {
+            if (amt >= BottleResourceHandler.BOTTLE_VOLUME) {
                 FluidResource fluid = tank.getResource(0);
 
                 ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 1);
@@ -259,7 +263,19 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 // also make sure that max stack size of output slot is 1 for empty buckets
                 // probably do this first
 
-                tank.set(0, fluid, amt - 1000);
+                int fluidMoved = ResourceHandlerUtil.move(tank, itemCapability, 
+                    fluidResource -> fluidResource.isEmpty() || tank.getResource(0).is(fluidResource.getFluidType()), 
+                    FluidType.BUCKET_VOLUME, transaction);
+                
+                System.err.println(tank.getAmountAsInt(0));
+                
+                switch(fluidMoved) {
+                case BottleResourceHandler.BOTTLE_VOLUME:
+                case FluidType.BUCKET_VOLUME:
+                    transaction.commit();
+                    tank.set(0, fluid, amt - fluidMoved);
+                default:
+                }
             }
         }
     }

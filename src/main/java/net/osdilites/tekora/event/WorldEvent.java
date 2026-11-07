@@ -87,6 +87,8 @@ public class WorldEvent {
 //    event.registerBlockEntity(Capabilities.Item.BLOCK, TekoraBlockEntities.BASIN.get(), TekoraBlockEntities::getItemHandler);
 
         // Possible compatibility issue with other mods?
-        event.registerItem(Capabilities.Fluid.ITEM, (stack, itemAccess) -> new BottleResourceHandler(itemAccess), Items.POTION);
+        event.registerItem(Capabilities.Fluid.ITEM, 
+            (stack, itemAccess) -> new BottleResourceHandler(itemAccess), 
+            Items.POTION, Items.GLASS_BOTTLE);
     }
 }

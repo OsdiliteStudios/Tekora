@@ -164,6 +164,8 @@ public class UtilFunctions {
 
     /// Useful for block entities that accept water bottles as fluid input.
     public static boolean isWaterBottle(ItemStack itemStack) {
+        // TODO, change this to work for any future generated fluid bottles
+        // add an additional parameter to check if itemStack contains fluid argument
         if ( itemStack.getItem() instanceof PotionItem ) {
             PotionContents potionContents = ((PotionContents)itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)); 
             return potionContents.is(Potions.WATER);

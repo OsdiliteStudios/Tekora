@@ -21,6 +21,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
@@ -49,7 +50,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BasinEntity extends AbstractModularCraftEntity {
-    // TODO plse change back to 1000 cap
     private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 10000) {
         @Override
         protected void onContentsChanged(int index, FluidStack previousContents) {
@@ -80,6 +80,9 @@ public class BasinEntity extends AbstractModularCraftEntity {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState, 4.815f);
     }
 
+    private final int FLUID_INPUT_SLOT = 0;
+    private final int FLUID_OUTPUT_SLOT = 1;
+
     // meaning of each index in the inventory
     // 0 = fluid container input
     // 1 = fluid container output
@@ -87,21 +90,17 @@ public class BasinEntity extends AbstractModularCraftEntity {
     protected ItemStacksResourceHandler makeInventory() {
         return new ItemStacksResourceHandler(11) {
             @Override
-            // ....
             protected void onContentsChanged(int index, ItemStack previousContents) {
                 super.onContentsChanged(index, previousContents);
                 BasinEntity.this.setChanged();
                 if(level != null && !level.isClientSide()) {
-                    // attempt to prevent different transactions on the same thread
-                    if (Transaction.getLifecycle() != Lifecycle.NONE) return;
-                    // prevent real edge case where onContentsChanged triggers with item remaining the same
-                    if (this.getResource(index).matches(previousContents)) return;
-
-                    if (index == 0) {
-                        fillTank();
-                    } else if (index == 1) {
-                        emptyTank();
-                    }
+                    // Note: fillTank and emptyTank can lead to another call to onContentsChanged,
+                    // but only the second call can change the item in the slot, delete or leave alone
+                    // if (index == 0) {
+                    //     fillTank();
+                    // } else if (index == 1) {
+                    //     emptyTank();
+                    // }
                     level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 }
             }
@@ -125,9 +124,6 @@ public class BasinEntity extends AbstractModularCraftEntity {
     protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
         // todo, use handler to check if a recipe containing them exists.
         // note, it is possible to hardcode mole behavior
-        if (!hasFluidItemStackInSlot()) {
-            return 0;
-        }
 
         if (ent instanceof AbstractDeployingMachineEntity deployer) {
             // todo, add applying and printing recipes here
@@ -153,8 +149,6 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 return 0;
             }        
             
-            System.out.println("so, i cann access recipe");
-
             ReactionRecipe accessedRec = recipe.get().value();
             // something to debug, if you switch recipes fast enough, does it still register as present?
             if (!this.hasRxn) {
@@ -236,21 +230,11 @@ public class BasinEntity extends AbstractModularCraftEntity {
         return new FluidStack(tank.getResource(0).getFluid(), tank.getAmountAsInt(0));
     }
 
-    // TODO is this needed (test this before testing lifecycle check)
-    private AtomicBoolean tankTransactionLock = new AtomicBoolean(false);
-
-    // TODO Needed to prevent duplicate onContentsChanged calls from capabilities that
-    // modify the items in basin's inventory
-    // maybe just write a new wrapper class that's like ResourceHandlerUtil.move,
-    // but doesn't directly simulate things
-
     private void fillTank() {
-        if (tankTransactionLock.get()) return;
         try(Transaction transaction = Transaction.openRoot()) {
-            tankTransactionLock.set(true);
-
-            ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 0);
+            ItemAccess itemAccess = ItemAccess.forHandlerIndexStrict(inventory, FLUID_INPUT_SLOT);
             var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
+
 
             // todo, allow water bottles to get used.
             // water bottles has a value of 333 mB        
@@ -261,8 +245,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
             // case fallthrough is intentional
             switch(fluidMoved) {
             case FluidType.BUCKET_VOLUME:
-                // note, possible incompatibility here if multiple types of buckets exist
                 if (itemAccess.getResource().getItem() instanceof BucketItem) {
+                    // note, possible incompatibility here if multiple types of buckets exist
                     itemAccess.exchange(ItemResource.of(Items.BUCKET), itemAccess.getAmount(), transaction);
                 }
             case BottleResourceHandler.BOTTLE_VOLUME:
@@ -270,8 +254,6 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 break;
             default:   
             }
-        } finally {
-            tankTransactionLock.set(false);
         }
     }
 
@@ -280,45 +262,57 @@ public class BasinEntity extends AbstractModularCraftEntity {
         if (amt < BottleResourceHandler.BOTTLE_VOLUME) return;
 
         try(Transaction transaction = Transaction.openRoot()) {
-            FluidResource fluid = tank.getResource(0);
+            // FluidResource fluid = tank.getResource(0);
 
-            ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 1);
+            ItemAccess itemAccess = ItemAccess.forHandlerIndexStrict(inventory, FLUID_OUTPUT_SLOT);
             var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
             // todo, implement a mechanism by which a tank could be emptied.
-
-            int fluidMoved = 0;
-            try (Transaction test = Transaction.open(transaction)) {
-                fluidMoved = ResourceHandlerUtil.move(tank, itemCapability, 
-                    fluidResource -> itemCapability.getResource(0).isEmpty() || itemCapability.getResource(0).is(fluidResource.getFluidType()), 
-                    FluidType.BUCKET_VOLUME, test);
-            }
             
-            // BUG TODO something seomthing simulated extracts run multiple times,
-            // causing extra callbacks on capabilities (onContentsChanged should be guarded) 
-
-            System.err.printf("%d : ", tank.getAmountAsInt(0)); // oml
+            int fluidMoved = ResourceHandlerUtil.move(tank, itemCapability, 
+                fluidResource -> itemCapability.getResource(0).isEmpty() || itemCapability.getResource(0).is(fluidResource.getFluidType()), 
+                FluidType.BUCKET_VOLUME, transaction);
             
             // case fallthrough is intentional
             switch(fluidMoved) {
             case BottleResourceHandler.BOTTLE_VOLUME:
             case FluidType.BUCKET_VOLUME:
-                // doesn't trigger tank interactions twice, since there is no simulation check,
-                // however, it doesn't change the item in the slot
-                // tank.set(0, fluid, amt - fluidMoved);
-
-                tank.set(0, fluid, amt - fluidMoved);
                 transaction.commit();
                 break;
             default:
             }   
-            System.err.println("--"); // oml
         }
     }
 
+    /// Answers: "Can fluid be transferred to the item in this basin's inventory slot?"
+    private boolean hasFluidCapability(int index) {
+        return !inventory.getResource(index).isEmpty()
+                && ItemAccess.forHandlerIndex(inventory, index).getCapability(Capabilities.Fluid.ITEM) != null;
+    }
+
     private boolean hasFluidItemStackInSlot() {
-        return !inventory.getResource(0).isEmpty()
-                && ItemAccess.forHandlerIndex(inventory, 0).getCapability(Capabilities.Fluid.ITEM) != null
-                && ItemAccess.forHandlerIndex(inventory, 0).getCapability(Capabilities.Fluid.ITEM).getAmountAsInt(0) != 0;
+        return hasFluidCapability(FLUID_INPUT_SLOT)
+                && ItemAccess.forHandlerIndex(inventory, FLUID_INPUT_SLOT).getCapability(Capabilities.Fluid.ITEM).getAmountAsInt(0) != 0;
+    }
+
+    // THANK YOU KAUPENJOE FOR GIVING ME THE IDEA TO CHECK FLUID ITEMS 
+    // ON TICK INSTEAD OF HAVING TO DEAL WITH SOMEONE'S ELSE'S DECISION TO PUT 
+    // FILL EMPTY ON A ONCONTENTSCHANGED FUNCTION THAT CAN INDIRECTLY
+    // RECURSIVELY CALL ITSELF
+    @Override 
+    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
+        super.tick(pLevel, pPos, pState);
+
+        // prevent an open transaction on the same thread from calling fill or empty across ticks?
+        if (Transaction.getLifecycle() != Lifecycle.NONE) return;
+
+        // while this is not really that efficient, it avoids some of the tricky
+        // problems with putting fill and empty logic in onContentsChanged:
+        // because items can change in-slot during a transaction, unwanted calls are triggered
+        if (hasFluidItemStackInSlot()) {
+            fillTank();
+        } else if (hasFluidCapability(FLUID_OUTPUT_SLOT)) {
+            emptyTank();
+        }
     }
 
     // todo, modify the two methods below in accordance with the JSON files

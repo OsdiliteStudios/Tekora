@@ -3,6 +3,9 @@ package net.osdilites.tekora.fluid;
 import net.neoforged.neoforge.fluids.FluidType;
 
 public class ChemicalFluidType extends FluidType {
+
+    public static final int BOTTLE_VOLUME = 333; // mB
+
     private final double molarVolume; // mol/L or mol/L, only applies to liquids, for gases we use the ideal gas law
 
     // anchor values

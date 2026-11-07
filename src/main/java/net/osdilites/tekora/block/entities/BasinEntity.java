@@ -29,25 +29,22 @@ import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
-import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import net.neoforged.neoforge.transfer.transaction.Transaction.Lifecycle;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.data.SoluteKey;
-import net.osdilites.tekora.item.BottleResourceHandler;
+import net.osdilites.tekora.fluid.ChemicalFluidType;
 import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.recipes.ReactionRecipe;
 import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 import net.osdilites.tekora.recipes.TekoraRecipes;
 import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
-import net.osdilites.tekora.util.UtilFunctions;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BasinEntity extends AbstractModularCraftEntity {
     private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 10000) {
@@ -235,21 +232,18 @@ public class BasinEntity extends AbstractModularCraftEntity {
             ItemAccess itemAccess = ItemAccess.forHandlerIndexStrict(inventory, FLUID_INPUT_SLOT);
             var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
 
-
-            // todo, allow water bottles to get used.
-            // water bottles has a value of 333 mB        
             int fluidMoved = ResourceHandlerUtil.move(itemCapability, tank,
                     fluidResource -> tank.getResource(0).isEmpty() || tank.getResource(0).is(fluidResource.getFluidType()),
                     FluidType.BUCKET_VOLUME, transaction);
             
             // case fallthrough is intentional
             switch(fluidMoved) {
-            case FluidType.BUCKET_VOLUME:
+            case ChemicalFluidType.BUCKET_VOLUME:
                 if (itemAccess.getResource().getItem() instanceof BucketItem) {
                     // note, possible incompatibility here if multiple types of buckets exist
                     itemAccess.exchange(ItemResource.of(Items.BUCKET), itemAccess.getAmount(), transaction);
                 }
-            case BottleResourceHandler.BOTTLE_VOLUME:
+            case ChemicalFluidType.BOTTLE_VOLUME:
                 transaction.commit();
                 break;
             default:   
@@ -259,14 +253,15 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
     private void emptyTank() {
         int amt = tank.getAmountAsInt(0);
-        if (amt < BottleResourceHandler.BOTTLE_VOLUME) return;
+        if (amt < ChemicalFluidType.BOTTLE_VOLUME) return;
 
         try(Transaction transaction = Transaction.openRoot()) {
             // FluidResource fluid = tank.getResource(0);
 
             ItemAccess itemAccess = ItemAccess.forHandlerIndexStrict(inventory, FLUID_OUTPUT_SLOT);
             var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
-            // todo, implement a mechanism by which a tank could be emptied.
+
+            // todo, expand upon this mechanism by which a tank could be emptied.
             
             int fluidMoved = ResourceHandlerUtil.move(tank, itemCapability, 
                 fluidResource -> itemCapability.getResource(0).isEmpty() || itemCapability.getResource(0).is(fluidResource.getFluidType()), 
@@ -274,8 +269,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
             
             // case fallthrough is intentional
             switch(fluidMoved) {
-            case BottleResourceHandler.BOTTLE_VOLUME:
-            case FluidType.BUCKET_VOLUME:
+            case ChemicalFluidType.BOTTLE_VOLUME:
+            case ChemicalFluidType.BUCKET_VOLUME:
                 transaction.commit();
                 break;
             default:
@@ -294,10 +289,6 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 && ItemAccess.forHandlerIndex(inventory, FLUID_INPUT_SLOT).getCapability(Capabilities.Fluid.ITEM).getAmountAsInt(0) != 0;
     }
 
-    // THANK YOU KAUPENJOE FOR GIVING ME THE IDEA TO CHECK FLUID ITEMS 
-    // ON TICK INSTEAD OF HAVING TO DEAL WITH SOMEONE'S ELSE'S DECISION TO PUT 
-    // FILL EMPTY ON A ONCONTENTSCHANGED FUNCTION THAT CAN INDIRECTLY
-    // RECURSIVELY CALL ITSELF
     @Override 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         super.tick(pLevel, pPos, pState);

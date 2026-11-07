@@ -13,6 +13,7 @@ import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.osdilites.tekora.fluid.ChemicalFluidType;
+import net.osdilites.tekora.util.UtilFunctions;
 
 // TODO FIND ANOTHER BETTER FILE OR FOLDER TO PUT THIS CLASS IN
 // BucketResourceHandler.java used as a basis for this
@@ -25,17 +26,9 @@ public final class BottleResourceHandler extends ItemAccessResourceHandler<Fluid
     
     @Override
     protected FluidResource getResourceFrom(ItemResource accessResource, int index) {
-        if (accessResource.getItem() instanceof PotionItem) {
-            ItemStack itemStack = accessResource.toStack();
-
-            // TODO instead, have bottles for dynamically generated tekoraFluids, or disregard this note
-            PotionContents potionContents = ((PotionContents)itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)); 
-            if (potionContents.is(Potions.WATER)) {
-                return FluidResource.of(Fluids.WATER);
-            } else {
-                return FluidResource.EMPTY;
-            }
-
+        if (UtilFunctions.isWaterBottle(accessResource.toStack())) {
+            // TODO instead, have bottles for dynamically generated tekoraFluids, or disregard this note 
+            return FluidResource.of(Fluids.WATER);
         } else {
             return FluidResource.EMPTY;
         }

@@ -8,20 +8,17 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
@@ -47,7 +44,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class BasinEntity extends AbstractModularCraftEntity {
-    private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 10000) {
+    private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 1000) {
         @Override
         protected void onContentsChanged(int index, FluidStack previousContents) {
             setChanged();
@@ -229,7 +226,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
     private void fillTank() {
         try(Transaction transaction = Transaction.openRoot()) {
-            ItemAccess itemAccess = ItemAccess.forHandlerIndexStrict(inventory, FLUID_INPUT_SLOT);
+            ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, FLUID_INPUT_SLOT);
             var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
 
             int fluidMoved = ResourceHandlerUtil.move(itemCapability, tank,
@@ -258,7 +255,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
         try(Transaction transaction = Transaction.openRoot()) {
             // FluidResource fluid = tank.getResource(0);
 
-            ItemAccess itemAccess = ItemAccess.forHandlerIndexStrict(inventory, FLUID_OUTPUT_SLOT);
+            ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, FLUID_OUTPUT_SLOT);
             var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
 
             // todo, expand upon this mechanism by which a tank could be emptied.

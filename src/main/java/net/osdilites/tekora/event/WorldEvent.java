@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.WaterFluid;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -48,7 +47,7 @@ public class WorldEvent {
         }
     }
 
-    // Commented out since using a BlockEvent is not allowed by NeoForge here, for some reason
+    // Commented out since using a BlockEvent is not allowed by NeoForge here else crash, for some reason
     // @SubscribeEvent
     // public static void inWater(BlockEvent event) {
     //     BlockState state = event.getState();

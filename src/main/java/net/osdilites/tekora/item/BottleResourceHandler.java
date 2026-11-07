@@ -54,9 +54,7 @@ public final class BottleResourceHandler extends ItemAccessResourceHandler<Fluid
         } else if (newAmount != BOTTLE_VOLUME) {
             return ItemResource.EMPTY;
         } else if (newResource.is(Fluids.WATER.getFluidType())){
-            // var newStack = newResource.toStack(newAmount);
-            // return ItemResource.of(newStack.getFluidType().getBucket(newStack));
-            // TODO return the bottled fluid as a resource; may need to create or modify helper methods 
+            // TODO return *any* bottled fluid as a resource; may need to create or modify helper methods, classes 
             ItemStack potStack = PotionContents.createItemStack(Items.POTION, Potions.WATER);
             return ItemResource.of(potStack);
         } else {

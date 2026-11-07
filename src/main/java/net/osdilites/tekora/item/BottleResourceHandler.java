@@ -12,12 +12,12 @@ import net.neoforged.neoforge.transfer.ItemAccessResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.osdilites.tekora.fluid.ChemicalFluidType;
 
 // TODO FIND ANOTHER BETTER FILE OR FOLDER TO PUT THIS CLASS IN
 // BucketResourceHandler.java used as a basis for this
 public final class BottleResourceHandler extends ItemAccessResourceHandler<FluidResource> {
-    // TODO find a better place for this constant?
-    final public static int BOTTLE_VOLUME = 333;
+    final private static int BOTTLE_VOLUME = ChemicalFluidType.BOTTLE_VOLUME;
     
     public BottleResourceHandler(ItemAccess itemAccess) {
         super(itemAccess, 1);

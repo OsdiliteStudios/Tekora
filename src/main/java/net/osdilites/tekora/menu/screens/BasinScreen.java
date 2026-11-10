@@ -46,13 +46,14 @@ public class BasinScreen extends AbstractContainerScreen<BasinMenu> {
 
         graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
 
-        fluidRenderer.render(graphics, x + 18, y + 24, menu.blockEntity.getFluid());
+        // note, may need to dynamically change y-offset based on fluid level
+        fluidRenderer.render(graphics, x + 27, y + 18, menu.blockEntity.getFluid());
 
         renderProcess(graphics, x, y);
     }
 
     private void assignFluidRenderer() {
-        fluidRenderer = new FluidTankRenderer(1000, true, 15, 44);
+        fluidRenderer = new FluidTankRenderer(1000, true, 15, 46);
     }
 
     private void renderFluidTooltipArea(GuiGraphicsExtractor guiGraphics, int pMouseX, int pMouseY, int x, int y,

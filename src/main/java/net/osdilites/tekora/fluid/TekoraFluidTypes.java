@@ -87,6 +87,55 @@ public class TekoraFluidTypes {
                     () -> AMMONIA_FLUID_DATA
             );
 
+    public static final DeferredHolder<FluidType, FluidType> BENZENE_TYPE =
+            FLUID_TYPES.register(
+                    "benzene",
+                    () -> new ChemicalFluidType(
+                            FluidType.Properties.create()
+                                    .viscosity(604)
+                                    .density(874)
+                                    .canExtinguish(false),
+                            ChemicalFluidType.ChemicalProperties.create()
+                                    .molarVolume(0.089)
+                                    .triplePoint(278.68, 0.05)
+                                    .boilingPoint(353.24)
+                                    .criticalPoint(562.02, 48.95)
+                                    .meltingPointSP(278.68)
+                                    .vacuumSublimationPoint(240)
+                                    .heatFusion(10600)
+                                    .tripleHeatVaporization(33500)
+                                    .specificHeat(1.63)
+                                    .gasSpecificHeat(82.4)
+                                    .metalDegradationRate(0.0005)
+                                    .polymerDegradationRate(0.01)
+                    )
+            );
+
+    public static final DeferredHolder<FluidType, FluidType> BROMINE_TYPE =
+            FLUID_TYPES.register(
+                    "bromine",
+                    () -> new ChemicalFluidType(
+                            FluidType.Properties.create()
+                                    .viscosity(950)
+                                    .density(3103)
+                                    .temperature(298)
+                                    .canExtinguish(false),
+                            ChemicalFluidType.ChemicalProperties.create()
+                                    .molarVolume(0.0515)
+                                    .triplePoint(265.9, 0.058)
+                                    .boilingPoint(332)
+                                    .criticalPoint(588, 103)
+                                    .meltingPointSP(265.9)
+                                    .vacuumSublimationPoint(238)
+                                    .heatFusion(10570)
+                                    .tripleHeatVaporization(31000)
+                                    .specificHeat(1.47)
+                                    .gasSpecificHeat(75.7)
+                                    .metalDegradationRate(0.08)
+                                    .polymerDegradationRate(0.03)
+                    )
+            );
+
     public static final DeferredHolder<FluidType, FluidType> ETHANOL_TYPE =
             FLUID_TYPES.register(
                     "ethanol",
@@ -108,6 +157,128 @@ public class TekoraFluidTypes {
                                     .gasSpecificHeat(65.4)
                                     .metalDegradationRate(0.0002)
                                     .polymerDegradationRate(0.0005)
+                    )
+            );
+
+    public static final DeferredHolder<FluidType, FluidType> FORMIC_ACID_TYPE =
+            FLUID_TYPES.register(
+                    "formic_acid",
+                    () -> new ChemicalFluidType(
+                            FluidType.Properties.create()
+                                    .viscosity(1600)
+                                    .density(1220)
+                                    .temperature(298)
+                                    .canExtinguish(false),
+                            ChemicalFluidType.ChemicalProperties.create()
+                                    .molarVolume(0.0377)
+                                    .triplePoint(281, 0.01)
+                                    .boilingPoint(373.8)
+                                    .criticalPoint(588, 58)
+                                    .meltingPointSP(281)
+                                    .vacuumSublimationPoint(250)
+                                    .heatFusion(12700)
+                                    .tripleHeatVaporization(50000)
+                                    .specificHeat(2.62)
+                                    .gasSpecificHeat(47)
+                                    .metalDegradationRate(0.005)
+                                    .polymerDegradationRate(0.002)
+                    )
+            );
+
+    public static final DeferredHolder<FluidType, FluidType> HYDRAZINE_TYPE =
+            FLUID_TYPES.register(
+                    "hydrazine",
+                    () -> new ChemicalFluidType(
+                            FluidType.Properties.create()
+                                    .viscosity(974)
+                                    .density(1004)
+                                    .canExtinguish(false),
+                            ChemicalFluidType.ChemicalProperties.create()
+                                    .molarVolume(0.0319)
+                                    .triplePoint(274.6, 0.01)
+                                    .boilingPoint(386.6)
+                                    .criticalPoint(924, 147)
+                                    .meltingPointSP(274.6)
+                                    .vacuumSublimationPoint(245)
+                                    .heatFusion(3000)
+                                    .tripleHeatVaporization(44500)
+                                    .specificHeat(3.1)
+                                    .gasSpecificHeat(45)
+                                    .metalDegradationRate(0.02)
+                                    .polymerDegradationRate(0.01)
+                    )
+            );
+
+    public static final DeferredHolder<FluidType, FluidType> HYDROGEN_FLUORIDE_TYPE =
+            FLUID_TYPES.register(
+                    "hydrogen_fluoride",
+                    () -> new ChemicalFluidType(
+                            FluidType.Properties.create()
+                                    .viscosity(250)
+                                    .density(1000)
+                                    .canExtinguish(false),
+                            ChemicalFluidType.ChemicalProperties.create()
+                                    .molarVolume(0.02)
+                                    .triplePoint(190, 0.06)
+                                    .boilingPoint(292.7)
+                                    .criticalPoint(461, 64)
+                                    .meltingPointSP(190)
+                                    .vacuumSublimationPoint(175)
+                                    .heatFusion(2500)
+                                    .tripleHeatVaporization(25000)
+                                    .specificHeat(2)
+                                    .gasSpecificHeat(29)
+                                    .metalDegradationRate(0.05)
+                                    .polymerDegradationRate(0.01)
+                    )
+            );
+
+    public static final DeferredHolder<FluidType, FluidType> HYDROGEN_PEROXIDE_TYPE =
+            FLUID_TYPES.register(
+                    "hydrogen_peroxide",
+                    () -> new ChemicalFluidType(
+                            FluidType.Properties.create()
+                                    .viscosity(1200)
+                                    .density(1445)
+                                    .canExtinguish(false),
+                            ChemicalFluidType.ChemicalProperties.create()
+                                    .molarVolume(0.0236)
+                                    .triplePoint(252, 0.0001)
+                                    .boilingPoint(423.35)
+                                    .criticalPoint(728, 220)
+                                    .meltingPointSP(252.9)
+                                    .vacuumSublimationPoint(225)
+                                    .heatFusion(12500)
+                                    .tripleHeatVaporization(51500)
+                                    .specificHeat(3.8)
+                                    .gasSpecificHeat(45)
+                                    .metalDegradationRate(0.03)
+                                    .polymerDegradationRate(0.02)
+                    )
+            );
+
+    public static final DeferredHolder<FluidType, FluidType> METHANOL_TYPE =
+            FLUID_TYPES.register(
+                    "methanol",
+                    () -> new ChemicalFluidType(
+                            FluidType.Properties.create()
+                                    .viscosity(545)
+                                    .density(792)
+                                    .temperature(298)
+                                    .canExtinguish(false),
+                            ChemicalFluidType.ChemicalProperties.create()
+                                    .molarVolume(0.0405)
+                                    .triplePoint(175.5, 2E-05)
+                                    .boilingPoint(337.85)
+                                    .criticalPoint(512.6, 80.9)
+                                    .meltingPointSP(175.5)
+                                    .vacuumSublimationPoint(155)
+                                    .heatFusion(3180)
+                                    .tripleHeatVaporization(44000)
+                                    .specificHeat(2.01)
+                                    .gasSpecificHeat(42.4)
+                                    .metalDegradationRate(0.0005)
+                                    .polymerDegradationRate(0.001)
                     )
             );
 
@@ -184,177 +355,6 @@ public class TekoraFluidTypes {
             FLUID_TYPES.register(
                     "sulfuric_acid",
                     () -> SULFURIC_ACID_DATA
-            );
-
-    public static final DeferredHolder<FluidType, FluidType> BROMINE_TYPE =
-            FLUID_TYPES.register(
-                    "bromine",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(950)
-                                    .density(3103)
-                                    .temperature(298)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.0515)
-                                    .triplePoint(265.9, 0.058)
-                                    .boilingPoint(332)
-                                    .criticalPoint(588, 103)
-                                    .meltingPointSP(265.9)
-                                    .vacuumSublimationPoint(238)
-                                    .heatFusion(10570)
-                                    .tripleHeatVaporization(31000)
-                                    .specificHeat(1.47)
-                                    .gasSpecificHeat(75.7)
-                                    .metalDegradationRate(0.08)
-                                    .polymerDegradationRate(0.03)
-                    )
-            );
-
-    public static final DeferredHolder<FluidType, FluidType> METHANOL_TYPE =
-            FLUID_TYPES.register(
-                    "methanol",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(545)
-                                    .density(792)
-                                    .temperature(298)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.0405)
-                                    .triplePoint(175.5, 2E-05)
-                                    .boilingPoint(337.85)
-                                    .criticalPoint(512.6, 80.9)
-                                    .meltingPointSP(175.5)
-                                    .vacuumSublimationPoint(155)
-                                    .heatFusion(3180)
-                                    .tripleHeatVaporization(44000)
-                                    .specificHeat(2.01)
-                                    .gasSpecificHeat(42.4)
-                                    .metalDegradationRate(0.0005)
-                                    .polymerDegradationRate(0.001)
-                    )
-            );
-
-    public static final DeferredHolder<FluidType, FluidType> FORMIC_ACID_TYPE =
-            FLUID_TYPES.register(
-                    "formic_acid",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(1600)
-                                    .density(1220)
-                                    .temperature(298)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.0377)
-                                    .triplePoint(281, 0.01)
-                                    .boilingPoint(373.8)
-                                    .criticalPoint(588, 58)
-                                    .meltingPointSP(281)
-                                    .vacuumSublimationPoint(250)
-                                    .heatFusion(12700)
-                                    .tripleHeatVaporization(50000)
-                                    .specificHeat(2.62)
-                                    .gasSpecificHeat(47)
-                                    .metalDegradationRate(0.005)
-                                    .polymerDegradationRate(0.002)
-                    )
-            );
-
-    public static final DeferredHolder<FluidType, FluidType> BENZENE_TYPE =
-            FLUID_TYPES.register(
-                    "benzene",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(604)
-                                    .density(874)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.089)
-                                    .triplePoint(278.68, 0.05)
-                                    .boilingPoint(353.24)
-                                    .criticalPoint(562.02, 48.95)
-                                    .meltingPointSP(278.68)
-                                    .vacuumSublimationPoint(240)
-                                    .heatFusion(10600)
-                                    .tripleHeatVaporization(33500)
-                                    .specificHeat(1.63)
-                                    .gasSpecificHeat(82.4)
-                                    .metalDegradationRate(0.0005)
-                                    .polymerDegradationRate(0.01)
-                    )
-            );
-
-    public static final DeferredHolder<FluidType, FluidType> HYDRAZINE_TYPE =
-            FLUID_TYPES.register(
-                    "hydrazine",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(974)
-                                    .density(1004)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.0319)
-                                    .triplePoint(274.6, 0.01)
-                                    .boilingPoint(386.6)
-                                    .criticalPoint(924, 147)
-                                    .meltingPointSP(274.6)
-                                    .vacuumSublimationPoint(245)
-                                    .heatFusion(3000)
-                                    .tripleHeatVaporization(44500)
-                                    .specificHeat(3.1)
-                                    .gasSpecificHeat(45)
-                                    .metalDegradationRate(0.02)
-                                    .polymerDegradationRate(0.01)
-                    )
-            );
-
-    public static final DeferredHolder<FluidType, FluidType> HYDROGEN_PEROXIDE_TYPE =
-            FLUID_TYPES.register(
-                    "hydrogen_peroxide",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(1200)
-                                    .density(1445)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.0236)
-                                    .triplePoint(252, 0.0001)
-                                    .boilingPoint(423.35)
-                                    .criticalPoint(728, 220)
-                                    .meltingPointSP(252.9)
-                                    .vacuumSublimationPoint(225)
-                                    .heatFusion(12500)
-                                    .tripleHeatVaporization(51500)
-                                    .specificHeat(3.8)
-                                    .gasSpecificHeat(45)
-                                    .metalDegradationRate(0.03)
-                                    .polymerDegradationRate(0.02)
-                    )
-            );
-
-    public static final DeferredHolder<FluidType, FluidType> HYDROGEN_FLUORIDE_TYPE =
-            FLUID_TYPES.register(
-                    "hydrogen_fluoride",
-                    () -> new ChemicalFluidType(
-                            FluidType.Properties.create()
-                                    .viscosity(250)
-                                    .density(1000)
-                                    .canExtinguish(false),
-                            ChemicalFluidType.ChemicalProperties.create()
-                                    .molarVolume(0.02)
-                                    .triplePoint(190, 0.06)
-                                    .boilingPoint(292.7)
-                                    .criticalPoint(461, 64)
-                                    .meltingPointSP(190)
-                                    .vacuumSublimationPoint(175)
-                                    .heatFusion(2500)
-                                    .tripleHeatVaporization(25000)
-                                    .specificHeat(2)
-                                    .gasSpecificHeat(29)
-                                    .metalDegradationRate(0.05)
-                                    .polymerDegradationRate(0.01)
-                    )
             );
 
     public static final DeferredHolder<FluidType, FluidType> WATER_TYPE =

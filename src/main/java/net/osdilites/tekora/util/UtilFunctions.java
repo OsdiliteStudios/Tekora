@@ -1,8 +1,13 @@
 package net.osdilites.tekora.util;
 
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -155,5 +160,16 @@ public class UtilFunctions {
             // todo, use JSON to derive the value
         }
         return 1;
+    }
+
+    /// Useful for block entities that accept water bottles as fluid input.
+    public static boolean isWaterBottle(ItemStack itemStack) {
+        // TODO, change this to work for any future generated fluid bottles
+        // add an additional parameter to check if itemStack contains fluid argument
+        if ( itemStack.getItem() instanceof PotionItem ) {
+            PotionContents potionContents = ((PotionContents)itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)); 
+            return potionContents.is(Potions.WATER);
+        }
+        return false;
     }
 }

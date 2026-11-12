@@ -14,17 +14,22 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.WaterFluid;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 import net.osdilites.tekora.data.Partners;
 import net.osdilites.tekora.data.TekoraComponents;
+import net.osdilites.tekora.item.BottleResourceHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@EventBusSubscriber(modid = Tekora.MODID)
 public class WorldEvent {
     @SubscribeEvent
     public static void onAttackEntity(AttackEntityEvent event) {
@@ -42,16 +47,17 @@ public class WorldEvent {
         }
     }
 
-    @SubscribeEvent
-    public static void inWater(BlockEvent event) {
-        BlockState state = event.getState();
-        if (state.getBlock() instanceof LiquidBlock liquid) {
-            if (liquid.fluid instanceof WaterFluid) {
-                // todo make any alkali metals explode if is in water.
-                // turn into a config option if this proves to be too laggy.
-            }
-        }
-    }
+    // Commented out since using a BlockEvent is not allowed by NeoForge here else crash, for some reason
+    // @SubscribeEvent
+    // public static void inWater(BlockEvent event) {
+    //     BlockState state = event.getState();
+    //     if (state.getBlock() instanceof LiquidBlock liquid) {
+    //         if (liquid.fluid instanceof WaterFluid) {
+    //             // todo make any alkali metals explode if is in water.
+    //             // turn into a config option if this proves to be too laggy.
+    //         }
+    //     }
+    // }
 
     // this machineType of code could also be applied to Tekora cables in the future.
     @SubscribeEvent
@@ -75,7 +81,13 @@ public class WorldEvent {
         }
     }
 
+    @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-//        event.registerBlockEntity(Capabilities.Item.BLOCK, TekoraBlockEntities.BASIN.get(), TekoraBlockEntities::getItemHandler);
+//    event.registerBlockEntity(Capabilities.Item.BLOCK, TekoraBlockEntities.BASIN.get(), TekoraBlockEntities::getItemHandler);
+
+        // Possible compatibility issue with other mods?
+        event.registerItem(Capabilities.Fluid.ITEM, 
+            (stack, itemAccess) -> new BottleResourceHandler(itemAccess), 
+            Items.POTION, Items.GLASS_BOTTLE);
     }
 }

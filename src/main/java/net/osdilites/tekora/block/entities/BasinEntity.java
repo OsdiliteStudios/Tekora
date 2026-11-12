@@ -7,7 +7,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -24,16 +26,19 @@ import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.transfer.transaction.Transaction.Lifecycle;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.data.SoluteKey;
+import net.osdilites.tekora.fluid.ChemicalFluidType;
 import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.recipes.ReactionRecipe;
 import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 import net.osdilites.tekora.recipes.TekoraRecipes;
 import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -69,6 +74,9 @@ public class BasinEntity extends AbstractModularCraftEntity {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState, 4.815f);
     }
 
+    private final int FLUID_INPUT_SLOT = 0;
+    private final int FLUID_OUTPUT_SLOT = 1;
+
     // meaning of each index in the inventory
     // 0 = fluid container input
     // 1 = fluid container output
@@ -80,23 +88,26 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 super.onContentsChanged(index, previousContents);
                 BasinEntity.this.setChanged();
                 if(level != null && !level.isClientSide()) {
-                    if (index == 0) {
-                        fillTank();
-                    } else if (index == 1) {
-                        emptyTank();
-                    }
+                    // Note: fillTank and emptyTank can lead to another call to onContentsChanged,
+                    // but only the second call can change the item in the slot, delete or leave alone
+                    // if (index == 0) {
+                    //     fillTank();
+                    // } else if (index == 1) {
+                    //     emptyTank();
+                    // }
                     level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 }
             }
 
             @Override
             protected int getCapacity(int index, ItemResource resource) {
-                return 11;
+                return resource.getMaxStackSize();
             }
         };
     }
 
     private double craftItem() {
+
         return 0;
     }
 
@@ -107,6 +118,13 @@ public class BasinEntity extends AbstractModularCraftEntity {
     protected double crafting(Level level, AbstractModularMachineEntity ent, String type, double velocity, double torque) {
         // todo, use handler to check if a recipe containing them exists.
         // note, it is possible to hardcode mole behavior
+
+        if (ent instanceof AbstractDeployingMachineEntity deployer) {
+            // todo, add applying and printing recipes here
+            // possible idea, maybe this creates ink water and allows maps to be copied
+            return 0;
+        }
+
         if (type.equals(TekoraMechanicalRecipe.MIXER)) {
             // the following code below reads the ingredients in inventory/tank
             HashMap<ChemicalIngredient, Double> ingredients = new HashMap<>();
@@ -115,46 +133,44 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
             ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy
             Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getCurrentRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
-            if (recipe.isPresent()) {
-                ReactionRecipe accessedRec = recipe.get().value();
-                // something to debug, if you switch recipes fast enough, does it still register as present?
-                if (!this.hasRxn) {
-                    // description: use this to develop a map of indices containing reactants/products including those with solutes
-                    accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
-                    accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
-                    this.hasRxn = true;
-                }
-                this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
-                this.lnK = accessedRec.getLnK(temperature);
 
-                // disabled realistic rate law checking for now
-                float rate = 1;//accessedRec.getRateTicks(liquidSolutes, temperature);
-                // if (rate == 0) {
-                //   break;
-                // }
-                //if (rate != 0) {
-                    int action = Double.compare(lnQ, lnK);
-
-                    // this code has been untested
-                    // todo, test this piece of code
-                    accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
-                    accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
-
-                    accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
-                    accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
-                //}
-            } else {
+            if (!recipe.isPresent()) {
                 this.hasRxn = false;
                 itemReactants.clear();
                 itemProducts.clear();
                 fluidReactants.clear();
                 fluidProducts.clear();
+                return 0;
+            }        
+            
+            ReactionRecipe accessedRec = recipe.get().value();
+            // something to debug, if you switch recipes fast enough, does it still register as present?
+            if (!this.hasRxn) {
+                // description: use this to develop a map of indices containing reactants/products including those with solutes
+                accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
+                accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
+                this.hasRxn = true;
             }
-        }
-        if (ent instanceof AbstractDeployingMachineEntity deployer) {
-            // todo, add applying and printing recipes here
-            // possible idea, maybe this creates ink water and allows maps to be copied
-            return 0;
+            this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
+            this.lnK = accessedRec.getLnK(temperature);
+
+            // disabled realistic rate law checking for now
+            float rate = 1;//accessedRec.getRateTicks(liquidSolutes, temperature);
+            // if (rate == 0) {
+            //   break;
+            // }
+            //if (rate != 0) {
+                int action = Double.compare(lnQ, lnK);
+
+                // this code has been untested
+                // todo, test this piece of code
+                accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
+                accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
+
+                accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
+                accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
+                
+            //}
         }
 
         // todo, include misc test cases here
@@ -210,40 +226,81 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
     private void fillTank() {
         try(Transaction transaction = Transaction.openRoot()) {
-            ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 0);
+            ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, FLUID_INPUT_SLOT);
             var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
 
-            // todo, allow water bottles to get used.
-            // water bottles has a value of 333 mB
             int fluidMoved = ResourceHandlerUtil.move(itemCapability, tank,
                     fluidResource -> tank.getResource(0).isEmpty() || tank.getResource(0).is(fluidResource.getFluidType()),
                     FluidType.BUCKET_VOLUME, transaction);
-
-            if(fluidMoved == FluidType.BUCKET_VOLUME) {
+            
+            // case fallthrough is intentional
+            switch(fluidMoved) {
+            case ChemicalFluidType.BUCKET_VOLUME:
+                if (itemAccess.getResource().getItem() instanceof BucketItem) {
+                    // note, possible incompatibility here if multiple types of buckets exist
+                    itemAccess.exchange(ItemResource.of(Items.BUCKET), itemAccess.getAmount(), transaction);
+                }
+            case ChemicalFluidType.BOTTLE_VOLUME:
                 transaction.commit();
+                break;
+            default:   
             }
         }
     }
 
     private void emptyTank() {
+        int amt = tank.getAmountAsInt(0);
+        if (amt < ChemicalFluidType.BOTTLE_VOLUME) return;
+
         try(Transaction transaction = Transaction.openRoot()) {
-            int amt = tank.getAmountAsInt(0);
-            if (amt >= 1000) {
-                FluidResource fluid = tank.getResource(0);
+            // FluidResource fluid = tank.getResource(0);
 
-                ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 1);
-                var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
-                // todo, implement a mechanism by which a tank could be emptied.
+            ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, FLUID_OUTPUT_SLOT);
+            var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
 
-                tank.set(0, fluid, amt - 1000);
-            }
+            // todo, expand upon this mechanism by which a tank could be emptied.
+            
+            int fluidMoved = ResourceHandlerUtil.move(tank, itemCapability, 
+                fluidResource -> itemCapability.getResource(0).isEmpty() || itemCapability.getResource(0).is(fluidResource.getFluidType()), 
+                FluidType.BUCKET_VOLUME, transaction);
+            
+            // case fallthrough is intentional
+            switch(fluidMoved) {
+            case ChemicalFluidType.BOTTLE_VOLUME:
+            case ChemicalFluidType.BUCKET_VOLUME:
+                transaction.commit();
+                break;
+            default:
+            }   
         }
     }
 
+    /// Answers: "Can fluid be transferred to the item in this basin's inventory slot?"
+    private boolean hasFluidCapability(int index) {
+        return !inventory.getResource(index).isEmpty()
+                && ItemAccess.forHandlerIndex(inventory, index).getCapability(Capabilities.Fluid.ITEM) != null;
+    }
+
     private boolean hasFluidItemStackInSlot() {
-        return !inventory.getResource(0).isEmpty()
-                && ItemAccess.forHandlerIndex(inventory, 0).getCapability(Capabilities.Fluid.ITEM) != null
-                && ItemAccess.forHandlerIndex(inventory, 0).getCapability(Capabilities.Fluid.ITEM).getAmountAsInt(0) != 0;
+        return hasFluidCapability(FLUID_INPUT_SLOT)
+                && ItemAccess.forHandlerIndex(inventory, FLUID_INPUT_SLOT).getCapability(Capabilities.Fluid.ITEM).getAmountAsInt(0) != 0;
+    }
+
+    @Override 
+    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
+        super.tick(pLevel, pPos, pState);
+
+        // prevent an open transaction on the same thread from calling fill or empty across ticks?
+        if (Transaction.getLifecycle() != Lifecycle.NONE) return;
+
+        // while this is not really that efficient, it avoids some of the tricky
+        // problems with putting fill and empty logic in onContentsChanged:
+        // because items can change in-slot during a transaction, unwanted calls are triggered
+        if (hasFluidItemStackInSlot()) {
+            fillTank();
+        } else if (hasFluidCapability(FLUID_OUTPUT_SLOT)) {
+            emptyTank();
+        }
     }
 
     // todo, modify the two methods below in accordance with the JSON files

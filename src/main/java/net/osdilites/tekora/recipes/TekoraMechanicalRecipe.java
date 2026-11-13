@@ -8,7 +8,7 @@ public interface TekoraMechanicalRecipe<T extends RecipeInput> extends TekoraGen
     String CUTTER = "cutter";
     String CRUSHER = "crusher";
     String PRINTER = "printer";
-    String APPLYER = "applyer";
+    String APPLIER = "applier";
     String SPLITTER = "splitter"; // magnetic separation
 
     double cutTorque();

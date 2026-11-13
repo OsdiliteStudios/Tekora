@@ -18,14 +18,14 @@ import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.item.TekoraItems;
 import org.jspecify.annotations.Nullable;
 
-public class ApplyerMechanical extends AbstractDeployingMachine {
-    public static final MapCodec<ApplyerMechanical> CODEC = simpleCodec(ApplyerMechanical::new);
+public class ApplierMechanical extends AbstractDeployingMachine {
+    public static final MapCodec<ApplierMechanical> CODEC = simpleCodec(ApplierMechanical::new);
 
-    private ApplyerMechanical(Properties properties) {
+    private ApplierMechanical(Properties properties) {
         super(properties);
     }
 
-    public ApplyerMechanical() {
+    public ApplierMechanical() {
         this(Properties.ofFullCopy(Blocks.STONECUTTER).setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, "assembler"))));
     }
 
@@ -41,11 +41,11 @@ public class ApplyerMechanical extends AbstractDeployingMachine {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new ApplyerMechanicalEntity(blockPos, blockState);
+        return new ApplierMechanicalEntity(blockPos, blockState);
     }
 
     @Override 
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
-        return createTickerHelper(type, TekoraBlockEntities.APPLYER.get(), (lvl, pos, state, block) -> block.tick(lvl, pos, state));
+        return createTickerHelper(type, TekoraBlockEntities.APPLIER.get(), (lvl, pos, state, block) -> block.tick(lvl, pos, state));
     }
 }

@@ -122,8 +122,8 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
                 machineType = TekoraMechanicalRecipe.PRESS;
             } else if (block.equals(TekoraBlocks.CUTTER.get())) {
                 machineType = TekoraMechanicalRecipe.CUTTER;
-            } else if (block.equals(TekoraBlocks.APPLYER.get())) {
-                machineType = TekoraMechanicalRecipe.APPLYER;
+            } else if (block.equals(TekoraBlocks.APPLIER.get())) {
+                machineType = TekoraMechanicalRecipe.APPLIER;
             } else if (block.equals(TekoraBlocks.PRINTER.get())) {
                 machineType = TekoraMechanicalRecipe.PRINTER;
             }

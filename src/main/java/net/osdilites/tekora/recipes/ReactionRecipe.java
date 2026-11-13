@@ -27,6 +27,7 @@ import net.osdilites.tekora.util.UtilFunctions;
 import org.jspecify.annotations.NonNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeInput> {
     private final List<Chemical> reactants;
@@ -106,32 +107,42 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             double q = 1;
 
             Set<ChemicalIngredient> ingredients = input.inputs().keySet();
+
+            // Two sets A and B are equal if:
+            // 1. They are the same length
+            // 2. A is a subset of B, and vice versa
+            // Note that ingredients can contain both reactants and products,
+            // and input doesn't necessarily need to be equal to union of reactants and products.
+            
+            // answers: is reactants a subset of ingredients?
             for (Chemical chemical : reactants) {
                 double c = chemical.coefficient();
-                for (ChemicalIngredient ing : ingredients) {
-                    if (ing.equals(chemical.chemical())) {
-                        q *= Math.pow(input.inputs().get(ing), c);
-                    } else {
-                        hasAllInput = false;
-                        q = 0;
-                        break;
-                    }
-                }
+                ChemicalIngredient recipeIng = chemical.chemical();
+                if (ingredients.contains(recipeIng)) {
+                    q *= Math.pow(input.inputs().get(recipeIng), c);
+                } else {
+                    System.out.printf("%s not found\n", recipeIng);
+                    hasAllInput = false;
+                    q = 0;
+                    break;
+                };
             }
+
+            // similar deal for products
             for (Chemical chemical : products) {
                 double c = chemical.coefficient();
-                for (ChemicalIngredient ing : ingredients) {
-                    if (ing.equals(chemical.chemical())) {
-                        q /= Math.pow(input.inputs().get(ing), c);
-                    } else {
-                        hasAllOutput = false;
-                        if (q == 0) return false;
-                        else {
-                            q = Double.POSITIVE_INFINITY;
-                        }
-                        break;
+                ChemicalIngredient ing = chemical.chemical();
+
+                if (ingredients.contains(ing)) {
+                    q /= Math.pow(input.inputs().get(ing), c);
+                } else {
+                    hasAllOutput = false;
+                    if (q == 0) return false;
+                    else {
+                        q = Double.POSITIVE_INFINITY;
                     }
-                }
+                    break;
+                };
             }
 
             return hasAllOutput || hasAllInput;
@@ -345,5 +356,10 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             }
             vals[1] %= 1.0f;
         }
+    }
+
+    @Override 
+    public String toString() {
+        return reactants.toString() + " : " + products.toString() + ";;;";
     }
 }

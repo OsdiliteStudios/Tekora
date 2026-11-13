@@ -82,6 +82,10 @@ public abstract class AbstractDeployingMachineEntity extends AbstractModularMach
         if (this.level != null) Containers.dropContents(this.level, this.worldPosition, inv);
     }
 
+    public ItemStacksResourceHandler getHandler() {
+        return handler;
+    }
+
     public Item getStoredItem() {
         return handler.getResource(0).getItem();
     }

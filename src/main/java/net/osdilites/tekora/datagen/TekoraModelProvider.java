@@ -51,9 +51,12 @@ public class TekoraModelProvider extends ModelProvider {
         itemModels.generateFlatItem(TekoraItems.STEEL_DUST.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.MAGNESIUM_CARBONATE.get(), ModelTemplates.FLAT_ITEM);
 
+        itemModels.generateFlatItem(TekoraItems.THERMOMETER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.WRENCH.get(), ModelTemplates.FLAT_ITEM);
+
         itemModels.generateFlatItem(TekoraItems.DEBUG_ITEM.get(), ModelTemplates.FLAT_ITEM);
 
-        // blockModels.createTrivialCube(ModBlocks.BAUXITE_ORE.get());
+        blockModels.createTrivialCube(TekoraBlocks.BAUXITE_ORE.get());
     }
     
     private void generateGearModel(ItemModelGenerators itemModels, Item item, String name) {

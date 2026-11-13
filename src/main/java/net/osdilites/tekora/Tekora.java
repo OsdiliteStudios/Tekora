@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.osdilites.tekora.block.TekoraBlocks;
@@ -25,6 +26,8 @@ public class Tekora {
     public static final String MODID = "tekora";
     public static final Logger LOGGER = LogUtils.getLogger();
     public Tekora(IEventBus modEventBus, ModContainer modContainer) {
+        modContainer.registerConfig(ModConfig.Type.COMMON, TekoraConfig.SPEC);
+
         modEventBus.addListener(this::commonSetup);
         TekoraBlocks.register(modEventBus);
         TekoraComponents.register(modEventBus);

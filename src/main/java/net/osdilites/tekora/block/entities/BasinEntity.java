@@ -1,3 +1,4 @@
+
 package net.osdilites.tekora.block.entities;
 
 import net.minecraft.core.BlockPos;
@@ -169,12 +170,12 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
                 accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
                 accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
-                
+                return torque; // todo, make this return viscosity rather than torque
             //}
         }
 
         // todo, include misc test cases here
-        return 0;
+        return 0; // generally returns torque
     }
 
     @Override

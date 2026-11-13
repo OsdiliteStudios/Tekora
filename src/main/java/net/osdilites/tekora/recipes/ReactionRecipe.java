@@ -176,6 +176,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
     // METHODS FOR BLOCK ENTITIES
 
+    @Deprecated
     // algorithm used to implement the natural log of the reaction quotient, used to compare against the equilibrium constant
     public double getLnQ(HashMap<SoluteKey, Double> ingredients, double tankVol) {
         double q = 1.0;
@@ -203,8 +204,10 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         return (deltaEnthalpy - temperature * deltaEntropy) / (temperature * UtilFunctions.IDEAL_GAS_CONST);
     }
 
+    @Deprecated // this method will be implanted in the matches method for more optimized code
     // function returns Ae^(-E/RT) * delta_t or in other words, the rate constant multiplied by the time period
-    public float getRateTicks(HashMap<SoluteKey, Double> ingredients, double temperature) {
+    public float getRateTicks(HashMap<SoluteKey, Double> ingredients, double temperature, float torque) {
+        // todo, involving the torque parameter, the hgiher the torque, the higher the returned rate value.
         float rateTicks = 1;
         boolean noReactants = false;
         for (var entry : ingredients.entrySet()) {

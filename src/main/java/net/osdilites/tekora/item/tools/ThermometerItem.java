@@ -5,6 +5,7 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.osdilites.tekora.TekoraConfig;
 import net.osdilites.tekora.block.entities.IHeatSensitive;
@@ -18,10 +19,13 @@ public class ThermometerItem extends TekoraItem {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
+        Level level = context.getLevel();
+        if (level.isClientSide()) return InteractionResult.PASS;
+
         Player player = context.getPlayer();
         if (player == null) return InteractionResult.PASS;
 
-        BlockEntity ent = context.getLevel().getBlockEntity(context.getClickedPos());
+        BlockEntity ent = level.getBlockEntity(context.getClickedPos());
         if (ent instanceof IHeatSensitive sensitive) {
             double mcTemp = UtilFunctions.fromKelvinsToMcTemp(sensitive.getTemperature()); // used for color-coding
             TextColor color;

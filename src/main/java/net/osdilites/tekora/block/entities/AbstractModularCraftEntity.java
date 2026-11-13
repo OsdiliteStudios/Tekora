@@ -89,50 +89,52 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putFloat("modcraft.progress", progress);
-        output.putChild("modcraft.inventory", inventory);
         output.putFloat("modcraft.temperature", temperature);
+        output.putChild("modcraft.inventory", inventory);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         progress = input.getFloatOr("modcraft.progress", 0.0f);
-        input.child("modcraft.inventory").ifPresent(inventory::deserialize);
         temperature = input.getFloatOr("modcraft.temperature", 300);
+        input.child("modcraft.inventory").ifPresent(inventory::deserialize);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (pLevel != null && !pLevel.isClientSide() && pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
+        if (pLevel != null && !pLevel.isClientSide()) {
             // the code segment here calculates temperature behavior
-            float biomeTemp = (float)UtilFunctions.fromMcTempToKelvins(UtilFunctions.getBiomeTemperature(pLevel, pPos));
+            float biomeTemp = (float) UtilFunctions.fromMcTempToKelvins(UtilFunctions.getBiomeTemperature(pLevel, pPos));
             if (!Float.isFinite(temperature) || temperature < 0) {
                 temperature = biomeTemp;
-            } // todo fix, make it so that the temperature code runs even without surrounding neighbors
+            }
             for (Direction direction : Direction.values()) {
                 temperature += pLevel.getBlockEntity(pPos.relative(direction)) instanceof IHeatSensitive sensitive
                         ? getTransferHeat(sensitive)
                         : getCoolingDiff(biomeTemp, UtilFunctions.getHeatTransferCoeff(pLevel));
             }
+            if (pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
+                // this calculates for "angular" acceleration specifically
+                double torque = ent.getTorque(); // determines recipe progress
+                Block block = ent.getBlockState().getBlock();
 
-            // this calculates for "angular" acceleration specifically
-            double torque = ent.getTorque(); // determines recipe progress
-            Block block = ent.getBlockState().getBlock();
-
-            String machineType = "";
-            if (block.equals(TekoraBlocks.CRUSHER.get())) {
-                machineType = TekoraMechanicalRecipe.CRUSHER;
-            } else if (block.equals(TekoraBlocks.MIXER.get())) {
-                machineType = TekoraMechanicalRecipe.MIXER;
-            } else if (block.equals(TekoraBlocks.PRESS.get())) {
-                machineType = TekoraMechanicalRecipe.PRESS;
-            } else if (block.equals(TekoraBlocks.CUTTER.get())) {
-                machineType = TekoraMechanicalRecipe.CUTTER;
-            } else if (block.equals(TekoraBlocks.APPLYER.get())) {
-                machineType = TekoraMechanicalRecipe.APPLYER;
-            } else if (block.equals(TekoraBlocks.PRINTER.get())) {
-                machineType = TekoraMechanicalRecipe.PRINTER;
+                String machineType = "";
+                if (block.equals(TekoraBlocks.CRUSHER.get())) {
+                    machineType = TekoraMechanicalRecipe.CRUSHER;
+                } else if (block.equals(TekoraBlocks.MIXER.get())) {
+                    machineType = TekoraMechanicalRecipe.MIXER;
+                } else if (block.equals(TekoraBlocks.PRESS.get())) {
+                    machineType = TekoraMechanicalRecipe.PRESS;
+                } else if (block.equals(TekoraBlocks.CUTTER.get())) {
+                    machineType = TekoraMechanicalRecipe.CUTTER;
+                } else if (block.equals(TekoraBlocks.APPLYER.get())) {
+                    machineType = TekoraMechanicalRecipe.APPLYER;
+                } else if (block.equals(TekoraBlocks.PRINTER.get())) {
+                    machineType = TekoraMechanicalRecipe.PRINTER;
+                }
+                if (!machineType.isEmpty())
+                    ent.addTorque(crafting(pLevel, ent, machineType, ent.getVelocity(), torque));
             }
-            if (!machineType.isEmpty()) ent.addTorque(crafting(pLevel, ent, machineType, ent.getVelocity(), torque));
         }
     }
 

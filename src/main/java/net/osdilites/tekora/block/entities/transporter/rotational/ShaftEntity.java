@@ -2,6 +2,8 @@ package net.osdilites.tekora.block.entities.transporter.rotational;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,6 +36,13 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
     private final HashMap<Item, ArrayList<BlockPos>> attachedPartners;
     private final double moment;
 
+    private static final int[][] PLANE_OFFSETS = {
+            // up, down, left, right
+            { 0,  1}, { 0, -1}, {-1,  0}, { 1,  0},
+            // bot. left, top left, bot. right, top right
+            {-1, -1}, {-1,  1}, { 1, -1}, { 1,  1}
+    };
+
     public ShaftEntity(BlockPos pPos, BlockState pState) {
         // WARNING: unsafe, only use in the registration
         this(pPos, pState, pState.getBlock() instanceof Shaft shaft ? shaft.getMoment() : 0);
@@ -54,58 +63,72 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
             double tot = 0;
 
             if (pState.getValueOrElse(Shaft.IS_LARGE, false)) {
-                // todo, test large gears
                 // if i == -2 or 2, j != k
                 // if i == 0, j == k
-                int x = pPos.getX();
-                int y = pPos.getY();
-                int z = pPos.getZ();
-                for (int i = -2; i <= 2; i += 2) {
-                    for (int j = -2; j <= 2; ++j) {
-                        for (int k = -2; k <= 2; ++k) {
-                            if (((i == 0 && j != 0 && k != 0) || (i != 0 && ((j == 0) != (k == 0))))
-                                    && ((Math.abs(j) == 2) != (Math.abs(k) == 2))) {
-                                BlockPos newPos = switch (axis) {
-                                    case X -> new BlockPos(x+i, y+j, z+k);
-                                    case Y -> new BlockPos(x+j, y+i, z+k);
-                                    case Z -> new BlockPos(x+j, y+k, z+i);
-                                };
-                                if (pLevel.getBlockEntity(newPos) instanceof ShaftEntity cog) {
-                                    BlockState analyzedState = cog.getBlockState();
-                                    if (analyzedState.getValueOrElse(Shaft.GEAR_TYPE, GearType.NONE) != GearType.NONE
-                                            && ((analyzedState.getValueOrElse(Shaft.IS_LARGE, false) && Math.abs(i) == 2 || Math.abs(j) == 2 || Math.abs(k) == 2)
-                                            || (!analyzedState.getValueOrElse(Shaft.IS_LARGE, false) && Math.abs(i) < 2 && Math.abs(j) < 2 && Math.abs(k) < 2))) {
-                                        tot += contact(pLevel, pPos, pPos.above(), orgV, cog);
-                                    } else {
-                                        pLevel.removeBlockEntity(newPos);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                BlockEntity up = pLevel.getBlockEntity(pPos.above());
-                BlockEntity down = pLevel.getBlockEntity(pPos.below());
-                BlockEntity north = pLevel.getBlockEntity(pPos.north());
-                BlockEntity south = pLevel.getBlockEntity(pPos.south());
-                BlockEntity east = pLevel.getBlockEntity(pPos.east());
-                BlockEntity west = pLevel.getBlockEntity(pPos.west());
+//                int x = pPos.getX();
+//                int y = pPos.getY();
+//                int z = pPos.getZ();
+//                for (int i = -2; i <= 2; i += 2) {
+//                    for (int j = -2; j <= 2; ++j) {
+//                        for (int k = -2; k <= 2; ++k) {
+//                            if (((i == 0 && j != 0 && k != 0) || (i != 0 && ((j == 0) != (k == 0))))
+//                                    && ((Math.abs(j) == 2) != (Math.abs(k) == 2))) {
+//                                BlockPos newPos = switch (axis) {
+//                                    case X -> new BlockPos(x+i, y+j, z+k);
+//                                    case Y -> new BlockPos(x+j, y+i, z+k);
+//                                    case Z -> new BlockPos(x+j, y+k, z+i);
+//                                };
+//                                if (pLevel.getBlockEntity(newPos) instanceof ShaftEntity cog) {
+//                                    BlockState analyzedState = cog.getBlockState();
+//                                    if (analyzedState.getValueOrElse(Shaft.GEAR_TYPE, GearType.NONE) != GearType.NONE
+//                                            && ((analyzedState.getValueOrElse(Shaft.IS_LARGE, false) && Math.abs(i) == 2 || Math.abs(j) == 2 || Math.abs(k) == 2)
+//                                            || (!analyzedState.getValueOrElse(Shaft.IS_LARGE, false) && Math.abs(i) < 2 && Math.abs(j) < 2 && Math.abs(k) < 2))) {
+//                                        tot += contact(pLevel, pPos, pPos.above(), orgV, cog);
+//                                    } else {
+//                                        pLevel.removeBlockEntity(newPos);
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+
+                // TODO: optimize this... and add large gears spinning other large gears
+                    // large gears spinning large gears isn't the same as for small gears where you check up down left right
+                // Large gear rotation logic
                 if (axis == Direction.Axis.X) {
-                    tot += contact(pLevel, pPos, pPos.above(), orgV, up);
-                    tot += contact(pLevel, pPos, pPos.below(), orgV, down);
-                    tot += contact(pLevel, pPos, pPos.north(), orgV, north);
-                    tot += contact(pLevel, pPos, pPos.south(), orgV, south);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, 0, -1, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, 0, -1,  1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, 0,  1, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, 0,  1,  1);
                 } else if (axis == Direction.Axis.Y) {
-                    tot += contact(pLevel, pPos, pPos.east(), orgV, east);
-                    tot += contact(pLevel, pPos, pPos.west(), orgV, west);
-                    tot += contact(pLevel, pPos, pPos.north(), orgV, north);
-                    tot += contact(pLevel, pPos, pPos.south(), orgV, south);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, 0, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, 0,  1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1, 0, -1);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1, 0,  1);
                 } else if (axis == Direction.Axis.Z) {
-                    tot += contact(pLevel, pPos, pPos.east(), orgV, east);
-                    tot += contact(pLevel, pPos, pPos.west(), orgV, west);
-                    tot += contact(pLevel, pPos, pPos.above(), orgV, up);
-                    tot += contact(pLevel, pPos, pPos.below(), orgV, down);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1, -1, 0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV, -1,  1, 0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1, -1, 0);
+                    tot += rotateNeighbor(pLevel, pPos, orgV,  1,  1, 0);
+                }
+
+            } else {
+                // Small gear rotation logic
+
+                // check neighbors by offsets relative to the current axis
+                // ex. if we looked at each axis orthagonally (like a tic tac toe board), the offset {-1, 1} refers to the top left corner
+                for (int[] offset : PLANE_OFFSETS)
+                {
+                    int row = offset[0];
+                    int col = offset[1];
+
+                    tot += switch (axis)
+                    {
+                        case X -> rotateNeighbor(pLevel, pPos, orgV, 0, row, col);
+                        case Y -> rotateNeighbor(pLevel, pPos, orgV, row, 0, col);
+                        case Z -> rotateNeighbor(pLevel, pPos, orgV, row, col, 0);
+                    };
                 }
             }
             body.addTorque(pPos, tot);
@@ -130,7 +153,16 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
         super.tick(pLevel, pPos, pState);
     }
 
+    private double rotateNeighbor(Level level, BlockPos originalPos, double orgV, int xOffset, int yOffset, int zOffset) {
+        BlockPos neighborPos = originalPos.offset(xOffset, yOffset, zOffset);
+        BlockEntity neighbor = level.getBlockEntity(neighborPos);
+
+        return contact(level, originalPos, neighborPos, orgV, neighbor);
+    }
+
     private double contact(Level pLevel, BlockPos curPos, BlockPos otherPos, double selfV, BlockEntity ent) {
+        // Prevents double application of torque by ensuring only one gear acts as the solver
+        // Since gears look at each other each tick, this is basically a tiebreaker that lets the gear with the smaller coordinate run the solver
         if (curPos.asLong() >= otherPos.asLong()) return 0;
 
         if (ent instanceof ShaftEntity cog && canBeCog() && cog.canBeCog()) {
@@ -209,10 +241,11 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
     public void setChanged() {
         super.setChanged();
         BlockState state = getBlockState();
+        System.out.println("setChanged called for state" + state);
         if (body != null && state.hasProperty(TekoraBlockStates.GEAR_TYPE) && state.hasProperty(BlockStateProperties.AXIS)) {
             GearType gearType = state.getValue(TekoraBlockStates.GEAR_TYPE);
             double added = state.getValueOrElse(TekoraBlockStates.IS_LARGE, false) ? gearType.getLargeMoment() : gearType.getSmallMoment();
-            double newVal = added + getMoment();
+            double newVal = getMoment();
             BlockPos pos = getBlockPos();
             Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);
             int loc = switch (axis) {

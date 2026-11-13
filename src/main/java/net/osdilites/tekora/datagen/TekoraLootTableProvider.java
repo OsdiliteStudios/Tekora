@@ -33,7 +33,7 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
 
         dropSelf(TekoraBlocks.STEEL_BLOCK.get());
 
-        add(TekoraBlocks.APPLYER.get(), this::dropMechTopPart);
+        add(TekoraBlocks.APPLIER.get(), this::dropMechTopPart);
         add(TekoraBlocks.CRUSHER.get(), this::dropMechTopPart);
         add(TekoraBlocks.MIXER.get(), this::dropMechTopPart);
         add(TekoraBlocks.PRINTER.get(), this::dropMechTopPart);

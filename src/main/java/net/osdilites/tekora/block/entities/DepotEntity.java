@@ -19,7 +19,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
-import net.osdilites.tekora.block.entities.mechanical.ApplyerMechanicalEntity;
+import net.osdilites.tekora.block.entities.mechanical.ApplierMechanicalEntity;
 import net.osdilites.tekora.block.entities.mechanical.PrinterMechanicalEntity;
 import net.osdilites.tekora.menu.DepotMenu;
 import net.osdilites.tekora.recipes.*;
@@ -49,19 +49,19 @@ public class DepotEntity extends AbstractModularCraftEntity {
             }
         };
     }
-    
-    private void tryOutput(Level level, ItemStack output, AbstractDeployingMachineEntity deployer, boolean consumeDeployedItem) 
+
+    private void tryOutput(Level level, ItemStack output, AbstractDeployingMachineEntity deployer, boolean consumeDeployedItem)
     {
         try (Transaction transaction = Transaction.openRoot()) {
             ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
             inventory.extract(inventory.getResource(0), 1, transaction);
-            
+
             if (!consumeDeployedItem) {
                 inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
                 transaction.commit();
                 return;
             }
-            
+
             ItemStacksResourceHandler deployerHandler = deployer.getHandler();
             ItemAccess deployerAccess = ItemAccess.forHandlerIndex(deployerHandler, 0);
             ItemStack deployed = deployerHandler.getResource(0).toStack();
@@ -84,7 +84,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
                 deployed.setDamageValue(finalDamage);
                 // since deployed is just a copy, overwrite the changes in the actual slot
                 deployerHandler.set(0, ItemResource.of(deployed), deployerAccess.getAmount());
-                
+
             } else {
                 int newAmount = Math.max(deployerAccess.getAmount() - 1, 0);
                 deployerHandler.set(0, deployerHandler.getResource(0), newAmount);
@@ -139,7 +139,7 @@ public class DepotEntity extends AbstractModularCraftEntity {
             cutTorque = val.cutTorque();
             cutConst = (torque - cutTorque) / ratedVelocity;
 
-        } else if (deployer instanceof ApplyerMechanicalEntity) {
+        } else if (deployer instanceof ApplierMechanicalEntity applier) {
             DeployingRecipeInput input = new DeployingRecipeInput(itemToConvert, itemDeployed, 0);
             Optional<RecipeHolder<ApplyingRecipe>> recipe = 
                 getCurrentRecipe(TekoraRecipes.APPLYING_TYPE.get(), input);
@@ -263,8 +263,8 @@ public class DepotEntity extends AbstractModularCraftEntity {
                 return Component.translatable("blockfunc.tekora.printer");
             } else if (block.equals(TekoraBlocks.CUTTER.get())) {
                 return Component.translatable("blockfunc.tekora.cutter");
-            } else if (block.equals(TekoraBlocks.APPLYER.get())) {
-                return Component.translatable("blockfunc.tekora.applyer");
+            } else if (block.equals(TekoraBlocks.APPLIER.get())) {
+                return Component.translatable("blockfunc.tekora.applier");
             } else {
                 return Component.translatable("block.tekora.depot");
             }

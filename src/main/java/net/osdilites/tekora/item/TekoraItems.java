@@ -43,6 +43,13 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> PLASTIC_GEAR = ITEMS.register("plastic_gear", () -> new GearItem("plastic_gear", GearType.PLASTIC, true));
   public static final DeferredHolder<Item, Item> STEEL_GEAR = ITEMS.register("steel_gear", () -> new GearItem("steel_gear", GearType.STEEL, false));
 
+  public static final DeferredHolder<Item, Item> LARGE_WOODEN_GEAR = ITEMS.register("large_wooden_gear", () -> new LargeGearItem("large_wooden_gear", GearType.WOOD, true));
+  public static final DeferredHolder<Item, Item> LARGE_ALUMINUM_GEAR = ITEMS.register("large_aluminum_gear", () -> new LargeGearItem("large_aluminum_gear", GearType.ALUMINUM, false));
+  public static final DeferredHolder<Item, Item> LARGE_BRASS_GEAR = ITEMS.register("large_brass_gear", () -> new LargeGearItem("large_brass_gear", GearType.BRASS, false));
+  public static final DeferredHolder<Item, Item> LARGE_BRONZE_GEAR = ITEMS.register("large_bronze_gear", () -> new LargeGearItem("large_bronze_gear", GearType.BRONZE, false));
+  public static final DeferredHolder<Item, Item> LARGE_PLASTIC_GEAR = ITEMS.register("large_plastic_gear", () -> new LargeGearItem("large_plastic_gear", GearType.PLASTIC, true));
+  public static final DeferredHolder<Item, Item> LARGE_STEEL_GEAR = ITEMS.register("large_steel_gear", () -> new LargeGearItem("large_steel_gear", GearType.STEEL, false));
+
   public static final DeferredHolder<Item, Item> WOODEN_GEAR_PART = ITEMS.register("wooden_gear_part", () -> new GearPartItem("wooden_gear_part", GearType.WOOD, true));
   public static final DeferredHolder<Item, Item> ALUMINUM_GEAR_PART = ITEMS.register("aluminum_gear_part", () -> new GearPartItem("aluminum_gear_part", GearType.ALUMINUM, false));
   public static final DeferredHolder<Item, Item> BRASS_GEAR_PART = ITEMS.register("brass_gear_part", () -> new GearPartItem("brass_gear_part", GearType.BRASS, false));
@@ -50,7 +57,7 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> PLASTIC_GEAR_PART = ITEMS.register("plastic_gear_part", () -> new GearPartItem("plastic_gear_part", GearType.PLASTIC, true));
   public static final DeferredHolder<Item, Item> STEEL_GEAR_PART = ITEMS.register("steel_gear_part", () -> new GearPartItem("steel_gear_part", GearType.STEEL, false));
 
-  public static final DeferredHolder<Item, Item> APPLYING_SHAFT = ITEMS.register("applying_shaft", () -> new MachinePartItem("applying_shaft", TekoraBlocks.APPLYER.get()));
+  public static final DeferredHolder<Item, Item> APPLYING_SHAFT = ITEMS.register("applying_shaft", () -> new MachinePartItem("applying_shaft", TekoraBlocks.APPLIER.get()));
   public static final DeferredHolder<Item, Item> CRUSHING_WHEEL = ITEMS.register("crushing_wheel", () -> new MachinePartItem("crushing_wheel", TekoraBlocks.CRUSHER.get()));
   public static final DeferredHolder<Item, Item> WHISK = ITEMS.register("whisk", () -> new MachinePartItem("whisk", TekoraBlocks.MIXER.get()));
   public static final DeferredHolder<Item, Item> PRESS_SHAFT = ITEMS.register("press_shaft", () -> new MachinePartItem("press_shaft", TekoraBlocks.PRESS.get()));

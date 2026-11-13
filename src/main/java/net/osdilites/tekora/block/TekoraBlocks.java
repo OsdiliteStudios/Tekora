@@ -33,8 +33,8 @@ public class TekoraBlocks {
             createBlock("super_crank", () -> new HandCrank("super_crank", 4, HandCrankEntity.SUPER_FORCE_COEFF));
 
     // mech attachments
-    public static final DeferredHolder<Block, ApplyerMechanical> APPLYER =
-            BLOCKS.register("assembler", ApplyerMechanical::new);
+    public static final DeferredHolder<Block, ApplierMechanical> APPLIER =
+            BLOCKS.register("assembler", ApplierMechanical::new);
     public static final DeferredHolder<Block, MixerMechanical> MIXER =
             BLOCKS.register("mixer", MixerMechanical::new);
     public static final DeferredHolder<Block, CrusherMechanical> CRUSHER =

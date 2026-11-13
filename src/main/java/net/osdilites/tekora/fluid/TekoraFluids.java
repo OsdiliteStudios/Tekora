@@ -36,28 +36,28 @@ public class TekoraFluids {
     public static final DeferredHolder<Fluid, FlowingFluid> SULFURIC_ACID_SOURCE = FLUIDS.register("sulfuric_acid", () -> new ChemicalFluid.Source(TekoraFluids.SULFURIC_ACID_PROPERTIES));
     public static final DeferredHolder<Fluid, FlowingFluid> SULFURIC_ACID_FLOWING = FLUIDS.register("sulfuric_acid_flowing", () -> new ChemicalFluid.Flowing(TekoraFluids.SULFURIC_ACID_PROPERTIES));
 
-    public static final BaseFlowingFluid.Properties ACETIC_ACID_PROPERTIES = new BaseFlowingFluid.Properties(
-            TekoraFluidTypes.ACETIC_ACID_TYPE, ACETIC_ACID_SOURCE, ACETIC_ACID_FLOWING)
+    public static final BaseFlowingFluid.Properties ACETIC_ACID_PROPERTIES = ChemicalFluid.FluidProperties(
+            TekoraFluidTypes.ACETIC_ACID_TYPE, ACETIC_ACID_SOURCE, ACETIC_ACID_FLOWING, TekoraFluidTypes.ACETIC_ACID_DATA)
             .block(TekoraBlocks.ACETIC_ACID);
 
-    public static final BaseFlowingFluid.Properties ACETONE_PROPERTIES = new BaseFlowingFluid.Properties(
-            TekoraFluidTypes.ACETONE_TYPE, ACETONE_SOURCE, ACETONE_FLOWING)
+    public static final BaseFlowingFluid.Properties ACETONE_PROPERTIES = ChemicalFluid.FluidProperties(
+            TekoraFluidTypes.ACETONE_TYPE, ACETONE_SOURCE, ACETONE_FLOWING, TekoraFluidTypes.ACETONE_DATA)
             .block(TekoraBlocks.ACETONE);
 
     public static final BaseFlowingFluid.Properties AMMONIA_PROPERTIES = ChemicalFluid.FluidProperties(
-            TekoraFluidTypes.AMMONIA_TYPE, AMMONIA_SOURCE, AMMONIA_FLOWING, TekoraFluidTypes.AMMONIA_FLUID_DATA)
+            TekoraFluidTypes.AMMONIA_TYPE, AMMONIA_SOURCE, AMMONIA_FLOWING, TekoraFluidTypes.AMMONIA_DATA)
             .block(TekoraBlocks.AMMONIA);
 
-    public static final BaseFlowingFluid.Properties ETHANOL_PROPERTIES = new BaseFlowingFluid.Properties(
-            TekoraFluidTypes.ETHANOL_TYPE, ETHANOL_SOURCE, ETHANOL_FLOWING)
+    public static final BaseFlowingFluid.Properties ETHANOL_PROPERTIES = ChemicalFluid.FluidProperties(
+            TekoraFluidTypes.ETHANOL_TYPE, ETHANOL_SOURCE, ETHANOL_FLOWING, TekoraFluidTypes.ETHANOL_DATA)
             .block(TekoraBlocks.ETHANOL);
 
-    public static final BaseFlowingFluid.Properties SULFUR_DIOXIDE_PROPERTIES = new BaseFlowingFluid.Properties(
-            TekoraFluidTypes.SULFUR_DIOXIDE_TYPE, SULFUR_DIOXIDE_SOURCE, SULFUR_DIOXIDE_FLOWING)
+    public static final BaseFlowingFluid.Properties SULFUR_DIOXIDE_PROPERTIES = ChemicalFluid.FluidProperties(
+            TekoraFluidTypes.SULFUR_DIOXIDE_TYPE, SULFUR_DIOXIDE_SOURCE, SULFUR_DIOXIDE_FLOWING, TekoraFluidTypes.SULFUR_DIOXIDE_DATA)
             .block(TekoraBlocks.SULFUR_DIOXIDE);
 
-    public static final BaseFlowingFluid.Properties SULFUR_TRIOXIDE_PROPERTIES = new BaseFlowingFluid.Properties(
-            TekoraFluidTypes.SULFUR_TRIOXIDE_TYPE, SULFUR_TRIOXIDE_SOURCE, SULFUR_TRIOXIDE_FLOWING)
+    public static final BaseFlowingFluid.Properties SULFUR_TRIOXIDE_PROPERTIES = ChemicalFluid.FluidProperties(
+            TekoraFluidTypes.SULFUR_TRIOXIDE_TYPE, SULFUR_TRIOXIDE_SOURCE, SULFUR_TRIOXIDE_FLOWING, TekoraFluidTypes.SULFUR_TRIOXIDE_DATA)
             .block(TekoraBlocks.SULFUR_TRIOXIDE);
 
     public static final BaseFlowingFluid.Properties SULFURIC_ACID_PROPERTIES = ChemicalFluid.FluidProperties(

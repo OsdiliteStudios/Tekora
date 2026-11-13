@@ -25,11 +25,11 @@ public class ThermometerItem extends TekoraItem {
         if (ent instanceof IHeatSensitive sensitive) {
             double mcTemp = UtilFunctions.fromKelvinsToMcTemp(sensitive.getTemperature()); // used for color-coding
             TextColor color;
-            if (mcTemp < -0.0) {
+            if (mcTemp < 0.0) {
                 color = TextColor.DARK_BLUE;
             } else if (mcTemp < 0.4) {
                 color = TextColor.BLUE;
-            } else if (mcTemp < 0.72) {
+            } else if (mcTemp < 0.6) {
                 color = TextColor.AQUA;
             } else if (mcTemp < 1.0) {
                 color = TextColor.GREEN;
@@ -39,10 +39,10 @@ public class ThermometerItem extends TekoraItem {
                 color = TextColor.RED;
             }
             Component temperature = (switch (TekoraConfig.UNIT.get()) {
-                case "C" -> Component.literal(UtilFunctions.fromMcTempToCelsius(mcTemp) + "°C");
-                case "F" -> Component.literal(UtilFunctions.fromMcTempToFahrenheit(mcTemp) + "°F");
-                case "M" -> Component.literal(mcTemp + "");
-                default -> Component.literal(sensitive.getTemperature() + " K");
+                case "C" -> Component.literal(String.format("%.1f°C", UtilFunctions.fromMcTempToCelsius(mcTemp)));
+                case "F" -> Component.literal(String.format("%.1f°F", UtilFunctions.fromMcTempToFahrenheit(mcTemp)));
+                case "M" -> Component.literal(String.format("%.2f", mcTemp));
+                default -> Component.literal(String.format("%.1fK", sensitive.getTemperature()));
             }).withColor(color);
             player.sendOverlayMessage(Component.translatable("tekora.tooltip.temperature").append(temperature));
         }

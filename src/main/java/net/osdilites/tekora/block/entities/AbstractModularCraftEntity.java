@@ -107,15 +107,11 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
             float biomeTemp = (float)UtilFunctions.fromMcTempToKelvins(UtilFunctions.getBiomeTemperature(pLevel, pPos));
             if (!Float.isFinite(temperature) || temperature < 0) {
                 temperature = biomeTemp;
-            }
+            } // todo fix, make it so that the temperature code runs even without surrounding neighbors
             for (Direction direction : Direction.values()) {
-                BlockPos pos = pPos.relative(direction);
-                BlockEntity blockEntity = pLevel.getBlockEntity(pos);
-                System.out.print("current: " + temperature);
-                temperature += blockEntity instanceof IHeatSensitive sensitive
+                temperature += pLevel.getBlockEntity(pPos.relative(direction)) instanceof IHeatSensitive sensitive
                         ? getTransferHeat(sensitive)
                         : getCoolingDiff(biomeTemp, UtilFunctions.getHeatTransferCoeff(pLevel));
-                System.out.println("\tfinal: " + temperature);
             }
 
             // this calculates for "angular" acceleration specifically

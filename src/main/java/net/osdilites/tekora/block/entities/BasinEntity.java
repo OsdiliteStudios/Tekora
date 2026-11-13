@@ -145,23 +145,24 @@ public class BasinEntity extends AbstractModularCraftEntity {
             float volume = ReactionRecipeInput.fromReadingHandlersGetVolume(ingredients, liquidSolutes, inventory, tank);
 
             ReactionRecipeInput input = new ReactionRecipeInput(ingredients, 900000540); // todo, replace torque with an actual more legit form of energy
-            Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getCurrentRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
+            // Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getCurrentRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
+            Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getFirstRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
 
-            System.out.printf("\n%s \n:::\n %s \n::I::\n %s \n:::v:::\n %s ... %s \n\n", 
-                ingredients.toString(), 
-                liquidSolutes.toString(), 
-                input.toString(), 
-                volume, 
-                recipe.isPresent());
+            // System.out.printf("\n%s \n:::\n %s \n::I::\n %s \n:::v:::\n %s ... %s \n\n", 
+            //     ingredients.toString(), 
+            //     liquidSolutes.toString(), 
+            //     input.toString(), 
+            //     volume, 
+            //     recipe.isPresent());
             
             // display available recipes: is datagen working?
-            ((ServerLevel)level).recipeAccess().recipeMap().byType(TekoraRecipes.REACTION_TYPE.get()).forEach(a -> {
-                System.out.printf("RECIPE: %s \n", a.value().toString());
-                System.out.println(a.value().matches(input, level)); // this true! but other method false b/c it uses different set of calls
-            });
+            // ((ServerLevel)level).recipeAccess().recipeMap().byType(TekoraRecipes.REACTION_TYPE.get()).forEach(a -> {
+            //     System.out.printf("RECIPE: %s \n", a.value().toString());
+            //     System.out.println(a.value().matches(input, level)); // this true! but other method false b/c it uses different set of calls
+            // });
 
-            System.out.printf("\nis this real: %s\n\n", 
-                TekoraRecipes.getFirstMatchingRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input).isPresent());
+            // System.out.printf("\nis this real: %s\n\n", 
+            //     TekoraRecipes.getFirstMatchingRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input).isPresent());
             
 
             if (!recipe.isPresent()) {

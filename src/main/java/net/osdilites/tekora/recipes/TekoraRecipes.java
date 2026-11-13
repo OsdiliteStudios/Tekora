@@ -76,7 +76,7 @@ public class TekoraRecipes {
      * Use this if you use non-trivial matches() method to match recipes.
      * Note: this can get very slow if there are many recipes belonging to recipeType
      */
-    public static <S extends RecipeInput, T extends Recipe<S>> Optional<RecipeHolder<T>> getFirstMatchingRecipe(ServerLevel level, RecipeType<T> recipeType, S input) {
+    public static <S extends RecipeInput, T extends Recipe<S>> Optional<RecipeHolder<T>> getFirstRecipe(ServerLevel level, RecipeType<T> recipeType, S input) {
         Optional<RecipeHolder<T>> val = Optional.ofNullable(null);
         var recipeMapType = level.recipeAccess().recipeMap().byType(recipeType);
 

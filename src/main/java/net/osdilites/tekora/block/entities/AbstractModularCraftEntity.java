@@ -1,20 +1,19 @@
 package net.osdilites.tekora.block.entities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -31,11 +30,11 @@ import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 import net.osdilites.tekora.util.UtilFunctions;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 
-public abstract class AbstractModularCraftEntity extends BlockEntity implements MenuProvider {
+public abstract class AbstractModularCraftEntity extends BlockEntity implements MenuProvider, IHeatSensitive {
     protected float temperature = -1; // K
     protected final float heatCapacity; // J/L
+    protected final float conductivity = 30f; // W/mK, 0.06 * conductivity should we switch to other cases
 
     public final ItemStacksResourceHandler inventory;
     protected final ContainerData data;
@@ -104,14 +103,24 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (pLevel != null && !pLevel.isClientSide() && pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
+            // the code segment here calculates temperature behavior
+            float biomeTemp = (float)UtilFunctions.fromMcTempToKelvins(UtilFunctions.getBiomeTemperature(pLevel, pPos));
+            if (!Float.isFinite(temperature) || temperature < 0) {
+                temperature = biomeTemp;
+            }
+            for (Direction direction : Direction.values()) {
+                BlockPos pos = pPos.relative(direction);
+                BlockEntity blockEntity = pLevel.getBlockEntity(pos);
+                System.out.print("current: " + temperature);
+                temperature += blockEntity instanceof IHeatSensitive sensitive
+                        ? getTransferHeat(sensitive)
+                        : getCoolingDiff(biomeTemp, UtilFunctions.getHeatTransferCoeff(pLevel));
+                System.out.println("\tfinal: " + temperature);
+            }
+
             // this calculates for "angular" acceleration specifically
             double torque = ent.getTorque(); // determines recipe progress
             Block block = ent.getBlockState().getBlock();
-
-            double biomeTemp = UtilFunctions.getBiomeTemperatureInK(pLevel, pPos);
-            double diff = biomeTemp - temperature;
-            double capacity = UtilFunctions.getAirHeatTransfer(pLevel);
-            // todo, figure out the formula by which temperature may be affected
 
             String machineType = "";
             if (block.equals(TekoraBlocks.CRUSHER.get())) {
@@ -135,6 +144,26 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
 
     public float getProgress() {
         return progress;
+    }
+
+    @Override
+    public float getHeatCapacity() {
+        return heatCapacity;
+    }
+
+    @Override
+    public float getTemperature() {
+        return temperature;
+    }
+
+    @Override
+    public float getContactArea() {
+        return 0.6f;
+    }
+
+    @Override
+    public float getConductivity() {
+        return conductivity;
     }
 
     // BLOCK ENTITY SYNC

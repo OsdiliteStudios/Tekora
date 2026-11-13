@@ -1,6 +1,7 @@
 {
   "itemGroup.tekora_machines": "Tekora Machines",
   "itemGroup.tekora_parts": "Tekora Parts",
+  "itemGroup.tekora_tools": "Tekora Tools",
 
   "block.tekora.basin": "Basin",
   "block.tekora.depot": "Depot",
@@ -53,6 +54,7 @@
   "item.tekora.press_shaft": "Press Shaft",
   "item.tekora.ink_press_shaft": "Ink Press Shaft",
   "item.tekora.cutter_shaft": "Cutter Shaft",
+  "item.tekora.thermometer": "Thermometer",
   "item.tekora.wrench": "Wrench",
 
   "item.tekora.magnesium_carbonate": "Magnesium Carbonate",
@@ -60,6 +62,7 @@
   "item.tekora.bauxite": "Bauxite",
 
   "tekora.tooltip.liquid.empty": "Empty",
+  "tekora.tooltip.temperature": "The block clicked is ",
   "tekora.tooltip.data.chemical": "Solute Formula: %s, Charge: %s, Concentration: %s mol/L",
   "tekora.tooltip.liquid.amount.with.capacity": "%s / %s L",
   "tekora.tooltip.liquid.amount": "%s L",

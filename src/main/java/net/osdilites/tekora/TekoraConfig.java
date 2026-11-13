@@ -1,23 +1,21 @@
 package net.osdilites.tekora;
 
-import java.util.List;
-
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
 // Demonstrates how to use Neo's config APIs
-public class Config {
+public class TekoraConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
     public static final ModConfigSpec.BooleanValue ALKALI_EXPLODE = BUILDER
             .comment("Do ingots, nuggets, and blocks composed of alkali metals explode in water?")
             .define("alkaliExplode", true);
 
-    public static final ModConfigSpec.ConfigValue<Character> UNIT = BUILDER
+    public static final ModConfigSpec.ConfigValue<String> UNIT = BUILDER
             .comment("Define the visible temperature unit in game, (C for Celsius, F for Fahrenheit, M for Minecraft Biome Temperature)")
-            .define("temperatureUnit", 'C');
+            .define("temperatureUnit", "C", s -> s.equals("C") || s.equals("F") || s.equals("M"));
 //
 //    public static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
 //            .comment("A magic number")

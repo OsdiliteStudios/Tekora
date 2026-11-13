@@ -21,6 +21,7 @@ import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
 import net.osdilites.tekora.block.entities.BasinEntity;
+import net.osdilites.tekora.block.entities.IHeatSensitive;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableBlock;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
@@ -30,6 +31,7 @@ import net.minecraft.world.item.*;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
+import net.osdilites.tekora.item.tools.ThermometerItem;
 import net.osdilites.tekora.item.typical.*;
 import net.osdilites.tekora.util.TekoraShaftBody;
 
@@ -69,6 +71,8 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> BAUXITE = ITEMS.register("bauxite", () -> new TekoraItem("bauxite"));
   // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
 
+  public static final DeferredHolder<Item, Item> THERMOMETER = ITEMS.register("thermometer", ThermometerItem::new);
+
   public static final DeferredHolder<Item, Item> MAGNESIUM_CARBONATE = ITEMS.register("magnesium_carbonate",
           () -> new CompoundItem("magnesium_carbonate",
                   Solutes.create()
@@ -87,6 +91,10 @@ public class TekoraItems {
         Player player = pContext.getPlayer();
         if (player != null) {
           String msg = state.getBlock() + "\n";
+          if (ent instanceof IHeatSensitive sensitive) {
+            msg += "Object temperature is " + sensitive.getTemperature() + " K\n";
+          }
+
           if (ent instanceof AbstractShaftConnectableEntity rotational) {
             TekoraShaftBody body = rotational.getBody();
             // this method is unreliable

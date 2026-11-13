@@ -97,28 +97,38 @@ public class UtilFunctions {
         return 1.013;
     }
 
-    public static double getAirHeatTransfer(Level level) { // J/g K
+    public static float getHeatTransferCoeff(Level level) { // W^2/m K
         if (level != null && !level.isClientSide()) {
             ResourceKey<Level> type = level.dimension();
             if (type.equals(Level.OVERWORLD)) {
-                return 1005;
+                return 10;
             } else if (type.equals(Level.NETHER)) {
-                return 1200;
+                return 25;
             } else if (type.equals(Level.END)) {
-                return 1500;
+                return 2;
             } else {
                 // todo, use dimension jsons to find value.
             }
 
         }
         return 0;
+
+    }
+    @Deprecated
+    public static double getAirHeatTransfer(Level level) {
+        return getHeatTransferCoeff(level);
     }
 
+    @Deprecated
     public static double getBiomeTemperatureInK(Level level, BlockPos pos) {
+        return fromMcTempToKelvins(getBiomeTemperature(level, pos));
+    }
+
+    public static double getBiomeTemperature(Level level, BlockPos pos) {
         if (level != null && !level.isClientSide()) {
-            return fromMcTempToKelvins(level.getBiome(pos).value().getBaseTemperature());
+            return level.getBiome(pos).value().getBaseTemperature();
         }
-        return 300;
+        return 1;
     }
 
     public static double getAirResTorque(Level level, double radius, double velocity) {

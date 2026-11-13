@@ -45,9 +45,6 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraItems.PRESS_SHAFT.get());
                         out.accept(TekoraItems.INK_PRESS_SHAFT.get());
                         out.accept(TekoraItems.CUTTER_SHAFT.get());
-
-                        out.accept(TekoraItems.WRENCH.get());
-                        
                     }).build());
 
 
@@ -60,6 +57,18 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraItems.STEEL_INGOT.get());
                         out.accept(TekoraItems.STEEL_PLATE.get());
                         out.accept(TekoraItems.STEEL_ROD.get());
+                        out.accept(TekoraItems.BAUXITE.get());
+                    }).build());
+
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TOOLS = CREATIVE_MODE_TABS.register("tools",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.tekora_tools"))
+                    .icon(() -> TekoraItems.STEEL_PLATE.get().asItem().getDefaultInstance())
+                    .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                    .displayItems((param, out) -> {
+                        out.accept(TekoraItems.THERMOMETER.get());
+                        out.accept(TekoraItems.WRENCH.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

@@ -1,0 +1,85 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "entries": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_0"
+        },
+        "threshold": 0.0
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_1"
+        },
+        "threshold": 0.1
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_2"
+        },
+        "threshold": 0.2
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_3"
+        },
+        "threshold": 0.3
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_4"
+        },
+        "threshold": 0.4
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_5"
+        },
+        "threshold": 0.5
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_6"
+        },
+        "threshold": 0.6
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_7"
+        },
+        "threshold": 0.7
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_8"
+        },
+        "threshold": 0.8
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_9"
+        },
+        "threshold": 0.9
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "tekora:item/mercury_thermometer_10"
+        },
+        "threshold": 1.0
+      }
+    ],
+    "property": "tekora:biome_temperature"
+  }
+}

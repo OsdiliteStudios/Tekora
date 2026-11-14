@@ -125,10 +125,7 @@ public class UtilFunctions {
     }
 
     public static double getBiomeTemperature(Level level, BlockPos pos) {
-        if (level != null && !level.isClientSide()) {
-            return Math.max(level.getBiome(pos).value().getBaseTemperature(), -10.926);
-        }
-        return 1;
+        return Math.max(level.getBiome(pos).value().getBaseTemperature(), -10.926);
     }
 
     public static double getAirResTorque(Level level, double radius, double velocity) {

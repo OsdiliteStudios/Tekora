@@ -67,7 +67,9 @@ public class TekoraCreativeTabs {
                     .icon(() -> TekoraItems.STEEL_PLATE.get().asItem().getDefaultInstance())
                     .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
                     .displayItems((param, out) -> {
-                        out.accept(TekoraItems.THERMOMETER.get());
+                        out.accept(TekoraItems.MERCURY_THERMOMETER.get());
+                        out.accept(TekoraItems.GALINSTAN_THERMOMETER.get());
+                        out.accept(TekoraItems.GALINSTAN_QUARTZ_THERMOMETER.get());
                         out.accept(TekoraItems.WRENCH.get());
                     }).build());
 

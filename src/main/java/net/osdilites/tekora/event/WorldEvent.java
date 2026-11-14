@@ -2,6 +2,7 @@ package net.osdilites.tekora.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -17,6 +18,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -24,6 +26,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 import net.osdilites.tekora.data.Partners;
 import net.osdilites.tekora.data.TekoraComponents;
+import net.osdilites.tekora.datagen.modelcases.BiomeTemperature;
 import net.osdilites.tekora.item.BottleResourceHandler;
 
 import java.util.ArrayList;
@@ -89,5 +92,13 @@ public class WorldEvent {
         event.registerItem(Capabilities.Fluid.ITEM, 
             (stack, itemAccess) -> new BottleResourceHandler(itemAccess), 
             Items.POTION, Items.GLASS_BOTTLE);
+    }
+
+    @SubscribeEvent
+    public static void registerRangeSelectProperties(RegisterRangeSelectItemModelPropertyEvent event) {
+        event.register(
+                Identifier.fromNamespaceAndPath("tekora", "biome_temperature"),
+                BiomeTemperature.MAP_CODEC
+        );
     }
 }

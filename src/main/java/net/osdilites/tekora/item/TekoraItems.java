@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
@@ -35,7 +36,6 @@ import net.osdilites.tekora.item.tools.ThermometerItem;
 import net.osdilites.tekora.item.typical.*;
 import net.osdilites.tekora.util.TekoraShaftBody;
 
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class TekoraItems {
@@ -71,7 +71,9 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> BAUXITE = ITEMS.register("bauxite", () -> new TekoraItem("bauxite"));
   // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
 
-  public static final DeferredHolder<Item, Item> THERMOMETER = ITEMS.register("thermometer", ThermometerItem::new);
+  public static final DeferredHolder<Item, Item> MERCURY_THERMOMETER = ITEMS.register("mercury_thermometer", () -> new ThermometerItem("mercury_thermometer", -1.55f, 10.27f, MobEffects.POISON)); // uses glass, but has a random chance of poisoning the player if broken somehow
+  public static final DeferredHolder<Item, Item> GALINSTAN_THERMOMETER = ITEMS.register("galinstan_thermometer", () -> new ThermometerItem("galinstan_thermometer", -0.76f, 8.00f)); // uses borosilicate glass
+  public static final DeferredHolder<Item, Item> GALINSTAN_QUARTZ_THERMOMETER = ITEMS.register("galinstan_quartz_thermometer", () -> new ThermometerItem("galinstan_quartz_thermometer", -0.76f, 44.00f)); // uses quartz
 
   public static final DeferredHolder<Item, Item> MAGNESIUM_CARBONATE = ITEMS.register("magnesium_carbonate",
           () -> new CompoundItem("magnesium_carbonate",

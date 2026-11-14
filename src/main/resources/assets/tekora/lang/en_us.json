@@ -54,7 +54,9 @@
   "item.tekora.press_shaft": "Press Shaft",
   "item.tekora.ink_press_shaft": "Ink Press Shaft",
   "item.tekora.cutter_shaft": "Cutter Shaft",
-  "item.tekora.thermometer": "Thermometer",
+  "item.tekora.mercury_thermometer": "Mercury Thermometer",
+  "item.tekora.galinstan_thermometer": "Galinstan Thermometer",
+  "item.tekora.galinstan_quartz_thermometer": "Galinstan Quartz Thermometer",
   "item.tekora.wrench": "Wrench",
 
   "item.tekora.magnesium_carbonate": "Magnesium Carbonate",
@@ -63,6 +65,9 @@
 
   "tekora.tooltip.liquid.empty": "Empty",
   "tekora.tooltip.temperature": "The block clicked is ",
+  "tekora.tooltip.temperature.toohot": "hotter than ",
+  "tekora.tooltip.temperature.toocold": "colder than ",
+  "tekora.tooltip.temperature.unreliable": "Temperature of block clicked cannot be read.",
   "tekora.tooltip.data.chemical": "Solute Formula: %s, Charge: %s, Concentration: %s mol/L",
   "tekora.tooltip.liquid.amount.with.capacity": "%s / %s L",
   "tekora.tooltip.liquid.amount": "%s L",

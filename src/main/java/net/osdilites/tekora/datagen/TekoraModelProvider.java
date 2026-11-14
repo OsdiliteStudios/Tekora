@@ -4,8 +4,9 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ItemModelUtils;
-import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.RangeSelectItemModel;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
@@ -13,8 +14,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.datagen.modelcases.BiomeTemperature;
 import net.osdilites.tekora.item.TekoraItems;
+import net.osdilites.tekora.item.tools.ThermometerItem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class TekoraModelProvider extends ModelProvider {
@@ -51,10 +56,13 @@ public class TekoraModelProvider extends ModelProvider {
         itemModels.generateFlatItem(TekoraItems.STEEL_DUST.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.MAGNESIUM_CARBONATE.get(), ModelTemplates.FLAT_ITEM);
 
-        itemModels.generateFlatItem(TekoraItems.THERMOMETER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.WRENCH.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(TekoraItems.DEBUG_ITEM.get(), ModelTemplates.FLAT_ITEM);
+
+        generateThermometerModel(itemModels, (ThermometerItem)TekoraItems.MERCURY_THERMOMETER.get());
+        generateThermometerModel(itemModels, (ThermometerItem)TekoraItems.GALINSTAN_THERMOMETER.get());
+        generateThermometerModel(itemModels, (ThermometerItem)TekoraItems.GALINSTAN_QUARTZ_THERMOMETER.get());
 
         blockModels.createTrivialCube(TekoraBlocks.BAUXITE_ORE.get());
     }
@@ -69,6 +77,19 @@ public class TekoraModelProvider extends ModelProvider {
 
     private void generateSPlateModel(ItemModelGenerators itemModels, Item item, String name) {
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(Tekora.MODID, "item/plates/" + name)));
+    }
+
+    private void generateThermometerModel(ItemModelGenerators itemModels, ThermometerItem item) {
+        List<RangeSelectItemModel.Entry> overrides = new ArrayList<>();
+        ItemModel.Unbaked base = ItemModelUtils.plainModel(itemModels.createFlatItemModel(item, "_0", ModelTemplates.FLAT_ITEM));
+        overrides.add(ItemModelUtils.override(base, 0.0f));
+
+        for (int i = 1; i < 11; i++) {
+            ItemModel.Unbaked model = ItemModelUtils.plainModel(itemModels.createFlatItemModel(item, "_" + i, ModelTemplates.FLAT_ITEM));
+            overrides.add(ItemModelUtils.override(model, i/10.0f));
+        }
+
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.rangeSelect(new BiomeTemperature(), 1.0f, overrides));
     }
 
     @Override

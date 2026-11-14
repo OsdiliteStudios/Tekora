@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "tekora:item/thermometer"
+    "layer0": "tekora:item/galinstan_quartz_thermometer_6"
   }
 }

@@ -15,7 +15,7 @@ public class TekoraConfig {
 
     public static final ModConfigSpec.ConfigValue<String> UNIT = BUILDER
             .comment("Define the visible temperature unit in game, (C for Celsius, F for Fahrenheit, M for Minecraft Biome Temperature)")
-            .define("temperatureUnit", "C", s -> s.equals("C") || s.equals("F") || s.equals("M"));
+            .define("temperatureUnit", "C", s -> s != null && (s.equals("C") || s.equals("F") || s.equals("M")));
 //
 //    public static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
 //            .comment("A magic number")

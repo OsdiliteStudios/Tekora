@@ -107,6 +107,12 @@ public class BasinEntity extends AbstractModularCraftEntity {
         };
     }
 
+    // signature TBD
+    private double deployerCrafting(Level level, AbstractDeployingMachineEntity deployer, String type, double velocity, double torque) {
+        // TODO
+        return 0.0;
+    }
+
     private double craftItem() {
 
         return 0;
@@ -123,17 +129,42 @@ public class BasinEntity extends AbstractModularCraftEntity {
         if (ent instanceof AbstractDeployingMachineEntity deployer) {
             // todo, add applying and printing recipes here
             // possible idea, maybe this creates ink water and allows maps to be copied
-            return 0;
+
+            // note, may not need to return here, but good to separate deployer crafts into another function
+            return deployerCrafting(level, deployer, type, velocity, torque);
         }
 
         if (type.equals(TekoraMechanicalRecipe.MIXER)) {
             // the following code below reads the ingredients in inventory/tank
             HashMap<ChemicalIngredient, Double> ingredients = new HashMap<>();
             HashMap<SoluteKey, Double> liquidSolutes = new HashMap<>();
+
+            // hard code testing
+            liquidSolutes.put(SoluteKey.MAGNESIUM, 2.0);
+            liquidSolutes.put(SoluteKey.CARBONATE, 2.0);
+
             float volume = ReactionRecipeInput.fromReadingHandlersGetVolume(ingredients, liquidSolutes, inventory, tank);
 
-            ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy
-            Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getCurrentRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
+            ReactionRecipeInput input = new ReactionRecipeInput(ingredients, 900000540); // todo, replace torque with an actual more legit form of energy
+            // Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getCurrentRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
+            Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getFirstRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
+
+            // System.out.printf("\n%s \n:::\n %s \n::I::\n %s \n:::v:::\n %s ... %s \n\n", 
+            //     ingredients.toString(), 
+            //     liquidSolutes.toString(), 
+            //     input.toString(), 
+            //     volume, 
+            //     recipe.isPresent());
+            
+            // display available recipes: is datagen working?
+            // ((ServerLevel)level).recipeAccess().recipeMap().byType(TekoraRecipes.REACTION_TYPE.get()).forEach(a -> {
+            //     System.out.printf("RECIPE: %s \n", a.value().toString());
+            //     System.out.println(a.value().matches(input, level)); // this true! but other method false b/c it uses different set of calls
+            // });
+
+            // System.out.printf("\nis this real: %s\n\n", 
+            //     TekoraRecipes.getFirstMatchingRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input).isPresent());
+            
 
             if (!recipe.isPresent()) {
                 this.hasRxn = false;

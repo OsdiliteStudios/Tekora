@@ -42,8 +42,8 @@ public record ReactionRecipeInput(Map<ChemicalIngredient, Double> inputs, double
      * Method that reads ingredients into hashmaps to be properly processed by the recipe input.
      * @param inventory - Entity inventory being passed to read data from
      * @param tank - Entity tank being passed to read data from
-     * @param ingredients - Input that has values read into them
-     * @param liquidSolutes - Input that has volumes read into them
+     * @param ingredients - Input that has values written into them
+     * @param liquidSolutes - Input that has volumes written into them
      * @return The total volume of the tank
      * */
     public static float fromReadingHandlersGetVolume(HashMap<ChemicalIngredient, Double> ingredients, HashMap<SoluteKey, Double> liquidSolutes, ItemStacksResourceHandler inventory, FluidStacksResourceHandler tank) {

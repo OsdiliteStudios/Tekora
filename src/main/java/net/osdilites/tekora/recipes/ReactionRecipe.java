@@ -11,13 +11,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
 import net.osdilites.tekora.data.TekoraComponents;
+import net.osdilites.tekora.item.TekoraItems;
 import net.osdilites.tekora.item.typical.CompoundItem;
 import net.osdilites.tekora.recipes.ingredient.Catalyst;
 import net.osdilites.tekora.recipes.ingredient.Chemical;
@@ -27,6 +30,7 @@ import net.osdilites.tekora.util.UtilFunctions;
 import org.jspecify.annotations.NonNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeInput> {
     private final List<Chemical> reactants;
@@ -106,32 +110,42 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             double q = 1;
 
             Set<ChemicalIngredient> ingredients = input.inputs().keySet();
+
+            // Two sets A and B are equal if:
+            // 1. They are the same length
+            // 2. A is a subset of B, and vice versa
+            // Note that ingredients can contain both reactants and products,
+            // and input doesn't necessarily need to be equal to union of reactants and products.
+            
+            // answers: is reactants a subset of ingredients?
             for (Chemical chemical : reactants) {
                 double c = chemical.coefficient();
-                for (ChemicalIngredient ing : ingredients) {
-                    if (ing.equals(chemical.chemical())) {
-                        q *= Math.pow(input.inputs().get(ing), c);
-                    } else {
-                        hasAllInput = false;
-                        q = 0;
-                        break;
-                    }
-                }
+                ChemicalIngredient recipeIng = chemical.chemical();
+                if (ingredients.contains(recipeIng)) {
+                    q *= Math.pow(input.inputs().get(recipeIng), c);
+                } else {
+                    // System.out.printf("%s not found\n", recipeIng);
+                    hasAllInput = false;
+                    q = 0;
+                    break;
+                };
             }
+
+            // similar deal for products
             for (Chemical chemical : products) {
                 double c = chemical.coefficient();
-                for (ChemicalIngredient ing : ingredients) {
-                    if (ing.equals(chemical.chemical())) {
-                        q /= Math.pow(input.inputs().get(ing), c);
-                    } else {
-                        hasAllOutput = false;
-                        if (q == 0) return false;
-                        else {
-                            q = Double.POSITIVE_INFINITY;
-                        }
-                        break;
+                ChemicalIngredient ing = chemical.chemical();
+
+                if (ingredients.contains(ing)) {
+                    q /= Math.pow(input.inputs().get(ing), c);
+                } else {
+                    hasAllOutput = false;
+                    if (q == 0) return false;
+                    else {
+                        q = Double.POSITIVE_INFINITY;
                     }
-                }
+                    break;
+                };
             }
 
             return hasAllOutput || hasAllInput;
@@ -282,11 +296,48 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         fillBasedOnData(products, items, inventory, fluids, tank);
     }
 
+    /**
+     * Modifies the given inventory based on the given parameters 
+     * @param itemReactants A map of slots (int) and coefficients (float[]) for each slot 
+     * @param inventory The item inventory to modify
+     * @param rate The rate at which the reaction occurs.
+     * @param action int determining whether to produce reactants (1) or products (-1).
+     */
     public void modifyCrafterInventory(@NonNull Map<Integer, float[]> itemReactants, ItemStacksResourceHandler inventory, double rate, int action) {
         if (action == 1) {
             // checks if all the products are available
+
+            // functional programming magic for ease of implementation
+            // NOTE: this may not be good for memory
+            Map<ChemicalIngredient, Boolean> productsIng = products.stream()
+                .map(chem -> chem.chemical())
+                .collect(Collectors.toMap(k -> k, v -> false));
+
+            for (int i = 0; i < inventory.size(); ++i) {
+                ItemResource slotResource = inventory.getResource(i);
+                ChemicalIngredient key = ChemicalIngredient.of(slotResource.getItem());
+                boolean isProduct = productsIng.containsKey(key);
+                // avoid setting any product already present to false, in the case of multiple slots
+                boolean isPresent = isProduct ? true : productsIng.get(key);
+                productsIng.put(key, isPresent);
+            }
+
+            if (productsIng.values().contains(false)) {
+                System.out.println("ouch");
+                return;
+            }
+
+            System.out.println("boowhomp");
+            
         } else if (action == -1) {
             // checks if all the reactants are available
+            System.out.println("woohoo");
+            // it works! however, still need to figure out how to get an ItemResource for a missing product
+            // try(Transaction transaction = Transaction.openRoot()) {
+            //     ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 3);
+            //     itemAccess.insert(ItemResource.of(TekoraItems.MAGNESIUM_CARBONATE.get()), 1, transaction);
+            //     transaction.commit();
+            // }
         }
 
         for (Integer ind : itemReactants.keySet()) {
@@ -348,5 +399,10 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             }
             vals[1] %= 1.0f;
         }
+    }
+
+    @Override 
+    public String toString() {
+        return reactants.toString() + " : " + products.toString();
     }
 }

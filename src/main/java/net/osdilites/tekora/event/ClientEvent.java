@@ -108,21 +108,24 @@ public class ClientEvent {
 
     @SubscribeEvent 
     public static void registerFluidModels(RegisterFluidModelsEvent event) {
-        // TODO: figure out better way of registering fluid models
-        event.register(createDefaultFluidModel(0x66E8F0E8), TekoraFluids.ACETIC_ACID.source(), TekoraFluids.ACETIC_ACID.flowing());
-        event.register(createDefaultFluidModel(0x4DF0F8FF), TekoraFluids.ACETONE.source(), TekoraFluids.ACETONE.flowing());
-        event.register(createDefaultFluidModel(0x59D8F4FF), TekoraFluids.AMMONIA.source(), TekoraFluids.AMMONIA.flowing());
-        event.register(createDefaultFluidModel(0x66F5F2DC), TekoraFluids.BENZENE.source(), TekoraFluids.BENZENE.flowing());
-        event.register(createDefaultFluidModel(0xE67A1C12), TekoraFluids.BROMINE.source(), TekoraFluids.BROMINE.flowing());
-        event.register(createDefaultFluidModel(0x55EBF5FB), TekoraFluids.ETHANOL.source(), TekoraFluids.ETHANOL.flowing());
-        event.register(createDefaultFluidModel(0x66E2ECE9), TekoraFluids.FORMIC_ACID.source(), TekoraFluids.FORMIC_ACID.flowing());
-        event.register(createDefaultFluidModel(0x66DCE4EC), TekoraFluids.HYDRAZINE.source(), TekoraFluids.HYDRAZINE.flowing());
-        event.register(createDefaultFluidModel(0x59E0F7FA), TekoraFluids.HYDROGEN_FLUORIDE.source(), TekoraFluids.HYDROGEN_FLUORIDE.flowing());
-        event.register(createDefaultFluidModel(0x66CBE8F6), TekoraFluids.HYDROGEN_PEROXIDE.source(), TekoraFluids.HYDROGEN_PEROXIDE.flowing());
-        event.register(createDefaultFluidModel(0x4DE6F2FF), TekoraFluids.METHANOL.source(), TekoraFluids.METHANOL.flowing());
-        event.register(createDefaultFluidModel(0x66F4F0C8), TekoraFluids.SULFUR_DIOXIDE.source(), TekoraFluids.SULFUR_DIOXIDE.flowing());
-        event.register(createDefaultFluidModel(0x73EAE6D7), TekoraFluids.SULFUR_TRIOXIDE.source(), TekoraFluids.SULFUR_TRIOXIDE.flowing());
-        event.register(createDefaultFluidModel(0x88E6DFC5), TekoraFluids.SULFURIC_ACID.source(), TekoraFluids.SULFURIC_ACID.flowing());
+        registerChemicalModel(event, 0x66E8F0E8, TekoraFluids.ACETIC_ACID);
+        registerChemicalModel(event, 0x4DF0F8FF, TekoraFluids.ACETONE);
+        registerChemicalModel(event, 0x59D8F4FF, TekoraFluids.AMMONIA);
+        registerChemicalModel(event, 0x66F5F2DC, TekoraFluids.BENZENE);
+        registerChemicalModel(event, 0xE67A1C12, TekoraFluids.BROMINE);
+        registerChemicalModel(event, 0x55EBF5FB, TekoraFluids.ETHANOL);
+        registerChemicalModel(event, 0x66E2ECE9, TekoraFluids.FORMIC_ACID);
+        registerChemicalModel(event, 0x66DCE4EC, TekoraFluids.HYDRAZINE);
+        registerChemicalModel(event, 0x59E0F7FA, TekoraFluids.HYDROGEN_FLUORIDE);
+        registerChemicalModel(event, 0x66CBE8F6, TekoraFluids.HYDROGEN_PEROXIDE);
+        registerChemicalModel(event, 0x4DE6F2FF, TekoraFluids.METHANOL);
+        registerChemicalModel(event, 0x66F4F0C8, TekoraFluids.SULFUR_DIOXIDE);
+        registerChemicalModel(event, 0x73EAE6D7, TekoraFluids.SULFUR_TRIOXIDE);
+        registerChemicalModel(event, 0x88E6DFC5, TekoraFluids.SULFURIC_ACID);
+    }
+    // Helper method:
+    private static void registerChemicalModel(RegisterFluidModelsEvent event, int hexColor, TekoraFluids.ChemicalEntry entry) {
+        event.register(createDefaultFluidModel(hexColor), entry.source(), entry.flowing());
     }
 
     @SubscribeEvent

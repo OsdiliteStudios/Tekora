@@ -14,6 +14,8 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
 import net.osdilites.tekora.data.TekoraComponents;
@@ -25,6 +27,7 @@ import net.osdilites.tekora.util.UtilFunctions;
 import org.jspecify.annotations.NonNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeInput> {
     private final List<Chemical> reactants;
@@ -249,6 +252,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                         items.put(i, list);
                     }
                 } else if (chemical.chemical().test(resource.toStack())) {
+                    // if the chemical is a valid material, encode its key as negative to indicate such 
                     items.put(-i-1, new float[]{chemical.coefficient(), 0f});
                     break;
                 }
@@ -281,16 +285,82 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         fillBasedOnData(products, items, inventory, fluids, tank);
     }
 
-    public void modifyCrafterInventory(@NonNull Map<Integer, float[]> itemReactants, ItemStacksResourceHandler inventory, double rate, int action) {
-        if (action == 1) {
-            // checks if all the products are available
-        } else if (action == -1) {
-            // checks if all the reactants are available
+    private boolean allPresent(List<Chemical> chemList, ItemStacksResourceHandler inventory, int action) {
+        Map<ChemicalIngredient, Boolean> recipeIng = 
+            chemList.stream()
+                .map(chem -> chem.chemical())
+                .collect(Collectors.toMap(k -> k, v -> false));       
+
+        if (action != 1 && action != -1) {
+            return false;
+        }
+        
+        for (int i = 0; i < inventory.size(); ++i) {
+            ItemResource slotResource = inventory.getResource(i);
+            // ingredients can't be air.
+            if (slotResource.isEmpty()) continue;
+            ChemicalIngredient key = ChemicalIngredient.of(slotResource.getItem());
+            boolean inRecipe = recipeIng.containsKey(key);
+            // cover the case of extra ingredients not in the recipe
+            if (!inRecipe) continue;
+            recipeIng.put(key, inRecipe);
         }
 
-        for (Integer ind : itemReactants.keySet()) {
-            boolean hasSolutes = ind < 0;
-            float[] vals = itemReactants.get(hasSolutes ? -ind - 1 : ind);
+        return !recipeIng.values().contains(false);
+    }
+    
+    private boolean soluteExistsInRecipe(SoluteKey key, int action) {
+        if (action == 1) {
+            return prodCoeffs.keySet().contains(key);
+        } else if (action == -1) {
+            return reactCoeffs.keySet().contains(key);
+        } else {
+            return false;
+        }
+    }
+
+    
+    public static class Direction {
+        public static final int REVERSE = 1, EQUAL = 0, FORWARD = -1;
+    }
+
+    /**
+     * Modifies the given inventory based on the given recipe parameters 
+     * @param itemChemicals A map of slot index (int) and *recipe* coefficients (float[]) for each slot, for either reactants or products.
+     * @param inventory The item inventory to modify
+     * @param rate The rate at which the reaction occurs.
+     * @param action int determining whether to produce reactants (1) or products (-1). The direction of the reaction.
+     */
+    public void modifyCrafterInventory(@NonNull Map<Integer, float[]> itemChemicals, ItemStacksResourceHandler inventory, double rate, int action) {
+        boolean allProducts = false; // can we can turn into reactants?
+        boolean allReactants = false; // we can turn into products?
+
+        
+        if (action == Direction.REVERSE) {
+            // check if all products are available
+            allProducts = allPresent(products, inventory, action);
+        } else if (action == Direction.FORWARD) {
+            // check if all reactants are available
+            allReactants = allPresent(reactants, inventory, action);
+        } else {
+            // at equilibrium, don't modify anything.
+            return;
+        }
+
+        if (!allProducts && !allReactants) {
+            // cannot produce a reaction, so don't modify anything.
+            return;
+        }
+
+        // modify the solutes of each of the inventory items 
+        for (Integer ind : itemChemicals.keySet()) {
+            // positive indices indicates solutes for a chemical item, reversed for fluids?
+            boolean hasSolutes = ind > 0;
+            // negative keys (ind) should be converted to unsigned
+            float[] vals = itemChemicals.get(hasSolutes ? ind : -ind - 1);
+
+            if (vals == null) continue;
+
             ItemResource resource = inventory.getResource(ind);
             if (hasSolutes && resource.has(TekoraComponents.SOLUTES_LIST)) {
                 int mapInd = 0;
@@ -298,10 +368,15 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 Map<SoluteKey, Double> data = resource.get(TekoraComponents.SOLUTES_LIST).dataMap();
                 for (var entry : data.entrySet()) {
                     float coeff = vals[mapInd++];
+                    
+                    // do not want to modify solutes not involved in reaction 
+                    if (!soluteExistsInRecipe(entry.getKey(), action)) continue;
+
                     if (coeff > 0) {
                         double newVal = coeff * rate;
-                        double org = entry.getValue();
-                        entry.setValue(action == -1 ? org-newVal : org+newVal);
+                        double original = entry.getValue();
+                        // modify solutes of the side given by itemChemicals.
+                        entry.setValue(action == Direction.FORWARD ? original-newVal : original+newVal);
                     }
                 }
             }

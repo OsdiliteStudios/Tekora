@@ -108,7 +108,12 @@ public class BasinEntity extends AbstractModularCraftEntity {
     }
 
     private double craftItem() {
-
+        try (Transaction transaction = Transaction.openRoot()) {
+            ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
+            // inventory.extract(inventory.getResource(0), 1, transaction);
+            // inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
+            // transaction.commit();
+        }
         return 0;
     }
 
@@ -161,7 +166,11 @@ public class BasinEntity extends AbstractModularCraftEntity {
             //   break;
             // }
             //if (rate != 0) {
+                // lnQ > lnK => 1 indicates reverse reaction.
                 int action = Double.compare(lnQ, lnK);
+
+                // System.out.println(itemReactants);
+                // System.out.println(itemProducts); // -3 : float[]
 
                 // this code has been untested
                 // todo, test this piece of code

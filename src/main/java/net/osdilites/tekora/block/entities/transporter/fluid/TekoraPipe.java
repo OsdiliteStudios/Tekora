@@ -1,23 +1,35 @@
 package net.osdilites.tekora.block.entities.transporter.fluid;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jspecify.annotations.Nullable;
 
-public abstract class AbstractTekoraPipe extends BaseEntityBlock {
+public class TekoraPipe extends BaseEntityBlock {
     protected static final IntegerProperty CONNECTION = TekoraBlockStates.CONNECTION;
+    public static final MapCodec<TekoraPipe> CODEC = simpleCodec(TekoraPipe::new);
 
     private static final VoxelShape CENTER = Block.box(4, 4, 4, 12, 12, 12);
 
@@ -49,7 +61,7 @@ public abstract class AbstractTekoraPipe extends BaseEntityBlock {
     private static final VoxelShape[] SHAPES = shapes();
 
     private static VoxelShape[] shapes() {
-        VoxelShape[] shapes = new VoxelShape[0b111111];
+        VoxelShape[] shapes = new VoxelShape[64];
         for (int a = 0; a < 2; a++) {
             VoxelShape joined = a == 0 ? CENTER : EAST;
             for (int b = 0; b < 2; b++) {
@@ -75,8 +87,37 @@ public abstract class AbstractTekoraPipe extends BaseEntityBlock {
         return shapes;
     }
 
-    protected AbstractTekoraPipe(Properties properties) {
-        super(properties);
+    private final float chemResistance;
+    private final boolean isPlastic;
+    private final float maxTemp; // in Minecraft temperature units
+
+    // here's the chemical coefficients for each metal
+    //Copper 0.8
+    //Steel 1.5
+    //Brass 0.7
+    //Aluminum 1.0
+    //Titanium 0.1
+
+    private TekoraPipe(Properties properties) {
+        super(properties.noOcclusion().requiresCorrectToolForDrops());
+        registerDefaultState(defaultBlockState().setValue(CONNECTION, 0));
+        this.chemResistance = 0.8f;
+        this.isPlastic = false;
+        this.maxTemp = 12.0f;
+    }
+
+    public TekoraPipe(String name, float chemResistance, boolean isPlastic, float maxTemp) {
+        super(Properties.ofFullCopy(Blocks.COPPER_BLOCK.waxed().exposed()).noOcclusion().requiresCorrectToolForDrops()
+                .setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, name))));
+        registerDefaultState(defaultBlockState().setValue(CONNECTION, 0));
+        this.chemResistance = chemResistance;
+        this.isPlastic = isPlastic;
+        this.maxTemp = maxTemp;
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -132,5 +173,22 @@ public abstract class AbstractTekoraPipe extends BaseEntityBlock {
             return SHAPES[state.getValue(CONNECTION)];
         }
         return CENTER;
+    }
+
+    @Override
+    public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {
+        super.destroy(level, pos, state);
+        // todo, make it so that if fluid exists in the block entity, that would cause a lingering effect based on the effects of the fluid
+        // todo, make it so the durability gets stored as an nbt value.
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new TekoraPipeEntity(blockPos, blockState, chemResistance, isPlastic, maxTemp);
+    }
+
+    @Override
+    public @org.jetbrains.annotations.Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
+        return createTickerHelper(type, TekoraBlockEntities.PIPE.get(), (lvl, pos, state, block) -> block.tick(lvl, pos, state));
     }
 }

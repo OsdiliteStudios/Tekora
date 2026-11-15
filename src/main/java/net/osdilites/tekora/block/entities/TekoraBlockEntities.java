@@ -1,14 +1,14 @@
 package net.osdilites.tekora.block.entities;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.*;
+import net.osdilites.tekora.block.entities.thermal.CombustionChamberEntity;
+import net.osdilites.tekora.block.entities.transporter.fluid.TekoraPipeEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.HandCrankEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 import net.osdilites.tekora.block.entities.thermal.KilnFurnaceEntity;
@@ -75,6 +75,14 @@ public class TekoraBlockEntities {
     public static final Supplier<BlockEntityType<KilnFurnaceEntity>> KILN_FURNACE =
             BLOCK_ENTITIES.register("kiln_furnace", () -> new BlockEntityType<>(KilnFurnaceEntity::new,
                     Set.of(TekoraBlocks.KILN_FURNACE.get())));
+
+    public static final Supplier<BlockEntityType<CombustionChamberEntity>> COMBUSTION_CHAMBER =
+            BLOCK_ENTITIES.register("combustion_chamber", () -> new BlockEntityType<>(CombustionChamberEntity::new,
+                    Set.of(TekoraBlocks.COMBUSTION_CHAMBER.get())));
+
+    public static final Supplier<BlockEntityType<TekoraPipeEntity>> PIPE =
+            BLOCK_ENTITIES.register("tekora_pipe", () -> new BlockEntityType<>(TekoraPipeEntity::new,
+                    Set.of(TekoraBlocks.COMBUSTION_CHAMBER.get())));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

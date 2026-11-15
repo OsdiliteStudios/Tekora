@@ -69,6 +69,7 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem("wrench", 560));
 
   public static final DeferredHolder<Item, Item> BAUXITE = ITEMS.register("bauxite", () -> new TekoraItem("bauxite"));
+  public static final DeferredHolder<Item, Item> CINNABAR_SHARD = ITEMS.register("cinnabar_shard", () -> new TekoraSmeltableItem("cinnabar_shard", 200));
   // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
 
   public static final DeferredHolder<Item, Item> MERCURY_THERMOMETER = ITEMS.register("mercury_thermometer", () -> new ThermometerItem("mercury_thermometer", -1.55f, 10.27f, MobEffects.POISON)); // uses glass, but has a random chance of poisoning the player if broken somehow

@@ -13,9 +13,18 @@ public class TekoraTags {
         public static final TagKey<Item> INGOTS_STEEL = tag("ingots/steel");
         public static final TagKey<Item> PLATES_STEEL = tag("plates/steel");
         public static final TagKey<Item> RODS_STEEL = tag("rods/steel");
+        public static final TagKey<Item> FUMES_ON_SMELT = tag("fumes_on_smelt");
+        public static final TagKey<Item> BLINDING_FUMES_ON_SMELT = tag("blinding_fumes_on_smelt");
+        public static final TagKey<Item> TOXIC_FUMES_ON_SMELT = tag("toxic_fumes_on_smelt");
+        public static final TagKey<Item> WEAKENING_FUMES_ON_SMELT = tag("weakening_fumes_on_smelt");
+        public static final TagKey<Item> RADIOACTIVE_FUMES_ON_SMELT = tag("radioactive_fumes_on_smelt");
 
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(Identifier.fromNamespaceAndPath("c", name));
+        }
+
+        private static TagKey<Item> tekoraTag(String name) {
+            return ItemTags.create(Identifier.fromNamespaceAndPath(Tekora.MODID, name));
         }
     }
     public static class Blocks {}

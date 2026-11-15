@@ -1,5 +1,9 @@
 package net.osdilites.tekora.block.entities;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.osdilites.tekora.util.UtilFunctions;
 import org.jspecify.annotations.NonNull;
 
 public interface IHeatSensitive {
@@ -10,6 +14,16 @@ public interface IHeatSensitive {
 
     // this function should return a value that is always subject to change in any objects inheriting this interface
     float getTemperature(); // in Kelvins (K)
+
+    default float getTotalTempDiff(Level level, BlockPos pos, float biomeTemp) {
+        float totalDiff = 0;
+        for (Direction direction : Direction.values()) {
+            totalDiff += level.getBlockEntity(pos.relative(direction)) instanceof IHeatSensitive sensitive
+                    ? getTransferHeat(sensitive)
+                    : getCoolingDiff(biomeTemp, UtilFunctions.getHeatTransferCoeff(level));
+        }
+        return totalDiff;
+    }
 
     default float getTransferHeat(@NonNull IHeatSensitive other) {
         float k1 = getConductivity();

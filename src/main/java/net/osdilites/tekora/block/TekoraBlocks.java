@@ -13,7 +13,9 @@ import net.osdilites.tekora.block.basic.TekoraExperienceBlock;
 import net.osdilites.tekora.block.entities.Basin;
 import net.osdilites.tekora.block.entities.Depot;
 import net.osdilites.tekora.block.entities.mechanical.*;
+import net.osdilites.tekora.block.entities.thermal.CombustionChamber;
 import net.osdilites.tekora.block.entities.thermal.KilnFurnace;
+import net.osdilites.tekora.block.entities.transporter.fluid.TekoraPipe;
 import net.osdilites.tekora.block.entities.transporter.rotational.*;
 import net.osdilites.tekora.block.fluids.ChemicalLiquidBlock;
 import net.osdilites.tekora.fluid.TekoraFluids;
@@ -55,9 +57,15 @@ public class TekoraBlocks {
     public static final DeferredHolder<Block, Depot> DEPOT =
             createBlock("depot", Depot::new);
 
+    public static final DeferredHolder<Block, CombustionChamber> COMBUSTION_CHAMBER =
+            createBlock("combustion_chamber", CombustionChamber::new);
+
+    public static final DeferredHolder<Block, TekoraPipe> COPPER_PIPE =
+            createBlock("copper_pipe", () -> new TekoraPipe("copper_pipe", 0.8f, false, 12.0f));
+
     // megablock components
     public static final DeferredHolder<Block, KilnFurnace> KILN_FURNACE =
-            createBlock("kiln_furnace", () -> new KilnFurnace(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
+            createBlock("kiln_furnace", KilnFurnace::new);
 
     // fluids
     public static final DeferredHolder<Block, ChemicalLiquidBlock> ACETIC_ACID =

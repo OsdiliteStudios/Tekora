@@ -22,6 +22,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.fluid.TekoraFluids;
+import net.osdilites.tekora.menu.screens.CombustionChamberScreen;
 import net.osdilites.tekora.renderers.*;
 import net.osdilites.tekora.menu.TekoraMenus;
 import net.osdilites.tekora.menu.screens.BasinScreen;
@@ -95,6 +96,7 @@ public class ClientEvent {
         event.register(TekoraMenus.BASIN_MENU.get(), BasinScreen::new);
         event.register(TekoraMenus.DEPOT_MENU.get(), DepotScreen::new);
         event.register(TekoraMenus.KILN_FURNACE_MENU.get(), KilnFurnaceScreen::new);
+        event.register(TekoraMenus.COMBUSTION_CHAMBER_MENU.get(), CombustionChamberScreen::new);
     }
 
     /// Color is in 0xAARRGGBB order

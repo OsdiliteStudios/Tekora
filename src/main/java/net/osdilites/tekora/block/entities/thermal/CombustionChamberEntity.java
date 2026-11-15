@@ -76,7 +76,6 @@ public class CombustionChamberEntity extends AbstractThermalEntity {
         if (level != null && !level.isClientSide()) {
             if (blockState.hasProperty(AbstractThermalMachine.LIT)) {
                 ItemStack stack = new ItemStack(inventory.getResource(0).getItem());
-                // test
 
                 int nCnt = stack.getCount() - 1;
 

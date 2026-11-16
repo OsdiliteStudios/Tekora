@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class AbstractThermalEntity extends BlockEntity implements MenuProvider, IHeatSensitive {
     protected float temperature;
     protected int burnTime;
+    protected int maxBurnTime;
     private final float heatCapacity;
     private final float conductivity;
 
@@ -34,6 +35,9 @@ public abstract class AbstractThermalEntity extends BlockEntity implements MenuP
         super(pType, pPos, pBlockState);
         this.heatCapacity = heatCapacity;
         this.conductivity = conductivity;
+        this.temperature = -1;
+        this.burnTime = 0;
+        this.maxBurnTime = 0;
     }
 
     public void drops() {
@@ -51,6 +55,7 @@ public abstract class AbstractThermalEntity extends BlockEntity implements MenuP
         super.saveAdditional(output);
         output.putFloat("temperature", this.temperature);
         output.putFloat("burntime", this.burnTime);
+        output.putFloat("maxburntime", this.maxBurnTime);
     }
 
     @Override
@@ -58,14 +63,16 @@ public abstract class AbstractThermalEntity extends BlockEntity implements MenuP
         super.loadAdditional(input);
         this.temperature = input.getFloatOr("temperature", 300.0f);
         this.burnTime = input.getIntOr("burntime", 0);
+        this.maxBurnTime = input.getIntOr("maxburntime", 0);
     }
+
     public void tick(Level level, BlockPos pos, BlockState blockState) {
         if (level != null && !level.isClientSide()) {
             float biomeTemp = (float) UtilFunctions.fromMcTempToKelvins(UtilFunctions.getBiomeTemperature(level, pos));
             if (!Float.isFinite(temperature) || temperature < 0) {
                 temperature = biomeTemp;
             }
-//            temperature += getTotalTempDiff(level, pos, biomeTemp);
+            temperature += getTotalTempDiff(level, pos, biomeTemp);
         }
     }
     public abstract ItemStacksResourceHandler getInventory();
@@ -96,8 +103,8 @@ public abstract class AbstractThermalEntity extends BlockEntity implements MenuP
         return temperature;
     }
 
-    public int getBurnTime() {
-        return burnTime;
+    public float getBurnPercentage() {
+        return maxBurnTime <= 0 || burnTime < 0 ? 0 : ((float)burnTime) / maxBurnTime;
     }
 
     // BLOCK ENTITY SYNC

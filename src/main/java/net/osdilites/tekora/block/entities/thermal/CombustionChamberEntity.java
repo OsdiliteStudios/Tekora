@@ -28,17 +28,21 @@ public class CombustionChamberEntity extends AbstractThermalEntity {
     private final ContainerData data = new ContainerData() {
         @Override
         public int get(int i) {
-            return CombustionChamberEntity.this.burnTime;
+            return i == 0 ? CombustionChamberEntity.this.burnTime : CombustionChamberEntity.this.maxBurnTime;
         }
 
         @Override
         public void set(int i, int i1) {
-            CombustionChamberEntity.this.burnTime = i1;
+            if (i == 0) {
+                CombustionChamberEntity.this.burnTime = i1;
+            } else if (i == 1) {
+                CombustionChamberEntity.this.maxBurnTime = i1;
+            }
         }
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
     };
 
@@ -80,21 +84,24 @@ public class CombustionChamberEntity extends AbstractThermalEntity {
                 int nCnt = stack.getCount() - 1;
 
                 if (burnTime > 0) {
-                    temperature += 1150.0f * (1.0f - (float) Math.exp(-0.03472 * burnTime));
+                    temperature += 0.25f; // todo, do proper modeling for temperature
                     burnTime--;
                     blockState = blockState.setValue(AbstractThermalMachine.LIT, true);
                 } else if (nCnt >= 0) {
-                    burnTime = stack.getBurnTime(RecipeType.SMELTING, level.fuelValues());
+                    maxBurnTime = stack.getBurnTime(RecipeType.SMELTING, level.fuelValues());
+                    burnTime = maxBurnTime;
                     if (burnTime > 0) {
-                        // todo, make sure lava leaves a bucket behind after smelting.
                         try (Transaction transaction = Transaction.openRoot()) {
                             inventory.extract(inventory.getResource(0), 1, transaction);
+                            if (stack.getCraftingRemainder() != null) {
+                                inventory.set(0, ItemResource.of(stack.getCraftingRemainder()), 1);
+                            }
                             transaction.commit();
                         }
                         blockState = blockState.setValue(AbstractThermalMachine.LIT, false);
                     }
                 }
-                level.setBlockAndUpdate(pos, blockState);
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), blockState, 3);
                 setChanged();
             }
         }

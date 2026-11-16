@@ -101,11 +101,11 @@ public class UtilFunctions {
         if (level != null && !level.isClientSide()) {
             ResourceKey<Level> type = level.dimension();
             if (type.equals(Level.OVERWORLD)) {
-                return 10;
+                return 0.01f;
             } else if (type.equals(Level.NETHER)) {
-                return 25;
+                return 0.025f;
             } else if (type.equals(Level.END)) {
-                return 2;
+                return 0.002f;
             } else {
                 // todo, use dimension jsons to find value.
             }

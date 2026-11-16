@@ -8,7 +8,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.osdilites.tekora.Tekora;
-import net.osdilites.tekora.block.entities.DepotEntity;
 import net.osdilites.tekora.menu.DepotMenu;
 
 public class DepotScreen extends AbstractContainerScreen<DepotMenu> {

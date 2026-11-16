@@ -32,8 +32,6 @@ public class CombustionChamberMenu extends TekoraItemMenu {
                 return stack.getBurnTime(RecipeType.SMELTING, level.fuelValues()) > 0;
             }
         });
-
-        addDataSlots(data);
     }
 
     @Override
@@ -44,5 +42,9 @@ public class CombustionChamberMenu extends TekoraItemMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), pPlayer, TekoraBlocks.COMBUSTION_CHAMBER.get());
+    }
+
+    public float getBurnPercent() {
+        return blockEntity.getBurnPercentage();
     }
 }

@@ -25,10 +25,10 @@ public interface IHeatSensitive {
         return totalDiff;
     }
 
-    default float getTransferHeat(@NonNull IHeatSensitive other) {
+    private float getTransferHeat(@NonNull IHeatSensitive other) {
         float k1 = getConductivity();
         float k2 = other.getConductivity();
-        if (k1 + k2 == 0) return getTemperature();
+        if (k1 + k2 == 0) return 0;
 
         float deltaTemp = other.getTemperature() - getTemperature();
         float kEff = 2 * k1 * k2 / (k1 + k2);
@@ -37,7 +37,10 @@ public interface IHeatSensitive {
         return kEff * area * deltaTemp * 0.05f / getHeatCapacity();
     }
 
-    default float getCoolingDiff(float envTemp, float transfer) {
-        return transfer * getContactArea() * (getTemperature() - envTemp) * 0.05f / getHeatCapacity();
+    private float getCoolingDiff(float envTemp, float transfer) {
+        if (getHeatCapacity() <= 0) {
+            return 0;
+        }
+        return transfer * getContactArea() * (envTemp - getTemperature()) * 0.05f / getHeatCapacity();
     }
 }

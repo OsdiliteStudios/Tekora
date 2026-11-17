@@ -82,7 +82,7 @@ public class TekoraBlockEntities {
 
     public static final Supplier<BlockEntityType<TekoraPipeEntity>> PIPE =
             BLOCK_ENTITIES.register("tekora_pipe", () -> new BlockEntityType<>(TekoraPipeEntity::new,
-                    Set.of(TekoraBlocks.COMBUSTION_CHAMBER.get())));
+                    Set.of(TekoraBlocks.COPPER_PIPE.get())));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

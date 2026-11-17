@@ -2,7 +2,7 @@
   "parent": "minecraft:block/orientable",
   "textures": {
     "front": "tekora:block/kiln_furnace_front_on",
-    "side": "tekora:block/firebricks",
-    "top": "tekora:block/firebricks"
+    "side": "tekora:block/fire_bricks",
+    "top": "tekora:block/fire_bricks"
   }
 }

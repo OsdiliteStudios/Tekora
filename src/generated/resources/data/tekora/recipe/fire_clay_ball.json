@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:clay_ball",
+    "tekora:bauxite"
+  ],
+  "result": {
+    "count": 2,
+    "id": "tekora:fire_clay_ball"
+  }
+}

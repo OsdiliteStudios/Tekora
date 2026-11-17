@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
@@ -87,21 +86,23 @@ public class CombustionChamberEntity extends AbstractThermalEntity {
                     temperature += 0.25f; // todo, do proper modeling for temperature
                     burnTime--;
                     blockState = blockState.setValue(AbstractThermalMachine.LIT, true);
-                } else if (nCnt >= 0) {
-                    maxBurnTime = stack.getBurnTime(RecipeType.SMELTING, level.fuelValues());
-                    burnTime = maxBurnTime;
-                    if (burnTime > 0) {
-                        try (Transaction transaction = Transaction.openRoot()) {
-                            inventory.extract(inventory.getResource(0), 1, transaction);
-                            if (stack.getCraftingRemainder() != null) {
-                                inventory.set(0, ItemResource.of(stack.getCraftingRemainder()), 1);
+                } else {
+                    if (nCnt >= 0) {
+                        maxBurnTime = stack.getBurnTime(RecipeType.SMELTING, level.fuelValues());
+                        burnTime = maxBurnTime;
+                        if (burnTime > 0) {
+                            try (Transaction transaction = Transaction.openRoot()) {
+                                inventory.extract(inventory.getResource(0), 1, transaction);
+                                if (stack.getCraftingRemainder() != null) {
+                                    inventory.set(0, ItemResource.of(stack.getCraftingRemainder()), 1);
+                                }
+                                transaction.commit();
                             }
-                            transaction.commit();
                         }
-                        blockState = blockState.setValue(AbstractThermalMachine.LIT, false);
                     }
+                    blockState = blockState.setValue(AbstractThermalMachine.LIT, false);
                 }
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), blockState, 3);
+                level.setBlockAndUpdate(pos, blockState);
                 setChanged();
             }
         }

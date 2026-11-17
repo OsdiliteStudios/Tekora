@@ -36,6 +36,7 @@ public class TekoraModelProvider extends ModelProvider {
         itemModels.generateFlatItem(TekoraItems.STEEL_GEAR.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.WOODEN_GEAR.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.BAUXITE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.CINNABAR_SHARD.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(TekoraItems.ALUMINUM_GEAR_PART.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.BRASS_GEAR_PART.get(), ModelTemplates.FLAT_ITEM);
@@ -54,7 +55,11 @@ public class TekoraModelProvider extends ModelProvider {
         itemModels.generateFlatItem(TekoraItems.STEEL_PLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.STEEL_ROD.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.STEEL_DUST.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.FIRE_BRICK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.FIRE_CLAY_BALL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.MAGNESIUM_CARBONATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.SODIUM_CHLORIDE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.AMMONIUM_PHOSPHATE.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(TekoraItems.WRENCH.get(), ModelTemplates.FLAT_ITEM);
 

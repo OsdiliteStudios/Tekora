@@ -2,13 +2,18 @@ package net.osdilites.tekora.datagen;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachine;
@@ -34,6 +39,10 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
         dropSelf(TekoraBlocks.MECH_TOP.get());
 
         dropSelf(TekoraBlocks.STEEL_BLOCK.get());
+        dropSelf(TekoraBlocks.FIRE_BRICKS.get());
+
+        dropSelf(TekoraBlocks.COMBUSTION_CHAMBER.get());
+        dropSelf(TekoraBlocks.COPPER_PIPE.get());
 
         addOre(TekoraBlocks.BAUXITE_ORE.get(), TekoraItems.BAUXITE.get());
 
@@ -43,6 +52,8 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
         add(TekoraBlocks.PRINTER.get(), this::dropMechTopPart);
         add(TekoraBlocks.PRESS.get(), this::dropMechTopPart);
         add(TekoraBlocks.CUTTER.get(), this::dropMechTopPart);
+
+        add(TekoraBlocks.FIRE_CLAY.get(), b -> createSilkTouchDispatchTable(b, applyExplosionDecay(b, LootItem.lootTableItem(TekoraItems.FIRE_BRICK.get()))));
     }
 
     private LootTable.Builder dropMechTopPart(Block block) {
@@ -51,7 +62,7 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
 
     private LootTable.Builder dropParts(Block block, AbstractModularMachine modMech) {
         LootPool.Builder builder = LootPool.lootPool()
-                .setRolls(ConstantValue.exactly(1.0F))
+                .setRolls(ConstantValue.exactly(1.0f))
                 .add(LootItem.lootTableItem(block.asItem()));
         return LootTable.lootTable().withPool(
                 modMech.equals(TekoraBlocks.MECH_TOP.get()) ? builder : builder.add(LootItem.lootTableItem(modMech.getAssocItem())));

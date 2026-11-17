@@ -1,6 +1,5 @@
 package net.osdilites.tekora.item.typical;
 
-import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
 
 public class CompoundItem extends TekoraItem {
@@ -22,5 +21,9 @@ public class CompoundItem extends TekoraItem {
 
     public double getMoles() {
         return moles;
+    }
+
+    public Solutes getFormula() {
+        return formula;
     }
 }

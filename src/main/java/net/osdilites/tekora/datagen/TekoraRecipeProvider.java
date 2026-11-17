@@ -6,7 +6,6 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
@@ -80,6 +79,33 @@ public class TekoraRecipeProvider extends RecipeProvider {
                 .define('P', TekoraItems.STEEL_INGOT.get())
                 .unlockedBy("has_steel_ingot", has(TekoraItems.STEEL_INGOT.get()))
                 .save(output);
+
+        shapeless(RecipeCategory.MISC, TekoraItems.CINNABAR_SHARD.get(), 4)
+                .requires(Items.CINNABAR)
+                .unlockedBy("has_cinnabar", has(Items.CINNABAR))
+                .save(output);
+
+        shaped(RecipeCategory.MISC, Items.CINNABAR)
+                .pattern("CC")
+                .pattern("CC")
+                .define('C', TekoraItems.CINNABAR_SHARD.get())
+                .unlockedBy("has_cinnabar", has(Items.CINNABAR))
+                .save(output);
+
+        shaped(RecipeCategory.MISC, TekoraBlocks.FIRE_BRICKS.get())
+                .pattern("BB")
+                .pattern("BB")
+                .define('B', TekoraItems.FIRE_BRICK.get())
+                .unlockedBy("has_fire_brick", has(TekoraItems.FIRE_BRICK.get()))
+                .save(output);
+
+        shapeless(RecipeCategory.MISC, TekoraItems.FIRE_CLAY_BALL.get(), 2)
+                .requires(Items.CLAY_BALL)
+                .requires(TekoraItems.BAUXITE.get())
+                .unlockedBy("has_bauxite", has(TekoraItems.BAUXITE.get()))
+                .save(output);
+
+        smeltingResultFromBase(TekoraItems.FIRE_BRICK.get(), TekoraItems.FIRE_CLAY_BALL.get());
 
         int reactionId = 1;
         ReactionRecipeBuilder.createReactionRecipe(reactionId++,

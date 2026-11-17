@@ -135,7 +135,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
             ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy
             Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getCurrentRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
 
-            if (!recipe.isPresent()) {
+            if (recipe.isEmpty()) {
                 this.hasRxn = false;
                 itemReactants.clear();
                 itemProducts.clear();

@@ -6,7 +6,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -18,7 +17,6 @@ import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
 import net.osdilites.tekora.data.TekoraComponents;
-import net.osdilites.tekora.item.typical.CompoundItem;
 import net.osdilites.tekora.recipes.ingredient.Catalyst;
 import net.osdilites.tekora.recipes.ingredient.Chemical;
 import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
@@ -38,11 +36,15 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     private final double freqFactor;
     private final double activationEnergy;
 
+    // stores a list of reaction coefficients so that recipe JSON data can easily get accessed.
+    // do NOT modify values in this list;
     private final Map<SoluteKey, Integer> reactCoeffs;
     private final Map<SoluteKey, Integer> prodCoeffs;
     private final Map<SoluteKey, Integer> reactOrders;
     private final Map<SoluteKey, Integer> prodOrders;
 
+    // NOTE: DO NOT STORE RECIPE EVALUATION DATA IN THIS CLASS.
+    //       THIS CLASS EXCLUSIVELY STORES JSON DATA.
     public ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double freqFactor, double activationEnergy) {
         this.reactants = reactants;
         this.products = products;
@@ -175,8 +177,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     }
 
     // METHODS FOR BLOCK ENTITIES
-
-    @Deprecated
     // algorithm used to implement the natural log of the reaction quotient, used to compare against the equilibrium constant
     public double getLnQ(HashMap<SoluteKey, Double> ingredients, double tankVol) {
         double q = 1.0;
@@ -204,7 +204,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         return (deltaEnthalpy - temperature * deltaEntropy) / (temperature * UtilFunctions.IDEAL_GAS_CONST);
     }
 
-    @Deprecated // this method will be implanted in the matches method for more optimized code
     // function returns Ae^(-E/RT) * delta_t or in other words, the rate constant multiplied by the time period
     public float getRateTicks(HashMap<SoluteKey, Double> ingredients, double temperature, float torque) {
         // todo, involving the torque parameter, the hgiher the torque, the higher the returned rate value.

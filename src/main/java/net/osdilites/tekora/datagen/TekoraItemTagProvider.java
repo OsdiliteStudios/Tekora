@@ -23,9 +23,18 @@ public class TekoraItemTagProvider extends ItemTagsProvider {
         tag(TekoraTags.Items.TOXIC_FUMES_ON_SMELT).add(TekoraItems.getKey(TekoraItems.CINNABAR_SHARD.get()));
 
         tag(TekoraTags.Items.FUMES_ON_SMELT).addTags(
-                TekoraTags.Items.TOXIC_FUMES_ON_SMELT,
+                TekoraTags.Items.TOXIC_FUMES_ON_SMELT/*,
                 TekoraTags.Items.BLINDING_FUMES_ON_SMELT,
                 TekoraTags.Items.RADIOACTIVE_FUMES_ON_SMELT,
-                TekoraTags.Items.WEAKENING_FUMES_ON_SMELT);
+                TekoraTags.Items.WEAKENING_FUMES_ON_SMELT*/);
+
+        // this is for compatibility with cooking mods (like farmer's delight)
+        // please do not add other inorganic salts besides NaCl here.
+        tag(TekoraTags.Items.SALT).add(TekoraItems.getKey(TekoraItems.SODIUM_CHLORIDE.get()));
+
+        tag(TekoraTags.Items.CHEMICAL_SALT)
+                .addTag(TekoraTags.Items.SALT)
+                .add(TekoraItems.getKey(TekoraItems.MAGNESIUM_CARBONATE.get()))
+                .add(TekoraItems.getKey(TekoraItems.AMMONIUM_PHOSPHATE.get()));
     }
 }

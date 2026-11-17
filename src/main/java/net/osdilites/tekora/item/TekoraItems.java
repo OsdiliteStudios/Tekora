@@ -66,6 +66,9 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> STEEL_DUST = ITEMS.register("steel_dust", () -> new TekoraItem(true, "steel_dust"));
   public static final DeferredHolder<Item, Item> STEEL_PLATE = ITEMS.register("steel_plate", () -> new TekoraItem(true, "steel_plate"));
   public static final DeferredHolder<Item, Item> STEEL_ROD   = ITEMS.register("steel_rod",   () -> new TekoraItem(true, "steel_rod"));
+  public static final DeferredHolder<Item, Item> FIRE_BRICK   = ITEMS.register("fire_brick",   () -> new TekoraItem(true, "fire_brick"));
+  public static final DeferredHolder<Item, Item> FIRE_CLAY_BALL = ITEMS.register("fire_clay_ball",   () -> new TekoraItem(false, "fire_clay_ball"));
+
   public static final DeferredHolder<Item, Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem("wrench", 560));
 
   public static final DeferredHolder<Item, Item> BAUXITE = ITEMS.register("bauxite", () -> new TekoraItem("bauxite"));
@@ -81,7 +84,22 @@ public class TekoraItems {
                   Solutes.create()
                           .addKey(SoluteKey.MAGNESIUM, 1)
                           .addKey(SoluteKey.CARBONATE, 1),
-                  9450));
+                  3.90));
+
+  public static final DeferredHolder<Item, Item> SODIUM_CHLORIDE = ITEMS.register("sodium_chloride",
+          () -> new CompoundItem("sodium_chloride",
+                  Solutes.create()
+                          .addKey(SoluteKey.SODIUM, 1)
+                          .addKey(SoluteKey.CHLORIDE, 1),
+                  4.12));
+
+  // used to craft super fertilizers, grows crops better than bone meal.
+  public static final DeferredHolder<Item, Item> AMMONIUM_PHOSPHATE = ITEMS.register("ammonium_phosphate",
+          () -> new CompoundItem("ammonium_phosphate",
+                  Solutes.create()
+                          .addKey(SoluteKey.AMMONIUM, 3)
+                          .addKey(SoluteKey.PHOSPHATE, 1),
+                  1.21));
 
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override

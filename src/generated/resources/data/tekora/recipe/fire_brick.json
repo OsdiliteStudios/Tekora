@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "experience": 0.1,
+  "ingredient": "tekora:fire_clay_ball",
+  "result": {
+    "id": "tekora:fire_brick"
+  }
+}

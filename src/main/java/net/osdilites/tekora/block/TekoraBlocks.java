@@ -113,6 +113,14 @@ public class TekoraBlocks {
         "steel_block", 
         () -> new TekoraBaseBlock("steel_block")
     );
+    public static final DeferredHolder<Block, Block> FIRE_BRICKS = createBlock(
+            "fire_bricks",
+            () -> new TekoraBaseBlock("fire_bricks")
+    );
+    public static final DeferredHolder<Block, Block> FIRE_CLAY = createBlock(
+            "fire_clay",
+            () -> new TekoraBaseBlock("fire_clay")
+    );
         
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);

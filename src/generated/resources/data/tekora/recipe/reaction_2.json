@@ -1,0 +1,45 @@
+{
+  "type": "tekora:reaction",
+  "activation_energy": 15000.0,
+  "catalyst": {
+    "catalyst": {
+      "input": "minecraft:barrier",
+      "is_solid": true
+    }
+  },
+  "d_enthalpy": 3880.0,
+  "d_entropy": 43.0,
+  "freq_factor": 1.0E9,
+  "products": [
+    {
+      "chemical": {
+        "input": {
+          "charge": 1,
+          "formula": "Na"
+        },
+        "is_solid": false
+      },
+      "order": 1
+    },
+    {
+      "chemical": {
+        "input": {
+          "charge": -1,
+          "formula": "Cl"
+        },
+        "is_solid": false
+      },
+      "order": 1
+    }
+  ],
+  "reactants": [
+    {
+      "chemical": {
+        "input": "tekora:sodium_chloride",
+        "is_solid": true
+      },
+      "order": 1
+    }
+  ],
+  "solvent": "minecraft:water"
+}

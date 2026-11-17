@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class TekoraRecipeProvider extends RecipeProvider {
+    private static int reactionId = 1;
     public TekoraRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
         super(registries, output);
     }
@@ -107,14 +108,55 @@ public class TekoraRecipeProvider extends RecipeProvider {
 
         smeltingResultFromBase(TekoraItems.FIRE_BRICK.get(), TekoraItems.FIRE_CLAY_BALL.get());
 
-        int reactionId = 1;
-        ReactionRecipeBuilder.createReactionRecipe(reactionId++,
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
                 List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.MAGNESIUM), 1, 1),
                         new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.CARBONATE), 1, 1)),
                 List.of(new Chemical(ChemicalIngredient.of(TekoraItems.MAGNESIUM_CARBONATE.get()), 1, 1)),
                 new Catalyst(ChemicalIngredient.liquidSolute(SoluteKey.SULFATE), 10000),
                 FluidIngredient.of(Fluids.WATER),
                 30540, 260.7, 2.51E8, 75540).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.of(TekoraItems.SODIUM_CHLORIDE.get()), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SODIUM), 1, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.CHLORIDE), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                3880, 43.0, 1E9, 15000).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.AMMONIUM), 3, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.PHOSPHATE), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(TekoraItems.AMMONIUM_PHOSPHATE.get()), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                5400, 2.0, 1E9, 12000).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SODIUM), 1, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.HYDROXIDE), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(TekoraItems.SODIUM_HYDROXIDE.get()), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                44500, 23.0, 1E9, 12000).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.BISULFATE), 1, 1),
+                        new Chemical(ChemicalIngredient.of(Fluids.WATER), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.HYDROXIDE), 1, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SULFURIC_ACID), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                55840, 80.7, 1E10, 5000).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SULFATE), 1, 1),
+                        new Chemical(ChemicalIngredient.of(Fluids.WATER), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.HYDROXIDE), 1, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.BISULFATE), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                30730, 128, 1E9, 8000).save(output);
 
         //PressingRecipeBuilder.pressingBuilder(RecipeCategory.TOOLS, Ingredient.of(TekoraItems.STEEL_INGOT.get()), TekoraItems.STEEL_PLATE.get(), 1, 1)
         //        .save(output, "tekora:pressing/steel_plate"); // todo, change the cuttorque and ratedvelocity values in the future
@@ -127,5 +169,9 @@ public class TekoraRecipeProvider extends RecipeProvider {
                 .pattern(" P ")
                 .define('P', gearPart)
                 .unlockedBy("has_" + gearPart.getDescriptionId(), has(gearPart));
+    }
+
+    public static int getReactionId() {
+        return reactionId++;
     }
 }

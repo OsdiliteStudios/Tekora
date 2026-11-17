@@ -1,0 +1,55 @@
+{
+  "type": "tekora:reaction",
+  "activation_energy": 5000.0,
+  "catalyst": {
+    "catalyst": {
+      "input": "minecraft:barrier",
+      "is_solid": true
+    }
+  },
+  "d_enthalpy": 55840.0,
+  "d_entropy": 80.7,
+  "freq_factor": 1.0E10,
+  "products": [
+    {
+      "chemical": {
+        "input": {
+          "charge": -1,
+          "formula": "OH"
+        },
+        "is_solid": false
+      },
+      "order": 1
+    },
+    {
+      "chemical": {
+        "input": {
+          "charge": 0,
+          "formula": "H2SO4"
+        },
+        "is_solid": false
+      },
+      "order": 1
+    }
+  ],
+  "reactants": [
+    {
+      "chemical": {
+        "input": {
+          "charge": -1,
+          "formula": "HSO4"
+        },
+        "is_solid": false
+      },
+      "order": 1
+    },
+    {
+      "chemical": {
+        "input": "minecraft:water",
+        "is_solid": false
+      },
+      "order": 1
+    }
+  ],
+  "solvent": "minecraft:water"
+}

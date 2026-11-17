@@ -4,6 +4,8 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -57,6 +59,14 @@ public class CombustionChamber extends AbstractThermalMachine {
             }
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState onState, Entity entity) {
+        super.stepOn(level, pos, onState, entity);
+        if (entity instanceof LivingEntity ent && onState.hasProperty(AbstractThermalMachine.LIT) && onState.getValue(AbstractThermalMachine.LIT)) {
+            ent.hurt(level.damageSources().campfire(), 1.0f);
+        }
     }
 
     @Override

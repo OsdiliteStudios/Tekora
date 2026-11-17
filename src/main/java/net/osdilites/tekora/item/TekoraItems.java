@@ -101,6 +101,14 @@ public class TekoraItems {
                           .addKey(SoluteKey.PHOSPHATE, 1),
                   1.21));
 
+  // testing acid-base reactions
+  public static final DeferredHolder<Item, Item> SODIUM_HYDROXIDE = ITEMS.register("sodium_hydroxide",
+          () -> new CompoundItem("sodium_hydroxide",
+                  Solutes.create()
+                          .addKey(SoluteKey.SODIUM, 1)
+                          .addKey(SoluteKey.HYDROXIDE, 1),
+                  5.92));
+
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override
     public InteractionResult useOn(UseOnContext pContext) {

@@ -177,6 +177,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
                 accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
 
+                // treat the products as left side of equation, or is this supposed to test not modifying tank? 
+                // TODO need to test implications of this
                 accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
                 accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
                 return torque; // todo, make this return viscosity rather than torque

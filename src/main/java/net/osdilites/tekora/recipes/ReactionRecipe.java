@@ -364,7 +364,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             ItemResource resource = inventory.getResource(ind);
             if (hasSolutes && resource.has(TekoraComponents.SOLUTES_LIST)) {
                 int mapInd = 0;
-                // todo, work products/reactants that are not in the list but in the recipe within the recipe.
+                // -----todo, work products/reactants that are not in the list but in the recipe within the recipe.
                 Map<SoluteKey, Double> data = resource.get(TekoraComponents.SOLUTES_LIST).dataMap();
                 for (var entry : data.entrySet()) {
                     float coeff = vals[mapInd++];
@@ -380,6 +380,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                     }
                 }
             }
+
+            // should I just refactor the hell out of this
+            // TODO: fiddle with this last, focus on making items from solutes in BasinEntity
 
             float amt = (float)rate * vals[0];
             if (action == -1) amt = -amt;

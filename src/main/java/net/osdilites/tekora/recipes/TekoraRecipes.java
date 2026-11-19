@@ -72,6 +72,26 @@ public class TekoraRecipes {
                 .getRecipeFor(recipeType, input, level);
     }
 
+    /** 
+     * For if getCurrentRecipe() cannot find a recipe, but a manual linear search implementation can.
+     * Note: this can get very slow if there are many recipes belonging to recipeType, 
+     * so this is not recommended for most use cases.
+     */
+    public static <S extends RecipeInput, T extends Recipe<S>> Optional<RecipeHolder<T>> getFirstRecipe(ServerLevel level, RecipeType<T> recipeType, S input) {
+        Optional<RecipeHolder<T>> val = Optional.ofNullable(null);
+        var recipeMapType = level.recipeAccess().recipeMap().byType(recipeType);
+
+        for (var it = recipeMapType.iterator(); it.hasNext(); ) {
+            RecipeHolder<T> holder = it.next();
+            if (holder.value().matches(input, level)) {
+                val = Optional.of(holder);
+                break;
+            }
+        }
+
+        return val;
+    }
+
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);
         TYPES.register(eventBus);

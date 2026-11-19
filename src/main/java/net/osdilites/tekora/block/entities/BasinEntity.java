@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -32,11 +33,15 @@ import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.data.SoluteKey;
+import net.osdilites.tekora.data.Solutes;
+import net.osdilites.tekora.data.TekoraComponents;
 import net.osdilites.tekora.fluid.ChemicalFluidType;
+import net.osdilites.tekora.item.TekoraItems;
 import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.recipes.ReactionRecipe;
 import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 import net.osdilites.tekora.recipes.TekoraRecipes;
+import net.osdilites.tekora.recipes.ingredient.Chemical;
 import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
 
@@ -107,12 +112,37 @@ public class BasinEntity extends AbstractModularCraftEntity {
         };
     }
 
-    private double craftItem() {
+    // for non-reaction recipes.
+    private double craftItem(ReactionRecipe recipe) {
         try (Transaction transaction = Transaction.openRoot()) {
-            ItemAccess access = ItemAccess.forHandlerIndex(inventory, 1);
-            // inventory.extract(inventory.getResource(0), 1, transaction);
-            // inventory.set(1, ItemResource.of(output), access.getAmount() + output.getCount());
-            // transaction.commit();
+            ItemAccess access = ItemAccess.forHandlerIndex(inventory, 2);
+
+            // temporary segment
+            {
+                // like allPresent() in reactionRecipe
+                var products = recipe.getProducts();
+                if (access.getResource().isEmpty()) return 0;
+
+                ChemicalIngredient key = ChemicalIngredient.of(access.getResource().getItem());
+                ItemResource output = access.getResource();
+                boolean inRecipe = true;
+                for (var chemProd : products) {
+                    ChemicalIngredient prodKey = chemProd.chemical();
+                    System.out.println(prodKey);
+                    System.out.println(key);
+                    if (prodKey.equals(key) && prodKey.isMaterial()) {
+                        inRecipe = true;
+                        // argghhh. what the hell?
+                        // output = Optional.of(ItemResource.of(TekoraItems.SODIUM_CHLORIDE.get()));
+                        break;
+                    }
+                }
+                if (!inRecipe) return 0;
+                // inventory.extract(inventory.getResource(0), 1, transaction);
+                inventory.set(2, output, access.getAmount() + 1);
+            }
+            
+            transaction.commit();
         }
         return 0;
     }
@@ -131,14 +161,46 @@ public class BasinEntity extends AbstractModularCraftEntity {
             return 0;
         }
 
+        // TODO, hardcode set the solutes of the fluid currently in the tank, to test 
+        // if basin produces products given enough energy
+        
+        // // buggy
+        // FluidResource resourceT = tank.getResource(0);
+        // Map<SoluteKey, Double> dataT = new HashMap<SoluteKey, Double>();
+        // dataT.put(SoluteKey.MAGNESIUM, 200.0);
+        // dataT.put(SoluteKey.CARBONATE, 200.0);
+        // if (resourceT.get(TekoraComponents.SOLUTES_LIST) == null) {
+        //     FluidResource wat = FluidResource.of(Fluids.WATER);
+        //     tank.set(0, wat.with(TekoraComponents.SOLUTES_LIST, new Solutes(dataT)), 1000); 
+        // }
+        
+
+        // what currently works is that, once the reactant solutes are present in ingredients, the
+        // product(s) get produced. 
+
+        // TODO, test the reverse reaction
+
+        // okay, here's a plan:
+        // if the ReactionRecipe helpers are hard to refactor or comprehend, just check for the 
+        // presence of a recipe, then try to produce some output every nth tick or based on torque,
+        // similar to the depot recipe. the goal is to get something working first, so that it will
+        // be easier to make changes iteratively.
+        // ignore the accessedRec functions, just produce products
+
         if (type.equals(TekoraMechanicalRecipe.MIXER)) {
             // the following code below reads the ingredients in inventory/tank
             HashMap<ChemicalIngredient, Double> ingredients = new HashMap<>();
             HashMap<SoluteKey, Double> liquidSolutes = new HashMap<>();
-            float volume = ReactionRecipeInput.fromReadingHandlersGetVolume(ingredients, liquidSolutes, inventory, tank);
 
+            // hardcoded test! hardcoded test!
+            liquidSolutes.put(SoluteKey.MAGNESIUM, 200.0);
+            liquidSolutes.put(SoluteKey.CARBONATE, 200.0);
+
+            float volume = ReactionRecipeInput.fromReadingHandlersGetVolume(ingredients, liquidSolutes, inventory, tank);
+            
+            torque = 88888888;
             ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy
-            Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getCurrentRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
+            Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getFirstRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
 
             if (recipe.isEmpty()) {
                 this.hasRxn = false;
@@ -160,6 +222,9 @@ public class BasinEntity extends AbstractModularCraftEntity {
             this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
             this.lnK = accessedRec.getLnK(temperature);
 
+            // TODO temp
+            craftItem(accessedRec);
+
             // disabled realistic rate law checking for now
             float rate = 1;//accessedRec.getRateTicks(liquidSolutes, temperature);
             // if (rate == 0) {
@@ -178,7 +243,11 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
 
                 // treat the products as left side of equation, or is this supposed to test not modifying tank? 
-                // TODO need to test implications of this
+                // TODO need to test implications of this 11/13
+                // 11/18 it seems kinda silly to negate the action value given the
+                // direction of the reaction depends on whether lnQ > or < than lnK
+                // unless there's a reason out there i'm missing
+
                 accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
                 accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
                 return torque; // todo, make this return viscosity rather than torque
@@ -271,6 +340,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
             var itemCapability = itemAccess.getCapability(Capabilities.Fluid.ITEM);
 
             // todo, expand upon this mechanism by which a tank could be emptied.
+            // TODO, consider if the code here is compatible for both items and machines (pipes?)
             
             int fluidMoved = ResourceHandlerUtil.move(tank, itemCapability, 
                 fluidResource -> itemCapability.getResource(0).isEmpty() || itemCapability.getResource(0).is(fluidResource.getFluidType()), 

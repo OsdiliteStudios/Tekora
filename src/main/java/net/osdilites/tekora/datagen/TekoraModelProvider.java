@@ -49,6 +49,13 @@ public class TekoraModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(TekoraItems.DEBUG_ITEM.get(), ModelTemplates.FLAT_ITEM);
 
+        itemModels.generateFlatItem(TekoraItems.RAW_TIN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.RAW_ZINC.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.RAW_NICKEL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.RAW_LEAD.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.RAW_SILVER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.RAW_PLATINUM.get(), ModelTemplates.FLAT_ITEM);
+
         // blockModels.createTrivialCube(ModBlocks.BAUXITE_ORE.get());
     }
     

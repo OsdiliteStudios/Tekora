@@ -2,6 +2,7 @@ package net.osdilites.tekora.datagen;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.references.BlockItemId;
 import net.minecraft.tags.BlockTags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.osdilites.tekora.Tekora;
@@ -27,7 +28,13 @@ public class TekoraBlockTagProvider extends BlockTagsProvider {
                 .add(TekoraBlocks.getKey(TekoraBlocks.KILN_FURNACE.get()))
                 .add(TekoraBlocks.getKey(TekoraBlocks.BASIN.get()))
                 .add(TekoraBlocks.getKey(TekoraBlocks.DEPOT.get()))
-                .add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()));
+                .add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.TIN_ORE.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.SILVER_ORE.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.ZINC_ORE.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.SILVER_ORE.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.LEAD_ORE.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.PLATINUM_ORE.get()));
 
         tag(BlockTags.MINEABLE_WITH_AXE).add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()));
 
@@ -42,6 +49,16 @@ public class TekoraBlockTagProvider extends BlockTagsProvider {
                 .add(TekoraBlocks.getKey(TekoraBlocks.KILN_FURNACE.get()))
                 .add(TekoraBlocks.getKey(TekoraBlocks.BASIN.get()))
                 .add(TekoraBlocks.getKey(TekoraBlocks.DEPOT.get()))
-                .add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()));
+                .add(TekoraBlocks.getKey(TekoraBlocks.HAND_CRANK.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.TIN_ORE.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.ZINC_ORE.get()));
+
+        tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(TekoraBlocks.getKey(TekoraBlocks.LEAD_ORE.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.NICKEL_ORE.get()))
+                .add(TekoraBlocks.getKey(TekoraBlocks.SILVER_ORE.get()));
+
+        tag(BlockTags.NEEDS_DIAMOND_TOOL)
+                .add(TekoraBlocks.getKey(TekoraBlocks.PLATINUM_ORE.get()));
     }
 }

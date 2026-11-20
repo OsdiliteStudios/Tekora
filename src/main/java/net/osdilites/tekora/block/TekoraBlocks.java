@@ -1,5 +1,6 @@
 package net.osdilites.tekora.block;
 
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
@@ -9,6 +10,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.block.basic.TekoraExperienceBlock;
 import net.osdilites.tekora.block.entities.Basin;
 import net.osdilites.tekora.block.entities.Depot;
 import net.osdilites.tekora.block.entities.mechanical.*;
@@ -66,6 +68,32 @@ public class TekoraBlocks {
             createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID_SOURCE.get(), "sulfuric_acid"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> AMMONIA =
             createBlock("ammonia", () -> new ChemicalLiquidBlock(TekoraFluids.AMMONIA_SOURCE.get(), "ammonia"));
+
+    // custom ore metals
+    public static final DeferredHolder<Block, TekoraExperienceBlock> NICKEL_ORE = createBlock(
+            "nickel_ore",
+            () -> new TekoraExperienceBlock("nickel_ore", 3.0f, 3.0f)
+    );
+    public static final DeferredHolder<Block, TekoraExperienceBlock> ZINC_ORE = createBlock(
+            "zinc_ore",
+            () -> new TekoraExperienceBlock("zinc_ore", 3.0f, 3.0f)
+    );
+    public static final DeferredHolder<Block, TekoraExperienceBlock> SILVER_ORE = createBlock(
+            "silver_ore",
+            () -> new TekoraExperienceBlock("silver_ore", 3.0f, 3.0f)
+    );
+    public static final DeferredHolder<Block, TekoraExperienceBlock> TIN_ORE = createBlock(
+            "tin_ore",
+            () -> new TekoraExperienceBlock("tin_ore", 3.0f, 3.0f)
+    );
+    public static final DeferredHolder<Block, TekoraExperienceBlock> LEAD_ORE = createBlock(
+            "lead_ore",
+            () -> new TekoraExperienceBlock("lead_ore", 3.0f, 3.0f)
+    );
+    public static final DeferredHolder<Block, TekoraExperienceBlock> PLATINUM_ORE = createBlock(
+            "platinum_ore",
+            () -> new TekoraExperienceBlock("platinum_ore", 4.0f, 3.0f)
+    );
 
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);

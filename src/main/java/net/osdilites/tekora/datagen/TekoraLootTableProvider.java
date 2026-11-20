@@ -10,7 +10,9 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.osdilites.tekora.block.TekoraBlocks;
+import net.osdilites.tekora.block.basic.TekoraExperienceBlock;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachine;
+import net.osdilites.tekora.item.TekoraItems;
 
 import java.util.Set;
 
@@ -36,6 +38,14 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
         add(TekoraBlocks.PRINTER.get(), this::dropMechTopPart);
         add(TekoraBlocks.PRESS.get(), this::dropMechTopPart);
         add(TekoraBlocks.CUTTER.get(), this::dropMechTopPart);
+
+        add(TekoraBlocks.NICKEL_ORE.get(), block -> createOreDrop(block, TekoraItems.RAW_NICKEL.get()));
+        add(TekoraBlocks.TIN_ORE.get(), block -> createOreDrop(block, TekoraItems.RAW_TIN.get()));
+        add(TekoraBlocks.ZINC_ORE.get(), block -> createOreDrop(block, TekoraItems.RAW_ZINC.get()));
+        add(TekoraBlocks.LEAD_ORE.get(), block -> createOreDrop(block, TekoraItems.RAW_LEAD.get()));
+        add(TekoraBlocks.SILVER_ORE.get(), block -> createOreDrop(block, TekoraItems.RAW_SILVER.get()));
+        add(TekoraBlocks.PLATINUM_ORE.get(), block -> createOreDrop(block, TekoraItems.RAW_PLATINUM.get()));
+
     }
 
     private LootTable.Builder dropMechTopPart(Block block) {

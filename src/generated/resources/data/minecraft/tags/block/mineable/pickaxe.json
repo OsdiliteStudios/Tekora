@@ -10,6 +10,12 @@
     "tekora:kiln_furnace",
     "tekora:basin",
     "tekora:depot",
-    "tekora:hand_crank"
+    "tekora:hand_crank",
+    "tekora:tin_ore",
+    "tekora:silver_ore",
+    "tekora:zinc_ore",
+    "tekora:silver_ore",
+    "tekora:lead_ore",
+    "tekora:platinum_ore"
   ]
 }

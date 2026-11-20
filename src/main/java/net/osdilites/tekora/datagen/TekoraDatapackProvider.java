@@ -25,6 +25,7 @@ public class TekoraDatapackProvider extends DatapackBuiltinEntriesProvider {
 
             .add(Registries.CONFIGURED_FEATURE, TekoraConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, TekoraPlacedFeatures::bootstrap)
+            .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, TekoraBiomeModifiers::bootstrap)
 
             //.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, TekoraBiomeModifiers::bootstrap)
 

@@ -10,6 +10,8 @@
     "tekora:kiln_furnace",
     "tekora:basin",
     "tekora:depot",
-    "tekora:hand_crank"
+    "tekora:hand_crank",
+    "tekora:tin_ore",
+    "tekora:zinc_ore"
   ]
 }

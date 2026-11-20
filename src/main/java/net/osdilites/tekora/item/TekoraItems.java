@@ -63,6 +63,14 @@ public class TekoraItems {
 
   // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
 
+  // raw ores
+  public static final DeferredHolder<Item, Item> RAW_NICKEL = ITEMS.register("raw_nickel", () -> new TekoraItem("raw_nickel"));
+  public static final DeferredHolder<Item, Item> RAW_TIN = ITEMS.register("raw_tin", () -> new TekoraItem("raw_tin"));
+  public static final DeferredHolder<Item, Item> RAW_ZINC = ITEMS.register("raw_zinc", () -> new TekoraItem("raw_zinc"));
+  public static final DeferredHolder<Item, Item> RAW_LEAD = ITEMS.register("raw_lead", () -> new TekoraItem("raw_lead"));
+  public static final DeferredHolder<Item, Item> RAW_SILVER = ITEMS.register("raw_silver", () -> new TekoraItem("raw_silver"));
+  public static final DeferredHolder<Item, Item> RAW_PLATINUM = ITEMS.register("raw_platinum", () -> new TekoraItem("raw_platinum"));
+
   public static final DeferredHolder<Item, Item> MAGNESIUM_CARBONATE = ITEMS.register("magnesium_carbonate", () -> new CompoundItem("magnesium_carbonate", "MgCO3", 9450));
 
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {

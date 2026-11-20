@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "experience": 0.1,
+  "ingredient": "tekora:bauxite",
+  "result": {
+    "id": "tekora:aluminum_oxide"
+  }
+}

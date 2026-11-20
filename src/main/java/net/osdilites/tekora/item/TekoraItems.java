@@ -109,6 +109,14 @@ public class TekoraItems {
                           .addKey(SoluteKey.HYDROXIDE, 1),
                   5.92));
 
+  // kiln furnace recipe
+  public static final DeferredHolder<Item, Item> ALUMINUM_OXIDE = ITEMS.register("aluminum_oxide",
+          () -> new CompoundItem("aluminum_oxide",
+                  Solutes.create()
+                          .addKey(SoluteKey.ALUMINUM, 1)
+                          .addKey(SoluteKey.OXIDE, 3),
+                  4.30));
+
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override
     public InteractionResult useOn(UseOnContext pContext) {

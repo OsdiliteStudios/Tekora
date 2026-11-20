@@ -19,13 +19,13 @@ public class ReactionRecipeBuilder extends AbstractTekoraRecipeBuilder {
     private final List<Chemical> products;
     private final Catalyst catalyst;
     private final FluidIngredient solvent;
-    private final int id;
+    private final long id;
     private final double deltaEnthalpy;
     private final double deltaEntropy;
     private final double freqFactor;
     private final double activationEnergy;
 
-    private ReactionRecipeBuilder(int id, List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double freqFactor, double activationEnergy) {
+    private ReactionRecipeBuilder(long id, List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double freqFactor, double activationEnergy) {
         this.id = id;
         this.reactants = reactants;
         this.products = products;
@@ -48,7 +48,7 @@ public class ReactionRecipeBuilder extends AbstractTekoraRecipeBuilder {
         recipeOutput.accept(resourceKey, recipe, null);
     }
 
-    public static ReactionRecipeBuilder createReactionRecipe(int id, List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double freqFactor, double activationEnergy) {
+    public static ReactionRecipeBuilder createReactionRecipe(long id, List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double freqFactor, double activationEnergy) {
         return new ReactionRecipeBuilder(id, reactants, products, catalyst, solvent, deltaEnthalpy, deltaEntropy, freqFactor, activationEnergy);
     }
 }

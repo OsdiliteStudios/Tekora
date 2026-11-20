@@ -13,6 +13,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.data.SoluteKey;
+import net.osdilites.tekora.data.Solutes;
 import net.osdilites.tekora.datagen.recipetypes.ReactionRecipeBuilder;
 import net.osdilites.tekora.datagen.tags.TekoraTags;
 import net.osdilites.tekora.item.TekoraItems;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class TekoraRecipeProvider extends RecipeProvider {
-    private static int reactionId = 1;
+    private static long reactionId = 1;
     public TekoraRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
         super(registries, output);
     }
@@ -107,59 +108,76 @@ public class TekoraRecipeProvider extends RecipeProvider {
                 .save(output);
 
         smeltingResultFromBase(TekoraItems.FIRE_BRICK.get(), TekoraItems.FIRE_CLAY_BALL.get());
+        smeltingResultFromBase(TekoraItems.ALUMINUM_OXIDE.get(), TekoraItems.BAUXITE.get());
 
         ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
-                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.MAGNESIUM), 1, 1),
-                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.CARBONATE), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.MAGNESIUM), 1, 1),
+                        new Chemical(ChemicalIngredient.of(SoluteKey.CARBONATE), 1, 1)),
                 List.of(new Chemical(ChemicalIngredient.of(TekoraItems.MAGNESIUM_CARBONATE.get()), 1, 1)),
-                new Catalyst(ChemicalIngredient.liquidSolute(SoluteKey.SULFATE), 10000),
+                new Catalyst(ChemicalIngredient.of(SoluteKey.SULFATE), 10000),
                 FluidIngredient.of(Fluids.WATER),
                 30540, 260.7, 2.51E8, 75540).save(output);
 
         ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
                 List.of(new Chemical(ChemicalIngredient.of(TekoraItems.SODIUM_CHLORIDE.get()), 1, 1)),
-                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SODIUM), 1, 1),
-                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.CHLORIDE), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.SODIUM), 1, 1),
+                        new Chemical(ChemicalIngredient.of(SoluteKey.CHLORIDE), 1, 1)),
                 Catalyst.NULL_CATALYST,
                 FluidIngredient.of(Fluids.WATER),
                 3880, 43.0, 1E9, 15000).save(output);
 
         ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
-                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.AMMONIUM), 3, 1),
-                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.PHOSPHATE), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.AMMONIUM), 3, 1),
+                        new Chemical(ChemicalIngredient.of(SoluteKey.PHOSPHATE), 1, 1)),
                 List.of(new Chemical(ChemicalIngredient.of(TekoraItems.AMMONIUM_PHOSPHATE.get()), 1, 1)),
                 Catalyst.NULL_CATALYST,
                 FluidIngredient.of(Fluids.WATER),
-                5400, 2.0, 1E9, 12000).save(output);
+                5400, -2.0, 1E9, 12000).save(output);
 
         ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
-                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SODIUM), 1, 1),
-                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.HYDROXIDE), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.SODIUM), 1, 1),
+                        new Chemical(ChemicalIngredient.of(SoluteKey.HYDROXIDE), 1, 1)),
                 List.of(new Chemical(ChemicalIngredient.of(TekoraItems.SODIUM_HYDROXIDE.get()), 1, 1)),
                 Catalyst.NULL_CATALYST,
                 FluidIngredient.of(Fluids.WATER),
-                44500, 23.0, 1E9, 12000).save(output);
+                44500, -23.0, 1E9, 12000).save(output);
 
         ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
-                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.BISULFATE), 1, 1),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.BISULFATE), 1, 1),
                         new Chemical(ChemicalIngredient.of(Fluids.WATER), 1, 1)),
-                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.HYDROXIDE), 1, 1),
-                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SULFURIC_ACID), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.HYDROXIDE), 1, 1),
+                        new Chemical(ChemicalIngredient.of(SoluteKey.SULFURIC_ACID), 1, 1)),
                 Catalyst.NULL_CATALYST,
                 FluidIngredient.of(Fluids.WATER),
-                55840, 80.7, 1E10, 5000).save(output);
+                55840, -80.7, 1E10, 5000).save(output);
 
         ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
-                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SULFATE), 1, 1),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.SULFATE), 1, 1),
                         new Chemical(ChemicalIngredient.of(Fluids.WATER), 1, 1)),
-                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.HYDROXIDE), 1, 1),
-                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.BISULFATE), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.HYDROXIDE), 1, 1),
+                        new Chemical(ChemicalIngredient.of(SoluteKey.BISULFATE), 1, 1)),
                 Catalyst.NULL_CATALYST,
                 FluidIngredient.of(Fluids.WATER),
-                30730, 128, 1E9, 8000).save(output);
+                30730, -128, 1E9, 8000).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.HYDROXIDE), 1, 2)),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.OXIDE), 1, 1),
+                        new Chemical(ChemicalIngredient.of(Fluids.WATER), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                163300, 157, 1E10, 20000).save(output);
+
+//        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+//                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.ALUMINUM), 1, 1),
+//                        new Chemical(ChemicalIngredient.of(SoluteKey.HYDROXIDE), 3, 3)),
+//                List.of(new Chemical(ChemicalIngredient.of(Solutes.create().addKey(SoluteKey.ALUMINUM, 1).addKey(SoluteKey.HYDROXIDE, 3)), 1, 1)),
+//                Catalyst.NULL_CATALYST,
+//                FluidIngredient.of(Fluids.WATER),
+//                128900, 215, 1E10, 143900).save(output);
 
         //PressingRecipeBuilder.pressingBuilder(RecipeCategory.TOOLS, Ingredient.of(TekoraItems.STEEL_INGOT.get()), TekoraItems.STEEL_PLATE.get(), 1, 1)
-        //        .save(output, "tekora:pressing/steel_plate"); // todo, change the cuttorque and ratedvelocity values in the future
+        //        .save(output, "tekora:pressing/steel_plate"); // todo, change the cut torque and rated velocity values in the future
     }
 
     private void buildGearRecipe(Item gear, Item gearPart) {
@@ -171,7 +189,7 @@ public class TekoraRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_" + gearPart.getDescriptionId(), has(gearPart));
     }
 
-    public static int getReactionId() {
+    public static long getReactionId() {
         return reactionId++;
     }
 }

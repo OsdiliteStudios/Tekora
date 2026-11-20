@@ -1,0 +1,41 @@
+{
+  "type": "tekora:reaction",
+  "activation_energy": 20000.0,
+  "catalyst": {
+    "catalyst": {
+      "input": "minecraft:barrier"
+    }
+  },
+  "d_enthalpy": 163300.0,
+  "d_entropy": 157.0,
+  "freq_factor": 1.0E10,
+  "products": [
+    {
+      "chemical": {
+        "input": {
+          "charge": -2,
+          "formula": "O"
+        }
+      },
+      "order": 1
+    },
+    {
+      "chemical": {
+        "input": "minecraft:water"
+      },
+      "order": 1
+    }
+  ],
+  "reactants": [
+    {
+      "chemical": {
+        "input": {
+          "charge": -1,
+          "formula": "OH"
+        }
+      },
+      "order": 2
+    }
+  ],
+  "solvent": "minecraft:water"
+}

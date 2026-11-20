@@ -6,7 +6,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -45,6 +44,10 @@ public record Solutes(@NotNull Map<SoluteKey, Double> dataMap) {
         if (dataMap.containsKey(key)) {
             dataMap.put(key, coeff);
         }
+    }
+
+    public double getKey(SoluteKey key) {
+        return dataMap.getOrDefault(key, 0.0d);
     }
 
     public static Solutes create() {

@@ -103,10 +103,11 @@ public record ReactionRecipeInput(Map<ChemicalIngredient, Double> inputs, double
             ingredients.put(ChemicalIngredient.of(pair.getKey()), pair.getValue());
         }
         for (var pair : solidSolutes.entrySet()) {
+            // todo, sort this in a more respectible way
             ingredients.put(ChemicalIngredient.solidSolute(pair.getKey()), pair.getValue());
         }
         for (var pair : liquidSolutes.entrySet()) {
-            ingredients.put(ChemicalIngredient.liquidSolute(pair.getKey()), pair.getValue());
+            ingredients.put(ChemicalIngredient.of(pair.getKey()), pair.getValue());
         }
         return volume;
     }

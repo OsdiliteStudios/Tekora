@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -13,20 +12,21 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.osdilites.tekora.data.SoluteKey;
+import net.osdilites.tekora.data.Solutes;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 // todo, figure out how gas and dissolution behavior works
-public record ChemicalIngredient(Either<MaterialIngredient, SoluteKey> input, boolean isSolid) {
+public record ChemicalIngredient(Either<MaterialIngredient, ChemDataIngredient> input) {
     public static final Codec<ChemicalIngredient> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    Codec.either(MaterialIngredient.CODEC, SoluteKey.CODEC).fieldOf("input").forGetter(ChemicalIngredient::input),
-                    Codec.BOOL.fieldOf("is_solid").forGetter(ChemicalIngredient::isSolid)
+                    Codec.either(MaterialIngredient.CODEC, ChemDataIngredient.CODEC).fieldOf("input").forGetter(ChemicalIngredient::input)
             ).apply(instance, ChemicalIngredient::new)
     );
 
-    private static final StreamCodec<RegistryFriendlyByteBuf, Either<MaterialIngredient, SoluteKey>>
+    private static final StreamCodec<RegistryFriendlyByteBuf, Either<MaterialIngredient, ChemDataIngredient>>
             GENERAL_STREAM_CODEC = StreamCodec.of(
             (buf, either) -> either.ifLeft(
                     ingredient -> {
@@ -36,29 +36,50 @@ public record ChemicalIngredient(Either<MaterialIngredient, SoluteKey> input, bo
             ).ifRight(
                     solute -> {
                         buf.writeBoolean(false);
-                        SoluteKey.STREAM_CODEC.encode(buf, solute);
+                        ChemDataIngredient.STREAM_CODEC.encode(buf, solute);
                     }
             ),
             buf -> buf.readBoolean()
                     ? Either.left(MaterialIngredient.STREAM_CODEC.decode(buf))
-                    : Either.right(SoluteKey.STREAM_CODEC.decode(buf))
+                    : Either.right(ChemDataIngredient.STREAM_CODEC.decode(buf))
     );
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ChemicalIngredient> STREAM_CODEC = StreamCodec.composite(
             GENERAL_STREAM_CODEC, ChemicalIngredient::input,
-            ByteBufCodecs.BOOL, ChemicalIngredient::isSolid,
             ChemicalIngredient::new
     );
 
     // Helper methods to easily query the machineType during reaction checks
-    public boolean isSolute() { return input.right().isPresent(); }
+    @Deprecated
+    public boolean isSolute() { return false; }
+
+    public boolean isData() { return input.right().isPresent(); }
     public boolean isMaterial() { return input.left().isPresent(); }
 
-    public MaterialIngredient asMaterial() { return input.left().orElseThrow(); }
-    public SoluteKey asSolute() { return input.right().orElseThrow(); }
+    public @NonNull MaterialIngredient asMaterial() { return input.left().orElseThrow(); }
+
+    @Contract(pure = true)
+    @Deprecated
+    public @Nullable SoluteKey asSolute() { return null; }
+
+    public @NonNull ChemDataIngredient asData() {
+        return input.right().orElseThrow();
+    }
 
     public boolean test(SoluteKey solute) {
-        return isSolute() && asSolute().equals(solute);
+        if (isData()) {
+            ChemDataIngredient data = asData();
+            return data.isSingular() && data.asSingular().equals(solute);
+        }
+        return false;
+    }
+
+    public boolean test(Solutes solutes) {
+        if (isData()) {
+            ChemDataIngredient data = asData();
+            return data.isSingular() && data.asMap().equals(solutes);
+        }
+        return false;
     }
 
     public boolean test(FluidStack fluid) {
@@ -79,8 +100,8 @@ public record ChemicalIngredient(Either<MaterialIngredient, SoluteKey> input, bo
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ChemicalIngredient(Either<MaterialIngredient, SoluteKey> input1, boolean isSolid1)) {
-            return input.equals(input1) && isSolid1 == isSolid;
+        if (obj instanceof ChemicalIngredient(Either<MaterialIngredient, ChemDataIngredient> input1)) {
+            return input.equals(input1);
         }
         return false;
     }
@@ -89,25 +110,40 @@ public record ChemicalIngredient(Either<MaterialIngredient, SoluteKey> input, bo
         return isSolute();
     }
 
+    // replace with of
+    @Deprecated
     public static @NonNull ChemicalIngredient liquidSolute(@NonNull SoluteKey data) {
-        return new ChemicalIngredient(Either.right(data), false);
+        return of(data);
     }
+
+    // replace with of
+    @Deprecated
     public static @NonNull ChemicalIngredient solidSolute(@NonNull SoluteKey data) {
-        return new ChemicalIngredient(Either.right(data), true);
+        return of(data);
     }
 
-    @Contract("_ -> new")
+    @Contract("_ -> new") // used for solids
+    public static @NonNull ChemicalIngredient of(SoluteKey data) {
+        return new ChemicalIngredient(Either.right(ChemDataIngredient.of(data)));
+    }
+
+    @Contract("_ -> new") // used for dissolved/aqueous solutes and gases
+    public static @NonNull ChemicalIngredient of(Solutes solutes) {
+        return new ChemicalIngredient(Either.right(ChemDataIngredient.of(solutes)));
+    }
+
+    @Contract("_ -> new") // used for liquids
     public static @NotNull ChemicalIngredient of(@NotNull Fluid fluid) {
-        return new ChemicalIngredient(Either.left(MaterialIngredient.of(FluidIngredient.of(fluid))), false);
+        return new ChemicalIngredient(Either.left(MaterialIngredient.of(FluidIngredient.of(fluid))));
     }
 
-    @Contract("_ -> new")
+    @Contract("_ -> new") // used for items
     public static @NotNull ChemicalIngredient of(@NotNull ItemLike item) {
-        return new ChemicalIngredient(Either.left(MaterialIngredient.of(Ingredient.of(item))), true);
+        return new ChemicalIngredient(Either.left(MaterialIngredient.of(Ingredient.of(item))));
     }
 
-    @Contract("_ -> new")
-    public static @NonNull ChemicalIngredient of(MaterialIngredient ingredient) {
-        return new ChemicalIngredient(Either.left(ingredient), ingredient.isItem());
+    @Deprecated
+    public static @Nullable ChemicalIngredient of(MaterialIngredient ingredient) {
+        return null;
     }
 }

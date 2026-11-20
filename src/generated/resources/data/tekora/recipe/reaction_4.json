@@ -3,18 +3,16 @@
   "activation_energy": 12000.0,
   "catalyst": {
     "catalyst": {
-      "input": "minecraft:barrier",
-      "is_solid": true
+      "input": "minecraft:barrier"
     }
   },
   "d_enthalpy": 44500.0,
-  "d_entropy": 23.0,
+  "d_entropy": -23.0,
   "freq_factor": 1.0E9,
   "products": [
     {
       "chemical": {
-        "input": "tekora:sodium_hydroxide",
-        "is_solid": true
+        "input": "tekora:sodium_hydroxide"
       },
       "order": 1
     }
@@ -25,8 +23,7 @@
         "input": {
           "charge": 1,
           "formula": "Na"
-        },
-        "is_solid": false
+        }
       },
       "order": 1
     },
@@ -35,8 +32,7 @@
         "input": {
           "charge": -1,
           "formula": "OH"
-        },
-        "is_solid": false
+        }
       },
       "order": 1
     }

@@ -61,6 +61,7 @@ public class TekoraModelProvider extends ModelProvider {
         itemModels.generateFlatItem(TekoraItems.SODIUM_CHLORIDE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.AMMONIUM_PHOSPHATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.SODIUM_HYDROXIDE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.ALUMINUM_OXIDE.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(TekoraItems.WRENCH.get(), ModelTemplates.FLAT_ITEM);
 

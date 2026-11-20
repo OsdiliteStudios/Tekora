@@ -69,33 +69,33 @@ public class TekoraBlocks {
 
     // fluids
     public static final DeferredHolder<Block, ChemicalLiquidBlock> ACETIC_ACID =
-            createBlock("acetic_acid", () -> new ChemicalLiquidBlock(TekoraFluids.ACETIC_ACID.getSource(), "acetic_acid"));
+            BLOCKS.register("acetic_acid", () -> new ChemicalLiquidBlock(TekoraFluids.ACETIC_ACID.getSource(), "acetic_acid"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> ACETONE =
-            createBlock("acetone", () -> new ChemicalLiquidBlock(TekoraFluids.ACETONE.getSource(), "acetone"));
+            BLOCKS.register("acetone", () -> new ChemicalLiquidBlock(TekoraFluids.ACETONE.getSource(), "acetone"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> AMMONIA =
-            createBlock("ammonia", () -> new ChemicalLiquidBlock(TekoraFluids.AMMONIA.getSource(), "ammonia"));
+            BLOCKS.register("ammonia", () -> new ChemicalLiquidBlock(TekoraFluids.AMMONIA.getSource(), "ammonia"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> BENZENE =
-            createBlock("benzene", () -> new ChemicalLiquidBlock(TekoraFluids.BENZENE.getSource(), "benzene"));
+            BLOCKS.register("benzene", () -> new ChemicalLiquidBlock(TekoraFluids.BENZENE.getSource(), "benzene"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> BROMINE =
-            createBlock("bromine", () -> new ChemicalLiquidBlock(TekoraFluids.BROMINE.getSource(), "bromine"));
+            BLOCKS.register("bromine", () -> new ChemicalLiquidBlock(TekoraFluids.BROMINE.getSource(), "bromine"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> ETHANOL =
-            createBlock("ethanol", () -> new ChemicalLiquidBlock(TekoraFluids.ETHANOL.getSource(), "ethanol"));
+            BLOCKS.register("ethanol", () -> new ChemicalLiquidBlock(TekoraFluids.ETHANOL.getSource(), "ethanol"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> FORMIC_ACID =
-            createBlock("formic_acid", () -> new ChemicalLiquidBlock(TekoraFluids.FORMIC_ACID.getSource(), "formic_acid"));
+            BLOCKS.register("formic_acid", () -> new ChemicalLiquidBlock(TekoraFluids.FORMIC_ACID.getSource(), "formic_acid"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> HYDRAZINE =
-            createBlock("hydrazine", () -> new ChemicalLiquidBlock(TekoraFluids.HYDRAZINE.getSource(), "hydrazine"));
+            BLOCKS.register("hydrazine", () -> new ChemicalLiquidBlock(TekoraFluids.HYDRAZINE.getSource(), "hydrazine"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> HYDROGEN_FLUORIDE =
-            createBlock("hydrogen_fluoride", () -> new ChemicalLiquidBlock(TekoraFluids.HYDROGEN_FLUORIDE.getSource(), "hydrogen_fluoride"));
+            BLOCKS.register("hydrogen_fluoride", () -> new ChemicalLiquidBlock(TekoraFluids.HYDROGEN_FLUORIDE.getSource(), "hydrogen_fluoride"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> HYDROGEN_PEROXIDE =
-            createBlock("hydrogen_peroxide", () -> new ChemicalLiquidBlock(TekoraFluids.HYDROGEN_PEROXIDE.getSource(), "hydrogen_peroxide"));
+            BLOCKS.register("hydrogen_peroxide", () -> new ChemicalLiquidBlock(TekoraFluids.HYDROGEN_PEROXIDE.getSource(), "hydrogen_peroxide"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> METHANOL =
-            createBlock("methanol", () -> new ChemicalLiquidBlock(TekoraFluids.METHANOL.getSource(), "methanol"));
+            BLOCKS.register("methanol", () -> new ChemicalLiquidBlock(TekoraFluids.METHANOL.getSource(), "methanol"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFURIC_ACID =
-            createBlock("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID.getSource(), "sulfuric_acid"));
+            BLOCKS.register("sulfuric_acid", () -> new ChemicalLiquidBlock(TekoraFluids.SULFURIC_ACID.getSource(), "sulfuric_acid"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFUR_DIOXIDE =
-            createBlock("sulfur_dioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_DIOXIDE.getSource(), "sulfur_dioxide"));
+            BLOCKS.register("sulfur_dioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_DIOXIDE.getSource(), "sulfur_dioxide"));
     public static final DeferredHolder<Block, ChemicalLiquidBlock> SULFUR_TRIOXIDE =
-            createBlock("sulfur_trioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_TRIOXIDE.getSource(), "sulfur_trioxide"));
+            BLOCKS.register("sulfur_trioxide", () -> new ChemicalLiquidBlock(TekoraFluids.SULFUR_TRIOXIDE.getSource(), "sulfur_trioxide"));
 
     // public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register(
     //     "steel_block", 

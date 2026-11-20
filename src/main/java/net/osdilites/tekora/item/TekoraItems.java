@@ -15,6 +15,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -32,11 +33,13 @@ import net.minecraft.world.item.*;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
+import net.osdilites.tekora.fluid.TekoraFluids;
 import net.osdilites.tekora.item.tools.ThermometerItem;
 import net.osdilites.tekora.item.typical.*;
 import net.osdilites.tekora.util.TekoraShaftBody;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class TekoraItems {
   public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Tekora.MODID);
@@ -78,6 +81,23 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> MERCURY_THERMOMETER = ITEMS.register("mercury_thermometer", () -> new ThermometerItem("mercury_thermometer", -1.55f, 10.27f, MobEffects.POISON)); // uses glass, but has a random chance of poisoning the player if broken somehow
   public static final DeferredHolder<Item, Item> GALINSTAN_THERMOMETER = ITEMS.register("galinstan_thermometer", () -> new ThermometerItem("galinstan_thermometer", -0.76f, 8.00f)); // uses borosilicate glass
   public static final DeferredHolder<Item, Item> GALINSTAN_QUARTZ_THERMOMETER = ITEMS.register("galinstan_quartz_thermometer", () -> new ThermometerItem("galinstan_quartz_thermometer", -0.76f, 44.00f)); // uses quartz
+
+  // Bucket items for fluids
+  // Inside TekoraItems.java
+  public static final DeferredHolder<Item, BucketItem> ACETIC_ACID_BUCKET = registerBucket("acetic_acid_bucket", () -> TekoraFluids.ACETIC_ACID.getSource());
+  public static final DeferredHolder<Item, BucketItem> ACETONE_BUCKET = registerBucket("acetone_bucket", () -> TekoraFluids.ACETONE.getSource());
+  public static final DeferredHolder<Item, BucketItem> AMMONIA_BUCKET = registerBucket("ammonia_bucket", () -> TekoraFluids.AMMONIA.getSource());
+  public static final DeferredHolder<Item, BucketItem> BENZENE_BUCKET = registerBucket("benzene_bucket", () -> TekoraFluids.BENZENE.getSource());
+  public static final DeferredHolder<Item, BucketItem> BROMINE_BUCKET = registerBucket("bromine_bucket", () -> TekoraFluids.BROMINE.getSource());
+  public static final DeferredHolder<Item, BucketItem> ETHANOL_BUCKET = registerBucket("ethanol_bucket", () -> TekoraFluids.ETHANOL.getSource());
+  public static final DeferredHolder<Item, BucketItem> FORMIC_ACID_BUCKET = registerBucket("formic_acid_bucket", () -> TekoraFluids.FORMIC_ACID.getSource());
+  public static final DeferredHolder<Item, BucketItem> HYDRAZINE_BUCKET = registerBucket("hydrazine_bucket", () -> TekoraFluids.HYDRAZINE.getSource());
+  public static final DeferredHolder<Item, BucketItem> HYDROGEN_FLUORIDE_BUCKET = registerBucket("hydrogen_fluoride_bucket", () -> TekoraFluids.HYDROGEN_FLUORIDE.getSource());
+  public static final DeferredHolder<Item, BucketItem> HYDROGEN_PEROXIDE_BUCKET = registerBucket("hydrogen_peroxide_bucket", () -> TekoraFluids.HYDROGEN_PEROXIDE.getSource());
+  public static final DeferredHolder<Item, BucketItem> METHANOL_BUCKET = registerBucket("methanol_bucket", () -> TekoraFluids.METHANOL.getSource());
+  public static final DeferredHolder<Item, BucketItem> SULFUR_DIOXIDE_BUCKET = registerBucket("sulfur_dioxide_bucket", () -> TekoraFluids.SULFUR_DIOXIDE.getSource());
+  public static final DeferredHolder<Item, BucketItem> SULFUR_TRIOXIDE_BUCKET = registerBucket("sulfur_trioxide_bucket", () -> TekoraFluids.SULFUR_TRIOXIDE.getSource());
+  public static final DeferredHolder<Item, BucketItem> SULFURIC_ACID_BUCKET = registerBucket("sulfuric_acid_bucket", () -> TekoraFluids.SULFURIC_ACID.getSource());
 
   public static final DeferredHolder<Item, Item> MAGNESIUM_CARBONATE = ITEMS.register("magnesium_carbonate",
           () -> new CompoundItem("magnesium_carbonate",
@@ -176,6 +196,13 @@ public class TekoraItems {
       super.appendHoverText(itemStack, context, display, builder, tooltipFlag);
     }
   }); // must be commented out if Tekora is released.
+
+  private static DeferredHolder<Item, BucketItem> registerBucket(String name, Supplier<? extends Fluid> fluid) {
+    return ITEMS.registerItem(name, props -> new BucketItem(
+            fluid.get(),
+            props.craftRemainder(Items.BUCKET).stacksTo(1)
+    ));
+  }
 
   public static ResourceKey<Item> getKey(Item item) {
     return BuiltInRegistries.ITEM.getResourceKey(item).orElse(null);

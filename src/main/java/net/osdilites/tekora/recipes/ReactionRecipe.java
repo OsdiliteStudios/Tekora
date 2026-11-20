@@ -1,19 +1,24 @@
 package net.osdilites.tekora.recipes;
 
+import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.StacksResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.resource.DataComponentHolderResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.data.SoluteKey;
@@ -25,11 +30,14 @@ import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 import net.osdilites.tekora.recipes.ingredient.MaterialIngredient;
 import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
 import net.osdilites.tekora.util.UtilFunctions;
+
+import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeInput> {
     private final List<Chemical> reactants;
@@ -248,24 +256,14 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         return rateTicks * (float)freqFactor * (float)Math.exp(-activationEnergy / (temperature * UtilFunctions.IDEAL_GAS_CONST)) / 20;
     }
 
-    private static boolean hasSolutes(ItemResource resource) {
-        return resource.getComponents().has(TekoraComponents.SOLUTES_LIST);
-    } 
-
-    private static boolean hasSolutes(FluidResource resource) {
-        return resource.getComponents().has(TekoraComponents.SOLUTES_LIST);
-    }
-
     /**
-     * wshen the recipe prcoes the whole thing, it passes throguh an inpoiut, both the item stack and fluid handlers
-     * look at existing data, recipe, populated handlers, and compa
-     * ******by default, if only reactants and no products, then create the product item first ********
-     * the list has to be complete. if neither are co 
+     * Old.
      * @param chemicals
      * @param items
      * @param inventory
      * @param fluids
      * @param tank
+     * @deprecated
      */
     private static void fillBasedOnData(List<Chemical> chemicals, Map<Integer, float[]> items, ItemStacksResourceHandler inventory, Map<Integer, float[]> fluids, FluidStacksResourceHandler tank) {
         for (Chemical chemical : chemicals) {
@@ -320,108 +318,227 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         fillBasedOnData(products, items, inventory, fluids, tank);
     }
 
-    // special values to indicate properties about coefficients in Map<Integer, float[]>
-    
-    /// used to indicate a solute is present for a map
-    private static float SOLUTE_NOT_PRESENT = -1.0f;
-
-    /// a index belongs to a material
-    private static boolean isMaterialIndex(Integer index) { return index < -1; }
-
-    // the material index as its actual index in map of chemicals
-    private static float asEquationIndex(Integer index) { return Math.abs(index + 1); }
-    
-
-    private static float[] getRecipeCoefficients(Map<Chemical, Chemical> chemicalSet, Map<SoluteKey, Double> inputResourceMap) {
-        float[] list = new float[inputResourceMap.size()];
-        // default initialize to not present 
-        for (int i = 0; i < list.length; ++i) {
-            list[i] = SOLUTE_NOT_PRESENT;
+    // inventory indices should be distinct.
+    public record CoefficientsKey(
+        boolean isSolute,   /// resource is either Material or has Solute ingredients
+        int inventoryIndex  /// Inventory index that this coefficient is for 
+    ) { 
+        public String toString() {
+            return String.format("{ %d: %s }", inventoryIndex, isSolute);
         }
-
-        // iterating through a set could be in any order, so instead set
-        // the coefficients that really matter
-        // ...actually nah, don't continue with this.
-
-        // TODO: change the data structure of Map<Integer, number> parameters used in helper functions
-        // to something else entirely
-
-        // would be like:
-        // key: Resource
-        // value: {
-        //  type: Either<MaterialIngredient, SoluteKey> or smth else?
-        //  moles: float
-        // }
-
-        // TODO: think about the pieces of the actual requirements you've been given,
-        // and channel your inner systems engineer to design a better flow
-        // free free to change ANY of the types not already needed for JSON representation
-        
-        return list;
     }
 
-    
+    // a more optimized, memory-efficient abstraction for accessing data... 
+    // ...is always welcome, but for now this approach is readable enough
+    // TODO: edge cases or requirements not considered?
+    // - same chemical on both sides? this is homogenous catalyst, so can make a explicit check for it
+    public static class CoefficientsMap {
+        /// pair of ingredient key and concentration value.
+        /// materials would only have one entry
+        public Map<Either<MaterialIngredient, SoluteKey>, Float> coefficients;
+        
+        // the portion of the material ingredient that is completed
+        float progress;
+
+        public CoefficientsMap() {
+            this.coefficients = new HashMap<>();
+            this.progress = 0.f;
+        }
+
+        public void put(SoluteKey key, float coeff) {
+            coefficients.put(Either.<MaterialIngredient, SoluteKey>right(key), coeff);
+        }
+
+        /// Returns 0 if entry is not found.
+        @NotNull public float get(SoluteKey key) {
+            Float value = coefficients.get(Either.<MaterialIngredient, SoluteKey>right(key));
+            return value == null ? 0.f : value;
+        }
+
+        public void put(MaterialIngredient key, float coeff) {
+            coefficients.put(Either.<MaterialIngredient, SoluteKey>left(key), coeff);
+        }
+
+        /// Returns 0 if entry is not found.
+        @NotNull public float get(MaterialIngredient key) {
+            Float value = coefficients.get(Either.<MaterialIngredient, SoluteKey>left(key));
+            return value == null ? 0.f : value;
+        }
+
+        public boolean isEmpty() {
+            return this.coefficients.isEmpty();
+        }
+    }
+
+    private static boolean hasSolutes(ItemResource resource) {
+        return resource.getComponents().has(TekoraComponents.SOLUTES_LIST);
+    } 
+
+    private static boolean hasSolutes(FluidResource resource) {
+        return resource.getComponents().has(TekoraComponents.SOLUTES_LIST);
+    }
     
     /**
-     * 
-     * @param chemicals Reactants or products of a chemical reaction
-     * @param itemIngredients
-     * @param inventory
+     * Populates the given maps with coefficient information for current inventory items.
+     * The chemicals list has to be complete for a side. if neither are complete, unintended consequences
+     * @param chemicals Reactants or products of a chemical reaction to read from
+     * @param itemIngredients Map of ingredient coefficients to *write* to for items, based on matches with recipe
+     * @param inventory inventory to read from for ingredient coefficients
+     * @param fluidIngredients Map of ingredient coefficients to write to for fluids, based on matches with recipe
+     * @param tank inventory to read from for ingredient coefficients
      */
-    private static void getIngredientCoefficients(List<Chemical> chemicals, Map<Integer, float[]> itemIngredients, ItemStacksResourceHandler inventory, Map<Integer, float[]> fluidIngredients, FluidStacksResourceHandler tank) {
-        // data structure for easier lookups and simplicity.
-        // if optimizing, make sure to cache this value somewhere
+    private static void getIngredientCoefficients(
+        List<Chemical> chemicals, 
+        Map<CoefficientsKey, CoefficientsMap> itemIngredients, 
+        ItemStacksResourceHandler inventory, 
+        Map<CoefficientsKey, CoefficientsMap> fluidIngredients, 
+        FluidStacksResourceHandler tank) 
+    {
+        // - getCoefficients could be made much simpler and not rely on inventory data
+        // because recipeData is constant, and wont have to explicitly only include
+        // data for those present in inventory????
+
+        // map for easier lookups and less nested loops.
+        // if optimizing, make sure to cache these maps somewhere
         // perhaps a dedicated cache object (new class) for these checks? 
         // or maybe just change the data structure from list to set
-        Map<Chemical, Chemical> chemicalSet = 
+        Map<SoluteKey, Chemical> chemicalSolutes = 
             chemicals.stream()
                 .map(chem -> chem)
-                .collect(Collectors.toMap(k -> k, v -> v));   
-        
+                .filter(chem -> chem.chemical().isSolute())
+                .collect(Collectors.toMap(k -> k.chemical().asSolute(), v -> v));  
         // test inventory on chemicals
         for (int index = 0; index < inventory.size(); ++index) {
             ItemResource resource = inventory.getResource(index);
             
-            if (hasSolutes(resource)) {
+            // note that a resource can have multiple solutes, each of which can be an ingredient
+            if (resource.getComponents().has(TekoraComponents.SOLUTES_LIST)) {
                 Solutes resourceSolutes = resource.getComponents().get(TekoraComponents.SOLUTES_LIST);
-
-                if (resourceSolutes == null) continue;
+                if (resourceSolutes == null) continue; // ? useless
 
                 Map<SoluteKey, Double> resSolutesMap = resourceSolutes.dataMap();
-                float[] list = getRecipeCoefficients(chemicalSet, resSolutesMap);
-                itemIngredients.put(index, list);
+                CoefficientsKey ingredientKey = new CoefficientsKey(true, index);
+                CoefficientsMap ingredientCoeffs = new CoefficientsMap();
+                
+                // iterate through all solutes present in the recipe,
+                // skipping ingredient solutes that are not part of the recipe 
+                for (SoluteKey recipeSoluteKey : chemicalSolutes.keySet()) {
+                    if (!resSolutesMap.containsKey(recipeSoluteKey)) continue;
+                    
+                    float recipeCoefficent = chemicalSolutes.get(recipeSoluteKey).coefficient();
+                    ingredientCoeffs.put(recipeSoluteKey, recipeCoefficent);
+                }
+                
+                itemIngredients.put(ingredientKey, ingredientCoeffs);
+            } else {
+                // test for materialIngredient
+                for (Chemical chemical : chemicals) {
+                    if (!chemical.chemical().test(resource.toStack(1))) continue;
+
+                    CoefficientsKey ingredientKey = new CoefficientsKey(false, index);
+                    CoefficientsMap ingredientCoeffs = new CoefficientsMap();
+                    ingredientCoeffs.put(chemical.chemical().asMaterial(), chemical.coefficient());
+                    itemIngredients.put(ingredientKey, ingredientCoeffs);
+                    break;
+                }
             }
         }
 
+        // test for fluids
+        // NOTE duplicate logic, possible bugs if changes are made to this function
+        // NOTE i tried make this function generic. can't because .toStack is not 
+        // inherited for both ItemResource and FluidResource
+        for (int index = 0; index < tank.size(); ++index) {
+            FluidResource resource = tank.getResource(index);
+            
+            if (hasSolutes(resource)) {
+                Solutes resourceSolutes = resource.getComponents().get(TekoraComponents.SOLUTES_LIST);
+                if (resourceSolutes == null) continue;
 
+                Map<SoluteKey, Double> resSolutesMap = resourceSolutes.dataMap();
+                CoefficientsKey ingredientKey = new CoefficientsKey(true, index);
+                CoefficientsMap ingredientCoeffs = new CoefficientsMap();
+                
+                // iterate through all solutes present in the recipe,
+                // skipping ingredient solutes that are not part of the recipe 
+                for (SoluteKey recipeSoluteKey : chemicalSolutes.keySet()) {
+                    if (!resSolutesMap.containsKey(recipeSoluteKey)) continue;
+                    
+                    float recipeCoefficent = chemicalSolutes.get(recipeSoluteKey).coefficient();
+                    ingredientCoeffs.put(recipeSoluteKey, recipeCoefficent);
+                }
+                
+                fluidIngredients.put(ingredientKey, ingredientCoeffs);
+            } else {
+                // test for materialIngredient
+                for (Chemical chemical : chemicals) {
+                    if (!chemical.chemical().test(resource.toStack(1))) continue;
 
-        // then, test fluids for chemicals
+                    CoefficientsKey ingredientKey = new CoefficientsKey(false, index);
+                    CoefficientsMap ingredientCoeffs = new CoefficientsMap();
+                    ingredientCoeffs.put(chemical.chemical().asMaterial(), chemical.coefficient());
+                    fluidIngredients.put(ingredientKey, ingredientCoeffs);
+                    break;
+                }
+            }
+        }
     }
 
-    private boolean allPresent(List<Chemical> chemList, ItemStacksResourceHandler inventory, int action) {
-        Map<ChemicalIngredient, Boolean> recipeIng = 
-            chemList.stream()
-                .map(chem -> chem.chemical())
-                .collect(Collectors.toMap(k -> k, v -> false));       
+    public void fillWithReactants(Map<CoefficientsKey, CoefficientsMap> items, ItemStacksResourceHandler inventory, 
+        Map<CoefficientsKey, CoefficientsMap> fluids, FluidStacksResourceHandler tank,boolean b) {
+        getIngredientCoefficients(reactants, items, inventory, fluids, tank);
+    }
+    public void fillWithProducts(Map<CoefficientsKey, CoefficientsMap> items, ItemStacksResourceHandler inventory, 
+        Map<CoefficientsKey, CoefficientsMap> fluids, FluidStacksResourceHandler tank,boolean b) {
+        getIngredientCoefficients(products, items, inventory, fluids, tank);
+    }
+    // ----
 
-        if (action != 1 && action != -1) {
+    public static class ReactionDirection {
+        public static final int REVERSE = 1, EQUAL = 0, FORWARD = -1;
+    } 
+
+    private boolean allPresent(List<Chemical> recipeChemList, ItemStacksResourceHandler inventory, int action) {
+        if (action != ReactionDirection.FORWARD && action != ReactionDirection.REVERSE) {
             return false;
         }
+        Stream<ChemicalIngredient> recipeIngStream = recipeChemList.stream().map(chem -> chem.chemical());  
+
+        Map<SoluteKey, Boolean> recipeSolutes = recipeIngStream
+            .filter(chemIng -> chemIng.isSolute()) 
+            .collect(Collectors.toMap(k -> k.asSolute(), v -> false));
         
+        Map<MaterialIngredient, Boolean> recipeMaterials = recipeIngStream
+            .filter(chemIng -> chemIng.isMaterial()) 
+            .collect(Collectors.toMap(k -> k.asMaterial(), v -> false));
+        
+        // extra ingredients not in the recipeChemList are ignored
         for (int i = 0; i < inventory.size(); ++i) {
             ItemResource slotResource = inventory.getResource(i);
             // ingredients can't be air.
             if (slotResource.isEmpty()) continue;
-            ChemicalIngredient key = ChemicalIngredient.of(slotResource.getItem());
-            boolean inRecipe = recipeIng.containsKey(key);
-            // cover the case of extra ingredients not in the recipe
-            if (!inRecipe) continue;
-            recipeIng.put(key, inRecipe);
-        }
 
-        return !recipeIng.values().contains(false);
+            if (hasSolutes(slotResource)) {
+                var solutesMap = slotResource.get(TekoraComponents.SOLUTES_LIST).dataMap();
+                for (SoluteKey soluteKey : solutesMap.keySet()) {
+                    boolean inRecipe = recipeSolutes.containsKey(soluteKey);
+                    if (inRecipe) recipeSolutes.put(soluteKey, true);
+                }
+
+            } else {
+                // implementation of .of(item) -> material 
+                MaterialIngredient key = ChemicalIngredient.of(slotResource.getItem()).asMaterial();
+                boolean inRecipe = recipeMaterials.containsKey(key);
+                if (inRecipe) recipeMaterials.put(key, true);
+            }
+        }
+        // if any recipeIng is missing -> false
+        boolean allSolutes = !recipeSolutes.values().contains(false);
+        boolean allMaterials = !recipeMaterials.values().contains(false);
+        return allSolutes && allMaterials;
     }
     
+
     private boolean soluteExistsInRecipe(SoluteKey key, int action) {
         if (action == 1) {
             return prodCoeffs.keySet().contains(key);
@@ -432,24 +549,13 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         }
     }
 
-    /** @deprecated Temporary method. modifyCrafterInventory should be used instead.*/
-    public List<Chemical> getProducts() {
-        return products;
-    }
-
-    
-    public static class ReactionDirection {
-        public static final int REVERSE = 1, EQUAL = 0, FORWARD = -1;
-    } 
-
-    /**
-     * Modifies the given inventory based on the given recipe parameters 
-     * @param itemChemicals A map of slot index (int) and *recipe* coefficients (float[]) for each slot, for either reactants or products.
-     * @param inventory The item inventory to modify
-     * @param rate The rate at which the reaction occurs.
-     * @param action int determining whether to produce reactants (1) or products (-1). The direction of the reaction.
-     */
-    public void modifyCrafterInventory(@NonNull Map<Integer, float[]> itemChemicals, ItemStacksResourceHandler inventory, double rate, int action) {
+    public void modifyCrafterInventory(
+        @NonNull Map<CoefficientsKey, CoefficientsMap> itemChemicals, 
+        ItemStacksResourceHandler inventory, 
+        double rate, 
+        int action,
+        boolean isReactants) 
+    {
         boolean allProducts = false; // can we can turn into reactants?
         boolean allReactants = false; // we can turn into products?
         
@@ -465,72 +571,141 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         }
 
         if (!allProducts && !allReactants) {
-            // cannot produce a reaction, so don't modify anything.
+            // cannot produce a reaction because missing ingredients
+            // on either side, so don't modify anything.
             return;
         }
 
+        // by default, if only reactants and no products, then create the product item first
+
         if (!allProducts) {
-            // create missing product items, and modify the appropriate solutes
+            // TODO create missing product items, and modify the appropriate solutes
             // then return.
+
+            // things to consider:
+            // 
+
+
         } else if (!allReactants) {
-            // create missing reactant items, and modify the appro... yea.
+            // TODO create missing reactant items, and modify the appro... yea.
             // then return
         }
 
         // all reactants and products are present at this point,
-        // so modify the moles of the given chemicals
+        // so modify the amou of the given chemicals in the inventory
 
-        // modify the solutes of each of the inventory items 
-        // for (Integer ind : itemChemicals.keySet()) {
-        //     // positive indices indicates solutes for a chemical item, reversed for fluids?
-        //     boolean hasSolutes = ind > 0;
-        //     // negative keys (ind) should be converted to unsigned
-        //     float[] vals = itemChemicals.get(hasSolutes ? ind : -ind - 1);
+        for (CoefficientsKey coeffKey : itemChemicals.keySet()) {
+            ItemResource inputResource = inventory.getResource(coeffKey.inventoryIndex);
+            CoefficientsMap inputCoefficients = itemChemicals.get(coeffKey);
 
-        //     if (vals == null) continue;
+            if (!inputCoefficients.isEmpty()) {
+                System.err.printf("%s for %s shouldn't be empty.\n", inputCoefficients.coefficients, coeffKey);
+                return;
+            }
 
-        //     ItemResource resource = inventory.getResource(ind);
-        //     if (hasSolutes && resource.has(TekoraComponents.SOLUTES_LIST)) {
-        //         int mapInd = 0;
-        //         // -----todo, work products/reactants that are not in the list but in the recipe within the recipe.
-        //         Map<SoluteKey, Double> data = resource.get(TekoraComponents.SOLUTES_LIST).dataMap();
-        //         for (var entry : data.entrySet()) {
-        //             float coeff = vals[mapInd++];
-                    
-        //             // do not want to modify solutes not involved in reaction 
-        //             if (!soluteExistsInRecipe(entry.getKey(), action)) continue;
+            if (coeffKey.isSolute() && !inputCoefficients.isEmpty()) {
+                if (!hasSolutes(inputResource)) continue; // ?
 
-        //             if (coeff > 0) {
-        //                 double newVal = coeff * rate;
-        //                 double original = entry.getValue();
-        //                 // modify solutes of the side given by itemChemicals.
-        //                 // TODO this needs to be changed. how to determine if itemChemicals
-        //                 // is products or reactants? how to make that distinction *clear*?
+                // current concentrations of solutes to modify.
+                Map<SoluteKey, Double> solutesAmts = inputResource.get(TekoraComponents.SOLUTES_LIST).dataMap();
 
-        //                 // forward should decrease reactants, but increase products, which is not what this seems like.
-        //                 // easy solution would just be to add another parameter to this method which indicates
-        //                 // the "side" that this method is modifying 
-        //                 entry.setValue(action == ReactionDirection.FORWARD ? original-newVal : original+newVal);
-        //             }
-        //         }
-        //     }
+                // assume that the guard conditions for this modifyInv method work,
+                // so recipe solutes is a subset of solutes in inventory (which has extras)
+                for (var soluteEntry : solutesAmts.entrySet()) {
+                    if (!soluteExistsInRecipe(soluteEntry.getKey(), action)) 
+                        continue;
+                    float coeff = itemChemicals.get(coeffKey).get(soluteEntry.getKey());
+                    /*
+                    // explanation, for some reason
+                    if (modifyingReactantsSide) {
+                        if (action == ReactionDirection.FORWARD) signum = -1.f;
+                        if (action == ReactionDirection.REVERSE) signum = 1.f;
+                    } else if (modifyingProductsSide) {
+                        if (action == ReactionDirection.FORWARD) signum = 1.f;
+                        if (action == ReactionDirection.REVERSE) signum = -1.f;
+                    }
+                     */
+                    // assumes FORWARD = -1, REVERSE = 1, 
+                    float signum = isReactants 
+                        ? action    // consume reactants
+                        : -action;  // consume products
+                    double change = signum * coeff * rate;
+                    double original = soluteEntry.getValue();
+                    soluteEntry.setValue(original+change);
+                }
+            } else if (!coeffKey.isSolute()) {
+                ChemicalIngredient inputIngredient = ChemicalIngredient.of(inputResource.getItem());
+                if (!inputIngredient.isMaterial()) {
+                    System.err.printf("couldn't treat %s as material\n", inputIngredient);
+                    return;
+                }
+                MaterialIngredient materialIng = inputIngredient.asMaterial();
+                
+                float materialCoeff = inputCoefficients.get(materialIng);
+                // add or subtract from progress based on direction and side of chemical reaction to modify
+                float signum = isReactants ? -action : action;
+                float change = signum * (float)rate * materialCoeff;
+                inputCoefficients.progress += change;
 
-        //     // should I just refactor the hell out of this
-        //     // TODO: ~~fiddle with this last, focus on making items from solutes in BasinEntity~~
-        //     // TODO: need these methods anyway, so get explanations/requirements for actual reactions,
-        //     // and rewrite such that these methods are much clearer (and all original todo items 
-        //     // are made possible to attempt without guessing what it actually means)
+                // truncate fractional part; = 0 if no item made yet 
+                int itemsCountChange = (int)inputCoefficients.progress;
+                if (Math.abs(inputCoefficients.progress) >= 1.f) {
+                    int newAmount = inventory.getAmountAsInt(coeffKey.inventoryIndex) + itemsCountChange;
+                    inventory.set(coeffKey.inventoryIndex, inputResource, newAmount );
+                }
 
-        //     float amt = (float)rate * vals[0];
-        //     if (action == -1) amt = -amt;
-        //     vals[1] += amt;
-        //     if (vals[1] >= 1.0f) {
-        //         inventory.set(ind, resource, inventory.getAmountAsInt(ind) + 1);
-        //     } else if (vals[1] <= -1.0f) {
-        //         inventory.set(ind, resource, inventory.getAmountAsInt(ind) - 1);
-        //     }
-        //     vals[1] %= 1.0f;
-        // }
+                inputCoefficients.progress %= 1.0f;
+            }
+        }
+
+    }
+
+    // ----
+
+
+    /**
+     * Modifies the given inventory based on the given recipe parameters 
+     * @param itemReactants A map of slot index (int) and *recipe* coefficients (float[]) for each slot, for either reactants or products.
+     * @param inventory The item inventory to modify
+     * @param rate The rate at which the reaction occurs.
+     * @param action int determining whether to produce reactants (1) or products (-1). The direction of the reaction.
+     * @deprecated
+     */
+    public void modifyCrafterInventory(@NonNull Map<Integer, float[]> itemReactants, ItemStacksResourceHandler inventory, double rate, int action) {
+        if (action == 1) {
+            // checks if all the products are available
+        } else if (action == -1) {
+            // checks if all the reactants are available
+        }
+
+        for (Integer ind : itemReactants.keySet()) {
+            boolean hasSolutes = ind < 0;
+            float[] vals = itemReactants.get(hasSolutes ? -ind - 1 : ind);
+            ItemResource resource = inventory.getResource(ind);
+            if (hasSolutes && resource.has(TekoraComponents.SOLUTES_LIST)) {
+                int mapInd = 0;
+                // todo, work products/reactants that are not in the list but in the recipe within the recipe.
+                Map<SoluteKey, Double> data = resource.get(TekoraComponents.SOLUTES_LIST).dataMap();
+                for (var entry : data.entrySet()) {
+                    float coeff = vals[mapInd++];
+                    if (coeff > 0) {
+                        double newVal = coeff * rate;
+                        double org = entry.getValue();
+                        entry.setValue(action == -1 ? org-newVal : org+newVal);
+                    }
+                }
+            }
+
+            float amt = (float)rate * vals[0];
+            if (action == -1) amt = -amt;
+            vals[1] += amt;
+            if (vals[1] >= 1.0f) {
+                inventory.set(ind, resource, inventory.getAmountAsInt(ind) + 1);
+            } else if (vals[1] <= -1.0f) {
+                inventory.set(ind, resource, inventory.getAmountAsInt(ind) - 1);
+            }
+            vals[1] %= 1.0f;
+        }
     }
 
     public void modifyCrafterTank(@NonNull Map<Integer, float[]> fluidReactants, FluidStacksResourceHandler tank, double rate, int action) {

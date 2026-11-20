@@ -118,29 +118,29 @@ public class BasinEntity extends AbstractModularCraftEntity {
             ItemAccess access = ItemAccess.forHandlerIndex(inventory, 2);
 
             // temporary segment
-            {
-                // like allPresent() in reactionRecipe
-                var products = recipe.getProducts();
-                if (access.getResource().isEmpty()) return 0;
+            // {
+            //     // like allPresent() in reactionRecipe
+            //     var products = recipe.getProducts();
+            //     if (access.getResource().isEmpty()) return 0;
 
-                ChemicalIngredient key = ChemicalIngredient.of(access.getResource().getItem());
-                ItemResource output = access.getResource();
-                boolean inRecipe = true;
-                for (var chemProd : products) {
-                    ChemicalIngredient prodKey = chemProd.chemical();
-                    System.out.println(prodKey);
-                    System.out.println(key);
-                    if (prodKey.equals(key) && prodKey.isMaterial()) {
-                        inRecipe = true;
-                        // argghhh. what the hell?
-                        // output = Optional.of(ItemResource.of(TekoraItems.SODIUM_CHLORIDE.get()));
-                        break;
-                    }
-                }
-                if (!inRecipe) return 0;
-                // inventory.extract(inventory.getResource(0), 1, transaction);
-                inventory.set(2, output, access.getAmount() + 1);
-            }
+            //     ChemicalIngredient key = ChemicalIngredient.of(access.getResource().getItem());
+            //     ItemResource output = access.getResource();
+            //     boolean inRecipe = true;
+            //     for (var chemProd : products) {
+            //         ChemicalIngredient prodKey = chemProd.chemical();
+            //         System.out.println(prodKey);
+            //         System.out.println(key);
+            //         if (prodKey.equals(key) && prodKey.isMaterial()) {
+            //             inRecipe = true;
+            //             // argghhh. what the hell?
+            //             // output = Optional.of(ItemResource.of(TekoraItems.SODIUM_CHLORIDE.get()));
+            //             break;
+            //         }
+            //     }
+            //     if (!inRecipe) return 0;
+            //     // inventory.extract(inventory.getResource(0), 1, transaction);
+            //     inventory.set(2, output, access.getAmount() + 1);
+            // }
             
             transaction.commit();
         }

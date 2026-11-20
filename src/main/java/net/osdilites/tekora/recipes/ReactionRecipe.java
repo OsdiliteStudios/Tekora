@@ -38,11 +38,15 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     private final double freqFactor;
     private final double activationEnergy;
 
+    // stores a list of reaction coefficients so that recipe JSON data can easily get accessed.
+    // do NOT modify values in this list;
     private final Map<SoluteKey, Integer> reactCoeffs;
     private final Map<SoluteKey, Integer> prodCoeffs;
     private final Map<SoluteKey, Integer> reactOrders;
     private final Map<SoluteKey, Integer> prodOrders;
 
+    // NOTE: DO NOT STORE RECIPE EVALUATION DATA IN THIS CLASS.
+    //       THIS CLASS EXCLUSIVELY STORES JSON DATA.
     public ReactionRecipe(List<Chemical> reactants, List<Chemical> products, Catalyst catalyst, FluidIngredient solvent, double deltaEnthalpy, double deltaEntropy, double freqFactor, double activationEnergy) {
         this.reactants = reactants;
         this.products = products;

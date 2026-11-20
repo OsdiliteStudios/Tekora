@@ -25,7 +25,13 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraBlocks.DEPOT.get().asItem());
                         out.accept(TekoraBlocks.BASIN.get().asItem());
 
+                        out.accept(TekoraBlocks.COMBUSTION_CHAMBER.get().asItem());
+                        out.accept(TekoraBlocks.KILN_FURNACE.get().asItem());
+                        out.accept(TekoraBlocks.COPPER_PIPE.get().asItem());
+
                         out.accept(TekoraBlocks.STEEL_BLOCK.get().asItem());
+                        out.accept(TekoraBlocks.FIRE_BRICKS.get().asItem());
+                        out.accept(TekoraBlocks.FIRE_CLAY.get().asItem());
 
                         out.accept(TekoraItems.ALUMINUM_GEAR.get());
                         out.accept(TekoraItems.BRASS_GEAR.get());
@@ -57,7 +63,13 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraItems.STEEL_INGOT.get());
                         out.accept(TekoraItems.STEEL_PLATE.get());
                         out.accept(TekoraItems.STEEL_ROD.get());
+                        out.accept(TekoraItems.FIRE_BRICK.get());
+                        out.accept(TekoraItems.FIRE_CLAY_BALL.get());
                         out.accept(TekoraItems.BAUXITE.get());
+                        out.accept(TekoraItems.CINNABAR_SHARD.get());
+                        out.accept(TekoraItems.MAGNESIUM_CARBONATE.get());
+                        out.accept(TekoraItems.SODIUM_CHLORIDE.get());
+                        out.accept(TekoraItems.AMMONIUM_PHOSPHATE.get());
                     }).build());
 
 

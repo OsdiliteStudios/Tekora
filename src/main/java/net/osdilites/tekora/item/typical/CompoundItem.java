@@ -23,4 +23,8 @@ public class CompoundItem extends TekoraItem {
     public double getMoles() {
         return moles;
     }
+
+    public Solutes getFormula() {
+        return formula;
+    }
 }

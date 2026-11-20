@@ -1,8 +1,12 @@
 package net.osdilites.tekora.event;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -11,9 +15,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.WaterFluid;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -27,6 +31,7 @@ import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 import net.osdilites.tekora.data.Partners;
 import net.osdilites.tekora.data.TekoraComponents;
 import net.osdilites.tekora.datagen.modelcases.BiomeTemperature;
+import net.osdilites.tekora.datagen.tags.TekoraTags;
 import net.osdilites.tekora.item.BottleResourceHandler;
 
 import java.util.ArrayList;
@@ -101,4 +106,26 @@ public class WorldEvent {
                 BiomeTemperature.MAP_CODEC
         );
     }
+
+//    @SubscribeEvent
+//    public static void registerBlockTickEvent(BlockEvent event) {
+//        BlockPos pos = event.getPos();
+//        if (!event.getLevel().isClientSide() && event.getLevel().getBlockEntity(pos) != null && event.getState().hasProperty(BlockStateProperties.LIT)) {
+//            BlockEntity blockEntity = event.getLevel().getBlockEntity(pos);
+//            if (blockEntity instanceof AbstractFurnaceBlockEntity furnace && event.getLevel() instanceof Level level) {
+//                // todo finish up this code
+//                ItemStack item = furnace.getItem(1);
+//                AreaEffectCloud cloud = new AreaEffectCloud(level, pos.getX(), pos.getY(), pos.getZ());
+//                MobEffectInstance instance;
+//                if (item.is(TekoraTags.Items.TOXIC_FUMES_ON_SMELT)) {
+//                    instance = new MobEffectInstance(MobEffects.POISON, 200, 0, false, false);
+//                } else if (item.is(TekoraTags.Items.BLINDING_FUMES_ON_SMELT)) {
+//                    instance = new MobEffectInstance(MobEffects.BLINDNESS, 200, 0, false, false);
+//                } else {
+//                    instance = new MobEffectInstance((Holder<MobEffect>) null);
+//                }
+//                cloud.addEffect(instance);
+//            }
+//        }
+//    }
 }

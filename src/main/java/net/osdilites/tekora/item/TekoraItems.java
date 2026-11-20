@@ -66,9 +66,13 @@ public class TekoraItems {
   public static final DeferredHolder<Item, Item> STEEL_DUST = ITEMS.register("steel_dust", () -> new TekoraItem(true, "steel_dust"));
   public static final DeferredHolder<Item, Item> STEEL_PLATE = ITEMS.register("steel_plate", () -> new TekoraItem(true, "steel_plate"));
   public static final DeferredHolder<Item, Item> STEEL_ROD   = ITEMS.register("steel_rod",   () -> new TekoraItem(true, "steel_rod"));
+  public static final DeferredHolder<Item, Item> FIRE_BRICK   = ITEMS.register("fire_brick",   () -> new TekoraItem(true, "fire_brick"));
+  public static final DeferredHolder<Item, Item> FIRE_CLAY_BALL = ITEMS.register("fire_clay_ball",   () -> new TekoraItem(false, "fire_clay_ball"));
+
   public static final DeferredHolder<Item, Item> WRENCH = ITEMS.register("wrench", () -> new WrenchItem("wrench", 560));
 
   public static final DeferredHolder<Item, Item> BAUXITE = ITEMS.register("bauxite", () -> new TekoraItem("bauxite"));
+  public static final DeferredHolder<Item, Item> CINNABAR_SHARD = ITEMS.register("cinnabar_shard", () -> new TekoraSmeltableItem("cinnabar_shard", 200));
   // public static final DeferredHolder<Item, Item> MANUSCRIPT = ITEMS.register("manuscript", ManuscriptItem::new); // a loot item intended to allow Tekora to be playable without JEI
 
   public static final DeferredHolder<Item, Item> MERCURY_THERMOMETER = ITEMS.register("mercury_thermometer", () -> new ThermometerItem("mercury_thermometer", -1.55f, 10.27f, MobEffects.POISON)); // uses glass, but has a random chance of poisoning the player if broken somehow
@@ -80,7 +84,30 @@ public class TekoraItems {
                   Solutes.create()
                           .addKey(SoluteKey.MAGNESIUM, 1)
                           .addKey(SoluteKey.CARBONATE, 1),
-                  9450));
+                  3.90));
+
+  public static final DeferredHolder<Item, Item> SODIUM_CHLORIDE = ITEMS.register("sodium_chloride",
+          () -> new CompoundItem("sodium_chloride",
+                  Solutes.create()
+                          .addKey(SoluteKey.SODIUM, 1)
+                          .addKey(SoluteKey.CHLORIDE, 1),
+                  4.12));
+
+  // used to craft super fertilizers, grows crops better than bone meal.
+  public static final DeferredHolder<Item, Item> AMMONIUM_PHOSPHATE = ITEMS.register("ammonium_phosphate",
+          () -> new CompoundItem("ammonium_phosphate",
+                  Solutes.create()
+                          .addKey(SoluteKey.AMMONIUM, 3)
+                          .addKey(SoluteKey.PHOSPHATE, 1),
+                  1.21));
+
+  // testing acid-base reactions
+  public static final DeferredHolder<Item, Item> SODIUM_HYDROXIDE = ITEMS.register("sodium_hydroxide",
+          () -> new CompoundItem("sodium_hydroxide",
+                  Solutes.create()
+                          .addKey(SoluteKey.SODIUM, 1)
+                          .addKey(SoluteKey.HYDROXIDE, 1),
+                  5.92));
 
   public static final DeferredHolder<Item, Item> DEBUG_ITEM = ITEMS.register("debug_item", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Tekora.MODID, "debug_item")))) {
     @Override

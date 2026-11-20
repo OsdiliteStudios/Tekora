@@ -1,0 +1,45 @@
+{
+  "type": "tekora:reaction",
+  "activation_energy": 12000.0,
+  "catalyst": {
+    "catalyst": {
+      "input": "minecraft:barrier",
+      "is_solid": true
+    }
+  },
+  "d_enthalpy": 44500.0,
+  "d_entropy": 23.0,
+  "freq_factor": 1.0E9,
+  "products": [
+    {
+      "chemical": {
+        "input": "tekora:sodium_hydroxide",
+        "is_solid": true
+      },
+      "order": 1
+    }
+  ],
+  "reactants": [
+    {
+      "chemical": {
+        "input": {
+          "charge": 1,
+          "formula": "Na"
+        },
+        "is_solid": false
+      },
+      "order": 1
+    },
+    {
+      "chemical": {
+        "input": {
+          "charge": -1,
+          "formula": "OH"
+        },
+        "is_solid": false
+      },
+      "order": 1
+    }
+  ],
+  "solvent": "minecraft:water"
+}

@@ -6,7 +6,6 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
@@ -25,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class TekoraRecipeProvider extends RecipeProvider {
+    private static int reactionId = 1;
     public TekoraRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
         super(registries, output);
     }
@@ -81,14 +81,82 @@ public class TekoraRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_steel_ingot", has(TekoraItems.STEEL_INGOT.get()))
                 .save(output);
 
-        int reactionId = 1;
-        ReactionRecipeBuilder.createReactionRecipe(reactionId++,
+        shapeless(RecipeCategory.MISC, TekoraItems.CINNABAR_SHARD.get(), 4)
+                .requires(Items.CINNABAR)
+                .unlockedBy("has_cinnabar", has(Items.CINNABAR))
+                .save(output);
+
+        shaped(RecipeCategory.MISC, Items.CINNABAR)
+                .pattern("CC")
+                .pattern("CC")
+                .define('C', TekoraItems.CINNABAR_SHARD.get())
+                .unlockedBy("has_cinnabar", has(Items.CINNABAR))
+                .save(output);
+
+        shaped(RecipeCategory.MISC, TekoraBlocks.FIRE_BRICKS.get())
+                .pattern("BB")
+                .pattern("BB")
+                .define('B', TekoraItems.FIRE_BRICK.get())
+                .unlockedBy("has_fire_brick", has(TekoraItems.FIRE_BRICK.get()))
+                .save(output);
+
+        shapeless(RecipeCategory.MISC, TekoraItems.FIRE_CLAY_BALL.get(), 2)
+                .requires(Items.CLAY_BALL)
+                .requires(TekoraItems.BAUXITE.get())
+                .unlockedBy("has_bauxite", has(TekoraItems.BAUXITE.get()))
+                .save(output);
+
+        smeltingResultFromBase(TekoraItems.FIRE_BRICK.get(), TekoraItems.FIRE_CLAY_BALL.get());
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
                 List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.MAGNESIUM), 1, 1),
                         new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.CARBONATE), 1, 1)),
                 List.of(new Chemical(ChemicalIngredient.of(TekoraItems.MAGNESIUM_CARBONATE.get()), 1, 1)),
                 new Catalyst(ChemicalIngredient.liquidSolute(SoluteKey.SULFATE), 10000),
                 FluidIngredient.of(Fluids.WATER),
                 30540, 260.7, 2.51E8, 75540).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.of(TekoraItems.SODIUM_CHLORIDE.get()), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SODIUM), 1, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.CHLORIDE), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                3880, 43.0, 1E9, 15000).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.AMMONIUM), 3, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.PHOSPHATE), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(TekoraItems.AMMONIUM_PHOSPHATE.get()), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                5400, 2.0, 1E9, 12000).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SODIUM), 1, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.HYDROXIDE), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(TekoraItems.SODIUM_HYDROXIDE.get()), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                44500, 23.0, 1E9, 12000).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.BISULFATE), 1, 1),
+                        new Chemical(ChemicalIngredient.of(Fluids.WATER), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.HYDROXIDE), 1, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SULFURIC_ACID), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                55840, 80.7, 1E10, 5000).save(output);
+
+        ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.SULFATE), 1, 1),
+                        new Chemical(ChemicalIngredient.of(Fluids.WATER), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.HYDROXIDE), 1, 1),
+                        new Chemical(ChemicalIngredient.liquidSolute(SoluteKey.BISULFATE), 1, 1)),
+                Catalyst.NULL_CATALYST,
+                FluidIngredient.of(Fluids.WATER),
+                30730, 128, 1E9, 8000).save(output);
 
         //PressingRecipeBuilder.pressingBuilder(RecipeCategory.TOOLS, Ingredient.of(TekoraItems.STEEL_INGOT.get()), TekoraItems.STEEL_PLATE.get(), 1, 1)
         //        .save(output, "tekora:pressing/steel_plate"); // todo, change the cuttorque and ratedvelocity values in the future
@@ -101,5 +169,9 @@ public class TekoraRecipeProvider extends RecipeProvider {
                 .pattern(" P ")
                 .define('P', gearPart)
                 .unlockedBy("has_" + gearPart.getDescriptionId(), has(gearPart));
+    }
+
+    public static int getReactionId() {
+        return reactionId++;
     }
 }

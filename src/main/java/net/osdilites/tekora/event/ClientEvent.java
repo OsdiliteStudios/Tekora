@@ -22,6 +22,7 @@ import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.fluid.TekoraFluids;
+import net.osdilites.tekora.menu.screens.CombustionChamberScreen;
 import net.osdilites.tekora.renderers.*;
 import net.osdilites.tekora.menu.TekoraMenus;
 import net.osdilites.tekora.menu.screens.BasinScreen;
@@ -95,6 +96,7 @@ public class ClientEvent {
         event.register(TekoraMenus.BASIN_MENU.get(), BasinScreen::new);
         event.register(TekoraMenus.DEPOT_MENU.get(), DepotScreen::new);
         event.register(TekoraMenus.KILN_FURNACE_MENU.get(), KilnFurnaceScreen::new);
+        event.register(TekoraMenus.COMBUSTION_CHAMBER_MENU.get(), CombustionChamberScreen::new);
     }
 
     /// Color is in 0xAARRGGBB order
@@ -108,21 +110,24 @@ public class ClientEvent {
 
     @SubscribeEvent 
     public static void registerFluidModels(RegisterFluidModelsEvent event) {
-        // TODO: figure out better way of registering fluid models
-        event.register(createDefaultFluidModel(0x66E8F0E8), TekoraFluids.ACETIC_ACID_SOURCE, TekoraFluids.ACETIC_ACID_FLOWING);
-        event.register(createDefaultFluidModel(0x4DF0F8FF), TekoraFluids.ACETONE_SOURCE, TekoraFluids.ACETONE_FLOWING);
-        event.register(createDefaultFluidModel(0x59D8F4FF), TekoraFluids.AMMONIA_SOURCE, TekoraFluids.AMMONIA_FLOWING);
-        event.register(createDefaultFluidModel(0x66F5F2DC), TekoraFluids.BENZENE_SOURCE, TekoraFluids.BENZENE_FLOWING);
-        event.register(createDefaultFluidModel(0xE67A1C12), TekoraFluids.BROMINE_SOURCE, TekoraFluids.BROMINE_FLOWING);
-        event.register(createDefaultFluidModel(0x55EBF5FB), TekoraFluids.ETHANOL_SOURCE, TekoraFluids.ETHANOL_FLOWING);
-        event.register(createDefaultFluidModel(0x66E2ECE9), TekoraFluids.FORMIC_ACID_SOURCE, TekoraFluids.FORMIC_ACID_FLOWING);
-        event.register(createDefaultFluidModel(0x66DCE4EC), TekoraFluids.HYDRAZINE_SOURCE, TekoraFluids.HYDRAZINE_FLOWING);
-        event.register(createDefaultFluidModel(0x59E0F7FA), TekoraFluids.HYDROGEN_FLUORIDE_SOURCE, TekoraFluids.HYDROGEN_FLUORIDE_FLOWING);
-        event.register(createDefaultFluidModel(0x66CBE8F6), TekoraFluids.HYDROGEN_PEROXIDE_SOURCE, TekoraFluids.HYDROGEN_PEROXIDE_FLOWING);
-        event.register(createDefaultFluidModel(0x4DE6F2FF), TekoraFluids.METHANOL_SOURCE, TekoraFluids.METHANOL_FLOWING);
-        event.register(createDefaultFluidModel(0x66F4F0C8), TekoraFluids.SULFUR_DIOXIDE_SOURCE, TekoraFluids.SULFUR_DIOXIDE_FLOWING);
-        event.register(createDefaultFluidModel(0x73EAE6D7), TekoraFluids.SULFUR_TRIOXIDE_SOURCE, TekoraFluids.SULFUR_TRIOXIDE_FLOWING);
-        event.register(createDefaultFluidModel(0x88E6DFC5), TekoraFluids.SULFURIC_ACID_SOURCE, TekoraFluids.SULFURIC_ACID_FLOWING);
+        registerChemicalModel(event, 0x66E8F0E8, TekoraFluids.ACETIC_ACID);
+        registerChemicalModel(event, 0x4DF0F8FF, TekoraFluids.ACETONE);
+        registerChemicalModel(event, 0x59D8F4FF, TekoraFluids.AMMONIA);
+        registerChemicalModel(event, 0x66F5F2DC, TekoraFluids.BENZENE);
+        registerChemicalModel(event, 0xE67A1C12, TekoraFluids.BROMINE);
+        registerChemicalModel(event, 0x55EBF5FB, TekoraFluids.ETHANOL);
+        registerChemicalModel(event, 0x66E2ECE9, TekoraFluids.FORMIC_ACID);
+        registerChemicalModel(event, 0x66DCE4EC, TekoraFluids.HYDRAZINE);
+        registerChemicalModel(event, 0x59E0F7FA, TekoraFluids.HYDROGEN_FLUORIDE);
+        registerChemicalModel(event, 0x66CBE8F6, TekoraFluids.HYDROGEN_PEROXIDE);
+        registerChemicalModel(event, 0x4DE6F2FF, TekoraFluids.METHANOL);
+        registerChemicalModel(event, 0x66F4F0C8, TekoraFluids.SULFUR_DIOXIDE);
+        registerChemicalModel(event, 0x73EAE6D7, TekoraFluids.SULFUR_TRIOXIDE);
+        registerChemicalModel(event, 0x88E6DFC5, TekoraFluids.SULFURIC_ACID);
+    }
+    // Helper method:
+    private static void registerChemicalModel(RegisterFluidModelsEvent event, int hexColor, TekoraFluids.ChemicalEntry entry) {
+        event.register(createDefaultFluidModel(hexColor), entry.source(), entry.flowing());
     }
 
     @SubscribeEvent

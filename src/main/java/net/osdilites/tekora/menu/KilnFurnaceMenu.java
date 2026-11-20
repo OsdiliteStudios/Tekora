@@ -22,7 +22,7 @@ public class KilnFurnaceMenu extends TekoraItemMenu {
     public KilnFurnaceMenu(int pContainerId, Inventory inv, BlockEntity blockEntity, ContainerData data) {
         super(TekoraMenus.KILN_FURNACE_MENU.get(), pContainerId, inv, data);
         this.blockEntity = (KilnFurnaceEntity)blockEntity;
-        addSlot(new ResourceHandlerSlot(this.blockEntity.handler, this.blockEntity.handler::set, 0, 80, 52));
+        addSlot(new ResourceHandlerSlot(this.blockEntity.getInventory(), this.blockEntity.getInventory()::set, 0, 80, 52));
     }
 
     @Override

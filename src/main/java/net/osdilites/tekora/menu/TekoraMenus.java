@@ -24,6 +24,9 @@ public class TekoraMenus {
     public static final DeferredHolder<MenuType<?>, MenuType<DeployerMenu>> PRINTER_MENU =
             MENUS.register("printer", () -> IMenuTypeExtension.create(DeployerMenu::new));
 
+    public static final DeferredHolder<MenuType<?>, MenuType<CombustionChamberMenu>> COMBUSTION_CHAMBER_MENU =
+            MENUS.register("combustion_chamber", () -> IMenuTypeExtension.create(CombustionChamberMenu::new));
+
     public static void register(IEventBus eventBus) {
         MENUS.register(eventBus);
     }

@@ -3,9 +3,13 @@
   "itemGroup.tekora_parts": "Tekora Parts",
   "itemGroup.tekora_tools": "Tekora Tools",
 
+  "block.tekora.fire_clay": "Fire Clay",
+  "block.tekora.fire_bricks": "Fire Bricks",
+  "block.tekora.copper_pipe": "Copper Pipe",
   "block.tekora.basin": "Basin",
   "block.tekora.depot": "Depot",
   "block.tekora.hand_crank": "Hand Crank",
+  "block.tekora.combustion_chamber": "Combustion Chamber",
   "block.tekora.kiln_furnace": "Kiln Furnace",
   "block.tekora.mechanical_top": "Mechanical Top",
   "block.tekora.steel_shaft": "Steel Shaft",
@@ -60,8 +64,13 @@
   "item.tekora.wrench": "Wrench",
 
   "item.tekora.magnesium_carbonate": "Magnesium Carbonate",
+  "item.tekora.sodium_chloride": "Sodium Chloride",
+  "item.tekora.ammonium_phosphate": "Ammonium Phosphate",
 
+  "item.tekora.fire_brick": "Fire Brick",
+  "item.tekora.fire_clay_ball": "Fire Clay Ball",
   "item.tekora.bauxite": "Bauxite",
+  "item.tekora.cinnabar_shard": "Cinnabar Shard",
 
   "tekora.tooltip.liquid.empty": "Empty",
   "tekora.tooltip.temperature": "The block clicked is ",

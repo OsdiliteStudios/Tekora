@@ -47,4 +47,8 @@ public record SoluteKey(String formula, int charge) {
     public static SoluteKey CARBONATE = new SoluteKey("CO3", -2);
     public static SoluteKey NITRATE = new SoluteKey("NO3", -1);
     public static SoluteKey SULFATE = new SoluteKey("SO4", -2);
+
+    // covalently bonded solutes
+    public static SoluteKey AMMONIA = new SoluteKey("NH3", 0);
+    public static SoluteKey SULFURIC_ACID = new SoluteKey("H2SO4", 0);
 }

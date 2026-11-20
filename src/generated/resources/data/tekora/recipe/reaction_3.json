@@ -1,0 +1,46 @@
+{
+  "type": "tekora:reaction",
+  "activation_energy": 12000.0,
+  "catalyst": {
+    "catalyst": {
+      "input": "minecraft:barrier",
+      "is_solid": true
+    }
+  },
+  "d_enthalpy": 5400.0,
+  "d_entropy": 2.0,
+  "freq_factor": 1.0E9,
+  "products": [
+    {
+      "chemical": {
+        "input": "tekora:ammonium_phosphate",
+        "is_solid": true
+      },
+      "order": 1
+    }
+  ],
+  "reactants": [
+    {
+      "chemical": {
+        "input": {
+          "charge": 1,
+          "formula": "NH4"
+        },
+        "is_solid": false
+      },
+      "coefficient": 3,
+      "order": 1
+    },
+    {
+      "chemical": {
+        "input": {
+          "charge": -3,
+          "formula": "PO4"
+        },
+        "is_solid": false
+      },
+      "order": 1
+    }
+  ],
+  "solvent": "minecraft:water"
+}

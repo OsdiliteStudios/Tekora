@@ -16,7 +16,7 @@ import net.osdilites.tekora.menu.KilnFurnaceMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class KilnFurnaceEntity extends AbstractThermalEntity {
-    public final ItemStacksResourceHandler handler = new ItemStacksResourceHandler(1) {
+    public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(1) {
     };
 
     private final ContainerData data = new ContainerData() {
@@ -37,7 +37,8 @@ public class KilnFurnaceEntity extends AbstractThermalEntity {
     };
 
     public KilnFurnaceEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TekoraBlockEntities.KILN_FURNACE.get(), pPos, pBlockState);
+        super(TekoraBlockEntities.KILN_FURNACE.get(), pPos, pBlockState, 1, 1);
+        // todo define heat capacity and conductivity
     }
 
     @Override
@@ -46,11 +47,11 @@ public class KilnFurnaceEntity extends AbstractThermalEntity {
     }
 
     public ItemStacksResourceHandler getInventory() {
-        return handler;
+        return inventory;
     }
 
     public void clearContents() {
-        handler.set(0, ItemResource.of(Items.AIR), 1);
+        inventory.set(0, ItemResource.of(Items.AIR), 1);
     }
 
     @Nullable

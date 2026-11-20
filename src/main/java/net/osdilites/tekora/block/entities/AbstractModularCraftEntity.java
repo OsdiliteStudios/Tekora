@@ -1,7 +1,6 @@
 package net.osdilites.tekora.block.entities;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -108,11 +107,7 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
             if (!Float.isFinite(temperature) || temperature < 0) {
                 temperature = biomeTemp;
             }
-            for (Direction direction : Direction.values()) {
-                temperature += pLevel.getBlockEntity(pPos.relative(direction)) instanceof IHeatSensitive sensitive
-                        ? getTransferHeat(sensitive)
-                        : getCoolingDiff(biomeTemp, UtilFunctions.getHeatTransferCoeff(pLevel));
-            }
+            temperature += getTotalTempDiff(pLevel, pPos, biomeTemp);
             if (pLevel.getBlockEntity(pPos.above()) instanceof AbstractModularMachineEntity ent) {
                 // this calculates for "angular" acceleration specifically
                 double torque = ent.getTorque(); // determines recipe progress

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "tekora:block/combustion_chamber_front",
+    "side": "tekora:block/combustion_chamber_sides",
+    "top": "tekora:block/combustion_chamber_top"
+  }
+}

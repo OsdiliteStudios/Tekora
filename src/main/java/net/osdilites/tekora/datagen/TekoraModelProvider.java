@@ -7,11 +7,15 @@ import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.RangeSelectItemModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.datagen.modelcases.BiomeTemperature;
@@ -20,6 +24,7 @@ import net.osdilites.tekora.item.tools.ThermometerItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class TekoraModelProvider extends ModelProvider {
@@ -70,6 +75,8 @@ public class TekoraModelProvider extends ModelProvider {
         generateThermometerModel(itemModels, (ThermometerItem)TekoraItems.GALINSTAN_THERMOMETER.get());
         generateThermometerModel(itemModels, (ThermometerItem)TekoraItems.GALINSTAN_QUARTZ_THERMOMETER.get());
 
+        generateBucketModels(itemModels);
+
         blockModels.createTrivialCube(TekoraBlocks.BAUXITE_ORE.get());
     }
     
@@ -96,6 +103,28 @@ public class TekoraModelProvider extends ModelProvider {
         }
 
         itemModels.itemModelOutput.accept(item, ItemModelUtils.rangeSelect(new BiomeTemperature(), 1.0f, overrides));
+    }
+
+    private static final DynamicFluidContainerModel.Textures BUCKET_TEXTURES = new DynamicFluidContainerModel.Textures(
+            Optional.empty(),
+            Optional.of(new Material(Identifier.withDefaultNamespace("item/bucket"))),
+            Optional.of(new Material(Identifier.fromNamespaceAndPath("neoforge", "item/mask/bucket_fluid"))),
+            Optional.empty()
+    );
+
+    void generateBucketModels(ItemModelGenerators itemModels) {
+        for (DeferredHolder<Item, ? extends Item> holder : TekoraItems.ITEMS.getEntries()) {
+            if (holder.get() instanceof BucketItem bucket) {
+                itemModels.itemModelOutput.accept(bucket,
+                    new DynamicFluidContainerModel.Unbaked(BUCKET_TEXTURES,
+                            bucket.content,
+                            false, // flipGas
+                            true,  // coverIsMask
+                            true   // applyFluidLuminosity
+                    )
+                );
+            }
+        }
     }
 
     @Override

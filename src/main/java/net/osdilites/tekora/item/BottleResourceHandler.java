@@ -15,9 +15,17 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.osdilites.tekora.fluid.ChemicalFluidType;
 import net.osdilites.tekora.util.UtilFunctions;
 
-// TODO FIND ANOTHER BETTER FILE OR FOLDER TO PUT THIS CLASS IN
-// BucketResourceHandler.java used as a basis for this
+/**
+ * Allows for bottles to be filled from or emptied to machines similarly to buckets.
+ * This is utilized by "Fluid Capabilities" so that machines don't have to check 
+ * specifically for bottles, 
+ * (TODO once this is fully implemented with support for TekoraFluids)
+ * BottleResourceHandler
+ */
 public final class BottleResourceHandler extends ItemAccessResourceHandler<FluidResource> {
+    // TODO FIND ANOTHER BETTER FILE OR FOLDER TO PUT THIS CLASS IN
+    // BucketResourceHandler.java used as a basis for this
+
     final private static int BOTTLE_VOLUME = ChemicalFluidType.BOTTLE_VOLUME;
     
     public BottleResourceHandler(ItemAccess itemAccess) {

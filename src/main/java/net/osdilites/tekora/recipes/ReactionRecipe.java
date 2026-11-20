@@ -33,6 +33,7 @@ import net.osdilites.tekora.util.UtilFunctions;
 
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
+import org.spongepowered.asm.mixin.injection.Desc;
 
 import java.util.*;
 import java.util.stream.Collector;
@@ -263,8 +264,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
      * @param inventory
      * @param fluids
      * @param tank
-     * @deprecated
      */
+    @Deprecated 
     private static void fillBasedOnData(List<Chemical> chemicals, Map<Integer, float[]> items, ItemStacksResourceHandler inventory, Map<Integer, float[]> fluids, FluidStacksResourceHandler tank) {
         for (Chemical chemical : chemicals) {
             for (int i = 0; i < inventory.size(); i++) {
@@ -311,9 +312,12 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         }
     }
 
+    @Deprecated 
     public void fillWithReactants(Map<Integer, float[]> items, ItemStacksResourceHandler inventory, Map<Integer, float[]> fluids, FluidStacksResourceHandler tank) {
         fillBasedOnData(reactants, items, inventory, fluids, tank);
     }
+
+    @Deprecated 
     public void fillWithProducts(Map<Integer, float[]> items, ItemStacksResourceHandler inventory, Map<Integer, float[]> fluids, FluidStacksResourceHandler tank) {
         fillBasedOnData(products, items, inventory, fluids, tank);
     }
@@ -378,6 +382,17 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         return resource.getComponents().has(TekoraComponents.SOLUTES_LIST);
     }
     
+    // TODO:
+    // since there is a new type of ingredient chemDataIngredient, 
+    // all the stuff added in that type of ingredient might make it
+    // easier to compare with a group of solutes in a very similar 
+    // way to material ingredients. thus, should get to 
+    // rewriting parts of literally every method I've touched that 
+    // involves solutes. damn...  
+
+    // i wouldn't have to iterate through each coefficient anymore
+    // 
+
     /**
      * Populates the given maps with coefficient information for current inventory items.
      * The chemicals list has to be complete for a side. if neither are complete, unintended consequences
@@ -422,6 +437,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 
                 // iterate through all solutes present in the recipe,
                 // skipping ingredient solutes that are not part of the recipe 
+
+                // TODO rewrite this to use Solutes
                 for (SoluteKey recipeSoluteKey : chemicalSolutes.keySet()) {
                     if (!resSolutesMap.containsKey(recipeSoluteKey)) continue;
                     
@@ -461,6 +478,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 
                 // iterate through all solutes present in the recipe,
                 // skipping ingredient solutes that are not part of the recipe 
+                // TODO rewrite this to use Solutes same deal
                 for (SoluteKey recipeSoluteKey : chemicalSolutes.keySet()) {
                     if (!resSolutesMap.containsKey(recipeSoluteKey)) continue;
                     
@@ -482,6 +500,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 }
             }
         }
+
     }
 
     public void fillWithReactants(Map<CoefficientsKey, CoefficientsMap> items, ItemStacksResourceHandler inventory, 
@@ -583,7 +602,10 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             // then return.
 
             // things to consider:
-            // 
+            // itemChemicals won't have entries for the missing products/reactants
+            // if I mutate itemChemicals with missing entries, then I wouldn't need 
+            // to return early; i could just continue on since all of them are present
+            // (default values would be 0)
 
 
         } else if (!allReactants) {
@@ -669,8 +691,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
      * @param inventory The item inventory to modify
      * @param rate The rate at which the reaction occurs.
      * @param action int determining whether to produce reactants (1) or products (-1). The direction of the reaction.
-     * @deprecated
      */
+    @Deprecated 
     public void modifyCrafterInventory(@NonNull Map<Integer, float[]> itemReactants, ItemStacksResourceHandler inventory, double rate, int action) {
         if (action == 1) {
             // checks if all the products are available

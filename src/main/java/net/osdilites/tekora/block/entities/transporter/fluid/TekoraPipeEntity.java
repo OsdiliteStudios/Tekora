@@ -1,14 +1,19 @@
 package net.osdilites.tekora.block.entities.transporter.fluid;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.osdilites.tekora.block.TekoraBlockStates;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
+import net.osdilites.tekora.data.PipeDurability;
+import net.osdilites.tekora.data.TekoraComponents;
 import net.osdilites.tekora.util.UtilFunctions;
 
 public class TekoraPipeEntity extends BlockEntity {
-    private static final float PIPE_DURABILITY = 500.0f;
+    public static final float PIPE_DURABILITY = 500.0f;
     private float durability;
     private final float chemResistance;
     private final boolean isPlastic;
@@ -31,6 +36,34 @@ public class TekoraPipeEntity extends BlockEntity {
             float diff = (float)UtilFunctions.getBiomeTemperature(level, pos) - maxTemp; // todo, we'll also use fluid temperature
             float tempInduced = diff > 0 ? (1 + diff + 4 * diff * diff) : 1;
             durability -= degradationRate * chemResistance * tempInduced * 0.05f;
+
+            if (durability <= 125.0f) {
+                blockState.setValue(TekoraBlockStates.DISREPAIR, 3);
+            } else if (durability <= 250.0f) {
+                blockState.setValue(TekoraBlockStates.DISREPAIR, 2);
+            } else if (durability <= 375.0f) {
+                blockState.setValue(TekoraBlockStates.DISREPAIR, 1);
+            } else {
+                blockState.setValue(TekoraBlockStates.DISREPAIR, 0);
+            }
+            setChanged();
+            level.setBlockAndUpdate(pos, blockState);
         }
+    }
+
+    public float getDurability() {
+        return durability;
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+        components.set(TekoraComponents.PIPE_DURABILITY.get(), new PipeDurability((int)durability));
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
+        this.durability = components.has(TekoraComponents.PIPE_DURABILITY) ? components.get(TekoraComponents.PIPE_DURABILITY).durability() : PIPE_DURABILITY;
     }
 }

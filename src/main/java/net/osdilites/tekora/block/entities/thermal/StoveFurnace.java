@@ -1,0 +1,77 @@
+package net.osdilites.tekora.block.entities.thermal;
+
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.osdilites.tekora.block.entities.TekoraBlockEntities;
+import org.jspecify.annotations.Nullable;
+
+public class StoveFurnace extends AbstractThermalMachine {
+    public static final MapCodec<StoveFurnace> CODEC = simpleCodec(StoveFurnace::new);
+
+    private StoveFurnace(Properties properties) {
+        super(properties, "stove_furnace");
+    }
+
+    public StoveFurnace() {
+        this(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new StoveFurnaceEntity(blockPos, blockState);
+    }
+    @Override
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, ItemStack toolStack, boolean willHarvest, FluidState fluid) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof StoveFurnaceEntity chamber) {
+            chamber.drops(); // todo, if the basin contains a toxic chemical, a new fog should appear around the basin damaging the player
+        }
+        return super.onDestroyedByPlayer(state, level, pos, player, toolStack, willHarvest, fluid);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide()) {
+            BlockEntity entity = level.getBlockEntity(pos);
+            if (entity instanceof StoveFurnaceEntity chamber) {
+                player.openMenu(new SimpleMenuProvider(chamber, chamber.getDisplayName()), pos);
+            }
+        }
+        return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState onState, Entity entity) {
+        super.stepOn(level, pos, onState, entity);
+        if (entity instanceof LivingEntity ent && onState.hasProperty(AbstractThermalMachine.LIT) && onState.getValue(AbstractThermalMachine.LIT)) {
+            ent.hurt(level.damageSources().campfire(), 1.0f);
+        }
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        return pLevel.isClientSide() ? null : createTickerHelper(pBlockEntityType, TekoraBlockEntities.STOVE_FURNACE.get(), (level1, pos, state, entity) ->
+                entity.tick(level1, pos, state));
+    }
+}

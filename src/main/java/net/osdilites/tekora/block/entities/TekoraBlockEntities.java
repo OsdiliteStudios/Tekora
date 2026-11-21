@@ -7,7 +7,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.*;
-import net.osdilites.tekora.block.entities.thermal.CombustionChamberEntity;
+import net.osdilites.tekora.block.entities.thermal.StoveFurnaceEntity;
 import net.osdilites.tekora.block.entities.transporter.fluid.TekoraPipeEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.HandCrankEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
@@ -76,9 +76,9 @@ public class TekoraBlockEntities {
             BLOCK_ENTITIES.register("kiln_furnace", () -> new BlockEntityType<>(KilnFurnaceEntity::new,
                     Set.of(TekoraBlocks.KILN_FURNACE.get())));
 
-    public static final Supplier<BlockEntityType<CombustionChamberEntity>> COMBUSTION_CHAMBER =
-            BLOCK_ENTITIES.register("combustion_chamber", () -> new BlockEntityType<>(CombustionChamberEntity::new,
-                    Set.of(TekoraBlocks.COMBUSTION_CHAMBER.get())));
+    public static final Supplier<BlockEntityType<StoveFurnaceEntity>> STOVE_FURNACE =
+            BLOCK_ENTITIES.register("stove_furnace", () -> new BlockEntityType<>(StoveFurnaceEntity::new,
+                    Set.of(TekoraBlocks.STOVE_FURNACE.get())));
 
     public static final Supplier<BlockEntityType<TekoraPipeEntity>> PIPE =
             BLOCK_ENTITIES.register("tekora_pipe", () -> new BlockEntityType<>(TekoraPipeEntity::new,

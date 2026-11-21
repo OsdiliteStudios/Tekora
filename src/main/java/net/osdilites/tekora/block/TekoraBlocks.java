@@ -4,7 +4,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -13,9 +12,10 @@ import net.osdilites.tekora.block.basic.TekoraExperienceBlock;
 import net.osdilites.tekora.block.entities.Basin;
 import net.osdilites.tekora.block.entities.Depot;
 import net.osdilites.tekora.block.entities.mechanical.*;
-import net.osdilites.tekora.block.entities.thermal.CombustionChamber;
+import net.osdilites.tekora.block.entities.thermal.StoveFurnace;
 import net.osdilites.tekora.block.entities.thermal.KilnFurnace;
 import net.osdilites.tekora.block.entities.transporter.fluid.TekoraPipe;
+import net.osdilites.tekora.block.entities.transporter.fluid.TekoraPipeEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.*;
 import net.osdilites.tekora.block.fluids.ChemicalLiquidBlock;
 import net.osdilites.tekora.fluid.TekoraFluids;
@@ -57,11 +57,11 @@ public class TekoraBlocks {
     public static final DeferredHolder<Block, Depot> DEPOT =
             createBlock("depot", Depot::new);
 
-    public static final DeferredHolder<Block, CombustionChamber> COMBUSTION_CHAMBER =
-            createBlock("combustion_chamber", CombustionChamber::new);
+    public static final DeferredHolder<Block, StoveFurnace> STOVE_FURNACE =
+            createBlock("stove_furnace", StoveFurnace::new);
 
-    public static final DeferredHolder<Block, TekoraPipe> COPPER_PIPE =
-            createBlock("copper_pipe", () -> new TekoraPipe("copper_pipe", 0.8f, false, 12.0f));
+    public static final DeferredHolder<Block, Block> COPPER_PIPE =
+            createPipeBlock("copper_pipe", 0.8f, false, 12.0f);
 
     // megablock components
     public static final DeferredHolder<Block, KilnFurnace> KILN_FURNACE =
@@ -125,6 +125,13 @@ public class TekoraBlocks {
     private static <T extends Block> DeferredHolder<Block, T> createBlock(String name, Supplier<T> block) {
         DeferredHolder<Block, T> ret = BLOCKS.register(name, block);
         TekoraItems.ITEMS.registerSimpleBlockItem(ret, Item.Properties::useBlockDescriptionPrefix);
+        return ret;
+    }
+
+    private static DeferredHolder<Block, Block> createPipeBlock(String name, float chemResistance, boolean isPlastic, float maxTemp) {
+        DeferredHolder<Block, Block> ret = BLOCKS.register(name, () -> new TekoraPipe(name, chemResistance, isPlastic, maxTemp));
+        // todo, make it so when the block gets placed, nbt/compound tags copy over or test it to make sure.
+        TekoraItems.ITEMS.registerSimpleBlockItem(ret, () -> new Item.Properties().useBlockDescriptionPrefix().durability((int) TekoraPipeEntity.PIPE_DURABILITY));
         return ret;
     }
 

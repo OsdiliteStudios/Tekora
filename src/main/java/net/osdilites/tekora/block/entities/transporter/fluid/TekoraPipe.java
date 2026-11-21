@@ -29,9 +29,11 @@ import org.jspecify.annotations.Nullable;
 
 public class TekoraPipe extends BaseEntityBlock {
     protected static final IntegerProperty CONNECTION = TekoraBlockStates.CONNECTION;
+    protected static final IntegerProperty DISREPAIR = TekoraBlockStates.DISREPAIR;
+
     public static final MapCodec<TekoraPipe> CODEC = simpleCodec(TekoraPipe::new);
 
-    private static final VoxelShape CENTER = Block.box(4, 4, 4, 12, 12, 12);
+    private static final VoxelShape CENTER = Block.box(5, 5, 5, 11, 11, 11);
 
     private static final VoxelShape EAST = Shapes.or(
             Block.box(0, 4, 4, 8, 12, 12),
@@ -65,17 +67,16 @@ public class TekoraPipe extends BaseEntityBlock {
         for (int a = 0; a < 2; a++) {
             VoxelShape joined = a == 0 ? CENTER : EAST;
             for (int b = 0; b < 2; b++) {
-                joined = b == 0 ? joined : Shapes.or(joined, WEST);
+                VoxelShape joined1 = b == 0 ? joined : Shapes.or(joined, WEST);
                 for (int c = 0; c < 2; c++) {
-                    joined = c == 0 ? joined : Shapes.or(joined, ABOVE);
+                    VoxelShape joined2 = c == 0 ? joined1 : Shapes.or(joined1, ABOVE);
                     for (int d = 0; d < 2; d++) {
-                        joined = d == 0 ? joined : Shapes.or(joined, BELOW);
+                        VoxelShape joined3 = d == 0 ? joined2 : Shapes.or(joined2, BELOW);
                         for (int e = 0; e < 2; e++) {
-                            joined = e == 0 ? joined : Shapes.or(joined, NORTH);
+                            VoxelShape joined4 = e == 0 ? joined3 : Shapes.or(joined3, NORTH);
                             for (int f = 0; f < 2; f++) {
-                                joined = f == 0 ? joined : Shapes.or(joined, SOUTH);
                                 int val = f + e * 2 + d * 4 + c * 8 + b * 16 + a * 32;
-                                shapes[val] = joined;
+                                shapes[val] = f == 0 ? joined4 : Shapes.or(joined4, SOUTH);
                             }
                         }
                     }
@@ -91,6 +92,14 @@ public class TekoraPipe extends BaseEntityBlock {
     private final boolean isPlastic;
     private final float maxTemp; // in Minecraft temperature units
 
+    private TekoraPipe(Properties properties) {
+        super(properties.noOcclusion().requiresCorrectToolForDrops());
+        registerDefaultState(defaultBlockState().setValue(CONNECTION, 0).setValue(DISREPAIR, 0));
+        this.chemResistance = 0.8f;
+        this.isPlastic = false;
+        this.maxTemp = 12.0f;
+    }
+
     // here's the chemical coefficients for each metal
     //Copper 0.8
     //Steel 1.5
@@ -98,18 +107,10 @@ public class TekoraPipe extends BaseEntityBlock {
     //Aluminum 1.0
     //Titanium 0.1
 
-    private TekoraPipe(Properties properties) {
-        super(properties.noOcclusion().requiresCorrectToolForDrops());
-        registerDefaultState(defaultBlockState().setValue(CONNECTION, 0));
-        this.chemResistance = 0.8f;
-        this.isPlastic = false;
-        this.maxTemp = 12.0f;
-    }
-
     public TekoraPipe(String name, float chemResistance, boolean isPlastic, float maxTemp) {
         super(Properties.ofFullCopy(Blocks.COPPER_BLOCK.waxed().exposed()).noOcclusion().requiresCorrectToolForDrops()
                 .setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Tekora.MODID, name))));
-        registerDefaultState(defaultBlockState().setValue(CONNECTION, 0));
+        registerDefaultState(defaultBlockState().setValue(CONNECTION, 0).setValue(DISREPAIR, 0));
         this.chemResistance = chemResistance;
         this.isPlastic = isPlastic;
         this.maxTemp = maxTemp;
@@ -124,6 +125,7 @@ public class TekoraPipe extends BaseEntityBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CONNECTION);
+        builder.add(DISREPAIR);
     }
 
     @Override
@@ -139,8 +141,8 @@ public class TekoraPipe extends BaseEntityBlock {
     }
 
     private void changeState(Level level, BlockState state, BlockPos pos) {
-        BlockState newState = state;
         int orgVal = state.getValueOrElse(CONNECTION, 0);
+        BlockState newState = state;
         BlockState aboveState = level.getBlockState(pos.above());
         newState = newState.setValue(CONNECTION, aboveState.is(this) && aboveState.hasProperty(CONNECTION) ? orgVal | 0b001000 : orgVal & 0b110111);
 
@@ -164,7 +166,7 @@ public class TekoraPipe extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(CONNECTION, 0);
+        return defaultBlockState().setValue(CONNECTION, 0).setValue(DISREPAIR, 0);
     }
 
     @Override

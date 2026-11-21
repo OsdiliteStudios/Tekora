@@ -7,15 +7,11 @@ import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.RangeSelectItemModel;
-import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.datagen.modelcases.BiomeTemperature;
@@ -24,7 +20,6 @@ import net.osdilites.tekora.item.tools.ThermometerItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public class TekoraModelProvider extends ModelProvider {
@@ -68,6 +63,21 @@ public class TekoraModelProvider extends ModelProvider {
         itemModels.generateFlatItem(TekoraItems.SODIUM_HYDROXIDE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(TekoraItems.ALUMINUM_OXIDE.get(), ModelTemplates.FLAT_ITEM);
 
+        itemModels.generateFlatItem(TekoraItems.ACETIC_ACID_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.ACETONE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.AMMONIA_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.BENZENE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.BROMINE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.ETHANOL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.FORMIC_ACID_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.HYDRAZINE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.HYDROGEN_FLUORIDE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.HYDROGEN_PEROXIDE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.METHANOL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.SULFUR_DIOXIDE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.SULFUR_TRIOXIDE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(TekoraItems.SULFURIC_ACID_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+
         itemModels.generateFlatItem(TekoraItems.WRENCH.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(TekoraItems.DEBUG_ITEM.get(), ModelTemplates.FLAT_ITEM);
@@ -77,8 +87,6 @@ public class TekoraModelProvider extends ModelProvider {
         generateThermometerModel(itemModels, (ThermometerItem)TekoraItems.GALINSTAN_QUARTZ_THERMOMETER.get());
 
         blockModels.createTrivialCube(TekoraBlocks.BAUXITE_ORE.get());
-
-        generateBucketModels(itemModels);
     }
     
     private void generateGearModel(ItemModelGenerators itemModels, Item item, String name) {
@@ -104,28 +112,6 @@ public class TekoraModelProvider extends ModelProvider {
         }
 
         itemModels.itemModelOutput.accept(item, ItemModelUtils.rangeSelect(new BiomeTemperature(), 1.0f, overrides));
-    }
-
-    private static final DynamicFluidContainerModel.Textures BUCKET_TEXTURES = new DynamicFluidContainerModel.Textures(
-            Optional.empty(),
-            Optional.of(new Material(Identifier.withDefaultNamespace("item/bucket"))),
-            Optional.of(new Material(Identifier.fromNamespaceAndPath("neoforge", "item/mask/bucket_fluid"))),
-            Optional.empty()
-    );
-
-    void generateBucketModels(ItemModelGenerators itemModels) {
-        for (DeferredHolder<Item, ? extends Item> holder : TekoraItems.ITEMS.getEntries()) {
-            if (holder.get() instanceof BucketItem bucket) {
-                itemModels.itemModelOutput.accept(bucket,
-                        new DynamicFluidContainerModel.Unbaked(BUCKET_TEXTURES,
-                                bucket.content,
-                                false, // flipGas
-                                true,  // coverIsMask
-                                true   // applyFluidLuminosity
-                        )
-                );
-            }
-        }
     }
 
     @Override

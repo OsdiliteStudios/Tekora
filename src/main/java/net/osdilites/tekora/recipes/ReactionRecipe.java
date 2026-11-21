@@ -25,6 +25,7 @@ import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
 import net.osdilites.tekora.data.TekoraComponents;
 import net.osdilites.tekora.recipes.ingredient.Catalyst;
+import net.osdilites.tekora.recipes.ingredient.ChemDataIngredient;
 import net.osdilites.tekora.recipes.ingredient.Chemical;
 import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 import net.osdilites.tekora.recipes.ingredient.MaterialIngredient;
@@ -322,6 +323,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         fillBasedOnData(products, items, inventory, fluids, tank);
     }
 
+    /*
     // inventory indices should be distinct.
     public record CoefficientsKey(
         boolean isSolute,   /// resource is either Material or has Solute ingredients
@@ -373,6 +375,84 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             return this.coefficients.isEmpty();
         }
     }
+    */
+
+    
+    /*
+     * type-alias, but not really
+     * @param inventoryIndex Inventory index that this coefficient is associated with
+     */
+    // public record CoefficientKey(int inventoryIndex) { }
+
+    public class CoefficientValue {
+        public final Float coefficient;
+
+        // how close the material ingredient is to being crafted.
+        public float progress = 0.f;
+
+        // ingredientKey data for checking using resource -> chemIng.of() -> .asMaterial
+        Either<MaterialIngredient, ChemDataIngredient> ingredient;
+
+        CoefficientValue(Float coeff, MaterialIngredient mat) {
+            this.coefficient = coeff;
+            this.ingredient = Either.left(mat);
+        }
+
+        CoefficientValue(Float coeff, ChemDataIngredient chem) {
+            this.coefficient = coeff;
+            this.ingredient = Either.right(chem);
+        }
+
+        public boolean isSolute() {
+            return ingredient.right().isPresent();
+        }
+    }
+
+    /// Wrapper for "map" of ingredients with associated coefficients.
+    public class CoefficientMap {
+        /// pair of ingredient key and concentration value.
+        /// materials would only have one entry
+        public Map<Integer, CoefficientValue> coefficients;
+
+        public CoefficientMap() {
+            this.coefficients = new HashMap<>();
+        }
+
+        // boilerplate
+
+        public void put(int index, MaterialIngredient mat, float coeff) {
+            coefficients.put(index, new CoefficientValue(coeff, mat));
+        }
+
+        public void put(int index, ChemDataIngredient chem, float coeff) {
+            coefficients.put(index, new CoefficientValue(coeff, chem));
+        }
+
+        /// Returns 0 if entry is not found.
+        // @NotNull public float get(int index, SoluteKey key) {
+        //     Either<MaterialIngredient, ChemDataIngredient> input = 
+        //         Either.right(ChemDataIngredient.of(key));
+        //     CoefficientKey ckey = new CoefficientKey(index, input);
+        //     Float value = coefficients.get(ckey).coefficient;
+        //     return value == null ? 0.f : value;
+        // }
+
+        public CoefficientValue get(int index) {
+            return coefficients.get(index);
+        }
+
+        /// Returns 0 if entry is not found.
+        public float getCoefficient(int index, boolean getChemIngredient) {
+            var value = coefficients.get(index);
+            if (value == null) return 0.f;
+            return value.coefficient;
+        }
+
+        public boolean isEmpty() {
+            return this.coefficients.isEmpty();
+        }
+    }
+    
 
     private static boolean hasSolutes(ItemResource resource) {
         return resource.getComponents().has(TekoraComponents.SOLUTES_LIST);
@@ -404,9 +484,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
      */
     private static void getIngredientCoefficients(
         List<Chemical> chemicals, 
-        Map<CoefficientsKey, CoefficientsMap> itemIngredients, 
+        CoefficientMap itemIngredients, 
         ItemStacksResourceHandler inventory, 
-        Map<CoefficientsKey, CoefficientsMap> fluidIngredients, 
+        CoefficientMap fluidIngredients, 
         FluidStacksResourceHandler tank) 
     {
         // - getCoefficients could be made much simpler and not rely on inventory data
@@ -417,11 +497,11 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         // if optimizing, make sure to cache these maps somewhere
         // perhaps a dedicated cache object (new class) for these checks? 
         // or maybe just change the data structure from list to set
-        Map<SoluteKey, Chemical> chemicalSolutes = 
+        Map<ChemDataIngredient, Chemical> chemicalSolutes =
             chemicals.stream()
-                .map(chem -> chem)
-                .filter(chem -> chem.chemical().isSolute())
-                .collect(Collectors.toMap(k -> k.chemical().asSolute(), v -> v));  
+                .filter(chem -> chem.chemical().isData())
+                .collect(Collectors.toMap(k -> k.chemical().asData(), v -> v));
+
         // test inventory on chemicals
         for (int index = 0; index < inventory.size(); ++index) {
             ItemResource resource = inventory.getResource(index);
@@ -429,18 +509,17 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             // note that a resource can have multiple solutes, each of which can be an ingredient
             if (resource.getComponents().has(TekoraComponents.SOLUTES_LIST)) {
                 Solutes resourceSolutes = resource.getComponents().get(TekoraComponents.SOLUTES_LIST);
-                if (resourceSolutes == null) continue; // ? useless
-
-                Map<SoluteKey, Double> resSolutesMap = resourceSolutes.dataMap();
-                CoefficientsKey ingredientKey = new CoefficientsKey(true, index);
-                CoefficientsMap ingredientCoeffs = new CoefficientsMap();
                 
-                // iterate through all solutes present in the recipe,
+                // implicitly iterate through all solutes present in the recipe,
                 // skipping ingredient solutes that are not part of the recipe 
 
-                // TODO rewrite this to use Solutes
-                for (SoluteKey recipeSoluteKey : chemicalSolutes.keySet()) {
-                    if (!resSolutesMap.containsKey(recipeSoluteKey)) continue;
+                for (ChemDataIngredient recipeChemDataKey : chemicalSolutes.keySet()) {
+                    // TODO support for singular? singular because need to treat reactions in either "groups" or singular
+                    if (!recipeChemDataKey.isMap()) continue;
+                    Solutes recipeSolutes = recipeChemDataKey.asMap();
+                    if (!resourceSolutes.hasAllKeys(recipeSolutes)) continue;
+
+                    // uhhhhh argghhgh ggahhhhh
                     
                     float recipeCoefficent = chemicalSolutes.get(recipeSoluteKey).coefficient();
                     ingredientCoeffs.put(recipeSoluteKey, recipeCoefficent);
@@ -661,6 +740,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                     System.err.printf("couldn't treat %s as material\n", inputIngredient);
                     return;
                 }
+                // could also get by coeffKey.index -> getResource -> chem.of(res.item()) -> .... 
                 MaterialIngredient materialIng = inputIngredient.asMaterial();
                 
                 float materialCoeff = inputCoefficients.get(materialIng);

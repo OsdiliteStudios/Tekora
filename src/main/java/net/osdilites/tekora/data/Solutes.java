@@ -59,4 +59,16 @@ public record Solutes(@NotNull Map<SoluteKey, Double> dataMap) {
             tooltip.add(Component.translatable("tekora.tooltip.data.chemical", entry.getKey().formula(), entry.getKey().charge(), entry.getValue()));
         }
     }
+
+    public boolean hasAllKeys(Map<SoluteKey, Double> otherMap) {
+        for (var key : otherMap.keySet()) {
+            if (!this.dataMap.containsKey(key)) return false;
+        }
+        return true;
+    }
+
+    /// is other a subset of *this* set?
+    public boolean hasAllKeys(Solutes other) {
+        return this.dataMap().keySet().containsAll(other.dataMap().keySet());
+    }
 }

@@ -85,6 +85,29 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraItems.WRENCH.get());
                     }).build());
 
+    // TODO: maybe switch later to "Chemicals" or "Elements" or "Chemical Elements" or something
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> FLUIDS = CREATIVE_MODE_TABS.register("fluids",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.tekora_fluids"))
+                    .icon(() -> TekoraItems.AMMONIA_BUCKET.get().asItem().getDefaultInstance())
+                    .withTabsBefore(TOOLS.getKey())
+                    .displayItems((param, out) -> {
+                        out.accept(TekoraItems.ACETIC_ACID_BUCKET.get());
+                        out.accept(TekoraItems.ACETONE_BUCKET.get());
+                        out.accept(TekoraItems.AMMONIA_BUCKET.get());
+                        out.accept(TekoraItems.BENZENE_BUCKET.get());
+                        out.accept(TekoraItems.BROMINE_BUCKET.get());
+                        out.accept(TekoraItems.ETHANOL_BUCKET.get());
+                        out.accept(TekoraItems.FORMIC_ACID_BUCKET.get());
+                        out.accept(TekoraItems.HYDRAZINE_BUCKET.get());
+                        out.accept(TekoraItems.HYDROGEN_FLUORIDE_BUCKET.get());
+                        out.accept(TekoraItems.HYDROGEN_PEROXIDE_BUCKET.get());
+                        out.accept(TekoraItems.METHANOL_BUCKET.get());
+                        out.accept(TekoraItems.SULFUR_DIOXIDE_BUCKET.get());
+                        out.accept(TekoraItems.SULFUR_TRIOXIDE_BUCKET.get());
+                        out.accept(TekoraItems.SULFURIC_ACID_BUCKET.get());
+                    }).build());
+
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);
     }

@@ -23,6 +23,12 @@ public class TekoraComponents {
                     .networkSynchronized(ManuscriptComponent.STREAM_CODEC)
                     .build());
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<PipeDurability>> PIPE_DURABILITY =
+            COMPONENTS.register("pipe_durability", () -> DataComponentType.<PipeDurability>builder()
+                    .persistent(PipeDurability.CODEC)
+                    .networkSynchronized(PipeDurability.STREAM_CODEC)
+                    .build());
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Solutes>> SOLUTES_LIST =
             COMPONENTS.register("solutes", () -> DataComponentType.<Solutes>builder()
                     .persistent(Solutes.CODEC)

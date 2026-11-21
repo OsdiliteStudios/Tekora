@@ -25,7 +25,7 @@ public class TekoraCreativeTabs {
                         out.accept(TekoraBlocks.DEPOT.get().asItem());
                         out.accept(TekoraBlocks.BASIN.get().asItem());
 
-                        out.accept(TekoraBlocks.COMBUSTION_CHAMBER.get().asItem());
+                        out.accept(TekoraBlocks.STOVE_FURNACE.get().asItem());
                         out.accept(TekoraBlocks.KILN_FURNACE.get().asItem());
                         out.accept(TekoraBlocks.COPPER_PIPE.get().asItem());
 

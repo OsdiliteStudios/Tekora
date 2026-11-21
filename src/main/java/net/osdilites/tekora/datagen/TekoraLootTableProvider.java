@@ -2,21 +2,19 @@ package net.osdilites.tekora.datagen;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachine;
+import net.osdilites.tekora.data.TekoraComponents;
 import net.osdilites.tekora.item.TekoraItems;
 
 import java.util.Set;
@@ -41,10 +39,11 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
         dropSelf(TekoraBlocks.STEEL_BLOCK.get());
         dropSelf(TekoraBlocks.FIRE_BRICKS.get());
 
-        dropSelf(TekoraBlocks.COMBUSTION_CHAMBER.get());
-        dropSelf(TekoraBlocks.COPPER_PIPE.get());
+        dropSelf(TekoraBlocks.STOVE_FURNACE.get());
 
         addOre(TekoraBlocks.BAUXITE_ORE.get(), TekoraItems.BAUXITE.get());
+
+        add(TekoraBlocks.COPPER_PIPE.get(), this::dropPipe);
 
         add(TekoraBlocks.APPLYER.get(), this::dropMechTopPart);
         add(TekoraBlocks.CRUSHER.get(), this::dropMechTopPart);
@@ -75,5 +74,13 @@ public class TekoraLootTableProvider extends BlockLootSubProvider {
     @Override
     protected Iterable<Block> getKnownBlocks() {
         return TekoraBlocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
+    }
+
+    private LootTable.Builder dropPipe(Block pipe) {
+        LootPool.Builder builder = LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0f))
+                .add(LootItem.lootTableItem(pipe.asItem()))
+                .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY).include(TekoraComponents.PIPE_DURABILITY.get()));
+        return LootTable.lootTable().withPool(builder);
     }
 }

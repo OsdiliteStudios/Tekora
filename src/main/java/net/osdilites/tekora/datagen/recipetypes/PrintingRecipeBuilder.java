@@ -3,6 +3,7 @@ package net.osdilites.tekora.datagen.recipetypes;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -19,6 +20,10 @@ public class PrintingRecipeBuilder extends DepotRecipeBuilder {
     }
 
     public static PrintingRecipeBuilder printingBuilder(RecipeCategory category, Ingredient ingredient, Item result, double cutTorque, double ratedVelocity) {
+        return new PrintingRecipeBuilder(category, ingredient, new ItemStackTemplate(result), cutTorque, ratedVelocity);
+    }
+
+    public static PrintingRecipeBuilder printingBuilder(RecipeCategory category, Ingredient ingredient, Holder<Item> result, double cutTorque, double ratedVelocity) {
         return new PrintingRecipeBuilder(category, ingredient, new ItemStackTemplate(result), cutTorque, ratedVelocity);
     }
 

@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_printer": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:printing/copy_book"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_writable_book": {
       "conditions": {
         "items": [
           {
-            "items": "tekora:ink_press_shaft"
+            "items": "minecraft:writable_book"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "tekora:printing/cyan_banner"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "has_printer"
+      "has_writable_book"
     ]
   ],
   "rewards": {
     "recipes": [
-      "tekora:printing/cyan_banner"
+      "tekora:printing/copy_book"
     ]
   }
 }

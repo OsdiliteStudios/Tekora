@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "tekora:printing/green_banner"
+        "recipe": "tekora:printing/copy_piglin_banner_pattern"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "tekora:printing/green_banner"
+      "tekora:printing/copy_piglin_banner_pattern"
     ]
   }
 }

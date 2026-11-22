@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "tekora:printing/magenta_banner"
+        "recipe": "tekora:printing/copy_skull_banner_pattern"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "tekora:printing/magenta_banner"
+      "tekora:printing/copy_skull_banner_pattern"
     ]
   }
 }

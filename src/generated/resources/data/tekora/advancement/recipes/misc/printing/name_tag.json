@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_printer": {
+    "has_name_tag": {
       "conditions": {
         "items": [
           {
-            "items": "tekora:ink_press_shaft"
+            "items": "minecraft:name_tag"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "tekora:printing/red_banner"
+        "recipe": "tekora:printing/name_tag"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_printer"
+      "has_name_tag"
     ]
   ],
   "rewards": {
     "recipes": [
-      "tekora:printing/red_banner"
+      "tekora:printing/name_tag"
     ]
   }
 }

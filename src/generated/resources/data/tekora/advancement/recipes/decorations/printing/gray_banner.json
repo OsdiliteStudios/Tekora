@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_printer": {
+    "has_banners": {
       "conditions": {
         "items": [
           {
-            "items": "tekora:ink_press_shaft"
+            "items": "#minecraft:banners"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "tekora:printing/black_banner"
+        "recipe": "tekora:printing/gray_banner"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_printer"
+      "has_banners"
     ]
   ],
   "rewards": {
     "recipes": [
-      "tekora:printing/black_banner"
+      "tekora:printing/gray_banner"
     ]
   }
 }

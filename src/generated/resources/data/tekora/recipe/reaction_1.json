@@ -4,8 +4,11 @@
   "catalyst": {
     "catalyst": {
       "input": {
-        "charge": -2,
-        "formula": "SO4"
+        "state": "SOLVATED",
+        "value": {
+          "charge": -2,
+          "formula": "SO4"
+        }
       }
     },
     "energy_reduction": 10000.0
@@ -25,8 +28,11 @@
     {
       "chemical": {
         "input": {
-          "charge": 2,
-          "formula": "Mg"
+          "state": "SOLVATED",
+          "value": {
+            "charge": 2,
+            "formula": "Mg"
+          }
         }
       },
       "order": 1
@@ -34,8 +40,11 @@
     {
       "chemical": {
         "input": {
-          "charge": -2,
-          "formula": "CO3"
+          "state": "SOLVATED",
+          "value": {
+            "charge": -2,
+            "formula": "CO3"
+          }
         }
       },
       "order": 1

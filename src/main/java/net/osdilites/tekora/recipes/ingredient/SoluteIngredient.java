@@ -6,65 +6,66 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.osdilites.tekora.data.SoluteKey;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
 import java.util.function.Predicate;
 
-@Deprecated // deprecated, reason: SoluteKey can handle most of the functions of SoluteIngredient
-public class SoluteIngredient implements Predicate<SoluteKey> {
+public final class SoluteIngredient implements Predicate<SoluteKey> {
+    public static final String SOLID = "SOLID";
+    public static final String LIQUID = "LIQUID";
+    public static final String SOLVATED = "SOLVATED";
+    public static final String GAS = "GAS";
+    public static final String SOLVICRITICAL = "SOLVICRITICAL";
+    public static final String SUPERCRITICAL = "SUPERCRITICAL";
+
     public static final Codec<SoluteIngredient> CODEC = RecordCodecBuilder.create((
             instance) -> instance.group(
-            Codec.STRING.fieldOf("formula").forGetter(SoluteIngredient::getFormula),
-            Codec.INT.fieldOf("charge").forGetter(SoluteIngredient::getCharge),
-            Codec.BOOL.fieldOf("is_solid").forGetter(SoluteIngredient::isSolid)
+            SoluteKey.CODEC.fieldOf("value").forGetter(SoluteIngredient::value),
+            Codec.STRING.fieldOf("state").forGetter(SoluteIngredient::state)
     ).apply(instance, SoluteIngredient::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, SoluteIngredient> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.STRING_UTF8, SoluteIngredient::getFormula,
-            ByteBufCodecs.INT, SoluteIngredient::getCharge,
-            ByteBufCodecs.BOOL, SoluteIngredient::isSolid,
+            SoluteKey.STREAM_CODEC, SoluteIngredient::value,
+            ByteBufCodecs.STRING_UTF8, SoluteIngredient::state,
             SoluteIngredient::new
     );
-    private final String formula;
-    private final int charge;
-    private final boolean isSolid;
+    private final SoluteKey value;
+    private final String state;
 
-    private SoluteIngredient(String formula, int charge, boolean isSolid) {
-        this.formula = formula;
-        this.charge = charge;
-        this.isSolid = isSolid;
+    private SoluteIngredient(SoluteKey key, String state) {
+        this.value = key;
+        this.state = state;
     }
 
-    protected String getFormula() {
-        return formula;
+    public SoluteKey value() {
+        return value;
     }
 
-    protected int getCharge() {
-        return charge;
-    }
-
-    protected boolean isSolid() {
-        return isSolid;
+    public String state() {
+        return state;
     }
 
     @Override
     public boolean test(@NonNull SoluteKey soluteData) {
-        return formula.equals(soluteData.formula()) && charge == soluteData.charge();
+        return value.equals(soluteData);
     }
 
-    public static @NonNull SoluteIngredient liquidSolute(@NonNull SoluteKey data) {
-        return new SoluteIngredient(data.formula(), data.charge(), false);
-    }
-
-    public static @NotNull SoluteIngredient solidSolute(@NotNull SoluteKey data) {
-        return new SoluteIngredient(data.formula(), data.charge(), true);
+    public static @NonNull SoluteIngredient of(@NonNull SoluteKey data, String state) {
+        if (data.charge() != 0 && state.equals(SOLID)) {
+            // this case is for testing purposes and will be removed in the final product.
+            throw new IllegalArgumentException("Cannot have a charged solid");
+        }
+        if (state.equals(SOLID) || state.equals(LIQUID) || state.equals(SOLVATED) || state.equals(GAS) || state.equals(SOLVICRITICAL) || state.equals(SUPERCRITICAL)) {
+            return new SoluteIngredient(data, state);
+        } else {
+            throw new IllegalArgumentException("Invalid state of matter");
+        }
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof SoluteIngredient ing) {
-            return ing.isSolid == isSolid() && ing.formula.equals(formula) && ing.charge == charge;
+            return value.equals(ing.value) && state.equals(ing.state);
         }
         return super.equals(obj);
     }

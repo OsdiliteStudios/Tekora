@@ -13,8 +13,11 @@
     {
       "chemical": {
         "input": {
-          "charge": -1,
-          "formula": "OH"
+          "state": "SOLVATED",
+          "value": {
+            "charge": -1,
+            "formula": "OH"
+          }
         }
       },
       "order": 1
@@ -22,8 +25,11 @@
     {
       "chemical": {
         "input": {
-          "charge": 0,
-          "formula": "H2SO4"
+          "state": "SOLVATED",
+          "value": {
+            "charge": 0,
+            "formula": "H2SO4"
+          }
         }
       },
       "order": 1
@@ -33,8 +39,11 @@
     {
       "chemical": {
         "input": {
-          "charge": -1,
-          "formula": "HSO4"
+          "state": "SOLVATED",
+          "value": {
+            "charge": -1,
+            "formula": "HSO4"
+          }
         }
       },
       "order": 1

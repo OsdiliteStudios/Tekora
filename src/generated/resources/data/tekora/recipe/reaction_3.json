@@ -21,8 +21,11 @@
     {
       "chemical": {
         "input": {
-          "charge": 1,
-          "formula": "NH4"
+          "state": "SOLVATED",
+          "value": {
+            "charge": 1,
+            "formula": "NH4"
+          }
         }
       },
       "coefficient": 3,
@@ -31,8 +34,11 @@
     {
       "chemical": {
         "input": {
-          "charge": -3,
-          "formula": "PO4"
+          "state": "SOLVATED",
+          "value": {
+            "charge": -3,
+            "formula": "PO4"
+          }
         }
       },
       "order": 1

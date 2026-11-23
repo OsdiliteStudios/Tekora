@@ -19,14 +19,14 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 // todo, figure out how gas and dissolution behavior works
-public record ChemicalIngredient(Either<MaterialIngredient, ChemDataIngredient> input) {
+public record ChemicalIngredient(Either<MaterialIngredient, SoluteIngredient> input) {
     public static final Codec<ChemicalIngredient> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    Codec.either(MaterialIngredient.CODEC, ChemDataIngredient.CODEC).fieldOf("input").forGetter(ChemicalIngredient::input)
+                    Codec.either(MaterialIngredient.CODEC, SoluteIngredient.CODEC).fieldOf("input").forGetter(ChemicalIngredient::input)
             ).apply(instance, ChemicalIngredient::new)
     );
 
-    private static final StreamCodec<RegistryFriendlyByteBuf, Either<MaterialIngredient, ChemDataIngredient>>
+    private static final StreamCodec<RegistryFriendlyByteBuf, Either<MaterialIngredient, SoluteIngredient>>
             GENERAL_STREAM_CODEC = StreamCodec.of(
             (buf, either) -> either.ifLeft(
                     ingredient -> {
@@ -36,12 +36,12 @@ public record ChemicalIngredient(Either<MaterialIngredient, ChemDataIngredient> 
             ).ifRight(
                     solute -> {
                         buf.writeBoolean(false);
-                        ChemDataIngredient.STREAM_CODEC.encode(buf, solute);
+                        SoluteIngredient.STREAM_CODEC.encode(buf, solute);
                     }
             ),
             buf -> buf.readBoolean()
                     ? Either.left(MaterialIngredient.STREAM_CODEC.decode(buf))
-                    : Either.right(ChemDataIngredient.STREAM_CODEC.decode(buf))
+                    : Either.right(SoluteIngredient.STREAM_CODEC.decode(buf))
     );
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ChemicalIngredient> STREAM_CODEC = StreamCodec.composite(
@@ -50,35 +50,38 @@ public record ChemicalIngredient(Either<MaterialIngredient, ChemDataIngredient> 
     );
 
     // Helper methods to easily query the machineType during reaction checks
-    @Deprecated
-    public boolean isSolute() { return false; }
+    public boolean isSolute() { return input.right().isPresent(); }
 
+    @Deprecated
     public boolean isData() { return input.right().isPresent(); }
     public boolean isMaterial() { return input.left().isPresent(); }
 
     public @NonNull MaterialIngredient asMaterial() { return input.left().orElseThrow(); }
 
-    @Contract(pure = true)
+    // please use asSoluteIngredient instead
     @Deprecated
-    public @Nullable SoluteKey asSolute() { return null; }
+    @Contract(pure = true)
+    public @NotNull SoluteKey asSolute() { return input.right().orElseThrow().value(); }
 
-    public @NonNull ChemDataIngredient asData() {
+    public SoluteIngredient asSoluteIngredient() {
         return input.right().orElseThrow();
+    }
+
+    @Deprecated
+    public @Nullable SoluteKey asData() {
+        return null;
     }
 
     public boolean test(SoluteKey solute) {
         if (isData()) {
-            ChemDataIngredient data = asData();
-            return data.isSingular() && data.asSingular().equals(solute);
+            SoluteKey data = asData();
+            return data.equals(solute);
         }
         return false;
     }
 
+    @Deprecated
     public boolean test(Solutes solutes) {
-        if (isData()) {
-            ChemDataIngredient data = asData();
-            return data.isSingular() && data.asMap().equals(solutes);
-        }
         return false;
     }
 
@@ -100,8 +103,12 @@ public record ChemicalIngredient(Either<MaterialIngredient, ChemDataIngredient> 
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ChemicalIngredient(Either<MaterialIngredient, ChemDataIngredient> input1)) {
-            return input.equals(input1);
+        if (obj instanceof ChemicalIngredient(Either<MaterialIngredient, SoluteIngredient> input1)) {
+            if (input1.left().isPresent() && input.left().isPresent()) {
+                return input1.left().get().equals(input.left().get());
+            } else if (input1.right().isPresent() && input.right().isPresent()) {
+                return input1.right().get().equals(input.right().get());
+            }
         }
         return false;
     }
@@ -110,26 +117,38 @@ public record ChemicalIngredient(Either<MaterialIngredient, ChemDataIngredient> 
         return isSolute();
     }
 
+
     // replace with of
     @Deprecated
     public static @NonNull ChemicalIngredient liquidSolute(@NonNull SoluteKey data) {
-        return of(data);
+        return of(SoluteIngredient.of(data,SoluteIngredient.LIQUID));
     }
 
     // replace with of
     @Deprecated
     public static @NonNull ChemicalIngredient solidSolute(@NonNull SoluteKey data) {
-        return of(data);
+        return of(SoluteIngredient.of(data,SoluteIngredient.SOLID));
     }
 
-    @Contract("_ -> new") // used for solids
+    @Contract("_ -> new")
+    public static @NonNull ChemicalIngredient of(SoluteIngredient data) {
+        return new ChemicalIngredient(Either.right(data));
+    }
+
+    @Deprecated
+    @Contract("_ -> new")
     public static @NonNull ChemicalIngredient of(SoluteKey data) {
-        return new ChemicalIngredient(Either.right(ChemDataIngredient.of(data)));
+        return new ChemicalIngredient(Either.right(SoluteIngredient.of(data, SoluteIngredient.SOLVATED)));
     }
 
-    @Contract("_ -> new") // used for dissolved/aqueous solutes and gases
-    public static @NonNull ChemicalIngredient of(Solutes solutes) {
-        return new ChemicalIngredient(Either.right(ChemDataIngredient.of(solutes)));
+    @Contract("_ -> new")
+    public static @NonNull ChemicalIngredient of(SoluteKey data, String state) {
+        return new ChemicalIngredient(Either.right(SoluteIngredient.of(data, state)));
+    }
+
+    @Deprecated
+    public static @Nullable ChemicalIngredient of(Solutes solutes) {
+        return null;
     }
 
     @Contract("_ -> new") // used for liquids

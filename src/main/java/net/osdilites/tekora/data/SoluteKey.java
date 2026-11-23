@@ -29,6 +29,7 @@ public record SoluteKey(String formula, int charge) {
         return false;
     }
 
+    // cations and anions are used for aqueous/dissolved salts and also for molten and gaseous salts.
     @Contract("_, _ -> new")
     public static @NonNull SoluteKey cation(String formula, int magnitude) {
         return new SoluteKey(formula, magnitude);
@@ -49,7 +50,7 @@ public record SoluteKey(String formula, int charge) {
         return anion(formula, 1);
     }
 
-    @Contract("_ -> new")
+    // used for covalently bounded compounds and solid salts
     public static @NonNull SoluteKey of(String formula) {
         return new SoluteKey(formula, 0);
     }
@@ -77,7 +78,7 @@ public record SoluteKey(String formula, int charge) {
     public static SoluteKey NITRATE = anion("NO3");
     public static SoluteKey SULFATE = anion("SO4", 2);
 
-    // covalently bonded solutes
+    // covalently bonded solutes/salts
     public static SoluteKey AMMONIA = of("NH3");
     public static SoluteKey SULFURIC_ACID = of("H2SO4");
     public static SoluteKey WATER = of("H2O");

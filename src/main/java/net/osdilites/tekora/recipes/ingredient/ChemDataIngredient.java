@@ -9,6 +9,7 @@ import net.osdilites.tekora.data.Solutes;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NonNull;
 
+@Deprecated
 public record ChemDataIngredient(Either<SoluteKey, Solutes> input) {
     public static final Codec<ChemDataIngredient> CODEC = Codec.either(
             SoluteKey.CODEC,

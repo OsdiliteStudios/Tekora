@@ -21,8 +21,11 @@
     {
       "chemical": {
         "input": {
-          "charge": 1,
-          "formula": "Na"
+          "state": "SOLVATED",
+          "value": {
+            "charge": 1,
+            "formula": "Na"
+          }
         }
       },
       "order": 1
@@ -30,8 +33,11 @@
     {
       "chemical": {
         "input": {
-          "charge": -1,
-          "formula": "OH"
+          "state": "SOLVATED",
+          "value": {
+            "charge": -1,
+            "formula": "OH"
+          }
         }
       },
       "order": 1

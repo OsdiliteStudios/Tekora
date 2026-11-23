@@ -1,0 +1,54 @@
+{
+  "type": "tekora:reaction",
+  "activation_energy": 143900.0,
+  "catalyst": {
+    "catalyst": {
+      "input": "minecraft:barrier"
+    }
+  },
+  "d_enthalpy": 128900.0,
+  "d_entropy": 215.0,
+  "freq_factor": 1.0E10,
+  "products": [
+    {
+      "chemical": {
+        "input": {
+          "state": "SOLID",
+          "value": {
+            "charge": 0,
+            "formula": "AlOH3"
+          }
+        }
+      },
+      "order": 1
+    }
+  ],
+  "reactants": [
+    {
+      "chemical": {
+        "input": {
+          "state": "SOLVATED",
+          "value": {
+            "charge": 3,
+            "formula": "Al"
+          }
+        }
+      },
+      "order": 1
+    },
+    {
+      "chemical": {
+        "input": {
+          "state": "SOLVATED",
+          "value": {
+            "charge": -1,
+            "formula": "OH"
+          }
+        }
+      },
+      "coefficient": 3,
+      "order": 3
+    }
+  ],
+  "solvent": "minecraft:water"
+}

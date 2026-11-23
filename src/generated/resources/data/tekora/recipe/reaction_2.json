@@ -13,8 +13,11 @@
     {
       "chemical": {
         "input": {
-          "charge": 1,
-          "formula": "Na"
+          "state": "SOLVATED",
+          "value": {
+            "charge": 1,
+            "formula": "Na"
+          }
         }
       },
       "order": 1
@@ -22,8 +25,11 @@
     {
       "chemical": {
         "input": {
-          "charge": -1,
-          "formula": "Cl"
+          "state": "SOLVATED",
+          "value": {
+            "charge": -1,
+            "formula": "Cl"
+          }
         }
       },
       "order": 1

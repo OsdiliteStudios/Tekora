@@ -330,76 +330,16 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     public void fillWithProducts(Map<Integer, float[]> items, ItemStacksResourceHandler inventory, Map<Integer, float[]> fluids, FluidStacksResourceHandler tank) {
         fillBasedOnData(products, items, inventory, fluids, tank);
     }
-
-    /*
-    // inventory indices should be distinct.
-    public record CoefficientsKey(
-        boolean isSolute,   /// resource is either Material or has Solute ingredients
-        int inventoryIndex  /// Inventory index that this coefficient is for 
-    ) { 
-        public String toString() {
-            return String.format("{ %d: %s }", inventoryIndex, isSolute);
-        }
-    }
-
-    // a more optimized, memory-efficient abstraction for accessing data... 
-    // ...is always welcome, but for now this approach is readable enough
-    // TODO: edge cases or requirements not considered?
-    // - same chemical on both sides? this is homogenous catalyst, so can make a explicit check for it
-    public static class CoefficientsMap {
-        /// pair of ingredient key and concentration value.
-        /// materials would only have one entry
-        public Map<Either<MaterialIngredient, SoluteKey>, Float> coefficients;
-        
-        // the portion of the material ingredient that is completed
-        float progress;
-
-        public CoefficientsMap() {
-            this.coefficients = new HashMap<>();
-            this.progress = 0.f;
-        }
-
-        public void put(SoluteKey key, float coeff) {
-            coefficients.put(Either.<MaterialIngredient, SoluteKey>right(key), coeff);
-        }
-
-        /// Returns 0 if entry is not found.
-        @NotNull public float get(SoluteKey key) {
-            Float value = coefficients.get(Either.<MaterialIngredient, SoluteKey>right(key));
-            return value == null ? 0.f : value;
-        }
-
-        public void put(MaterialIngredient key, float coeff) {
-            coefficients.put(Either.<MaterialIngredient, SoluteKey>left(key), coeff);
-        }
-
-        /// Returns 0 if entry is not found.
-        @NotNull public float get(MaterialIngredient key) {
-            Float value = coefficients.get(Either.<MaterialIngredient, SoluteKey>left(key));
-            return value == null ? 0.f : value;
-        }
-
-        public boolean isEmpty() {
-            return this.coefficients.isEmpty();
-        }
-    }
-    */
-
     
-    /*
-     * type-alias, but not really
-     * @param inventoryIndex Inventory index that this coefficient is associated with
-     */
-    // public record CoefficientKey(int inventoryIndex) { }
 
     public class IngredientValue {
         private final Float coefficient;
 
-        // how close the material ingredient is to being crafted.
+        /// how close the material ingredient is to being crafted.
         public float progress = 0.f;
 
         // ingredientKey data for checking using resource -> chemIng.of() -> .asMaterial
-        public ChemicalIngredient ingredient;
+        public ChemicalIngredient ingredient; 
 
         IngredientValue(Float coeff, ChemicalIngredient chemIng) {
             this.coefficient = coeff;
@@ -428,13 +368,31 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     public class CoefficientMap {
         /// pair of ingredient key and concentration value.
         /// materials would only have one entry
+
+        // TODO IngredientValue changed to a map,
+        // where the ingredient is the key
+        // this does mean that i'd need to check for 
+        // an ingredient every inventory index... again
+
         public Map<Integer, IngredientValue> coefficients;
 
-        public CoefficientMap() {
-            this.coefficients = new HashMap<>();
-        }
+        /// indicates side of the reaction recipe this map is for 
+        public boolean isReactants;
 
-        // boilerplate
+        // TODO, change coefficients map so that ingredient value
+        // information is per slot of a handler. 
+        // 
+        // though, have to figure out how much this changes lookups again
+        // (essentially a regression)
+
+        // what i'm planning to do is force the user to construct
+        // a separate map for each inventory, and make private helpers
+        // to deal with merging map info, then splitting out and applying changes yk?
+
+        public CoefficientMap(boolean isReactants) {
+            this.coefficients = new HashMap<>();
+            this.isReactants = isReactants;
+        }
 
         public void put(int index, ChemicalIngredient mat, float coeff) {
             coefficients.put(index, new IngredientValue(coeff, mat));
@@ -465,17 +423,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     private static <T extends DataComponentHolderResource<W>, W> boolean hasSolutes(T resource) {
         return resource.getComponents().has(TekoraComponents.SOLUTES_LIST);
     }
-    
-    // TODO:
-    // since there is a new type of ingredient chemDataIngredient, 
-    // all the stuff added in that type of ingredient might make it
-    // easier to compare with a group of solutes in a very similar 
-    // way to material ingredients. thus, should get to 
-    // rewriting parts of literally every method I've touched that 
-    // involves solutes. damn...  
-
-    // i wouldn't have to iterate through each coefficient anymore
-    // 
 
     private static <T extends DataComponentHolderResource<W>, W>
         ChemicalIngredient IngredientFromResource(T resource) {
@@ -520,10 +467,10 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         // or maybe just change the data structure from list to set
         Map<ChemicalIngredient, Chemical> chemicalIngMap =
             chemicals.stream().collect(Collectors.toMap(k -> k.chemical(), v -> v));
+
         // test inventory on chemicals
         for (int index = 0; index < resourceHandler.size(); ++index) {
             T resource = resourceHandler.getResource(index);
-            
             // note that a resource can have multiple solutes, each of which can be an ingredient
             if (hasSolutes(resource)) {
                 Map<SoluteKey, Double> resourceSolutesMap = resource.getComponents().get(TekoraComponents.SOLUTES_LIST).dataMap();
@@ -541,6 +488,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                     // modify the actual concentrations in the resource's map later
                     resourceIngredients.put(index, inputIngredient, recipeCoefficent);
                 }
+
             } else {
                 ChemicalIngredient inputIngredient = IngredientFromResource(resource);
                 if (!chemicalIngMap.containsKey(inputIngredient)) continue;
@@ -577,14 +525,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         Map<ChemicalIngredient, Boolean> recipeIngPresent = recipeChemList.stream()
             .map(chem -> chem.chemical())
             .collect(Collectors.toMap(k -> k, v -> false));  
-
-        // Map<SoluteIngredient, Boolean> recipeSolutes = recipeIngStream
-        //     .filter(chemIng -> chemIng.isSolute()) 
-        //     .collect(Collectors.toMap(k -> k.asSoluteIngredient(), v -> false));
-        
-        // Map<MaterialIngredient, Boolean> recipeMaterials = recipeIngStream
-        //     .filter(chemIng -> chemIng.isMaterial()) 
-        //     .collect(Collectors.toMap(k -> k.asMaterial(), v -> false));
         
         // extra ingredients not in the recipeChemList are ignored
         for (int i = 0; i < inventory.size(); ++i) {
@@ -596,7 +536,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 Map<SoluteKey, Double> solutes = slotResource.get(TekoraComponents.SOLUTES_LIST).dataMap();
 
                 for (SoluteKey invSoluteKey : solutes.keySet()) {
-                    // NOTE, another of the same assumption 
+                    // NOTE, solute may not be always SOLVATED later in development
                     ChemicalIngredient key = ChemicalIngredient.of(invSoluteKey, SoluteIngredient.SOLVATED);
                     boolean inRecipe = recipeIngPresent.containsKey(key);
                     if (inRecipe) recipeIngPresent.replace(key, true);
@@ -609,32 +549,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 if (inRecipe) recipeIngPresent.replace(key, true);
             }
         }
-        // // if any recipeIng is missing -> false
-        // boolean allSolutes = !recipeSolutes.values().contains(false);
-        // boolean allMaterials = !recipeMaterials.values().contains(false);
-        // boolean allIngredientsPresent = allSolutes && allMaterials;
-
-        // if (!allIngredientsPresent && missingIngredients != null) {
-        //     Set<MaterialIngredient> missingMaterials = recipeMaterials.entrySet()
-        //         .stream()
-        //         .filter(e -> e.getValue() != false)
-        //         .map(e -> e.getKey())
-        //         .collect(Collectors.toSet());
-            
-        //     Set<SoluteIngredient> missingChemData = recipeSolutes.entrySet()
-        //         .stream()
-        //         .filter(e -> e.getValue() != false)
-        //         .map(e -> e.getKey())
-        //         .collect(Collectors.toSet());
-            
-        //     for (MaterialIngredient mat : missingMaterials) {
-        //         missingIngredients.add(Either.left(mat));
-        //     }
-
-        //     for (SoluteIngredient chemDat : missingChemData) {
-        //         missingIngredients.add(Either.right(chemDat));
-        //     }
-        // }
 
         // I LOVE FUNCTIONAL PROGRAMMING!
         Set<ChemicalIngredient> missingIngredients = recipeIngPresent.entrySet()
@@ -663,6 +577,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     }
 
     /// Add to itemChemicals, read from everything else
+    // TODO. ??????
+    @Deprecated 
     private <R extends StacksResourceHandler<S, T>, S, T extends DataComponentHolderResource<W>, W> 
         void addMissingEntries(@NonNull CoefficientMap itemChemicals, List<Chemical> recipeList, R inventory, Set<ChemicalIngredient> missing, OutputBound bound) 
     {
@@ -694,13 +610,31 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         }
     }
 
-    public void modifyCrafterInventory(
-        @NonNull CoefficientMap itemChemicals, 
-        ItemStacksResourceHandler inventory, 
-        double rate, 
-        int action,
-        boolean isReactants,
-        @Nullable OutputBound invBound) 
+    /*
+    i just realized that getIngredientCoefficients would 
+    overwrite indices given different containers on subsequent calls...
+    so I would need some way to map resources from different handlers
+    onto an index in the coefficient map, preserving index info of
+    previous handler
+    - hashcode?
+    
+    each coefficient map corresponds to a side on the reaction.
+    inventories have associated bounds to prevent filling on input slots
+    
+    modifyCrafterInventories(coefficientMaps, inventories and bounds, rate, action):
+        copy (or preserve) state of entity's affected inventories
+        calculate new  
+
+
+     */
+
+    // TODO. why does the user have to call modifyCrafterInventory twice, once
+    // for reactants, and another for products? if that has to be done,
+    // consolidate into one call so the entire inventory is modified in
+    // one go, because the next state is dependent upon the entire previous state.
+
+    public <R extends StacksResourceHandler<S, T>, S, T extends DataComponentHolderResource<W>, W> 
+        void modifyCrafterInventory(@NonNull CoefficientMap itemChemicals, R inventory, double rate, int action, @Nullable OutputBound invBound) 
     {
         boolean allProducts = false; // can we can turn into reactants?
         boolean allReactants = false; // we can turn into products?
@@ -734,6 +668,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             return;
         }
 
+        // NOTE, itemChemicals only has data for one side of the reaction.
+
         // by default, if only inputs present and missing outputs, then create the output entries first
         if (allReactants && action == ReactionDirection.FORWARD) {
             addMissingEntries(itemChemicals, products, inventory, missing, invBound);
@@ -742,6 +678,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         }
 
         // TODO, should add entry to data component for resource creation
+        // TODO, same chemical on both sides? this is homogenous catalyst, so can make a explicit check for it
 
         // these cases shouldn't happen, should be covered by an above check
         if ( (!allProducts && action == ReactionDirection.REVERSE) 
@@ -753,7 +690,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         // all reactants and products are present at this point,
         // so modify the amou of the given chemicals in the inventory
         for (Integer inventoryIndex : itemChemicals.coefficients.keySet()) {
-            ItemResource inputResource = inventory.getResource(inventoryIndex);
+            T inputResource = inventory.getResource(inventoryIndex);
             IngredientValue inputIngredientInfo = itemChemicals.get(inventoryIndex);
 
             if (inputIngredientInfo == null) {
@@ -782,7 +719,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                     }
                      */
                     // assumes FORWARD = -1, REVERSE = 1, 
-                    float signum = isReactants 
+                    float signum = itemChemicals.isReactants 
                         ? action    // consume reactants
                         : -action;  // consume products
                     double change = signum * soluteCoeff * rate;
@@ -790,7 +727,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                     soluteEntry.setValue(original+change);
                 }
             } else if (!inputIngredientInfo.isMaterial()) {
-                ChemicalIngredient inputIngredient = ChemicalIngredient.of(inputResource.getItem());
+                ChemicalIngredient inputIngredient = IngredientFromResource(inputResource);
                 if (!inputIngredient.isMaterial()) {
                     // error here means serious flaw with assumptions
                     System.err.printf("couldn't treat %s as material\n", inputIngredient);
@@ -799,7 +736,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
                 float materialCoeff = inputIngredientInfo.coefficient;
                 // add or subtract from progress based on direction and side of chemical reaction to modify
-                float signum = isReactants ? -action : action;
+                float signum = itemChemicals.isReactants ? -action : action;
                 float change = signum * (float)rate * materialCoeff;
                 inputIngredientInfo.progress += change;
 

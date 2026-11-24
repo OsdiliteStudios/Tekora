@@ -11,6 +11,7 @@ import org.jspecify.annotations.NonNull;
 import java.util.function.Predicate;
 
 public final class SoluteIngredient implements Predicate<SoluteKey> {
+    // TODO, could change this to enums
     public static final String SOLID = "SOLID";
     public static final String LIQUID = "LIQUID";
     public static final String SOLVATED = "SOLVATED";

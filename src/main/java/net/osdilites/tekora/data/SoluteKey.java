@@ -78,8 +78,49 @@ public record SoluteKey(String formula, int charge) {
     public static SoluteKey NITRATE = anion("NO3");
     public static SoluteKey SULFATE = anion("SO4", 2);
 
-    // covalently bonded solutes/salts
+    // covalently bonded solutes/solid salts
     public static SoluteKey AMMONIA = of("NH3");
     public static SoluteKey SULFURIC_ACID = of("H2SO4");
     public static SoluteKey WATER = of("H2O");
+
+    private static boolean isPolyatomic(@NonNull String formula) {
+        return formula.length() > 2 || (formula.length() == 2 && ((formula.charAt(1) >= 'A' && formula.charAt(1) <= 'Z') || (formula.charAt(1) >= '2' && formula.charAt(1) <= '9')));
+    }
+
+    // method that can make a SoluteKey from other SoluteKeys. Useful for JSON recipe consistency.
+    public static @NonNull SoluteKey assembleSaltFromIons(@NonNull SoluteKey cation, @NonNull SoluteKey anion) {
+        int pos = cation.charge();
+        int neg = anion.charge();
+        // safeguarding, removed for the released product
+        if (neg >= 0 || pos <= 0) throw new IllegalArgumentException("Cation has to be positive and anion has to be negative");
+
+        pos = Math.abs(pos);
+        neg = Math.abs(neg);
+        String catForm = cation.formula();
+        String anForm = anion.formula();
+        if (pos == neg) {
+            return of(catForm + anForm);
+        } else {
+            boolean catParen = isPolyatomic(catForm);
+            boolean anParen = isPolyatomic(anForm);
+            if (pos % neg == 0) {
+                int anCnt = pos / neg;
+                return of(catForm + (anParen ? "(" + anForm + ")" : anForm) + anCnt);
+            } else if (neg % pos == 0) {
+                int catCnt = neg / pos;
+                return of((catParen ? "(" + catForm + ")" : catForm) + catCnt + anForm);
+            } else {
+                int a = neg;
+                int b = pos;
+                while (b != 0) {
+                    int temp = b;
+                    b = a % b;
+                    a = temp;
+                }
+                int anCnt = pos/a;
+                int catCnt = neg/a;
+                return of((catParen ? "(" + catForm + ")" : catForm) + catCnt + (anParen ? "(" + anForm + ")" : anForm) + anCnt);
+            }
+        }
+    }
 }

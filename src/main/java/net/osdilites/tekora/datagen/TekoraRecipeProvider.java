@@ -171,7 +171,7 @@ public class TekoraRecipeProvider extends RecipeProvider {
         ReactionRecipeBuilder.createReactionRecipe(getReactionId(),
                 List.of(new Chemical(ChemicalIngredient.of(SoluteKey.ALUMINUM, SoluteIngredient.SOLVATED), 1, 1),
                         new Chemical(ChemicalIngredient.of(SoluteKey.HYDROXIDE, SoluteIngredient.SOLVATED), 3, 3)),
-                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.of("AlOH3"), SoluteIngredient.SOLID), 1, 1)),
+                List.of(new Chemical(ChemicalIngredient.of(SoluteKey.assembleSaltFromIons(SoluteKey.ALUMINUM, SoluteKey.HYDROXIDE), SoluteIngredient.SOLID), 1, 1)),
                 Catalyst.NULL_CATALYST,
                 FluidIngredient.of(Fluids.WATER),
                 128900, 215, 1E10, 143900).save(output);

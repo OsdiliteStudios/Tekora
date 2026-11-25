@@ -13,6 +13,9 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
+
+import java.util.Objects;
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
@@ -111,6 +114,21 @@ public record ChemicalIngredient(Either<MaterialIngredient, SoluteIngredient> in
             }
         }
         return false;
+    }
+
+    /// ????????????????
+    @Override 
+    public int hashCode() {
+        // https://stackoverflow.com/questions/45832458/use-objects-hash-or-own-hashcode-implementation
+        if (input == null) { return 0; }
+        int hash = 11;
+        if (input.left().isPresent()) {
+            hash = 553 * hash + (input.left().get().hashCode() + 1);
+        } else if (input.right().isPresent()) {
+            hash = 13427 * hash + (input.right().get().hashCode() + 1);
+        }
+        // return hash;
+        return hash;
     }
 
     public boolean affectsQ() {

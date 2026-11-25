@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.StacksResourceHandler;
@@ -270,6 +271,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     
     // -------
 
+    // TODO lnQ, lnK, and getRateTicks need to be revisited.
+
     // the output from comparing lnQ with lnK.
     public static class ReactionDirection {
         public static final int REVERSE = 1, EQUAL = 0, FORWARD = -1;
@@ -290,7 +293,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     public record SlotReference(ResourceHandlerType type, int slotIndex, double storedAmount) { }
 
     public static class IngredientValue {
-        public float progress = 0.f;
+        public double progress = 0.0;
 
         // info from the Chemical object
 
@@ -388,30 +391,155 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     // okay fine, I will setup more external structures for 
     // the block to use
 
-    public class ReactionTracker {
+    public static class ReactionTracker {
         // keep going, don't clear, yea?
-        int activeRecipeId;
+        int activeRecipeHash;
 
-        HashMap<Integer, ChemicalIngredient> itemSlotLookup;
-        HashMap<Integer, ChemicalIngredient> fluidSlotLookup;
-        HashMap<ChemicalIngredient, Float> ingredientProgress;
+        Map<Integer, ChemicalIngredient> itemSlotLookup;
+        Map<Integer, ChemicalIngredient> fluidSlotLookup;
+        Map<ChemicalIngredient, Double> ingredientProgress;
 
         CrafterStatus status;
         // mark when external change
         boolean isDirty;
 
+        public ReactionTracker() {
+            this.itemSlotLookup = new HashMap<>();
+            this.fluidSlotLookup = new HashMap<>();
+            this.ingredientProgress = new HashMap<>();
+        }
+
         // TODO handling pipes? or extraction mid processing?
     }
 
     // kinda mimick neoforge's transaction model for inserting and extracting items
-    public class InventorySnapshot {
-        HashMap<Integer, ChemicalIngredient> itemSlots;
-        HashMap<Integer, ChemicalIngredient> fluidSlots;
-        HashMap<ChemicalIngredient, Float> ingredientProgress;
-        // TODO
-        // solventSlots?
-        // emptyItemSlots????
-        // emptyFluidSlots?????
+    /// Because the state should persist between ticks, capture a snapshot to simulate first,
+    /// since it is possible to reach an invalid state (like overflow) in the middle of updating.
+    public class ReactionSnapshot {
+        // deep copies... oh.....
+        // maps for now, though array could be chosen if
+        // willing to deal with null checks
+        Map<Integer, ItemStack> itemSlots;
+        Map<Integer, FluidStack> fluidSlots;
+        Map<ChemicalIngredient, Double> ingredientProgress;
+        
+        // lists slots indices
+        Integer validSolventSlot; // in the solvent
+        ArrayList<Integer> validSoluteSlots;  // solid items
+        ArrayList<Integer> emptyItemSlots;
+        ArrayList<Integer> emptyFluidSlots;
+
+        public ReactionSnapshot() {
+            this.itemSlots = new HashMap<>();
+            this.fluidSlots = new HashMap<>();
+            this.ingredientProgress = new HashMap<>();
+
+            this.validSolventSlot = null;
+            this.validSoluteSlots = new ArrayList<>();
+            this.emptyItemSlots = new ArrayList<>();
+            this.emptyFluidSlots = new ArrayList<>();
+        }
+
+        public ReactionSnapshot(ItemStacksResourceHandler inventory, FluidStacksResourceHandler tank, ReactionTracker tracker) {
+            this();
+
+            for (int slot = 0; slot < inventory.size(); ++slot) {
+                ItemResource resource = inventory.getResource(slot);
+                ItemStack itemStack = resource.toStack(inventory.getAmountAsInt(slot));
+                this.itemSlots.put(slot, itemStack);
+
+                if (itemStack.isEmpty()) { 
+                    this.emptyItemSlots.add(slot);
+                    continue; 
+                } else if (itemStack.has(TekoraComponents.SOLUTES_LIST)) {
+                    this.validSoluteSlots.add(slot);
+                }
+            }
+
+            // NOTE; have to be careful with which lists and maps get added
+
+            for (int slot = 0; slot < tank.size(); ++slot) {
+                FluidResource resource = tank.getResource(slot);
+                FluidStack fluidStack = resource.toStack(tank.getAmountAsInt(slot));
+                this.fluidSlots.put(slot, fluidStack);
+
+                if (fluidStack.isEmpty()) { 
+                    this.emptyFluidSlots.add(slot);
+                    continue; 
+                } 
+
+                // TODO what...?
+
+                if (fluidStack.has(TekoraComponents.SOLUTES_LIST)) {
+                    this.validSoluteSlots.add(slot);
+                } 
+                
+                if (solvent.test(fluidStack)) {
+                    this.validSolventSlot = slot;
+                }
+                // handling multiple solvents? mixed solvents exist,
+                // but for now, a recipe only has one solvent involved.
+            }
+            
+
+            // deep copy? literal deja vu I thought of deep copies before i stg
+            this.ingredientProgress = tracker.ingredientProgress.entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+        }
+
+        public boolean extract(IngredientValue value, double delta) {
+            // TODO
+            return false;
+        }
+
+        public double insert(IngredientValue value, double delta) {
+            double currentProg = this.ingredientProgress.getOrDefault(value.ingredient, 0.0) + delta;
+            double addedCount = Math.floor(currentProg);
+            double newProg = currentProg - addedCount;
+            this.ingredientProgress.put(value.ingredient, newProg);
+
+            if (addedCount <= 0) { return 0.0; }
+
+            // otherwise, insert items into the snapshot itself
+            ChemicalIngredient chemIng = value.ingredient;
+            if (chemIng.isSolute()) {
+                SoluteIngredient soluteIng = chemIng.asSoluteIngredient();
+                
+                switch (soluteIng.state()) {
+                    case SoluteIngredient.SOLVATED:
+                        // TODO: why am I adding solutes in discrete counts?
+                        if (this.validSolventSlot == null) return addedCount;
+                        int targetFluidSlot = this.validSolventSlot;
+                        // TODO addSoluteToFluidSlot
+
+                        // no overflow!
+                        return 0.0;
+                    
+                    case SoluteIngredient.SOLID:
+                        if (this.validSoluteSlots.isEmpty()) return addedCount;
+                        int targetItemSlot = this.validSoluteSlots.getFirst();
+                        // TODO addSoluteToItemSlot
+                        
+                        // no overflow!
+                        return 0.0;
+                    
+                    default:
+                        // TODO cases for other states?
+                        break;
+                }
+            } else if (chemIng.isMaterial()) {
+                MaterialIngredient materialIng = chemIng.asMaterial();
+
+                // TODO
+                if (materialIng.isItem()) {
+                    // ...
+                } else if (materialIng.isFluid()) {
+                    // ...
+                }
+            }
+
+            return 0.0;
+        }
     }
 
     // -----
@@ -530,24 +658,77 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
     // -----
 
-    /*
-    lnQ, lnK, and getRateTicks need to be revisited.
-     */
+    public boolean simulateReactionStep(
+        ReactionContext dat,
+        int direction,
+        double rateTicks,
+        ReactionTracker tracker
+    ) {
+        if (direction != ReactionDirection.FORWARD && direction != ReactionDirection.REVERSE) {
+            tracker.status = CrafterStatus.IDLE;
+            return false;
+        }
+
+        // ASIDE, coming from a beginner c++ background, have to consciously note that these are references
+        ReactionSnapshot snapshot = dat.snapshot;
+        ReactionState reactantState = dat.reactantState;
+        ReactionState productState = dat.productState;
+
+        ReactionState inputState = direction == ReactionDirection.FORWARD ? reactantState : productState;
+        ReactionState outputState = direction == ReactionDirection.FORWARD ? productState : reactantState;
+        
+        double tickProgress = 1.0 / rateTicks;
+
+        for (IngredientValue value : inputState.entries.values()) {
+            double consumed = value.coefficient() * tickProgress;
+            boolean isConsumed = snapshot.extract(value, consumed);
+            if (!isConsumed) { 
+                tracker.status = CrafterStatus.IDLE;
+                return false; 
+            }
+        }
+
+        for (IngredientValue value : outputState.entries.values()) {
+            double produced = value.coefficient() * tickProgress;
+            // solutes virtually never deal with overflow.
+            double overflow = snapshot.insert(value, produced);
+            
+            // TODO, overflow returned is what can't fit into a slot, for materials.
+
+            if (overflow <= 0.0) continue;
+
+            // TODO: handling overflow. does neoforge transaction api
+            // handle overflow in the way i'm thinking of?
+        }
+
+        tracker.status = CrafterStatus.ACTIVE;
+        return true;
+    }
 
     // ----
 
-    // ----
 
+    /// Used to restrict which indices to check and output to 
+    /// for entities that share output and input in the same handler.
+    public record OutputBound(int minIndex, int maxIndex) { 
+        /// Bounds are inclusive.
+        public OutputBound(int minIndex, int maxIndex) {
+            if (minIndex > maxIndex) 
+                throw new IllegalArgumentException("min > max");
 
-    // restricting where to output slots for a resourecHandler
-    public record OutputBound(int minIndex, int maxIndex) {
-        // TODO
+            this.minIndex = minIndex < 0 ? 0 : minIndex;
+            this.maxIndex = maxIndex;
+        }
+        public boolean inBounds(int index) {
+            return (minIndex <= index) && (index <= maxIndex);
+        }
     }
 
     // they called this type of pattern a context!
     public static class ReactionContext {
         public ReactionState reactantState;
         public ReactionState productState;
+        public ReactionSnapshot snapshot;
         
         // and if there were more even more handlers to consider?
         public ItemStacksResourceHandler inventory;
@@ -556,18 +737,31 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         public @Nullable OutputBound fluidBounds;
     }
 
-    public void modifyCrafterInventory(ReactionContext dat, double rate, int action) {
-        if (action != ReactionDirection.FORWARD && action != ReactionDirection.REVERSE) {
-            return;
+    public void modifyCrafterInventory(ReactionContext dat, ReactionTracker tracker) {
+
+        try (Transaction transaction = Transaction.openRoot()) {
+            // LOL
+
+            for (var itemEntry : dat.snapshot.itemSlots.entrySet()) {
+                int slot = itemEntry.getKey();
+                ItemResource currRes = dat.inventory.getResource(slot);
+                int currCount = dat.inventory.getAmountAsInt(slot);
+                ItemStack currStack = currRes.toStack(currCount);
+
+                // if not stacks are identical then set stack in slot
+                // i.e. if there's a change, update.
+            }
+
+            for (var fluidEntry : dat.snapshot.fluidSlots.entrySet()) {
+                int slot = fluidEntry.getKey();
+                FluidResource currRes = dat.tank.getResource(slot);
+                int currCount = dat.tank.getAmountAsInt(slot);
+                FluidStack currStack = currRes.toStack(currCount);
+
+                // similar thing.
+            }
+
+            tracker.ingredientProgress = dat.snapshot.ingredientProgress;
         }
-        
-        /*
-        // Because the state should persist between ticks, capture a snapshot to simulate first
-        snapshot = captureSnapshot(handlers)
-
-
-        */
-        // TODO
-
     }
 }

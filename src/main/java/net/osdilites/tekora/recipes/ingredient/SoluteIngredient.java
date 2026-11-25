@@ -70,4 +70,9 @@ public final class SoluteIngredient implements Predicate<SoluteKey> {
         }
         return super.equals(obj);
     }
+
+    @Override 
+    public int hashCode() {
+        return 273 * (value.hashCode() + state.hashCode());
+    }
 }

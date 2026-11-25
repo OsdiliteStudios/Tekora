@@ -215,8 +215,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
             // something to debug, if you switch recipes fast enough, does it still register as present?
             if (!this.hasRxn) {
                 // description: use this to develop a map of indices containing reactants/products including those with solutes
-                accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
-                accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
+                // accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
+                // accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
                 this.hasRxn = true;
             }
             this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
@@ -239,8 +239,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
                 // this code has been untested
                 // todo, test this piece of code
-                accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
-                accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
+                // accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
+                // accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
 
                 // treat the products as left side of equation, or is this supposed to test not modifying tank? 
                 // TODO need to test implications of this 11/13
@@ -248,8 +248,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 // direction of the reaction depends on whether lnQ > or < than lnK
                 // unless there's a reason out there i'm missing
 
-                accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
-                accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
+                // accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
+                // accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);
                 return torque; // todo, make this return viscosity rather than torque
             //}
         }

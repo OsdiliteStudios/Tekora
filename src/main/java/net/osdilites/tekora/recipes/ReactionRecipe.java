@@ -273,7 +273,24 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     // -------
 
     // TODO lnQ, lnK, and getRateTicks need to be revisited.
+    // NOTE, this code is slop. like, super slop. very much slop slop slop.
+    // I hate it. I hate it with all of my being.
+    // If I could muster the sufficiently menial amount of brainpower to 
+    // think of all the ways to trim down all of the useless repetition and  
+    // allocations and exploit cache locality and the like, without 
+    // compromising on maintainability, I would.
+    // But I can't. I'm too stupid at the moment.
+    
 
+    /* Pipeline
+     * recipeInputs + states -> fillStates -> lnQ vs lnK -> modifyInventories(transaction)
+     * 
+     * if there were more handlers to consider, like an entity with multiple
+     * output fluidTanks and/or output inventories,
+     * then code would need to be rewritten in essentially every method
+     *
+     * more description here
+     */
 
     // ---
 
@@ -788,7 +805,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         public ReactionState productState;
         // public ReactionSnapshot snapshot;
         
-        // and if there were more even more handlers to consider?
         public ItemStacksResourceHandler inventory;
         public FluidStacksResourceHandler tank;
         public @Nullable OutputBound itemBounds;

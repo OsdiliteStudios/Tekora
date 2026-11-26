@@ -41,6 +41,9 @@ import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.recipes.ReactionRecipe;
 import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 import net.osdilites.tekora.recipes.TekoraRecipes;
+import net.osdilites.tekora.recipes.ReactionRecipe.ReactionContext;
+import net.osdilites.tekora.recipes.ReactionRecipe.ReactionState;
+import net.osdilites.tekora.recipes.ReactionRecipe.ReactionTracker;
 import net.osdilites.tekora.recipes.ingredient.Chemical;
 import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
@@ -75,6 +78,10 @@ public class BasinEntity extends AbstractModularCraftEntity {
     private final Map<Integer, float[]> fluidReactants = new HashMap<>();
     private final Map<Integer, float[]> itemProducts = new HashMap<>();
     private final Map<Integer, float[]> fluidProducts = new HashMap<>();
+
+    private final ReactionState reactants = new ReactionState(true);
+    private final ReactionState products = new ReactionState(false);
+    private final ReactionTracker state = new ReactionTracker();
 
     public BasinEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState, 4.815f);
@@ -165,16 +172,16 @@ public class BasinEntity extends AbstractModularCraftEntity {
         // if basin produces products given enough energy
         
         // // buggy
-        // FluidResource resourceT = tank.getResource(0);
-        // Map<SoluteKey, Double> dataT = new HashMap<SoluteKey, Double>();
-        // dataT.put(SoluteKey.MAGNESIUM, 200.0);
-        // dataT.put(SoluteKey.CARBONATE, 200.0);
-        // if (resourceT.get(TekoraComponents.SOLUTES_LIST) == null) {
-        //     FluidResource wat = FluidResource.of(Fluids.WATER);
-        //     tank.set(0, wat.with(TekoraComponents.SOLUTES_LIST, new Solutes(dataT)), 1000); 
-        // }
+        FluidResource resourceT = tank.getResource(0);
+        Map<SoluteKey, Double> dataT = new HashMap<SoluteKey, Double>();
+        dataT.put(SoluteKey.MAGNESIUM, 20000.0);
+        dataT.put(SoluteKey.CARBONATE, 20000.0);
+        if (!resourceT.isEmpty() && resourceT.get(TekoraComponents.SOLUTES_LIST) == null) {
+            FluidResource wat = resourceT.with(TekoraComponents.SOLUTES_LIST, new Solutes(dataT));
+            tank.set(0, wat, 1000);
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
         
-
         // what currently works is that, once the reactant solutes are present in ingredients, the
         // product(s) get produced. 
 
@@ -193,8 +200,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
             HashMap<SoluteKey, Double> liquidSolutes = new HashMap<>();
 
             // hardcoded test! hardcoded test!
-            liquidSolutes.put(SoluteKey.MAGNESIUM, 200.0);
-            liquidSolutes.put(SoluteKey.CARBONATE, 200.0);
+            // liquidSolutes.put(SoluteKey.MAGNESIUM, 20000.0);
+            // liquidSolutes.put(SoluteKey.CARBONATE, 20000.0);
 
             float volume = ReactionRecipeInput.fromReadingHandlersGetVolume(ingredients, liquidSolutes, inventory, tank);
             
@@ -212,18 +219,43 @@ public class BasinEntity extends AbstractModularCraftEntity {
             }        
             
             ReactionRecipe accessedRec = recipe.get().value();
+
+            ReactionContext context = new ReactionContext();
+            context.reactantState = reactants;
+            context.productState = products;
+            context.tracker = state;
+            context.inventory = inventory;
+            context.tank = tank;
+
+            // note, some values in reactionRecipe are definitely unused
+            // if only there was a tool to quickly find them...
+
+            System.out.println("yes recipe exists");
+
+
             // something to debug, if you switch recipes fast enough, does it still register as present?
             if (!this.hasRxn) {
                 // description: use this to develop a map of indices containing reactants/products including those with solutes
                 // accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
                 // accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
+                accessedRec.fillWithReactants(reactants, state, volume, inventory, tank);
+                accessedRec.fillWithProducts(products, state, volume, inventory, tank);
                 this.hasRxn = true;
             }
-            this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
-            this.lnK = accessedRec.getLnK(temperature);
+            accessedRec.updateConcentrations(volume, context);
+            // this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
+            // this.lnK = accessedRec.getLnK(temperature);
 
             // TODO temp
-            craftItem(accessedRec);
+            
+            // some accomplishments:
+            // forward reaction with solutes in tank work... ish
+            // TODO still need to update the reaction state...
+            // and rename classes to better fit role 
+            // the code is an eltrich frankenstein monster.
+
+            lnQ = 1.0;
+            lnK = 2.0;
 
             // disabled realistic rate law checking for now
             float rate = 1;//accessedRec.getRateTicks(liquidSolutes, temperature);
@@ -234,19 +266,17 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 // lnQ > lnK => 1 indicates reverse reaction.
                 int action = Double.compare(lnQ, lnK);
 
-                // System.out.println(itemReactants);
-                // System.out.println(itemProducts); // -3 : float[]
-
                 // this code has been untested
                 // todo, test this piece of code
                 // accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
                 // accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
-
-                // treat the products as left side of equation, or is this supposed to test not modifying tank? 
-                // TODO need to test implications of this 11/13
-                // 11/18 it seems kinda silly to negate the action value given the
-                // direction of the reaction depends on whether lnQ > or < than lnK
-                // unless there's a reason out there i'm missing
+                String format = "volume %s\naction %s\n";
+                System.out.printf(format, volume, action);
+                accessedRec.modifyCrafterInventory(context, action, rate);
+                if (state.isDirty) {
+                    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                    state.isDirty = false;
+                }
 
                 // accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
                 // accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);

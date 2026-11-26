@@ -14,14 +14,21 @@ import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 
 public class GearItem extends TekoraItem {
     protected final GearType gearType;
+    protected final boolean isLarge;
 
+    // gearitems are created with isLarge = false by default
     public GearItem(String name, GearType gearType, boolean flammable) {
+        this(name, gearType, flammable, false);
+    }
+
+    protected GearItem(String name, GearType gearType, boolean flammable, boolean isLarge) {
         super(flammable, name);
         this.gearType = gearType;
+        this.isLarge = isLarge;
     }
 
     protected InteractionResult placeSuccessful(UseOnContext context, Level world, BlockPos pos, BlockState state) {
-        BlockState newState = state.setValue(TekoraBlockStates.GEAR_TYPE, gearType).setValue(TekoraBlockStates.IS_LARGE, true);
+        BlockState newState = state.setValue(TekoraBlockStates.GEAR_TYPE, gearType).setValue(TekoraBlockStates.IS_LARGE, isLarge);
         context.getItemInHand().shrink(1);
         Player player = context.getPlayer();
         if (world.setBlock(pos, newState, 3)) {

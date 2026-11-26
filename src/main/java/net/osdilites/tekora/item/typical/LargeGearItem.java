@@ -12,7 +12,7 @@ import org.jspecify.annotations.NonNull;
 public class LargeGearItem extends GearItem
 {
     public LargeGearItem(String name, GearType gearType, boolean flammable) {
-        super(name, gearType, flammable);
+        super(name, gearType, flammable, true);
     }
 
     @Override @NonNull

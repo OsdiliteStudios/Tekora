@@ -21,7 +21,7 @@ public class GearItem extends TekoraItem {
         this(name, gearType, flammable, false);
     }
 
-    protected GearItem(String name, GearType gearType, boolean flammable, boolean isLarge) {
+    public GearItem(String name, GearType gearType, boolean flammable, boolean isLarge) {
         super(flammable, name);
         this.gearType = gearType;
         this.isLarge = isLarge;
@@ -60,7 +60,12 @@ public class GearItem extends TekoraItem {
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState state = world.getBlockState(pos);
-        if (state.hasProperty(TekoraBlockStates.GEAR_TYPE) && state.getValue(TekoraBlockStates.GEAR_TYPE) == GearType.NONE) {
+        if (state.hasProperty(TekoraBlockStates.GEAR_TYPE)
+                && state.getValue(TekoraBlockStates.GEAR_TYPE) == GearType.NONE
+                // currently, small can only be placed so we check !isLarge
+                // this is because large has placement restrictions, where it can be placed on shafts but not modular machinery
+                // but if the block has isLarge propery, then we can allow placement
+                && (!isLarge || state.hasProperty(TekoraBlockStates.IS_LARGE))) {
             return placeSuccessful(context, world, pos, state);
         }
         return super.useOn(context);

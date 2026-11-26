@@ -12,7 +12,7 @@ body:
     attributes:
       value: |
         ### Before Submitting
-        - **Team**: Set `Mech` or `Transformation` (or both) so it appears on the team board.
+        - **Team**: Set `Mech` or `Transformation` (or both)
         - **Priority / Effort**: Set if known.
         - **Labels**: Add `needs-discussion` if this is a new proposal so design decisions can be confirmed.
         - Break implementation, assets, and recipes into **Task** sub-issues under this feature.

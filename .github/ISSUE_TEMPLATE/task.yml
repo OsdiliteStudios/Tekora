@@ -1,0 +1,39 @@
+name: Task (Sub-Issue)
+description: A specific piece of work under a Feature (base implementation, assets, recipes, etc.).
+title: "parent: task"
+type: Task
+projects: ["OsdiliteStudios/2"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Before Submitting
+        - **Title**: Use `<parent>: <task>` (e.g. `basin: add recipes`, `large gear: design models`).
+        - Link the **Parent** `Feature` issue.
+        - Set **Team** (`Mech` or `Transformation`)
+        - Add a label if applicable: `type-asset`, `type-recipes`, or `needs-discussion`.
+
+  - type: input
+    id: parent
+    attributes:
+      label: Parent Feature
+      description: Issue number of the parent Feature
+      placeholder: "#43"
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Acceptance Criteria
+      description: Concrete checklist or requirements needed to close this task.
+    validations:
+      required: true
+
+  - type: input
+    id: dependencies
+    attributes:
+      label: Dependencies (Optional)
+      placeholder: "Depends on #57"
+    validations:
+      required: false

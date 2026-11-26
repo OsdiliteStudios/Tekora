@@ -1,0 +1,10 @@
+{
+  "type": "tekora:printing",
+  "cut_torque": 4.0,
+  "experience": 0,
+  "ingredient": "minecraft:paper",
+  "rated_velocity": 0.2,
+  "result": {
+    "id": "minecraft:skull_banner_pattern"
+  }
+}

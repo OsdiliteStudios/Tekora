@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_printer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tekora:ink_press_shaft"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tekora:printing/copy_flower_banner_pattern"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_printer"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tekora:printing/copy_flower_banner_pattern"
+    ]
+  }
+}

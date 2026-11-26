@@ -28,7 +28,13 @@ public class GearItem extends TekoraItem {
     }
 
     protected InteractionResult placeSuccessful(UseOnContext context, Level world, BlockPos pos, BlockState state) {
-        BlockState newState = state.setValue(TekoraBlockStates.GEAR_TYPE, gearType).setValue(TekoraBlockStates.IS_LARGE, isLarge);
+        BlockState newState = state.setValue(TekoraBlockStates.GEAR_TYPE, gearType);
+        
+        // if something doesn't have an isLarge property, like modular machinery,it would crash without this guard
+        if (state.hasProperty(TekoraBlockStates.IS_LARGE)) {
+            newState.setValue(TekoraBlockStates.IS_LARGE, isLarge);
+        }
+
         context.getItemInHand().shrink(1);
         Player player = context.getPlayer();
         if (world.setBlock(pos, newState, 3)) {

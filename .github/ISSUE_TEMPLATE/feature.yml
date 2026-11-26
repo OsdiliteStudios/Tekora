@@ -1,0 +1,34 @@
+# ideally this would have a team field, but currently custom fields aren't supported.
+# a workaround is to use a github workflow to detect when an issue is made and look for a team label,
+#   then remove that label and apply it into the issue's custom team field, but i think you need a PAT for this and i don't feel like setting it up
+name: Feature (Parent Issue)
+description: Propose or track a top-level block, item, machine, or system.
+title: "<Feature name>"
+type: Feature
+labels: ["enhancement"]
+projects: ["OsdiliteStudios/2"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Before Submitting (on the right sidebar)
+        - **Team**: Set `Mech` or `Transformation` (or both) so it appears on the team board.
+        - **Priority / Effort**: Set if known.
+        - **Labels**: Add `needs-discussion` if this is a new proposal so design decisions can be confirmed.
+        - Break implementation, assets, and recipes into **Task** sub-issues under this feature.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary & Behavior
+      description: What does this feature do?
+    validations:
+      required: true
+
+  - type: textarea
+    id: considerations
+    attributes:
+      label: Design Notes / Open Questions
+      description: Design decisions, concerns, or dependencies on other features.
+    validations:
+      required: false

@@ -1,0 +1,8 @@
+blank_issues_enabled: true #set to false when we have more templates
+contact_links:
+  - name: Contribution Guidelines
+    url: https://github.com/OsdiliteStudios/Tekora/blob/26.1%2B/CONTRIBUTING.md
+    about: Read the team branching, sub-issue, and PR rules before creating issues.
+  - name: Tekora Roadmap (Project Board)
+    url: https://github.com/orgs/OsdiliteStudios/projects/2
+    about: Check existing features and tasks on the roadmap before opening a duplicate.

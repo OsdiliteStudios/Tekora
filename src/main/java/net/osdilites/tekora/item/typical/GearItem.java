@@ -32,7 +32,7 @@ public class GearItem extends TekoraItem {
         
         // if something doesn't have an isLarge property, like modular machinery,it would crash without this guard
         if (state.hasProperty(TekoraBlockStates.IS_LARGE)) {
-            newState.setValue(TekoraBlockStates.IS_LARGE, isLarge);
+            newState = newState.setValue(TekoraBlockStates.IS_LARGE, isLarge);
         }
 
         context.getItemInHand().shrink(1);

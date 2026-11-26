@@ -1,6 +1,6 @@
 name: Task (Sub-Issue)
 description: A specific piece of work under a Feature (base implementation, assets, recipes, etc.).
-title: "parent: task"
+title: "<parent>: <task>"
 type: Task
 projects: ["OsdiliteStudios/2"]
 body:

@@ -3,7 +3,7 @@
 #   then remove that label and apply it into the issue's custom team field, but i think you need a PAT for this and i don't feel like setting it up
 name: Feature (Parent Issue)
 description: Propose or track a top-level block, item, machine, or system.
-title: ""
+title: "<feature>"
 type: Feature
 labels: ["enhancement"]
 projects: ["OsdiliteStudios/2"]

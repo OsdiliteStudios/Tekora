@@ -16,6 +16,7 @@ import net.osdilites.tekora.item.typical.CompoundItem;
 import net.osdilites.tekora.recipes.ingredient.Catalyst;
 import net.osdilites.tekora.recipes.ingredient.Chemical;
 import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
+import net.osdilites.tekora.recipes.ingredient.SoluteIngredient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -104,10 +105,10 @@ public record ReactionRecipeInput(Map<ChemicalIngredient, Double> inputs, double
         }
         for (var pair : solidSolutes.entrySet()) {
             // todo, sort this in a more respectible way
-            ingredients.put(ChemicalIngredient.solidSolute(pair.getKey()), pair.getValue());
+            ingredients.put(ChemicalIngredient.of(pair.getKey(), SoluteIngredient.SOLID), pair.getValue());
         }
         for (var pair : liquidSolutes.entrySet()) {
-            ingredients.put(ChemicalIngredient.of(pair.getKey()), pair.getValue());
+            ingredients.put(ChemicalIngredient.of(pair.getKey(), SoluteIngredient.SOLVATED), pair.getValue());
         }
         return volume;
     }

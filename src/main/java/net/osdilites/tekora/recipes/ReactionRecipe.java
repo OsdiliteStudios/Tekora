@@ -264,11 +264,10 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
         return rateTicks * (float)freqFactor * (float)Math.exp(-activationEnergy / (temperature * UtilFunctions.IDEAL_GAS_CONST)) / 20;
     }
-
     
     // -------
 
-    // TODO lnQ, lnK, and getRateTicks need to be revisited.
+    // TODO trim unneeded code based on what existing unmodified functions already cover
 
     /* Pipeline
      * recipeInputs + states -> fillStates* -> lnQ vs lnK -> modifyInventories (transaction)

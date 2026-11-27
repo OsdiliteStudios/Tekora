@@ -207,7 +207,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
             float volume = ReactionRecipeInput.fromReadingHandlersGetVolume(ingredients, liquidSolutes, inventory, tank);
             
-            torque = 88888888;
+            // torque = 88888888;
             ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy
             Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getFirstRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
 
@@ -252,8 +252,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 this.hasRxn = true;
             }
             accessedRec.updateConcentrations(volume, context);
-            // this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
-            // this.lnK = accessedRec.getLnK(temperature);
+            this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
+            this.lnK = accessedRec.getLnK(temperature);
 
             // TODO temp
             
@@ -269,10 +269,10 @@ public class BasinEntity extends AbstractModularCraftEntity {
             // also there are duplicate concerns between basin and reaction
 
             // and rename reaction's classes to better fit role 
-            // the code is a man-made horror beyond my comphrension.
+            // the code is a man-made horror beyond my comprehension.
 
-            lnQ = 1.0;
-            lnK = 2.0;
+            // lnQ = 1.0;
+            // lnK = 2.0;
 
             // disabled realistic rate law checking for now
             float rate = .25f;//accessedRec.getRateTicks(liquidSolutes, temperature);
@@ -287,8 +287,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 // todo, test this piece of code
                 // accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
                 // accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
-                String format = "volume %s\naction %s\nstatus %s\n";
-                System.out.printf(format, volume, action, state.status);
+                String format = "volume %s\naction %s\nstatus %s\nlnQ %s\nlnK %s\n";
+                System.out.printf(format, volume, action, state.status, lnQ, lnK);
                 accessedRec.modifyCrafterInventory(context, action, rate);
                 if (state.isDirty) {
                     if (level != null && !level.isClientSide()) {

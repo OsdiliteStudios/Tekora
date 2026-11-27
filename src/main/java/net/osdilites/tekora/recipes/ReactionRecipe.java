@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 import org.jspecify.annotations.NonNull;
+import org.spongepowered.asm.mixin.injection.Desc;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -301,6 +302,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
      * 
      * shouldn't be possible to dupe solutes or materials in very specific edge cases
      * shouldn't be able to consume any other material once a recipe has been set
+     *
+     * in progress: consolidating ingredient totals and hasAll values into ReactionState class
      */
 
     // ---
@@ -404,6 +407,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         Map<ChemicalIngredient, Double> ingredientProgress;
         Map<ChemicalIngredient, Double> ingredientTotals;
 
+        private boolean hasAllReactants;
+        private boolean hasAllProducts;
+
         public ReactionStatus status;
         // mark when external change
         public boolean isDirty;
@@ -414,8 +420,12 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             this.itemSlotLookup = new HashMap<>();
             this.fluidSlotLookup = new HashMap<>();
             this.ingredientProgress = new HashMap<>();
+            this.ingredientTotals = new HashMap<>();
             this.status = ReactionStatus.IDLE;
             this.isDirty = false;
+
+            this.hasAllReactants = false;
+            this.hasAllProducts = false;
         }
 
         public void clear() {
@@ -425,6 +435,23 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             this.fluidSlotLookup.clear();
             // preserve ingredientProgress, since
             // an ingredient can be shared between recipes
+        }
+
+        public boolean hasAllReactants() {
+            return this.hasAllReactants;
+        }
+
+        public boolean hasAllProducts() {
+            return this.hasAllProducts;
+        }
+
+        public void incrementIngredientTotal(ChemicalIngredient key, double change) {
+            ingredientTotals.computeIfPresent(key, (_, v) -> v + change);
+        }
+
+        public double getIngredientTotal(ChemicalIngredient key) {
+            Double total = ingredientTotals.get(key);
+            return total == null ? 0.0 : total;
         }
 
         public void printIngProg() {
@@ -443,12 +470,14 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 fluidSlotLookup.putIfAbsent(chemIng, new HashSet<>());
             }
             ingredientProgress.putIfAbsent(chemIng, 0.0);
+            // ingredientTotals.putIfAbsent(chemIng, 0.0);
         }
 
         public void putSlotSet(ChemicalIngredient chemIng) {
             itemSlotLookup.putIfAbsent(chemIng, new HashSet<>());
             fluidSlotLookup.putIfAbsent(chemIng, new HashSet<>());
             ingredientProgress.putIfAbsent(chemIng, 0.0);
+            // ingredientTotals.putIfAbsent(chemIng, 0.0);
         }
 
         private @Nullable Set<Integer> getItemSlots(ChemicalIngredient chemIng) {
@@ -570,6 +599,72 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 break;
             }
         }
+        // TODO, dealing with multiple solvents?
+    }
+
+    /// note, only call the fill methods when the recipe changes 
+    // TODO tweak for new ReactionState logic once (or if) implemented
+    public void fillReactionState(
+        @NonNull List<Chemical> reactantChemicals,
+        @NonNull List<Chemical> productChemicals, 
+        double solventVolume, // volume of the fluid in tank
+        ReactionContext context
+    ) {
+        if (reactantChemicals.isEmpty() || productChemicals.isEmpty()) {
+            throw new IllegalArgumentException("recipeChemicals shouldn't be empty");
+        }
+        
+        // clear the state objects since they will be reused across recipe changes
+        context.reactantState.clear();
+        context.productState.clear();
+
+        // default initialize state's entries; totals for each are computed on a pass thru handlers
+        reactantChemicals.forEach(chem -> {
+            context.reactantState.put(chem);
+            ChemicalIngredient ing = chem.chemical();
+            if (ing.isSolute()) {
+                context.tracker.putSlotSet(ing);
+            } else {
+                context.tracker.putSlotSet(ing, ing.asMaterial().isItem());
+            }
+        });
+
+        productChemicals.forEach(chem -> {
+            context.productState.put(chem);
+            ChemicalIngredient ing = chem.chemical();
+            if (ing.isSolute()) {
+                context.tracker.putSlotSet(ing);
+            } else {
+                context.tracker.putSlotSet(ing, ing.asMaterial().isItem());
+            }
+        });
+
+        System.err.println(context.tracker.itemSlotLookup);
+        System.err.println(context.tracker.fluidSlotLookup);
+
+        populateReactionStateFromHandler(context.inventory, context.reactantState, context.tracker);
+        populateReactionStateFromHandler(context.tank, context.reactantState, context.tracker);
+        
+        populateReactionStateFromHandler(context.inventory, context.productState, context.tracker);
+        populateReactionStateFromHandler(context.tank, context.productState, context.tracker);
+
+        context.reactantState.hasAll = true;
+        for (IngredientValue value : context.reactantState.entries.values()) {
+            System.out.printf("%s = %s", value.ingredient.toString(), value.total);
+            if (value.total <= 0.0) {
+                context.reactantState.hasAll = false;
+                break;
+            }
+        }
+
+        context.productState.hasAll = true;
+        for (IngredientValue value : context.productState.entries.values()) {
+            System.out.printf("%s = %s", value.ingredient.toString(), value.total);
+            if (value.total <= 0.0) {
+                context.productState.hasAll = false;
+                break;
+            }
+        }
 
         // TODO, dealing with multiple solvents?
     }
@@ -607,6 +702,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 if (!validMaterial) { continue; }
 
                 value.total += amount;
+
                 tracker.putSlotSet(value.ingredient, isItem);
                 boolean success = tracker.putChemIngInSlot(slot, isItem, value.ingredient);
                 if (!success) throw new IllegalStateException("failed. one by material");

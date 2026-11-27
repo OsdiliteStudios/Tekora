@@ -13,12 +13,12 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.osdilites.tekora.block.TekoraBlockStatesProperties;
+import net.osdilites.tekora.block.TekoraBlockStateProperties;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractModularMachine extends BaseEntityBlock {
-    public static final EnumProperty<GearType> GEAR_TYPE = TekoraBlockStatesProperties.GEAR_TYPE;
+    public static final EnumProperty<GearType> GEAR_TYPE = TekoraBlockStateProperties.GEAR_TYPE;
 
     private static final VoxelShape SHAPE = Shapes.or(
             box(0, 4, 0, 16, 14, 16),

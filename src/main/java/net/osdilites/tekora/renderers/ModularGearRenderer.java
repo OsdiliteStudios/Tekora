@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import net.osdilites.tekora.block.TekoraBlockStatesProperties;
+import net.osdilites.tekora.block.TekoraBlockStateProperties;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
@@ -42,8 +42,8 @@ public class ModularGearRenderer implements BlockEntityRenderer<BlockEntity, Mec
         BlockState gearState = blockEntity.getBlockState();
         BlockState hypothetical = TekoraBlocks.STEEL_SHAFT.get().defaultBlockState()
                 .setValue(BlockStateProperties.AXIS, Direction.Axis.Y)
-                .setValue(TekoraBlockStatesProperties.GEAR_TYPE, gearState.getValue(TekoraBlockStatesProperties.GEAR_TYPE))
-                .setValue(TekoraBlockStatesProperties.IS_LARGE, false);
+                .setValue(TekoraBlockStateProperties.GEAR_TYPE, gearState.getValue(TekoraBlockStateProperties.GEAR_TYPE))
+                .setValue(TekoraBlockStateProperties.IS_LARGE, false);
 
         if (state.blockState == null) {
             state.blockState = hypothetical;

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public record Solutes(@NotNull Map<SoluteKey, Double> dataMap) {
+    // TODO, fix encoding error "Not a string" so fluids with solutes can actually save
     public static final Codec<Solutes> CODEC = RecordCodecBuilder.create((
             instance) -> instance.group(
             Codec.unboundedMap(SoluteKey.CODEC, Codec.DOUBLE).fieldOf("solutes").forGetter(Solutes::dataMap)

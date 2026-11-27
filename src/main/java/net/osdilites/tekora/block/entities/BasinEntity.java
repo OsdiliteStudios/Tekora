@@ -43,8 +43,8 @@ import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 import net.osdilites.tekora.recipes.TekoraRecipes;
 import net.osdilites.tekora.recipes.ReactionRecipe.OutputBound;
 import net.osdilites.tekora.recipes.ReactionRecipe.ReactionContext;
+import net.osdilites.tekora.recipes.ReactionRecipe.ReactionMap;
 import net.osdilites.tekora.recipes.ReactionRecipe.ReactionState;
-import net.osdilites.tekora.recipes.ReactionRecipe.ReactionTracker;
 import net.osdilites.tekora.recipes.ingredient.Chemical;
 import net.osdilites.tekora.recipes.ingredient.ChemicalIngredient;
 import net.osdilites.tekora.recipes.inputs.ReactionRecipeInput;
@@ -80,9 +80,9 @@ public class BasinEntity extends AbstractModularCraftEntity {
     private final Map<Integer, float[]> itemProducts = new HashMap<>();
     private final Map<Integer, float[]> fluidProducts = new HashMap<>();
 
-    private final ReactionState reactants = new ReactionState(true);
-    private final ReactionState products = new ReactionState(false);
-    private final ReactionTracker state = new ReactionTracker();
+    private final ReactionMap reactants = new ReactionMap(true);
+    private final ReactionMap products = new ReactionMap(false);
+    private final ReactionState state = new ReactionState();
 
     public BasinEntity(BlockPos pPos, BlockState pState) {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState, 4.815f);
@@ -247,11 +247,11 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 // description: use this to develop a map of indices containing reactants/products including those with solutes
                 // accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
                 // accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
-                accessedRec.fillWithReactants(reactants, state, volume, inventory, tank);
-                accessedRec.fillWithProducts(products, state, volume, inventory, tank);
+                accessedRec.fillWithReactants(context, volume, inventory, tank);
+                accessedRec.fillWithProducts(context, volume, inventory, tank);
                 this.hasRxn = true;
             }
-            accessedRec.updateConcentrations(volume, context);
+            // accessedRec.updateConcentrations(volume, context);
             this.lnQ = accessedRec.getLnQ(liquidSolutes, volume);
             this.lnK = accessedRec.getLnK(temperature);
 
@@ -283,10 +283,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 // lnQ > lnK => 1 indicates reverse reaction.
                 int action = Double.compare(lnQ, lnK);
 
-                // this code has been untested
-                // todo, test this piece of code
-                // accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
-                // accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
+                // this code has not been tested enough
+                // todo, test this piece of code more
                 String format = "volume %s\naction %s\nstatus %s\nlnQ %s\nlnK %s\n";
                 System.out.printf(format, volume, action, state.status, lnQ, lnK);
                 accessedRec.modifyCrafterInventory(context, action, rate);
@@ -297,6 +295,14 @@ public class BasinEntity extends AbstractModularCraftEntity {
                     }
                     
                 }
+
+                // TODO: before adding onto basin entity's reaction recipe or modifying
+                // reaction recipe's "helpers," create *unit tests* that tests if an
+                // exact output of a reaction occurs given specific input conditions.
+                // these cases must cover different types of ingredients, overflow cases,
+                // and insufficient resource cases. should also test if recipe swapping
+                // breaks anything. unit tests should inspect inventory and tank directly,
+                // not the internal state of reaction data
 
                 // accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);
                 // accessedRec.modifyCrafterTank(fluidProducts, tank, rate, -action);

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
@@ -16,6 +18,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import net.minecraft.core.component.DataComponentHolder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -30,12 +33,14 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
+import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.StacksResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.resource.DataComponentHolderResource;
+import net.neoforged.neoforge.transfer.resource.Resource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
@@ -279,7 +284,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
      * output fluidTanks and/or output inventories,
      * then code would need to be rewritten in essentially every method
      *
-     * more description here
      * this code is very very brittle and incomprehensible, but it "kind of" works with simple recipes
      * simulateReactionStep's logic per type of ingredient and handler could be 
      * put into private generic helpers if there was more time, and 
@@ -288,13 +292,15 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
      *
      * behaviors I wish are true:
      *
-     * reactionState should be renamed. 
      * it should hold values that are constant for a running
      * reaction, and only change/cleared if recipe changes
      * 
-     * reactionTracker is the one that needs to be updated per state.
+     * reactionState is the one that needs to be updated per tick.
      * it should be the one to track totals of an ingredient across slots, and 
      * be cleared completely on recipe change.
+     * 
+     * shouldn't be possible to dupe solutes or materials in very specific edge cases
+     * shouldn't be able to consume any other material once a recipe has been set
      */
 
     // ---
@@ -304,39 +310,25 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         public static final int REVERSE = 1, EQUAL = 0, FORWARD = -1;
     }
 
-    // if for any reason the reaction should not continue, there is stalled.
     public enum ReactionStatus {
         IDLE, 
         ACTIVE,
         STALLED, // unused, maybe use this later
     }
 
-    // what is an overflow resolution strategy?
-
-    // assume that there will only be two distinct inventories to deal with,
-    // so the enum should be enough to determine where to look/insert into
+    // assume that there will only be two distinct inventories to deal with
 
     public static class IngredientValue {
         // info from the Chemical object
-
         public final ChemicalIngredient ingredient;
         private final int stoichCoefficient;
-        public final int rateExponent;
 
-        // aggregations
-
-        public double concentration;
+        // aggregation
         public double total;
 
-        public IngredientValue(
-            ChemicalIngredient chemIng, 
-            int coeff, int rateOrder, 
-            double total, double concentration
-        ) {
+        public IngredientValue(ChemicalIngredient chemIng, int coeff, double total) {
             this.stoichCoefficient = coeff;
             this.ingredient = chemIng;
-            this.rateExponent = rateOrder;
-            this.concentration = concentration;
             this.total = total;
         }
 
@@ -353,14 +345,10 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         public float coefficient() {
             return stoichCoefficient;
         }
-
-        public boolean affectsQ() {
-            return ingredient.affectsQ();
-        }
     }
 
     // initialize only once for each side of the chemical reaction.
-    public static class ReactionState {
+    public static class ReactionMap {
         // okay, let's not worry about raw arrays and cache locality for now
         // worry about getting the new system that takes into account other requirements,
         // and can create a new abstraction for storing chemical ingredients later. 
@@ -369,9 +357,11 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         /// which side of equation this is for
         public final boolean isReactants;
         /// whether recipe ingredients on this side are present
+        // note, could move to ReactionState as hasAllReactants and hasAllProducts,
+        // but that would require deprecating the fillWith... methods
         public boolean hasAll = false;
 
-        public ReactionState(boolean isReactants) {
+        public ReactionMap(boolean isReactants) {
             this.entries = new HashMap<>();
             this.isReactants = isReactants;
         }
@@ -381,8 +371,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         }
 
         public void put(Chemical chem) {
-            IngredientValue entry = new IngredientValue(
-                chem.chemical(), chem.coefficient(), chem.order(), 0, 0);
+            IngredientValue entry = new IngredientValue(chem.chemical(), chem.coefficient(), 0);
             entries.put(chem.chemical(), entry);
         }
 
@@ -401,9 +390,11 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     // ------
 
     /// structure supporting (hopefully) fast lookups and stores status of entity after each craft 
-    // instantiate this only once for the lifetime of the block entity supporting reaction recipes
-    public static class ReactionTracker {
-        // keep going, don't clear, yea?
+    /// instantiate this only once for the lifetime of the block entity supporting reaction recipes
+    public static class ReactionState {
+        // for if reaction recipe crafting is interrupted,
+        // but the recipe doesn't immediately switch to another reaction recipe,
+        // then track the last active recipe to avoid needless clearing of entries
         int activeRecipeHash;
 
         // slots associated with chemical ingredient
@@ -411,6 +402,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         Map<ChemicalIngredient, Set<Integer>> itemSlotLookup;
         Map<ChemicalIngredient, Set<Integer>> fluidSlotLookup;
         Map<ChemicalIngredient, Double> ingredientProgress;
+        Map<ChemicalIngredient, Double> ingredientTotals;
 
         public ReactionStatus status;
         // mark when external change
@@ -418,7 +410,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
         public double solventVolume = 0.0;
 
-        public ReactionTracker() {
+        public ReactionState() {
             this.itemSlotLookup = new HashMap<>();
             this.fluidSlotLookup = new HashMap<>();
             this.ingredientProgress = new HashMap<>();
@@ -445,11 +437,17 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         }
 
         public void putSlotSet(ChemicalIngredient chemIng, boolean isItem) {
-            // if (isItem) {
+            if (isItem) {
                 itemSlotLookup.putIfAbsent(chemIng, new HashSet<>());
-            // } else {
+            } else {
                 fluidSlotLookup.putIfAbsent(chemIng, new HashSet<>());
-            // }
+            }
+            ingredientProgress.putIfAbsent(chemIng, 0.0);
+        }
+
+        public void putSlotSet(ChemicalIngredient chemIng) {
+            itemSlotLookup.putIfAbsent(chemIng, new HashSet<>());
+            fluidSlotLookup.putIfAbsent(chemIng, new HashSet<>());
             ingredientProgress.putIfAbsent(chemIng, 0.0);
         }
 
@@ -491,7 +489,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
     /// Used to restrict which indices to check and output to 
     /// for entities that share output and input in the same handler.
-    // TODO use this
+    // TODO use this when dealing with overflow
     public record OutputBound(int minIndex, int maxIndex) { 
         /// Bounds are inclusive.
         public OutputBound(int minIndex, int maxIndex) {
@@ -509,9 +507,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     // they called this type of pattern a context!
     // TODO: some more functions could replace parameters with this
     public static class ReactionContext {
-        public ReactionState reactantState;
-        public ReactionState productState;
-        public ReactionTracker tracker;
+        public ReactionMap reactantState;
+        public ReactionMap productState;
+        public ReactionState tracker;
         
         public ItemStacksResourceHandler inventory;
         public FluidStacksResourceHandler tank;
@@ -523,117 +521,52 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
     // -----
 
-    public void fillWithReactants(ReactionState state, ReactionTracker tracker, double solventVolume, ItemStacksResourceHandler inventory, FluidStacksResourceHandler tank) {
-        fillReactionState(reactants, solventVolume, inventory, tank, state, tracker);
+    public void fillWithReactants(ReactionContext dat, double solventVolume, ItemStacksResourceHandler inventory, FluidStacksResourceHandler tank) {
+        fillReactionState(reactants, solventVolume, inventory, tank, dat.reactantState, dat.tracker);
     }
 
-    public void fillWithProducts(ReactionState state, ReactionTracker tracker, double solventVolume, ItemStacksResourceHandler inventory, FluidStacksResourceHandler tank) {
-        fillReactionState(products, solventVolume, inventory, tank, state, tracker);
+    public void fillWithProducts(ReactionContext dat, double solventVolume, ItemStacksResourceHandler inventory, FluidStacksResourceHandler tank) {
+        fillReactionState(products, solventVolume, inventory, tank, dat.productState, dat.tracker);
     }
 
-    // only call the fill methods when the recipe changes 
-    private <R extends StacksResourceHandler<S, T>, S, T extends DataComponentHolderResource<W>, W>
-    void fillReactionState(
+    // note, only call the fill methods when the recipe changes 
+    private void fillReactionState(
         @NonNull List<Chemical> recipeChemicals, 
         double solventVolume, // volume of the fluid in tank
         @NonNull ItemStacksResourceHandler inventory, 
         @NonNull FluidStacksResourceHandler tank,
-        ReactionState state,
-        ReactionTracker tracker
+        ReactionMap map,
+        ReactionState tracker
     ) {
         if (recipeChemicals.isEmpty()) {
             throw new IllegalArgumentException("recipeChemicals shouldn't be empty");
         }
         
         // clear the state object since it will be reused across recipe changes
-        state.clear();
+        map.clear();
 
         // default initialize state's entries; totals for each are computed on a pass thru handlers
         recipeChemicals.forEach(chem -> {
-            state.put(chem);
-            tracker.putSlotSet(chem.chemical(), true);
+            map.put(chem);
+            ChemicalIngredient ing = chem.chemical();
+            if (ing.isSolute()) {
+                tracker.putSlotSet(ing);
+            } else {
+                tracker.putSlotSet(ing, ing.asMaterial().isItem());
+            }
         });
 
         System.err.println(tracker.itemSlotLookup);
         System.err.println(tracker.fluidSlotLookup);
 
-        for (int slot = 0; slot < inventory.size(); ++slot) {
-            ItemResource itemResource = inventory.getResource(slot);
-            if (itemResource.isEmpty()) continue;
-            ItemStack itemStack = itemResource.toStack();
-            
-            boolean validMaterial = false;
-            for (IngredientValue value : state.entries.values()) {
-                validMaterial = value.ingredient.isMaterial() 
-                    && value.ingredient.test(itemStack);
-                if (!validMaterial) { continue; }
-                value.total += inventory.getAmountAsInt(slot);
-                boolean success = tracker.putChemIngInSlot(slot, true, value.ingredient);
-                if (!success) throw new IllegalStateException("failed. one by one");
-            }
-            if (validMaterial) continue;
+        populateReactionStateFromHandler(inventory, map, tracker);
+        populateReactionStateFromHandler(tank, map, tracker);
 
-            // NOTE, assume a material ingredient cannot hold solutes, unless that should change
-
-            boolean validSolutes = itemResource.has(TekoraComponents.SOLUTES_LIST);
-            if (!validSolutes) continue;
-
-            Solutes soluteMap = itemResource.get(TekoraComponents.SOLUTES_LIST);
-            for (var solute : soluteMap.dataMap().entrySet()) {
-                // we'll assume solutes are solid inside items only to get this working for now
-                // (there's also the case of solutes being in bucket/bottle items...)
-                ChemicalIngredient chemIng = ChemicalIngredient.of(solute.getKey(), SoluteIngredient.SOLID);
-                IngredientValue value = state.entries.get(chemIng);
-                if (value == null) continue;
-                value.total += solute.getValue();
-                tracker.putSlotSet(value.ingredient, true);
-                boolean success = tracker.putChemIngInSlot(slot, true, value.ingredient);
-                if (!success) throw new IllegalStateException("failed. one by 2");
-            }
-        }
-
-        for (int slot = 0; slot < tank.size(); ++slot) {
-            FluidResource fluidResource = tank.getResource(slot);
-            int amount = tank.getAmountAsInt(slot);
-            FluidStack fluidStack = fluidResource.toStack(amount);
-            boolean validMaterial = false;
-            // similar logic, except assume different states for inserted ingredients
-            for (IngredientValue value : state.entries.values()) {
-                // note, please don't try to extract logic onto generic funtcion, not worth time
-                validMaterial = value.ingredient.isMaterial() 
-                    && value.ingredient.test(fluidStack);
-                if (!validMaterial) { continue; }
-                value.total += amount;
-                tracker.putSlotSet(value.ingredient, false);
-                boolean success = tracker.putChemIngInSlot(slot, false, value.ingredient);
-                if (!success) throw new IllegalStateException("failed. one by 3");
-            }
-            if (validMaterial) continue;
-
-            boolean validSolutes = fluidResource.has(TekoraComponents.SOLUTES_LIST);
-            if (!validSolutes) continue;
-            
-            Solutes soluteMap = fluidResource.get(TekoraComponents.SOLUTES_LIST);
-            for (var solute : soluteMap.dataMap().entrySet()) {
-                // TODO, if other states get annexed, determine what it is based off the fluid resource properties
-                // TODO, must solvated ingredients force solventVolume to be above 0?
-                // a new private method can be created to determine state based off resource properties
-                ChemicalIngredient chemIng = ChemicalIngredient.of(solute.getKey(), SoluteIngredient.SOLVATED);
-                IngredientValue value = state.entries.get(chemIng);
-                if (value == null) continue;
-                value.total += solute.getValue();
-                tracker.putSlotSet(value.ingredient, false);
-                boolean success = tracker.putChemIngInSlot(slot, false, value.ingredient);
-                if (!success) throw new IllegalStateException("failed. one by 4");
-            }
-        }
-
-        // are all ingredients for this side present? check to ensure
-        state.hasAll = true;
-        for (IngredientValue value : state.entries.values()) {
+        map.hasAll = true;
+        for (IngredientValue value : map.entries.values()) {
             System.out.printf("%s = %s", value.ingredient.toString(), value.total);
             if (value.total <= 0.0) {
-                state.hasAll = false;
+                map.hasAll = false;
                 break;
             }
         }
@@ -641,50 +574,90 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         // TODO, dealing with multiple solvents?
     }
 
-    private static double getConcentration(IngredientValue ingredientDat, double solventVolume) {
-        if (ingredientDat.total <= 0.0) return 0.0;
-        else if (ingredientDat.isMaterial()) return 1.0;
-        
-        if (!ingredientDat.isSolute()) return 0.0;
-        String state = ingredientDat.ingredient.asSoluteIngredient().state();
-        switch (state) {
-            // what is chemistry thermodynamic
-            case SoluteIngredient.SOLID:
-            case SoluteIngredient.LIQUID:
-                return 1.0;
-            case SoluteIngredient.SOLVATED:
-                return solventVolume > 0.0 ? ingredientDat.total / solventVolume : 0.0;
-            // TODO, concentration based on other states
-            default:
-                return 0.0;
-        }
-    }
+    private <S, T extends DataComponentHolder & Resource> 
+    void populateReactionStateFromHandler(StacksResourceHandler<S, T> handler, ReactionMap map,  ReactionState tracker) {
+        for (int slot = 0; slot < handler.size(); ++slot) {
+            T resource = handler.getResource(slot);
+            int amount = handler.getAmountAsInt(slot);
+            if (resource.isEmpty()) continue;
+            
+            Object resourceStack;
+            boolean isItem;
+            if (resource instanceof ItemResource itemResource) {
+                resourceStack = itemResource.toStack(amount);
+                isItem = true;
+            } else if (resource instanceof FluidResource fluidResource) {
+                resourceStack = fluidResource.toStack(amount);
+                isItem = false;
+            } else {
+                // silent fail
+                System.err.println("Unsupported resource in " + handler.toString());
+                return;
+            }
+            
+            boolean validMaterial = false;
+            // this iterates over the recipe's usually few required material ingredients,
+            // so should in theory not be a big deal performance wise
+            for (IngredientValue value : map.entries.values()) {
+                if (resourceStack instanceof ItemStack itemStack) {
+                    validMaterial = value.ingredient.test(itemStack);
+                } else if (resourceStack instanceof FluidStack fluidStack) {
+                    validMaterial = value.ingredient.test(fluidStack);
+                }
+                if (!validMaterial) { continue; }
 
-    // solventVolume needs to be fetched from ReactionRecipeInput helper
-    // should be called per active tick
-    public void updateConcentrations(double solventVolume, ReactionContext dat) {
-        double clampedVolume = Math.max(0.0, solventVolume);
-        dat.tracker.solventVolume = clampedVolume;
-        for (IngredientValue value : dat.reactantState.entries.values()) {
-            value.concentration = getConcentration(value, clampedVolume);
-        }
-        for (IngredientValue value : dat.productState.entries.values()) {
-            value.concentration = getConcentration(value, clampedVolume);
+                value.total += amount;
+                tracker.putSlotSet(value.ingredient, isItem);
+                boolean success = tracker.putChemIngInSlot(slot, isItem, value.ingredient);
+                if (!success) throw new IllegalStateException("failed. one by material");
+            }
+            if (validMaterial) continue;
+
+            // NOTE, assume a material ingredient cannot hold solutes, unless that should change
+
+            boolean validSolutes = resource.has(TekoraComponents.SOLUTES_LIST);
+            if (!validSolutes) continue;
+            
+            Solutes soluteMap = resource.get(TekoraComponents.SOLUTES_LIST);
+            for (var solute : soluteMap.dataMap().entrySet()) {
+                // TODO, if other states get annexed, determine what it is based off the fluid resource properties
+                // TODO, must solvated ingredients force solventVolume to be above 0?
+                // a new private method can be created to determine state based off resource properties
+                String soluteState;
+                if (!isItem) {
+                    soluteState = SoluteIngredient.SOLVATED;
+                    // ???
+                } else {
+                    soluteState = SoluteIngredient.SOLID;
+                }
+
+                // there's also the case of solutes being in bucket/bottle items, which is not covered here
+                ChemicalIngredient chemIng = ChemicalIngredient.of(solute.getKey(), soluteState);
+                IngredientValue value = map.entries.get(chemIng);
+                if (value == null) continue;
+                value.total += solute.getValue();
+                tracker.putSlotSet(value.ingredient, isItem);
+                boolean success = tracker.putChemIngInSlot(slot, isItem, value.ingredient);
+                if (!success) throw new IllegalStateException("failed. one by solute");
+            }
         }
     }
 
     // -----
 
-    // 
-    private static ItemResource withNewSolutes(ItemResource original, SoluteKey key, double delta) {
+    /// returns the new resource with modified solutes map, since resources are immutable
+    /// @param withFunc should be given (res, solutes) -> resource.with(...)
+    private static <T extends DataComponentHolder & Resource> 
+    T withNewSolutes(T original, SoluteKey key, double change, BiFunction<T, Solutes, T> withFunc) {
         Map<SoluteKey, Double> updatedMap;
-        if (original.has(TekoraComponents.SOLUTES_LIST)) {
-            Solutes solutes = original.get(TekoraComponents.SOLUTES_LIST);
+        var type = TekoraComponents.SOLUTES_LIST;
+        if (original.has(type)) {
+            Solutes solutes = original.get(type);
             updatedMap = new HashMap<>(solutes.dataMap());
         } else {
             updatedMap = new HashMap<>();
         }
-        double next = updatedMap.getOrDefault(key, 0.0) + delta;
+        double next = updatedMap.getOrDefault(key, 0.0) + change;
         if (next <= 0) {
             // TODO have to return the amount still due (not needed for bare minimum)
             updatedMap.remove(key);
@@ -693,27 +666,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         }
 
         Solutes nextSolutes = new Solutes(Map.copyOf(updatedMap));
-        return original.with(TekoraComponents.SOLUTES_LIST.get(), nextSolutes);
-    }
-
-    private static FluidResource withNewSolutes(FluidResource original, SoluteKey key, double delta) {
-        Map<SoluteKey, Double> updatedMap;
-        if (original.has(TekoraComponents.SOLUTES_LIST)) {
-            Solutes solutes = original.get(TekoraComponents.SOLUTES_LIST);
-            updatedMap = new HashMap<>(solutes.dataMap());
-        } else {
-            updatedMap = new HashMap<>();
-        }
-        double next = updatedMap.getOrDefault(key, 0.0) + delta;
-        if (next <= 0) {
-            // TODO have to return the amount still due (not needed for bare minimum)
-            updatedMap.remove(key);
-        } else {
-            updatedMap.put(key, next);
-        }
-
-        Solutes nextSolutes = new Solutes(Map.copyOf(updatedMap));
-        return original.with(TekoraComponents.SOLUTES_LIST.get(), nextSolutes);
+        return withFunc.apply(original, nextSolutes);
     }
 
     private static Optional<ItemResource> findItemResource(MaterialIngredient materialIng) {
@@ -737,11 +690,11 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         Map<ChemicalIngredient, Double> reactionProg,
         Transaction transaction
     ) {        
-        ReactionState reactantState = dat.reactantState;
-        ReactionState productState = dat.productState;
+        ReactionMap reactantState = dat.reactantState;
+        ReactionMap productState = dat.productState;
 
-        ReactionState inputState;
-        ReactionState outputState;
+        ReactionMap inputState;
+        ReactionMap outputState;
         switch (direction) {
             case ReactionDirection.FORWARD:
                 inputState = reactantState;
@@ -819,7 +772,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                             continue;
                         }
 
-                        ItemResource newResource = withNewSolutes(resource, solIng.value(), -amtConsumed);
+                        ItemResource newResource = withNewSolutes(resource, solIng.value(), -amtConsumed, 
+                            (res, sol) -> res.with(TekoraComponents.SOLUTES_LIST, sol));
 
                         // replacement
                         int extracted = dat.inventory.extract(slot, resource, count, simTransaction);
@@ -881,7 +835,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
                     if (chemIng.isSolute()) {
                         var solIng = chemIng.asSoluteIngredient();
-                        FluidResource newResource = withNewSolutes(resource, solIng.value(), -amtConsumed);
+                        FluidResource newResource = withNewSolutes(resource, solIng.value(), -amtConsumed,
+                            (res, sol) -> res.with(TekoraComponents.SOLUTES_LIST, sol));
 
                         // replacement
                         int extracted = dat.tank.extract(slot, resource, count, simTransaction);
@@ -970,7 +925,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                                 continue;
                             }
                             
-                            FluidResource newResource = withNewSolutes(solventResource, soluteIng.value(), amtProduced);
+                            FluidResource newResource = withNewSolutes(solventResource, soluteIng.value(), amtProduced,
+                                (res, sol) -> res.with(TekoraComponents.SOLUTES_LIST, sol));
                             // replacement
                             int extracted = dat.tank.extract(solventSlot, solventResource, solventCount, simTransaction);
                             int inserted = dat.tank.insert(solventSlot, newResource, solventCount, simTransaction);

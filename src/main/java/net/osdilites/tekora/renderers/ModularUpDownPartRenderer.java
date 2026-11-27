@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelLoader;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStatesProperties;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.event.ClientEvent;
@@ -55,8 +55,8 @@ public class ModularUpDownPartRenderer implements BlockEntityRenderer<AbstractMo
         BlockState gearState = blockEntity.getBlockState();
         BlockState hypothetical = TekoraBlocks.STEEL_SHAFT.get().defaultBlockState()
                 .setValue(BlockStateProperties.AXIS, Direction.Axis.Y)
-                .setValue(TekoraBlockStates.GEAR_TYPE, gearState.getValue(TekoraBlockStates.GEAR_TYPE))
-                .setValue(TekoraBlockStates.IS_LARGE, false);
+                .setValue(TekoraBlockStatesProperties.GEAR_TYPE, gearState.getValue(TekoraBlockStatesProperties.GEAR_TYPE))
+                .setValue(TekoraBlockStatesProperties.IS_LARGE, false);
 
         if (state.blockState == null) {
             state.blockState = hypothetical;

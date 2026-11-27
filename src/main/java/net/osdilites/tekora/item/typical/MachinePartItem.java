@@ -7,7 +7,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStatesProperties;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachine;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
@@ -33,7 +33,7 @@ public class MachinePartItem extends TekoraItem {
             BlockState orgState = world.getBlockState(pos);
             Block block = orgState.getBlock();
             if (block.equals(TekoraBlocks.MECH_TOP.get())) {
-                BlockState state = this.block.defaultBlockState().setValue(TekoraBlockStates.GEAR_TYPE, orgState.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE));
+                BlockState state = this.block.defaultBlockState().setValue(TekoraBlockStatesProperties.GEAR_TYPE, orgState.getValueOrElse(TekoraBlockStatesProperties.GEAR_TYPE, GearType.NONE));
                 if (state.hasProperty(BlockStateProperties.FACING)) {
                     state = state.setValue(BlockStateProperties.FACING, context.getClickedFace().getOpposite());
                 }

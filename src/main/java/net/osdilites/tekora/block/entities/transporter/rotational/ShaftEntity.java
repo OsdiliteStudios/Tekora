@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStatesProperties;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachineEntity;
 import net.osdilites.tekora.data.Partners;
@@ -139,11 +139,11 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
                 if (partners != null) {
                     for (BlockPos p : partners.partners()) {
                         BlockState partnerState = pLevel.getBlockState(p);
-                        if (partnerState.hasProperty(TekoraBlockStates.GEAR_TYPE)) {
-                            GearType gearType = partnerState.getValue(TekoraBlockStates.GEAR_TYPE);
+                        if (partnerState.hasProperty(TekoraBlockStatesProperties.GEAR_TYPE)) {
+                            GearType gearType = partnerState.getValue(TekoraBlockStatesProperties.GEAR_TYPE);
                             if (gearType == GearType.NONE) continue;
 
-                            double moment = partnerState.getValueOrElse(TekoraBlockStates.IS_LARGE, false) ? gearType.getLargeMoment() : gearType.getSmallMoment();
+                            double moment = partnerState.getValueOrElse(TekoraBlockStatesProperties.IS_LARGE, false) ? gearType.getLargeMoment() : gearType.getSmallMoment();
                             // todo, make the chain and conveyor belt implementation here
                         }
                     }
@@ -168,7 +168,7 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
         if (ent instanceof ShaftEntity cog && canBeCog() && cog.canBeCog()) {
             BlockState otherState = pLevel.getBlockState(otherPos);
             BlockState selfState = pLevel.getBlockState(curPos);
-            if (otherState.hasProperty(BlockStateProperties.AXIS) && selfState.hasProperty(BlockStateProperties.AXIS) && otherState.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
+            if (otherState.hasProperty(BlockStateProperties.AXIS) && selfState.hasProperty(BlockStateProperties.AXIS) && otherState.getValueOrElse(TekoraBlockStatesProperties.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
                 Direction.Axis otherVal = otherState.getValue(BlockStateProperties.AXIS);
                 Direction.Axis selfVal = selfState.getValue(BlockStateProperties.AXIS);
                 if (otherVal == selfVal) {
@@ -183,7 +183,7 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
                     return r1 * factor;
                 }
             }
-        } else if (ent instanceof AbstractModularMachineEntity machine && machine.getBlockState().getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
+        } else if (ent instanceof AbstractModularMachineEntity machine && machine.getBlockState().getValueOrElse(TekoraBlockStatesProperties.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
             BlockState selfState = pLevel.getBlockState(curPos);
             if (selfState.hasProperty(BlockStateProperties.AXIS) && selfState.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) {
                 double r1 = componentRadius();
@@ -242,9 +242,9 @@ public class ShaftEntity extends AbstractShaftConnectableEntity {
         super.setChanged();
         BlockState state = getBlockState();
         System.out.println("setChanged called for state" + state);
-        if (body != null && state.hasProperty(TekoraBlockStates.GEAR_TYPE) && state.hasProperty(BlockStateProperties.AXIS)) {
-            GearType gearType = state.getValue(TekoraBlockStates.GEAR_TYPE);
-            double added = state.getValueOrElse(TekoraBlockStates.IS_LARGE, false) ? gearType.getLargeMoment() : gearType.getSmallMoment();
+        if (body != null && state.hasProperty(TekoraBlockStatesProperties.GEAR_TYPE) && state.hasProperty(BlockStateProperties.AXIS)) {
+            GearType gearType = state.getValue(TekoraBlockStatesProperties.GEAR_TYPE);
+            double added = state.getValueOrElse(TekoraBlockStatesProperties.IS_LARGE, false) ? gearType.getLargeMoment() : gearType.getSmallMoment();
             double newVal = getMoment();
             BlockPos pos = getBlockPos();
             Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);

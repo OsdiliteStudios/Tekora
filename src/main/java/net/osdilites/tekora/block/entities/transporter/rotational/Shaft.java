@@ -26,7 +26,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.osdilites.tekora.Tekora;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStatesProperties;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.util.UtilFunctions;
 import org.jetbrains.annotations.Nullable;
@@ -53,8 +53,8 @@ public class Shaft extends AbstractShaftConnectableBlock {
             box(0, 0, 7, 16, 16, 9),
             (b1, b2) -> b1 || b2);
 
-    public static final EnumProperty<GearType> GEAR_TYPE = TekoraBlockStates.GEAR_TYPE;
-    public static final BooleanProperty IS_LARGE = TekoraBlockStates.IS_LARGE;
+    public static final EnumProperty<GearType> GEAR_TYPE = TekoraBlockStatesProperties.GEAR_TYPE;
+    public static final BooleanProperty IS_LARGE = TekoraBlockStatesProperties.IS_LARGE;
 
     private final double moment;
 

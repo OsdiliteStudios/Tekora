@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStatesProperties;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.block.entities.transporter.rotational.AbstractShaftConnectableEntity;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
@@ -58,7 +58,7 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
             double orgV = componentRadius() * velocity;
             double tot = 0;
 
-            GearType type = pState.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE);
+            GearType type = pState.getValueOrElse(TekoraBlockStatesProperties.GEAR_TYPE, GearType.NONE);
             if (type != GearType.NONE) {
                 BlockEntity north = pLevel.getBlockEntity(pPos.north());
                 BlockEntity south = pLevel.getBlockEntity(pPos.south());
@@ -117,7 +117,7 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
 
         if (ent instanceof ShaftEntity cog && canBeCog() && cog.canBeCog()) {
             BlockState otherState = pLevel.getBlockState(otherPos);
-            if (otherState.hasProperty(BlockStateProperties.AXIS) && otherState.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y && otherState.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
+            if (otherState.hasProperty(BlockStateProperties.AXIS) && otherState.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y && otherState.getValueOrElse(TekoraBlockStatesProperties.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
                 double r1 = componentRadius();
                 double r2 = cog.componentRadius();
 
@@ -128,7 +128,7 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
                 cog.getBody().addTorque(otherPos, r2 * factor);
                 return r1 * factor;
             }
-        } else if (ent instanceof AbstractModularMachineEntity machine && machine.getBlockState().getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
+        } else if (ent instanceof AbstractModularMachineEntity machine && machine.getBlockState().getValueOrElse(TekoraBlockStatesProperties.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
             double r1 = componentRadius();
             double r2 = machine.componentRadius();
 
@@ -152,10 +152,10 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
     public double getSingularMoment() {
         double orgMoment = ShaftEntity.STEEL_I + partMoment();
         BlockState state = getBlockState();
-        if (state.hasProperty(TekoraBlockStates.GEAR_TYPE)) {
-            GearType type = state.getValue(TekoraBlockStates.GEAR_TYPE);
+        if (state.hasProperty(TekoraBlockStatesProperties.GEAR_TYPE)) {
+            GearType type = state.getValue(TekoraBlockStatesProperties.GEAR_TYPE);
             if (type != GearType.NONE) {
-                orgMoment += state.getValue(TekoraBlockStates.GEAR_TYPE).getSmallMoment();
+                orgMoment += state.getValue(TekoraBlockStatesProperties.GEAR_TYPE).getSmallMoment();
             }
         }
         return orgMoment;
@@ -165,12 +165,12 @@ public abstract class AbstractModularMachineEntity extends BlockEntity {
 
     protected boolean canBeCog() {
         BlockState state = getBlockState();
-        return state.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE;
+        return state.getValueOrElse(TekoraBlockStatesProperties.GEAR_TYPE, GearType.NONE) != GearType.NONE;
     }
 
     public double componentRadius() {
         BlockState state = getBlockState();
-        if (state.getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
+        if (state.getValueOrElse(TekoraBlockStatesProperties.GEAR_TYPE, GearType.NONE) != GearType.NONE) {
             return 0.5;
         }
         return 0.125;

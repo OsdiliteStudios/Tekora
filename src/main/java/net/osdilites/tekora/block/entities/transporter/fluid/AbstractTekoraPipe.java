@@ -13,11 +13,11 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStatesProperties;
 import org.jspecify.annotations.Nullable;
 
 public abstract class AbstractTekoraPipe extends BaseEntityBlock {
-    protected static final IntegerProperty CONNECTION = TekoraBlockStates.CONNECTION;
+    protected static final IntegerProperty CONNECTION = TekoraBlockStatesProperties.CONNECTION;
 
     private static final VoxelShape CENTER = Block.box(4, 4, 4, 12, 12, 12);
 

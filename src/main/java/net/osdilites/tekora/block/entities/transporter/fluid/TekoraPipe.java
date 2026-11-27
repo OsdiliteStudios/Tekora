@@ -23,13 +23,13 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.osdilites.tekora.Tekora;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStateProperties;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import org.jspecify.annotations.Nullable;
 
 public class TekoraPipe extends BaseEntityBlock {
-    protected static final IntegerProperty CONNECTION = TekoraBlockStates.CONNECTION;
-    protected static final IntegerProperty DISREPAIR = TekoraBlockStates.DISREPAIR;
+    protected static final IntegerProperty CONNECTION = TekoraBlockStateProperties.CONNECTION;
+    protected static final IntegerProperty DISREPAIR = TekoraBlockStateProperties.DISREPAIR;
 
     public static final MapCodec<TekoraPipe> CODEC = simpleCodec(TekoraPipe::new);
 

@@ -1,10 +1,17 @@
 package net.osdilites.tekora.fluid;
 
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.fluids.FluidType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChemicalFluidType extends FluidType {
 
     public static final int BOTTLE_VOLUME = 333; // mB
+    public static final int CANISTER_VOLUME = 250; // mB
 
     private final double molarVolume; // mol/L or mol/L, only applies to liquids, for gases we use the ideal gas law
 
@@ -39,6 +46,9 @@ public class ChemicalFluidType extends FluidType {
     private final double metalDegradationRate;
     private final double polymerDegradationRate;
 
+    // these allows certain effects to be applied to certain mobs depending on context
+    private final List<MobEffectInstance> potentialEffects;
+
     public ChemicalFluidType(final Properties properties, final ChemicalProperties chemProperties) {
         super(properties);
 
@@ -69,6 +79,8 @@ public class ChemicalFluidType extends FluidType {
 
         this.metalDegradationRate = chemProperties.metalDegradationRate;
         this.polymerDegradationRate = chemProperties.polymerDegradationRate;
+
+        this.potentialEffects = chemProperties.potentialEffects;
     }
 
     public double getMeltingPoint(double pressure) {
@@ -132,6 +144,22 @@ public class ChemicalFluidType extends FluidType {
         return polymerDegradationRate;
     }
 
+    public void effectLivingGood(LivingEntity entity) {
+        for (MobEffectInstance instance : potentialEffects) {
+            if (instance.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
+                entity.addEffect(instance);
+            }
+        }
+    }
+
+    public void effectLivingBad(LivingEntity entity) {
+        for (MobEffectInstance instance : potentialEffects) {
+            if (instance.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
+                entity.addEffect(instance);
+            }
+        }
+    }
+
     public static final class ChemicalProperties {
         private double molarVolume = 0.018; // L/mol or block/(1000 mol)
 
@@ -160,6 +188,9 @@ public class ChemicalFluidType extends FluidType {
         // rates in mm/year
         private double metalDegradationRate = 0.00001;
         private double polymerDegradationRate = 0.00001;
+
+        // entity harming/healing by tags
+        private List<MobEffectInstance> potentialEffects = new ArrayList<>();
 
         private ChemicalProperties() {
         }

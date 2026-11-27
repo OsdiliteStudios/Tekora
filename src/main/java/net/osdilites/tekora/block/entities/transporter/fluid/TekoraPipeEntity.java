@@ -6,7 +6,7 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStateProperties;
 import net.osdilites.tekora.block.entities.TekoraBlockEntities;
 import net.osdilites.tekora.data.PipeDurability;
 import net.osdilites.tekora.data.TekoraComponents;
@@ -38,13 +38,13 @@ public class TekoraPipeEntity extends BlockEntity {
             durability -= degradationRate * chemResistance * tempInduced * 0.05f;
 
             if (durability <= 125.0f) {
-                blockState.setValue(TekoraBlockStates.DISREPAIR, 3);
+                blockState.setValue(TekoraBlockStateProperties.DISREPAIR, 3);
             } else if (durability <= 250.0f) {
-                blockState.setValue(TekoraBlockStates.DISREPAIR, 2);
+                blockState.setValue(TekoraBlockStateProperties.DISREPAIR, 2);
             } else if (durability <= 375.0f) {
-                blockState.setValue(TekoraBlockStates.DISREPAIR, 1);
+                blockState.setValue(TekoraBlockStateProperties.DISREPAIR, 1);
             } else {
-                blockState.setValue(TekoraBlockStates.DISREPAIR, 0);
+                blockState.setValue(TekoraBlockStateProperties.DISREPAIR, 0);
             }
             setChanged();
             level.setBlockAndUpdate(pos, blockState);

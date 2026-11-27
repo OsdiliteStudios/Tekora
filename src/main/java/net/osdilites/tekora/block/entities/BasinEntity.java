@@ -5,19 +5,23 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
@@ -233,13 +237,31 @@ public class BasinEntity extends AbstractModularCraftEntity {
             int fluidMoved = ResourceHandlerUtil.move(itemCapability, tank,
                     fluidResource -> tank.getResource(0).isEmpty() || tank.getResource(0).is(fluidResource.getFluidType()),
                     FluidType.BUCKET_VOLUME, transaction);
-            
+
+            Item item = itemAccess.getResource().getItem();
+
+            // enables sound effects to be played whenever the player puts the bucket in
+            if (level != null) {
+                if (item instanceof BucketItem bucket) {
+                    SoundEvent soundEvent = bucket.getContent().getFluidType().getSound(null, level, getBlockPos(), SoundActions.BUCKET_EMPTY);
+                    if (soundEvent == null) {
+                        // todo, make the sound dependent on fluidtype in the future
+                        soundEvent = bucket.getContent().is(FluidTags.LAVA) ? SoundEvents.BUCKET_EMPTY_LAVA : SoundEvents.BUCKET_EMPTY;
+                    }
+                    level.playSound(null, getBlockPos(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
+                } else if (item instanceof BottleItem) {
+                    level.playSound(null, getBlockPos(), SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0f, 1.0f);
+                }
+            }
+
             // case fallthrough is intentional
             switch(fluidMoved) {
             case ChemicalFluidType.BUCKET_VOLUME:
-                if (itemAccess.getResource().getItem() instanceof BucketItem) {
+                if (item instanceof BucketItem bucket) {
                     // note, possible incompatibility here if multiple types of buckets exist
+                    // in such circumstance, it is possible to use multiple if statements or stuff assuming we're using Tekora buckets
                     itemAccess.exchange(ItemResource.of(Items.BUCKET), itemAccess.getAmount(), transaction);
+
                 }
             case ChemicalFluidType.BOTTLE_VOLUME:
                 transaction.commit();
@@ -272,7 +294,21 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 transaction.commit();
                 break;
             default:
-            }   
+            }
+            // enables sound effect to be played after the player takes the fluid out
+            if (level != null && fluidMoved > 0) {
+                // todo, figure out a way to enhance the if statements for future consistency
+                if (fluidMoved == ChemicalFluidType.BUCKET_VOLUME) {
+                    SoundEvent soundEvent = tank.getResource(0).getFluidType().getSound(null, level, getBlockPos(), SoundActions.BUCKET_EMPTY);
+                    if (soundEvent == null) {
+                        // todo, make the sound dependent on fluidtype in the future
+                        soundEvent = tank.getResource(0).is(FluidTags.LAVA) ? SoundEvents.BUCKET_FILL_LAVA : SoundEvents.BUCKET_FILL;
+                    }
+                    level.playSound(null, getBlockPos(), soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f);
+                } else if (fluidMoved == ChemicalFluidType.BOTTLE_VOLUME) {
+                    level.playSound(null, getBlockPos(), SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+                }
+            }
         }
     }
 

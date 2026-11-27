@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStateProperties;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 
 public class GearItem extends TekoraItem {
@@ -23,8 +23,8 @@ public class GearItem extends TekoraItem {
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState state = world.getBlockState(pos);
-        if (state.hasProperty(TekoraBlockStates.GEAR_TYPE) && state.getValue(TekoraBlockStates.GEAR_TYPE) == GearType.NONE) {
-            BlockState newState = state.setValue(TekoraBlockStates.GEAR_TYPE, gearType);
+        if (state.hasProperty(TekoraBlockStateProperties.GEAR_TYPE) && state.getValue(TekoraBlockStateProperties.GEAR_TYPE) == GearType.NONE) {
+            BlockState newState = state.setValue(TekoraBlockStateProperties.GEAR_TYPE, gearType);
             context.getItemInHand().shrink(1);
             Player player = context.getPlayer();
             if (world.setBlock(pos, newState, 3)) {

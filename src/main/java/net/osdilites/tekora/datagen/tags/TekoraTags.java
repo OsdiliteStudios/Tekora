@@ -5,8 +5,11 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.osdilites.tekora.Tekora;
+import net.osdilites.tekora.fluid.ChemicalFluidType;
 
 public class TekoraTags {
     public static class Items {
@@ -32,12 +35,35 @@ public class TekoraTags {
     }
     public static class Blocks {}
     public static class Entities {
-        public static final TagKey<EntityType<?>> OXYGEN_LETHAL = tekoraTag("poisonedby/oxygen"); // this is for Tekora Space
+        public static final TagKey<EntityType<?>> OXYGEN_LETHAL = tekoraTag("harmedby/oxygen"); // this is for Tekora Space
 
-        public static final TagKey<EntityType<?>> SO2_LETHAL = tekoraTag("poisonedby/so2");
+        public static final TagKey<EntityType<?>> SO2_LETHAL = tekoraTag("harmedby/sulfur_dioxide");
+        public static final TagKey<EntityType<?>> SULFURIC_ACID_LETHAL = tekoraTag("harmedby/sulfuric_acid");
+
+        public static final TagKey<EntityType<?>> OXYGEN_HEALS = tekoraTag("poweredby/oxygen");
 
         private static TagKey<EntityType<?>> tekoraTag(String name) {
             return TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Tekora.MODID, name));
+        }
+
+        public static boolean getsHarmed(ChemicalFluidType type, LivingEntity entity) {
+            Identifier loc = NeoForgeRegistries.FLUID_TYPES.getKey(type);
+            if (loc != null) {
+                String path = loc.getPath();
+                int end = path.contains("/") ? path.lastIndexOf('/') + 1 : 0;
+                return entity.is(tekoraTag("harmedby/" + path.substring(end)));
+            }
+            return false;
+        }
+
+        public static boolean getsPowered(ChemicalFluidType type, LivingEntity entity) {
+            Identifier loc = NeoForgeRegistries.FLUID_TYPES.getKey(type);
+            if (loc != null) {
+                String path = loc.getPath();
+                int end = path.contains("/") ? path.lastIndexOf('/') + 1 : 0;
+                return entity.is(tekoraTag("poweredby/" + path.substring(end)));
+            }
+            return false;
         }
     }
 }

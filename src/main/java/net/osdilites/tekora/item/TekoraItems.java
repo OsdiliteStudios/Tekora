@@ -19,7 +19,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStateProperties;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.AbstractModularCraftEntity;
 import net.osdilites.tekora.block.entities.BasinEntity;
@@ -159,7 +159,7 @@ public class TekoraItems {
             msg += (rotational.isBodyTicker() ? " and ticks the body\n" : "\n");
             msg += "Object properties " + body + "\n";
           } else if (ent instanceof AbstractModularMachineEntity modular) {
-            GearType type = modular.getBlockState().getValueOrElse(TekoraBlockStates.GEAR_TYPE, GearType.NONE);
+            GearType type = modular.getBlockState().getValueOrElse(TekoraBlockStateProperties.GEAR_TYPE, GearType.NONE);
             msg += "Object has a geartype of " + type + "\n";
             msg += "Object has a velocity of " + modular.getVelocity() + "\n";
             msg += "Object has a height position of " + modular.getHeightPosition() + "\n";
@@ -176,11 +176,11 @@ public class TekoraItems {
           if (state.hasProperty(AbstractThermalMachine.LIT)) {
             msg += "Object is currently " + (state.getValue(AbstractThermalMachine.LIT) ? "" : "not ") + "lit\n";
           }
-          if (state.hasProperty(TekoraBlockStates.GEAR_TYPE)) {
-            msg += "Gear Type: " + state.getValue(TekoraBlockStates.GEAR_TYPE) + "\n";
+          if (state.hasProperty(TekoraBlockStateProperties.GEAR_TYPE)) {
+            msg += "Gear Type: " + state.getValue(TekoraBlockStateProperties.GEAR_TYPE) + "\n";
           }
-          if (state.hasProperty(TekoraBlockStates.IS_LARGE)) {
-            msg += (state.getValue(TekoraBlockStates.IS_LARGE) ? "The gear is large" : "The gear is normal sized" )+ "\n";
+          if (state.hasProperty(TekoraBlockStateProperties.IS_LARGE)) {
+            msg += (state.getValue(TekoraBlockStateProperties.IS_LARGE) ? "The gear is large" : "The gear is normal sized" )+ "\n";
           }
           player.sendSystemMessage(Component.literal(msg));
           return InteractionResult.CONSUME;

@@ -78,7 +78,7 @@ public abstract class AbstractModularCraftEntity extends BlockEntity implements 
     public void drops() {
         SimpleContainer inv = new SimpleContainer(inventory.size());
         for(int i = 0; i < inventory.size(); i++) {
-            ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, 0);
+            ItemAccess itemAccess = ItemAccess.forHandlerIndex(inventory, i);
             inv.setItem(i, new ItemStack(itemAccess.getResource().getItem(), itemAccess.getAmount()));
         }
         if (this.level != null) Containers.dropContents(this.level, this.worldPosition, inv);

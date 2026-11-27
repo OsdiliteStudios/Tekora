@@ -41,6 +41,7 @@ import net.osdilites.tekora.menu.BasinMenu;
 import net.osdilites.tekora.recipes.ReactionRecipe;
 import net.osdilites.tekora.recipes.TekoraMechanicalRecipe;
 import net.osdilites.tekora.recipes.TekoraRecipes;
+import net.osdilites.tekora.recipes.ReactionRecipe.OutputBound;
 import net.osdilites.tekora.recipes.ReactionRecipe.ReactionContext;
 import net.osdilites.tekora.recipes.ReactionRecipe.ReactionState;
 import net.osdilites.tekora.recipes.ReactionRecipe.ReactionTracker;
@@ -171,16 +172,17 @@ public class BasinEntity extends AbstractModularCraftEntity {
         // TODO, hardcode set the solutes of the fluid currently in the tank, to test 
         // if basin produces products given enough energy
         
-        // // buggy
+        // // buggy, tends to void fluids on world load
         FluidResource resourceT = tank.getResource(0);
         Map<SoluteKey, Double> dataT = new HashMap<SoluteKey, Double>();
-        dataT.put(SoluteKey.MAGNESIUM, 20000.0);
-        dataT.put(SoluteKey.CARBONATE, 20000.0);
-        if (!resourceT.isEmpty() && resourceT.get(TekoraComponents.SOLUTES_LIST) == null) {
-            FluidResource wat = resourceT.with(TekoraComponents.SOLUTES_LIST, new Solutes(dataT));
-            tank.set(0, wat, 1000);
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-        }
+        // dataT.put(SoluteKey.MAGNESIUM, 20000.0);
+        // dataT.put(SoluteKey.CARBONATE, 20000.0);
+        // if (!resourceT.isEmpty() && resourceT.get(TekoraComponents.SOLUTES_LIST) == null) {
+        //     FluidResource wat = resourceT.with(TekoraComponents.SOLUTES_LIST, new Solutes(dataT));
+        //     tank.set(0, wat, 1000);
+        //     if (level != null && !level.isClientSide())
+        //         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        // }
         
         // what currently works is that, once the reactant solutes are present in ingredients, the
         // product(s) get produced. 
@@ -209,12 +211,18 @@ public class BasinEntity extends AbstractModularCraftEntity {
             ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy
             Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getFirstRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
 
-            if (recipe.isEmpty()) {
+            // the volume check is to sloppily prevent a solute map update from
+            // crashing due to empty fluid resource in tank. note that
+            // transactions can take place in a separate thread
+            if (recipe.isEmpty() || volume <= 0.f) {
                 this.hasRxn = false;
-                itemReactants.clear();
-                itemProducts.clear();
-                fluidReactants.clear();
-                fluidProducts.clear();
+                // itemReactants.clear();
+                // itemProducts.clear();
+                // fluidReactants.clear();
+                // fluidProducts.clear();
+                reactants.clear();
+                products.clear();
+                state.clear();
                 return 0;
             }        
             
@@ -226,6 +234,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
             context.tracker = state;
             context.inventory = inventory;
             context.tank = tank;
+            context.itemBounds = new OutputBound(2, 10);
 
             // note, some values in reactionRecipe are definitely unused
             // if only there was a tool to quickly find them...
@@ -250,15 +259,23 @@ public class BasinEntity extends AbstractModularCraftEntity {
             
             // some accomplishments:
             // forward reaction with solutes in tank work... ish
-            // TODO still need to update the reaction state...
-            // and rename classes to better fit role 
-            // the code is an eltrich frankenstein monster.
+            // TODO still need to update the reaction tracker...?
+            // on a pertick basis...?
+
+            // currently, no reaction happening because the reaction
+            // state aint being updated, so the fill code needed
+            // to populate tables are not ran
+
+            // also there are duplicate concerns between basin and reaction
+
+            // and rename reaction's classes to better fit role 
+            // the code is a man-made horror beyond my comphrension.
 
             lnQ = 1.0;
             lnK = 2.0;
 
             // disabled realistic rate law checking for now
-            float rate = 1;//accessedRec.getRateTicks(liquidSolutes, temperature);
+            float rate = .25f;//accessedRec.getRateTicks(liquidSolutes, temperature);
             // if (rate == 0) {
             //   break;
             // }
@@ -270,12 +287,15 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 // todo, test this piece of code
                 // accessedRec.modifyCrafterInventory(itemReactants, inventory, rate, action);
                 // accessedRec.modifyCrafterTank(fluidReactants, tank, rate, action);
-                String format = "volume %s\naction %s\n";
-                System.out.printf(format, volume, action);
+                String format = "volume %s\naction %s\nstatus %s\n";
+                System.out.printf(format, volume, action, state.status);
                 accessedRec.modifyCrafterInventory(context, action, rate);
                 if (state.isDirty) {
-                    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-                    state.isDirty = false;
+                    if (level != null && !level.isClientSide()) {
+                        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                        state.isDirty = false;
+                    }
+                    
                 }
 
                 // accessedRec.modifyCrafterInventory(itemProducts, inventory, rate, -action);

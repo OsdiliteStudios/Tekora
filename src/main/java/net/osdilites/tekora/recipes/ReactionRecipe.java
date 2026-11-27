@@ -16,7 +16,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.client.particle.SuspendedParticle;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -272,9 +271,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     // TODO lnQ, lnK, and getRateTicks need to be revisited.
 
     /* Pipeline
-     * recipeInputs + states -> fillStates* -> lnQ vs lnK -> modifyInventories(transaction)
+     * recipeInputs + states -> fillStates* -> lnQ vs lnK -> modifyInventories (transaction)
      * 
-     * *fillStates be called when there is an active reaction recipe
+     * *fillStates be called once when there is an active reaction recipe
      * **lnQ, lnK, and rateTicks still need to be rewritten. hardcode values for now
      *
      * if there were more handlers to consider, like an entity with multiple
@@ -282,6 +281,21 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
      * then code would need to be rewritten in essentially every method
      *
      * more description here
+     * this code is very very brittle and incomprehensible, but it "kind of" works with simple recipes
+     * simulateReactionStep's logic per type of ingredient and handler could be 
+     * put into private generic helpers if there was more time, and 
+     * redundant checks and logic could be cut down once the important invariants are
+     * identified and documented
+     *
+     * behaviors I wish are true:
+     *
+     * reactionState should be renamed. 
+     * it should hold values that are constant for a running
+     * reaction, and only change/cleared if recipe changes
+     * 
+     * reactionTracker is the one that needs to be updated per state.
+     * it should be the one to track totals of an ingredient across slots, and 
+     * be cleared completely on recipe change.
      */
 
     // ---
@@ -454,7 +468,11 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
         public boolean putChemIngInSlot(int slot, boolean isItem, ChemicalIngredient chemIng) {
             var set = getSlotSet(chemIng, isItem);
-            return set != null ? set.add(slot) : false;
+            if (set != null) {
+                set.add(slot);
+                return true;
+            }
+            return false;
         }
 
         public Integer getFirst(ChemicalIngredient chemIng, boolean isItem) {
@@ -537,6 +555,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             tracker.putSlotSet(chem.chemical(), true);
         });
 
+        System.err.println(tracker.itemSlotLookup);
+        System.err.println(tracker.fluidSlotLookup);
+
         for (int slot = 0; slot < inventory.size(); ++slot) {
             ItemResource itemResource = inventory.getResource(slot);
             if (itemResource.isEmpty()) continue;
@@ -611,6 +632,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         // are all ingredients for this side present? check to ensure
         state.hasAll = true;
         for (IngredientValue value : state.entries.values()) {
+            System.out.printf("%s = %s", value.ingredient.toString(), value.total);
             if (value.total <= 0.0) {
                 state.hasAll = false;
                 break;
@@ -733,18 +755,24 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             case ReactionDirection.EQUAL:
             default:
                 dat.tracker.status = ReactionStatus.IDLE;
+                System.out.println("directionless");
                 return false;
         }
 
         if (!inputState.hasAll) {
+            System.out.println("not all present for input side");
             dat.tracker.status = ReactionStatus.IDLE;
             return false;
         }
         
-        final double tickProgress = 1.0 / rateTicks;
+        final double tickProgress = rateTicks;
+
+        final int firstItemOutputSlot = dat.itemBounds == null ? 0 : dat.itemBounds.minIndex();
 
         try (Transaction simTransaction = Transaction.open(transaction)) {
             // code from old version still useful?
+
+            System.err.println("attempting transaction");
 
             // try extraction
             boolean isExtractedAll = true;
@@ -759,6 +787,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 // but for now they are unused
                 Set<Integer> itemSlots = dat.tracker.getItemSlots(chemIng);
                 Set<Integer> fluidSlots = dat.tracker.getFluidSlots(chemIng);
+                // misnomers
                 boolean presentInInventory = itemSlots != null && !itemSlots.isEmpty();
                 boolean presentInTank = fluidSlots != null && !fluidSlots.isEmpty();
 
@@ -839,6 +868,16 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                         System.err.println("really? can't find?");
                     }
                     FluidResource resource = dat.tank.getResource(slot);
+                    // TODO, a bug where stale entry in tracker's slots
+                    // points to an empty resource, causing crash
+                    // fix this by making sure tracker is updated on recipe
+                    // change (when the mixer gets replaced, for example)
+                    if (resource.isEmpty()) {
+                        System.err.println("fluid resource is empty despite present entry in tracker");
+                        isExtractedAll = false;
+                        break;
+                    }
+
                     int count = dat.tank.getAmountAsInt(slot);
 
                     if (chemIng.isSolute()) {
@@ -892,6 +931,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
             if (!isExtractedAll) { 
                 dat.tracker.status = ReactionStatus.IDLE;
+                System.err.println("cannot extract all");
                 simTransaction.close();
                 return false; 
             }
@@ -980,7 +1020,18 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                             System.err.println("can't find output resource from material");
                             continue;
                         };
-                        inserted = dat.inventory.insert(resource, amt, simTransaction);
+                        
+                        // overflow attempt (doesn't really work atm)
+                        int amtRemaining = amt;
+                        final int lastItemOutputSlot = dat.itemBounds == null ? firstItemOutputSlot : dat.itemBounds.maxIndex(); 
+                        for (int slot = firstItemOutputSlot; slot <= lastItemOutputSlot; ++slot) {
+                            inserted = dat.inventory.insert(firstItemOutputSlot, resource, amtRemaining, simTransaction);
+                            amtRemaining -= inserted;
+                            if (amtRemaining <= 0) {
+                                break;
+                                // otherwise, attempt an insert in the next slot
+                            }
+                        }
                     }
                     
                     if (inserted < amt) {
@@ -1005,6 +1056,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
             System.out.println("before");
             dat.tracker.printIngProg();
+            if (!dat.tank.getResource(0).isEmpty() && dat.tank.getResource(0).has(TekoraComponents.SOLUTES_LIST)) {
+                System.out.println(dat.tank.getResource(0).get(TekoraComponents.SOLUTES_LIST).dataMap());
+            }
 
             var progSnapshot = dat.tracker.ingredientProgress.entrySet().stream()
                 .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
@@ -1017,6 +1071,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 System.out.println("failed to commit");
                 System.out.println("after");
                 dat.tracker.printIngProg();
+                if (!dat.tank.getResource(0).isEmpty() && dat.tank.getResource(0).has(TekoraComponents.SOLUTES_LIST)) {
+                    System.out.println(dat.tank.getResource(0).get(TekoraComponents.SOLUTES_LIST).dataMap());
+                }
                 System.out.println("\n\n");
                 // throw new IllegalStateException("oops");
                 transaction.close();
@@ -1026,6 +1083,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
         System.out.println("after");
         dat.tracker.printIngProg();
+        if (!dat.tank.getResource(0).isEmpty() && dat.tank.getResource(0).has(TekoraComponents.SOLUTES_LIST)) {
+            System.out.println(dat.tank.getResource(0).get(TekoraComponents.SOLUTES_LIST).dataMap());
+        }
         System.out.println("\n\n");
     }
 }

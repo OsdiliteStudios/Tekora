@@ -49,7 +49,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class BasinEntity extends AbstractModularCraftEntity {
-    private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 1000) {
+    private final int TANK_CAPACITY = 1000;
+    private final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, TANK_CAPACITY) {
         @Override
         protected void onContentsChanged(int index, FluidStack previousContents) {
             setChanged();
@@ -79,8 +80,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
         super(TekoraBlockEntities.BASIN.get(), pPos, pState, 4.815f);
     }
 
-    private final int FLUID_INPUT_SLOT = 0;
-    private final int FLUID_OUTPUT_SLOT = 1;
+    public final int FLUID_INPUT_SLOT = 0;
+    public final int FLUID_OUTPUT_SLOT = 1;
 
     // meaning of each index in the inventory
     // 0 = fluid container input
@@ -358,5 +359,9 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
     public boolean hasReaction() {
         return hasRxn;
+    }
+
+    public int getTankCapacity() {
+        return TANK_CAPACITY;
     }
 }

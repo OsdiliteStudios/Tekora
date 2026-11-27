@@ -67,6 +67,7 @@ public class ClientEvent {
         registerModularUpDown(event, TekoraBlockEntities.PRESS.get(), PRESS_SHAFT, PRESS_SHAFT_KEY);
 
         event.registerBlockEntityRenderer(TekoraBlockEntities.DEPOT.get(), DepotRenderer::new);
+        event.registerBlockEntityRenderer(TekoraBlockEntities.BASIN.get(), BasinRenderer::new);
 
         registerWithGearPart(event, TekoraBlockEntities.TOP_MECH.get());
     }

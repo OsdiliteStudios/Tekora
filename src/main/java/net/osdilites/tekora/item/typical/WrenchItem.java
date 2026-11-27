@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.osdilites.tekora.Tekora;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStateProperties;
 import net.osdilites.tekora.block.TekoraBlocks;
 import net.osdilites.tekora.block.entities.mechanical.AbstractDeployingMachineEntity;
 import net.osdilites.tekora.block.entities.mechanical.AbstractModularMachine;
@@ -86,7 +86,7 @@ public class WrenchItem extends Item {
                     }
 
                     lvl.addFreshEntity(new ItemEntity(lvl, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(modMech.getAssocItem())));
-                    newState = TekoraBlocks.MECH_TOP.get().defaultBlockState().setValue(TekoraBlockStates.GEAR_TYPE, GearType.NONE);
+                    newState = TekoraBlocks.MECH_TOP.get().defaultBlockState().setValue(TekoraBlockStateProperties.GEAR_TYPE, GearType.NONE);
                     context.getItemInHand().hurtAndBreak(1, player, context.getHand());
                 }
             } else {

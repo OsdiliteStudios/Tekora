@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStateProperties;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.block.entities.transporter.rotational.Shaft;
 
@@ -28,9 +28,9 @@ public class GearPartItem extends TekoraItem {
             BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
             ItemStack handItem = context.getItemInHand();
-            if (block instanceof Shaft && state.hasProperty(TekoraBlockStates.GEAR_TYPE) && state.hasProperty(TekoraBlockStates.IS_LARGE) && handItem.getCount() >= 4) {
-                GearType blockType = state.getValue(TekoraBlockStates.GEAR_TYPE);
-                if (blockType == this.gearType && !state.getValue(TekoraBlockStates.IS_LARGE) && state.hasProperty(BlockStateProperties.AXIS)) {
+            if (block instanceof Shaft && state.hasProperty(TekoraBlockStateProperties.GEAR_TYPE) && state.hasProperty(TekoraBlockStateProperties.IS_LARGE) && handItem.getCount() >= 4) {
+                GearType blockType = state.getValue(TekoraBlockStateProperties.GEAR_TYPE);
+                if (blockType == this.gearType && !state.getValue(TekoraBlockStateProperties.IS_LARGE) && state.hasProperty(BlockStateProperties.AXIS)) {
                     BlockState check1, check2, check3, check4;
                     int x = pos.getX();
                     int y = pos.getY();

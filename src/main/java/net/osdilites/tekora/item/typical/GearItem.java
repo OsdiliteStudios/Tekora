@@ -8,7 +8,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.osdilites.tekora.block.TekoraBlockStates;
+import net.osdilites.tekora.block.TekoraBlockStateProperties;
 import net.osdilites.tekora.block.entities.transporter.rotational.GearType;
 import net.osdilites.tekora.block.entities.transporter.rotational.ShaftEntity;
 
@@ -28,11 +28,11 @@ public class GearItem extends TekoraItem {
     }
 
     protected InteractionResult placeSuccessful(UseOnContext context, Level world, BlockPos pos, BlockState state) {
-        BlockState newState = state.setValue(TekoraBlockStates.GEAR_TYPE, gearType);
+        BlockState newState = state.setValue(TekoraBlockStateProperties.GEAR_TYPE, gearType);
         
         // if something doesn't have an isLarge property, like modular machinery,it would crash without this guard
-        if (state.hasProperty(TekoraBlockStates.IS_LARGE)) {
-            newState = newState.setValue(TekoraBlockStates.IS_LARGE, isLarge);
+        if (state.hasProperty(TekoraBlockStateProperties.IS_LARGE)) {
+            newState = newState.setValue(TekoraBlockStateProperties.IS_LARGE, isLarge);
         }
 
         context.getItemInHand().shrink(1);
@@ -60,12 +60,12 @@ public class GearItem extends TekoraItem {
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState state = world.getBlockState(pos);
-        if (state.hasProperty(TekoraBlockStates.GEAR_TYPE)
-                && state.getValue(TekoraBlockStates.GEAR_TYPE) == GearType.NONE
+        if (state.hasProperty(TekoraBlockStateProperties.GEAR_TYPE)
+                && state.getValue(TekoraBlockStateProperties.GEAR_TYPE) == GearType.NONE
                 // currently, small can only be placed so we check !isLarge
                 // this is because large has placement restrictions, where it can be placed on shafts but not modular machinery
                 // but if the block has isLarge propery, then we can allow placement
-                && (!isLarge || state.hasProperty(TekoraBlockStates.IS_LARGE))) {
+                && (!isLarge || state.hasProperty(TekoraBlockStateProperties.IS_LARGE))) {
             return placeSuccessful(context, world, pos, state);
         }
         return super.useOn(context);

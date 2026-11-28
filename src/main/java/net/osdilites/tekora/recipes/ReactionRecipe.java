@@ -565,9 +565,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             return this.hasAllProducts;
         }
 
-        public void setHasAllFields(ReactionContext context) {
+        public void updateHasAllFields(ReactionMap reactantState, ReactionMap productState) {
             this.hasAllReactants = true;
-            for (var entry : context.reactantState.entries.entrySet()) {
+            for (var entry : reactantState.entries.entrySet()) {
                 IngredientValue value = entry.getValue();
                 double total = this.ingredientTotals.get(entry.getKey());
                 System.out.printf("%s = %s", value.ingredient.toString(), total);
@@ -578,7 +578,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             }
             
             this.hasAllProducts = true;
-            for (var entry : context.reactantState.entries.entrySet()) {
+            for (var entry : productState.entries.entrySet()) {
                 IngredientValue value = entry.getValue();
                 double total = this.ingredientTotals.get(entry.getKey());
                 System.out.printf("%s = %s", value.ingredient.toString(), total);
@@ -672,8 +672,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 removalQueue.clear();
                 return;
             }
-
-            setHasAllFields(context);
 
             // note: I considered clearing slot entries from a queue pushed to by simulateReaction(),
             // a queue approach introduces a dependency between the two steps, 
@@ -805,7 +803,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         populateReactionStateFromHandler(context.tank, context.productState, context.tracker);
 
         // do i need totals for simulateReactionStep?
-        context.tracker.setHasAllFields(context);
+        context.tracker.updateHasAllFields(context.reactantState, context.productState);
 
         // TODO, dealing with multiple solvents?
     }

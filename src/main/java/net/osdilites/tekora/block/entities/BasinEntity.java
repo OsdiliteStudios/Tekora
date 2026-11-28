@@ -173,8 +173,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
         // if basin produces products given enough energy
         
         // // buggy, tends to void fluids on world load because solutes can't be serialized lmao
-        FluidResource resourceT = tank.getResource(0);
-        Map<SoluteKey, Double> dataT = new HashMap<SoluteKey, Double>();
+        // FluidResource resourceT = tank.getResource(0);
+        // Map<SoluteKey, Double> dataT = new HashMap<SoluteKey, Double>();
         // dataT.put(SoluteKey.SODIUM, 20000.0);
         // dataT.put(SoluteKey.CHLORIDE, 20000.0);
         // if (!resourceT.isEmpty() && resourceT.get(TekoraComponents.SOLUTES_LIST) == null) {
@@ -200,14 +200,8 @@ public class BasinEntity extends AbstractModularCraftEntity {
             // the following code below reads the ingredients in inventory/tank
             HashMap<ChemicalIngredient, Double> ingredients = new HashMap<>();
             HashMap<SoluteKey, Double> liquidSolutes = new HashMap<>();
-
-            // hardcoded test! hardcoded test!
-            // liquidSolutes.put(SoluteKey.MAGNESIUM, 20000.0);
-            // liquidSolutes.put(SoluteKey.CARBONATE, 20000.0);
-
             float volume = ReactionRecipeInput.fromReadingHandlersGetVolume(ingredients, liquidSolutes, inventory, tank);
             
-            // torque = 88888888;
             ReactionRecipeInput input = new ReactionRecipeInput(ingredients, torque); // todo, replace torque with an actual more legit form of energy
             Optional<RecipeHolder<ReactionRecipe>> recipe = TekoraRecipes.getFirstRecipe((ServerLevel)level, TekoraRecipes.REACTION_TYPE.get(), input);
 
@@ -238,9 +232,6 @@ public class BasinEntity extends AbstractModularCraftEntity {
 
             // note, some values in reactionRecipe are definitely unused
             // if only there was a tool to quickly find them...
-
-            System.out.println("yes recipe exists");
-
 
             // something to debug, if you switch recipes fast enough, does it still register as present?
             if (!this.hasRxn) {

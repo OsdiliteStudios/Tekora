@@ -247,8 +247,7 @@ public class BasinEntity extends AbstractModularCraftEntity {
                 // description: use this to develop a map of indices containing reactants/products including those with solutes
                 // accessedRec.fillWithReactants(itemReactants, inventory, fluidReactants, tank);
                 // accessedRec.fillWithProducts(itemProducts, inventory, fluidProducts, tank);
-                accessedRec.fillWithReactants(context, volume, inventory, tank);
-                accessedRec.fillWithProducts(context, volume, inventory, tank);
+                accessedRec.fillReactionState(volume, context);
                 this.hasRxn = true;
             }
             // accessedRec.updateConcentrations(volume, context);

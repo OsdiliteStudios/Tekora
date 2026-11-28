@@ -7,13 +7,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
 import org.jspecify.annotations.NonNull;
-import org.spongepowered.asm.mixin.injection.Desc;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -273,6 +271,126 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
     
     // -------
 
+    @Deprecated 
+    public void fillWithReactants(Map<Integer, float[]> items, ItemStacksResourceHandler inventory, Map<Integer, float[]> fluids, FluidStacksResourceHandler tank) {
+        fillBasedOnData(reactants, items, inventory, fluids, tank);
+    }
+    @Deprecated 
+    public void fillWithProducts(Map<Integer, float[]> items, ItemStacksResourceHandler inventory, Map<Integer, float[]> fluids, FluidStacksResourceHandler tank) {
+        fillBasedOnData(products, items, inventory, fluids, tank);
+    }
+    @Deprecated 
+    private static void fillBasedOnData(List<Chemical> chemicals, Map<Integer, float[]> items, ItemStacksResourceHandler inventory, Map<Integer, float[]> fluids, FluidStacksResourceHandler tank) {
+        for (Chemical chemical : chemicals) {
+            for (int i = 0; i < inventory.size(); i++) {
+                ItemResource resource = inventory.getResource(i);
+                if (resource.getComponents().has(TekoraComponents.SOLUTES_LIST)) {
+                    Solutes val = resource.getComponents().get(TekoraComponents.SOLUTES_LIST);
+                    if (val != null) {
+                        Map<SoluteKey, Double> map = val.dataMap();
+                        float[] list = new float[map.size()];
+                        int ind = 0;
+                        for (SoluteKey key : map.keySet()) {
+                            list[ind++] = chemical.chemical().test(key) ? chemical.coefficient() : -1.0f;
+                        }
+                        items.put(i, list);
+                    }
+                } else if (chemical.chemical().test(resource.toStack())) {
+                    items.put(-i-1, new float[]{chemical.coefficient(), 0f});
+                    break;
+                }
+            }
+            for (int i = 0; i < tank.size(); i++) {
+                FluidResource resource = tank.getResource(i);
+                if (resource.getComponents().has(TekoraComponents.SOLUTES_LIST)) {
+                    Solutes val = resource.getComponents().get(TekoraComponents.SOLUTES_LIST);
+                    if (val != null) {
+                        Map<SoluteKey, Double> map = val.dataMap();
+                        float[] list = new float[map.size()];
+                        int ind = 0;
+                        for (SoluteKey key : map.keySet()) {
+                            list[ind++] = chemical.chemical().test(key) ? chemical.coefficient() : -1.0f;
+                        }
+                        items.put(-i-1, list);
+                    }
+                } else if (chemical.chemical().test(resource.toStack(1))) {
+                    fluids.put(i, new float[]{chemical.coefficient(), 0f});
+                    break;
+                }
+            }
+        }
+    }
+    @Deprecated 
+    public void modifyCrafterInventory(@NonNull Map<Integer, float[]> itemReactants, ItemStacksResourceHandler inventory, double rate, int action) {
+        if (action == 1) {
+            // checks if all the products are available
+        } else if (action == -1) {
+            // checks if all the reactants are available
+        }
+
+        for (Integer ind : itemReactants.keySet()) {
+            boolean hasSolutes = ind < 0;
+            float[] vals = itemReactants.get(hasSolutes ? -ind - 1 : ind);
+            ItemResource resource = inventory.getResource(ind);
+            if (hasSolutes && resource.has(TekoraComponents.SOLUTES_LIST)) {
+                int mapInd = 0;
+                // todo, work products/reactants that are not in the list but in the recipe within the recipe.
+                Map<SoluteKey, Double> data = resource.get(TekoraComponents.SOLUTES_LIST).dataMap();
+                for (var entry : data.entrySet()) {
+                    float coeff = vals[mapInd++];
+                    if (coeff > 0) {
+                        double newVal = coeff * rate;
+                        double org = entry.getValue();
+                        entry.setValue(action == -1 ? org-newVal : org+newVal);
+                    }
+                }
+            }
+
+            float amt = (float)rate * vals[0];
+            if (action == -1) amt = -amt;
+            vals[1] += amt;
+            if (vals[1] >= 1.0f) {
+                inventory.set(ind, resource, inventory.getAmountAsInt(ind) + 1);
+            } else if (vals[1] <= -1.0f) {
+                inventory.set(ind, resource, inventory.getAmountAsInt(ind) - 1);
+            }
+            vals[1] %= 1.0f;
+        }
+    }
+    @Deprecated 
+    public void modifyCrafterTank(@NonNull Map<Integer, float[]> fluidReactants, FluidStacksResourceHandler tank, double rate, int action) {
+        for (Integer ind : fluidReactants.keySet()) {
+            boolean hasSolutes = ind < 0;
+            float[] vals = fluidReactants.get(hasSolutes ? -ind - 1 : ind);
+            FluidResource resource = tank.getResource(ind);
+            if (hasSolutes && resource.has(TekoraComponents.SOLUTES_LIST)) {
+                int mapInd = 0;
+                // todo, work products/reactants that are not in the list but in the recipe within the recipe.
+                Map<SoluteKey, Double> data = resource.get(TekoraComponents.SOLUTES_LIST).dataMap();
+                for (var entry : data.entrySet()) {
+                    float coeff = vals[mapInd++];
+                    if (coeff > 0) {
+                        double newVal = coeff * rate;
+                        double org = entry.getValue();
+                        entry.setValue(action == -1 ? org-newVal : org+newVal);
+                    }
+                }
+            }
+
+            float amt = (float)rate * vals[0];
+            if (action == -1) amt = -amt;
+            vals[1] += amt;
+            if (vals[1] >= 1.0f) {
+                tank.set(ind, resource, tank.getAmountAsInt(ind) + 1);
+            } else if (vals[1] <= -1.0f) {
+                tank.set(ind, resource, tank.getAmountAsInt(ind) - 1);
+            }
+            vals[1] %= 1.0f;
+        }
+    }
+
+    // -------
+
     // TODO trim unneeded code based on what existing unmodified functions already cover
 
     /* Pipeline
@@ -359,10 +477,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         private HashMap<ChemicalIngredient, IngredientValue> entries;
         /// which side of equation this is for
         public final boolean isReactants;
-        /// whether recipe ingredients on this side are present
-        // note, could move to ReactionState as hasAllReactants and hasAllProducts,
-        // but that would require deprecating the fillWith... methods
-        public boolean hasAll = false;
 
         public ReactionMap(boolean isReactants) {
             this.entries = new HashMap<>();
@@ -382,10 +496,9 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             return entries.get(key);
         }
 
-        // clearing entries should only be the 
-        // case when the entity's recipes change 
+        /// clearing entries should only be the 
+        /// case when the entity's recipes change 
         public void clear() {
-            hasAll = false;
             entries.clear();
         }
     }
@@ -437,12 +550,34 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             // an ingredient can be shared between recipes
         }
 
+        /// whether recipe ingredients on this side are present
         public boolean hasAllReactants() {
             return this.hasAllReactants;
         }
 
+        /// whether recipe ingredients on this side are present
         public boolean hasAllProducts() {
             return this.hasAllProducts;
+        }
+
+        public void setHasAllFields(ReactionContext context) {
+            this.hasAllReactants = true;
+            for (IngredientValue value : context.reactantState.entries.values()) {
+                System.out.printf("%s = %s", value.ingredient.toString(), value.total);
+                if (value.total <= 0.0) {
+                    this.hasAllReactants = false;
+                    break;
+                }
+            }
+            
+            this.hasAllProducts = true;
+            for (IngredientValue value : context.productState.entries.values()) {
+                System.out.printf("%s = %s", value.ingredient.toString(), value.total);
+                if (value.total <= 0.0) {
+                    this.hasAllProducts = false;
+                    break;
+                }
+            }
         }
 
         public void incrementIngredientTotal(ChemicalIngredient key, double change) {
@@ -470,14 +605,14 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 fluidSlotLookup.putIfAbsent(chemIng, new HashSet<>());
             }
             ingredientProgress.putIfAbsent(chemIng, 0.0);
-            // ingredientTotals.putIfAbsent(chemIng, 0.0);
+            ingredientTotals.putIfAbsent(chemIng, 0.0);
         }
 
         public void putSlotSet(ChemicalIngredient chemIng) {
             itemSlotLookup.putIfAbsent(chemIng, new HashSet<>());
             fluidSlotLookup.putIfAbsent(chemIng, new HashSet<>());
             ingredientProgress.putIfAbsent(chemIng, 0.0);
-            // ingredientTotals.putIfAbsent(chemIng, 0.0);
+            ingredientTotals.putIfAbsent(chemIng, 0.0);
         }
 
         private @Nullable Set<Integer> getItemSlots(ChemicalIngredient chemIng) {
@@ -533,7 +668,6 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         }
     }
 
-    // they called this type of pattern a context!
     // TODO: some more functions could replace parameters with this
     public static class ReactionContext {
         public ReactionMap reactantState;
@@ -546,79 +680,44 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         // TODO these have to be used by simulateReactionStep()!
         public @Nullable OutputBound itemBounds;
         public @Nullable OutputBound fluidBounds;
+
+        public ReactionContext(
+            ItemStacksResourceHandler inventoryRef,
+            FluidStacksResourceHandler tankRef
+        ) {
+            this.reactantState = new ReactionMap(true);
+            this.productState = new ReactionMap(false);
+            this.tracker = new ReactionState();
+            this.inventory = inventoryRef;
+            this.tank = tankRef;
+            this.itemBounds = new OutputBound(0, inventoryRef.size());
+            this.fluidBounds = new OutputBound(0, tankRef.size());
+        }
+
+        /// calling this -> every field must be set
+        public ReactionContext() { }
     }
 
     // -----
 
-    public void fillWithReactants(ReactionContext dat, double solventVolume, ItemStacksResourceHandler inventory, FluidStacksResourceHandler tank) {
-        fillReactionState(reactants, solventVolume, inventory, tank, dat.reactantState, dat.tracker);
-    }
-
-    public void fillWithProducts(ReactionContext dat, double solventVolume, ItemStacksResourceHandler inventory, FluidStacksResourceHandler tank) {
-        fillReactionState(products, solventVolume, inventory, tank, dat.productState, dat.tracker);
-    }
-
-    // note, only call the fill methods when the recipe changes 
-    private void fillReactionState(
-        @NonNull List<Chemical> recipeChemicals, 
-        double solventVolume, // volume of the fluid in tank
-        @NonNull ItemStacksResourceHandler inventory, 
-        @NonNull FluidStacksResourceHandler tank,
-        ReactionMap map,
-        ReactionState tracker
-    ) {
-        if (recipeChemicals.isEmpty()) {
-            throw new IllegalArgumentException("recipeChemicals shouldn't be empty");
-        }
-        
-        // clear the state object since it will be reused across recipe changes
-        map.clear();
-
-        // default initialize state's entries; totals for each are computed on a pass thru handlers
-        recipeChemicals.forEach(chem -> {
-            map.put(chem);
-            ChemicalIngredient ing = chem.chemical();
-            if (ing.isSolute()) {
-                tracker.putSlotSet(ing);
-            } else {
-                tracker.putSlotSet(ing, ing.asMaterial().isItem());
-            }
-        });
-
-        System.err.println(tracker.itemSlotLookup);
-        System.err.println(tracker.fluidSlotLookup);
-
-        populateReactionStateFromHandler(inventory, map, tracker);
-        populateReactionStateFromHandler(tank, map, tracker);
-
-        map.hasAll = true;
-        for (IngredientValue value : map.entries.values()) {
-            System.out.printf("%s = %s", value.ingredient.toString(), value.total);
-            if (value.total <= 0.0) {
-                map.hasAll = false;
-                break;
-            }
-        }
-        // TODO, dealing with multiple solvents?
-    }
-
     /// note, only call the fill methods when the recipe changes 
+    /// @param solventVolume is volume of the fluid in tank
+    /// @param context is object to write ReactionMap and ReactionState info to
     // TODO tweak for new ReactionState logic once (or if) implemented
-    public void fillReactionState(
-        @NonNull List<Chemical> reactantChemicals,
-        @NonNull List<Chemical> productChemicals, 
-        double solventVolume, // volume of the fluid in tank
-        ReactionContext context
-    ) {
+    public void fillReactionState(double solventVolume, ReactionContext context) {
+        // these are references, not copies.
+        List<Chemical> reactantChemicals = reactants;
+        List<Chemical> productChemicals = products;
+
         if (reactantChemicals.isEmpty() || productChemicals.isEmpty()) {
-            throw new IllegalArgumentException("recipeChemicals shouldn't be empty");
+            throw new IllegalStateException("recipeChemicals shouldn't be empty");
         }
         
         // clear the state objects since they will be reused across recipe changes
         context.reactantState.clear();
         context.productState.clear();
 
-        // default initialize state's entries; totals for each are computed on a pass thru handlers
+        // default initialize state's entries; totals for each are computed on another pass thru handlers
         reactantChemicals.forEach(chem -> {
             context.reactantState.put(chem);
             ChemicalIngredient ing = chem.chemical();
@@ -648,23 +747,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         populateReactionStateFromHandler(context.inventory, context.productState, context.tracker);
         populateReactionStateFromHandler(context.tank, context.productState, context.tracker);
 
-        context.reactantState.hasAll = true;
-        for (IngredientValue value : context.reactantState.entries.values()) {
-            System.out.printf("%s = %s", value.ingredient.toString(), value.total);
-            if (value.total <= 0.0) {
-                context.reactantState.hasAll = false;
-                break;
-            }
-        }
-
-        context.productState.hasAll = true;
-        for (IngredientValue value : context.productState.entries.values()) {
-            System.out.printf("%s = %s", value.ingredient.toString(), value.total);
-            if (value.total <= 0.0) {
-                context.productState.hasAll = false;
-                break;
-            }
-        }
+        context.tracker.setHasAllFields(context);
 
         // TODO, dealing with multiple solvents?
     }
@@ -791,13 +874,16 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
 
         ReactionMap inputState;
         ReactionMap outputState;
+        boolean inputHasAll = false;
         switch (direction) {
             case ReactionDirection.FORWARD:
                 inputState = reactantState;
+                inputHasAll = dat.tracker.hasAllReactants();
                 outputState = productState;
                 break;
             case ReactionDirection.REVERSE:
                 inputState = productState;
+                inputHasAll = dat.tracker.hasAllProducts();
                 outputState = reactantState;
                 break;
             case ReactionDirection.EQUAL:
@@ -807,7 +893,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 return false;
         }
 
-        if (!inputState.hasAll) {
+        if (!inputHasAll) {
             System.out.println("not all present for input side");
             dat.tracker.status = ReactionStatus.IDLE;
             return false;

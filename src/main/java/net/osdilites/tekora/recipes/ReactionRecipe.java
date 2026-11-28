@@ -43,6 +43,7 @@ import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.resource.DataComponentHolderResource;
 import net.neoforged.neoforge.transfer.resource.Resource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.osdilites.tekora.Tekora;
 import net.osdilites.tekora.data.SoluteKey;
 import net.osdilites.tekora.data.Solutes;
 import net.osdilites.tekora.data.TekoraComponents;
@@ -425,7 +426,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
      * TODO verify if producing fluids from recipe work
      * TODO support for heterogenous catalysts (explicitly marked catalysts)
      * TODO support for homogenous catalysts (detect if an ingredient is on both sides of reaction)
-     * TODO attemptExtract() should look for resources in other slots if current one depletes
+     * TODO, an unrelated material ingredient should not stop the transaction from attempting to extract
      * TODO replace print statements with LOGGER debug statements
      * ...other todo items buried in the code
      */
@@ -645,10 +646,33 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             return false;
         }
 
+        @Deprecated 
         public Integer getFirst(ChemicalIngredient chemIng, boolean isItem) {
             var set = getSlotSet(chemIng, isItem);
             if (set != null && !set.isEmpty()) {
                 for (Integer val : set) return val;
+            }
+            return -1; // stinky
+        }
+        
+        public <S, T extends DataComponentHolder & Resource>
+        Integer getFirst(ChemicalIngredient chemIng, StacksResourceHandler<S, T> handler) {
+            boolean isItem;
+            if (handler instanceof ItemStacksResourceHandler) {
+                isItem = true;
+            } else if (handler instanceof FluidStacksResourceHandler) {
+                isItem = false;
+            } else {
+                throw new IllegalArgumentException("getFirst(): unsupported handler type");
+            }
+
+            // note, do not make this remove lookup entries, as that is the responsibility of 
+            // the caller. this function should be pure.
+            var set = getSlotSet(chemIng, isItem);
+            if (set != null && !set.isEmpty()) {
+                for (Integer val : set) { 
+                    if (handler.getAmountAsInt(val) != 0) return val; 
+                }
             }
             return -1; // stinky
         }
@@ -937,7 +961,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             throw new IllegalArgumentException("fed unsupported resource handler");
         }
 
-        int slot = tracker.getFirst(chemIng, isItem);
+        int slot = tracker.getFirst(chemIng, handler);
         if (slot < 0) {
             System.err.println("really? can't find?");
             throw new IllegalStateException("really? can't find?");
@@ -950,7 +974,7 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
         // fix this by making sure tracker is updated on recipe
         // change (when the mixer gets replaced, for example)
         if (resource.isEmpty()) {
-            System.err.println("fluid resource is empty despite present entry in tracker");
+            System.err.println("resource is empty despite present entry in tracker");
             return TransactionAction.CANCEL;
         }
 
@@ -983,9 +1007,27 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 return TransactionAction.CANCEL;
             }
         } else if (chemIng.isMaterial()) {
-            // ...
+            // ...reliant on parent function maintaining invariant that
+            // handler matches with found ingredient
             MaterialIngredient matIng = chemIng.asMaterial();
-            assert matIng.isItem(); // ...
+            boolean matchesIngredient = false;
+            if (isItem && matIng.isItem()) {
+                ItemResource itemResource = (ItemResource) resource;
+                matchesIngredient = matIng.asItem().test(itemResource.toStack(count));
+            } else if (!isItem && matIng.isFluid()) {
+                FluidResource fluidResource = (FluidResource) resource;
+                matchesIngredient = matIng.asFluid().test(fluidResource.toStack(count));
+            } else {
+                Tekora.LOGGER.error("attemptExtract(): material and handler do not match");
+                return TransactionAction.CANCEL;
+            }
+
+            // TODO, an unrelated material ingredient should not stop the transaction from
+            // attempting to extract; the next slot in the lookup or inventory should be searched instead.
+            if (!matchesIngredient) {
+                Tekora.LOGGER.error("attemptExtract(): matchesIngredient false, stale lookup");
+                return TransactionAction.CANCEL;
+            }
 
             // the "fractional" amount of the material
             double currProg = reactionProg.getOrDefault(chemIng, 0.0);
@@ -1002,14 +1044,25 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
             int amt = Math.abs((int)Math.floor(nextProg));
             int extracted = handler.extract(slot, resource, amt, simTransaction);
             if (extracted < amt) {
+                int amtDue = amt - extracted;
                 // TODO, instead of canceling early, look through other
                 // slots (via lookup table in ReactionState) to 
                 // see if there's still resources of matching type to extract.
                 // if successful (extracted == expected amount), don't modify the
-                // lookup table directly here, and instead **queue** a change that
-                // should be made after the transaction completes.
-                // this change to the lookup table should be ignored if the
-                // transaction fails.
+                // lookup table directly in here
+
+                Set<Integer> slots = isItem ? tracker.getItemSlots(chemIng) : tracker.getFluidSlots(chemIng);
+                if (slots != null) {
+                    for (Integer extractSlot : slots) {
+                        // this is so jank for skipping 1st slot, indicates logic rewrite may be needed
+                        if (slot == extractSlot) continue;
+
+                        int extractedAmt = handler.extract(extractSlot, resource, amtDue, simTransaction);
+                        amtDue -= extractedAmt;
+                        if (amtDue <= 0) { return TransactionAction.GOOD; }
+                    }
+                }
+
                 System.err.println("cannot replace extract, mat item");
                 return TransactionAction.CANCEL;
             }
@@ -1249,7 +1302,8 @@ public final class ReactionRecipe implements TekoraGeneralRecipe<ReactionRecipeI
                 IngredientValue value = entry.getValue();
                 double amtProduced = value.coefficient() * tickProgress;
 
-                // // remove???
+                // // TODO for possibly inserting into lookup slots, in the case 
+                // // that reaction changes direction and output becomes input on next step
                 // Set<Integer> itemSlots = tracker.getItemSlots(chemIng);
                 // Set<Integer> fluidSlots = tracker.getFluidSlots(chemIng);
 

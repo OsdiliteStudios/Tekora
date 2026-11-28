@@ -172,11 +172,11 @@ public class BasinEntity extends AbstractModularCraftEntity {
         // TODO, hardcode set the solutes of the fluid currently in the tank, to test 
         // if basin produces products given enough energy
         
-        // // buggy, tends to void fluids on world load
+        // // buggy, tends to void fluids on world load because solutes can't be serialized lmao
         FluidResource resourceT = tank.getResource(0);
         Map<SoluteKey, Double> dataT = new HashMap<SoluteKey, Double>();
-        // dataT.put(SoluteKey.MAGNESIUM, 20000.0);
-        // dataT.put(SoluteKey.CARBONATE, 20000.0);
+        // dataT.put(SoluteKey.SODIUM, 20000.0);
+        // dataT.put(SoluteKey.CHLORIDE, 20000.0);
         // if (!resourceT.isEmpty() && resourceT.get(TekoraComponents.SOLUTES_LIST) == null) {
         //     FluidResource wat = resourceT.with(TekoraComponents.SOLUTES_LIST, new Solutes(dataT));
         //     tank.set(0, wat, 1000);
